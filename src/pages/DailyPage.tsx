@@ -58,7 +58,7 @@ const DailyPage = () => {
             TODAY
           </h1>
           <p className="text-lg text-muted-foreground mt-1">
-            {format(selectedDate, "d EEEE").toUpperCase()} → {format(addDays(selectedDate, 1), "d EEEE").toUpperCase()}
+            {format(selectedDate, "dd.MM.yyyy")}
           </p>
         </header>
 
