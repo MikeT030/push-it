@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
@@ -18,21 +18,23 @@ const DailyPage = () => {
     isLoaded,
   } = usePushUpData();
 
-  if (!isLoaded) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  const currentCount = getEntryForDate(selectedDate);
-  const progress = getDailyProgress(selectedDate);
+  const currentCount = isLoaded ? getEntryForDate(selectedDate) : 0;
+  const progress = isLoaded ? getDailyProgress(selectedDate) : 0;
   const isEditable = canEditDate(selectedDate);
 
   useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
   }, [selectedDate, currentCount]);
+
+  const monthDays = useMemo(() => eachDayOfInterval({
+    start: startOfMonth(currentMonth),
+    end: endOfMonth(currentMonth),
+  }), [currentMonth]);
+
+  const firstDayOfWeek = startOfMonth(currentMonth).getDay();
+  const emptyDays = useMemo(() => Array(firstDayOfWeek).fill(null), [firstDayOfWeek]);
+
+  const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
 
   const handleInputChange = (value: string) => {
     const num = parseInt(value) || 0;
@@ -48,15 +50,13 @@ const DailyPage = () => {
     setInputValue(newCount > 0 ? newCount.toString() : "");
   };
 
-  const monthDays = eachDayOfInterval({
-    start: startOfMonth(currentMonth),
-    end: endOfMonth(currentMonth),
-  });
-
-  const firstDayOfWeek = startOfMonth(currentMonth).getDay();
-  const emptyDays = Array(firstDayOfWeek).fill(null);
-
-  const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">

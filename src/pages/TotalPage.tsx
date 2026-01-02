@@ -14,19 +14,24 @@ const TotalPage = () => {
     isLoaded,
   } = usePushUpData();
 
-  if (!isLoaded) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  const totalPushUps = getTotalPushUps();
-  const yearProgress = getYearProgress();
+  const totalPushUps = isLoaded ? getTotalPushUps() : 0;
+  const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
   
   const stats = useMemo(() => {
+    if (!isLoaded) {
+      return {
+        daysElapsed: 0,
+        daysRemaining: 365,
+        streak: 0,
+        weeklyAvg: 0,
+        paceStatus: "behind" as const,
+        paceDiff: 0,
+        requiredDaily: 0,
+        expectedByNow: 0,
+      };
+    }
+
     const today = new Date();
     const yearStart = startOfYear(today);
     const daysElapsed = differenceInDays(today, yearStart) + 1;
@@ -71,9 +76,9 @@ const TotalPage = () => {
       requiredDaily,
       expectedByNow,
     };
-  }, [totalPushUps, getEntryForDate, remaining]);
+  }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
 
-  const statCards = [
+  const statCards = useMemo(() => [
     {
       label: "Current Streak",
       value: `${stats.streak}`,
@@ -102,7 +107,15 @@ const TotalPage = () => {
       icon: Target,
       color: stats.requiredDaily > dailyTarget ? "text-accent" : "text-primary",
     },
-  ];
+  ], [stats, dailyTarget]);
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
