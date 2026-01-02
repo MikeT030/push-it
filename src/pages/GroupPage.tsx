@@ -5,6 +5,7 @@ import { differenceInDays, startOfYear } from "date-fns";
 
 interface UserProgress {
   user_id: string;
+  display_name: string | null;
   total_pushups: number;
   yearly_goal: number;
   progress_percent: number;
@@ -153,7 +154,7 @@ const GroupPage = () => {
                     {/* Info */}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground truncate">
-                        Member {index + 1}
+                        {user.display_name || `Member ${index + 1}`}
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {user.days_logged} days logged • Goal: {user.yearly_goal.toLocaleString()}
