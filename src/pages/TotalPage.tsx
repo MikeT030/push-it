@@ -126,7 +126,7 @@ const TotalPage = () => {
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
           <h1 className="text-4xl font-black text-foreground tracking-tight mt-1">
-            Overview
+            Your progress
           </h1>
         </header>
 
