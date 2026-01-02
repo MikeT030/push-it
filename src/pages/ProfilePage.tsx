@@ -73,7 +73,6 @@ const ProfilePage = () => {
     const { data, error } = await supabase
       .from("push_up_entries")
       .select("id, user_id, date, count, created_at, updated_at")
-      .eq("user_id", user.id)
       .order("date", { ascending: true });
 
     if (error) {
