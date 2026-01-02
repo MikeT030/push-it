@@ -127,7 +127,8 @@ const TotalPage = () => {
         <div className="flex justify-end mb-4">
           <Button
             onClick={() => navigate("/daily")}
-            className="rounded-full px-5 py-2 shadow-lg"
+            variant="outline"
+            className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-primary/10"
           >
             <Plus className="w-4 h-4" />
             Add push-ups
