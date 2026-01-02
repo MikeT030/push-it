@@ -22,7 +22,7 @@ export const usePushUpData = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const yearlyGoal = profile?.yearly_goal ?? DEFAULT_YEARLY_GOAL;
-  const dailyTarget = Math.ceil(yearlyGoal / 365);
+  const dailyTarget = Math.round(yearlyGoal / 365);
 
   // Load data from database
   useEffect(() => {
