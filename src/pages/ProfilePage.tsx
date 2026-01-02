@@ -232,7 +232,7 @@ const ProfilePage = () => {
                 className="flex-1 h-12"
               >
                 <Download className="w-4 h-4 mr-2" />
-                Backup
+                Push Ups Backup
               </Button>
               <Button
                 variant="outline"
