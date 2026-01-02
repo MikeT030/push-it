@@ -38,7 +38,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const AppContent = () => {
   const location = useLocation();
   const { user } = useAuth();
-  const showNav = user && ["/", "/total", "/group", "/profile"].includes(location.pathname);
+  const showNav = user && ["/", "/daily", "/total", "/profile"].includes(location.pathname);
 
   return (
     <>
@@ -46,6 +46,14 @@ const AppContent = () => {
         <Route path="/auth" element={<AuthPage />} />
         <Route
           path="/"
+          element={
+            <ProtectedRoute>
+              <GroupPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/daily"
           element={
             <ProtectedRoute>
               <Index />
@@ -60,14 +68,7 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/group"
-          element={
-            <ProtectedRoute>
-              <GroupPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/group" element={<Navigate to="/" replace />} />
         <Route
           path="/profile"
           element={
