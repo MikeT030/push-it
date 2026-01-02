@@ -1,63 +1,83 @@
 import { useState, useEffect, useCallback } from "react";
-import { format, parseISO, startOfYear, differenceInDays, isAfter, startOfDay } from "date-fns";
+import { format, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, differenceInDays } from "date-fns";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface PushUpEntry {
   date: string; // YYYY-MM-DD
   count: number;
 }
 
-interface UserData {
-  name: string;
-  entries: PushUpEntry[];
+interface Profile {
+  yearly_goal: number;
 }
 
-const STORAGE_KEY = "pushit_user_data";
-const YEARLY_GOAL = 30000;
-const DAILY_TARGET = 82;
-
-const getDefaultUserData = (): UserData => ({
-  name: "User",
-  entries: [],
-});
+const DEFAULT_YEARLY_GOAL = 30000;
 
 export const usePushUpData = () => {
-  const [userData, setUserData] = useState<UserData>(getDefaultUserData);
+  const { user } = useAuth();
+  const [entries, setEntries] = useState<PushUpEntry[]>([]);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load data from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        setUserData(JSON.parse(stored));
-      } catch {
-        setUserData(getDefaultUserData());
-      }
-    }
-    setIsLoaded(true);
-  }, []);
+  const yearlyGoal = profile?.yearly_goal ?? DEFAULT_YEARLY_GOAL;
+  const dailyTarget = Math.ceil(yearlyGoal / 365);
 
-  // Save data to localStorage
+  // Load data from database
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+    if (!user) {
+      setEntries([]);
+      setProfile(null);
+      setIsLoaded(true);
+      return;
     }
-  }, [userData, isLoaded]);
+
+    const loadData = async () => {
+      // Load profile
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("yearly_goal")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (profileData) {
+        setProfile(profileData);
+      }
+
+      // Load entries
+      const { data: entriesData } = await supabase
+        .from("push_up_entries")
+        .select("date, count")
+        .eq("user_id", user.id);
+
+      if (entriesData) {
+        setEntries(entriesData.map(e => ({ date: e.date, count: e.count })));
+      }
+
+      setIsLoaded(true);
+    };
+
+    loadData();
+  }, [user]);
 
   const getEntryForDate = useCallback(
     (date: Date): number => {
       const dateStr = format(date, "yyyy-MM-dd");
-      const entry = userData.entries.find((e) => e.date === dateStr);
+      const entry = entries.find((e) => e.date === dateStr);
       return entry?.count ?? 0;
     },
-    [userData.entries]
+    [entries]
   );
 
-  const setEntryForDate = useCallback((date: Date, count: number) => {
+  const setEntryForDate = useCallback(async (date: Date, count: number) => {
+    if (!user) return;
+
     const dateStr = format(date, "yyyy-MM-dd");
-    setUserData((prev) => {
-      const existingIndex = prev.entries.findIndex((e) => e.date === dateStr);
-      const newEntries = [...prev.entries];
+
+    // Optimistic update
+    setEntries((prev) => {
+      const existingIndex = prev.findIndex((e) => e.date === dateStr);
+      const newEntries = [...prev];
 
       if (existingIndex >= 0) {
         if (count === 0) {
@@ -69,34 +89,47 @@ export const usePushUpData = () => {
         newEntries.push({ date: dateStr, count });
       }
 
-      return { ...prev, entries: newEntries };
+      return newEntries;
     });
-  }, []);
+
+    // Persist to database
+    if (count === 0) {
+      await supabase
+        .from("push_up_entries")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("date", dateStr);
+    } else {
+      await supabase
+        .from("push_up_entries")
+        .upsert({
+          user_id: user.id,
+          date: dateStr,
+          count,
+        }, { onConflict: "user_id,date" });
+    }
+  }, [user]);
 
   const getTotalPushUps = useCallback((): number => {
-    return userData.entries.reduce((sum, entry) => sum + entry.count, 0);
-  }, [userData.entries]);
+    return entries.reduce((sum, entry) => sum + entry.count, 0);
+  }, [entries]);
 
   const getYearProgress = useCallback((): number => {
     const total = getTotalPushUps();
-    return Math.min((total / YEARLY_GOAL) * 100, 100);
-  }, [getTotalPushUps]);
+    return Math.min((total / yearlyGoal) * 100, 100);
+  }, [getTotalPushUps, yearlyGoal]);
 
   const getDailyProgress = useCallback(
     (date: Date): number => {
       const count = getEntryForDate(date);
-      return Math.min((count / DAILY_TARGET) * 100, 100);
+      return Math.min((count / dailyTarget) * 100, 100);
     },
-    [getEntryForDate]
+    [getEntryForDate, dailyTarget]
   );
 
   const getDaysWithEntries = useCallback((): string[] => {
-    return userData.entries.map((e) => e.date);
-  }, [userData.entries]);
-
-  const setUserName = useCallback((name: string) => {
-    setUserData((prev) => ({ ...prev, name }));
-  }, []);
+    return entries.map((e) => e.date);
+  }, [entries]);
 
   const canEditDate = (date: Date): boolean => {
     const today = startOfDay(new Date());
@@ -104,9 +137,60 @@ export const usePushUpData = () => {
     return !isAfter(targetDate, today);
   };
 
+  // Statistics functions
+  const getCurrentStreak = useCallback((): number => {
+    const today = new Date();
+    let streak = 0;
+    let checkDate = today;
+    
+    while (true) {
+      const count = getEntryForDate(checkDate);
+      if (count > 0) {
+        streak++;
+        checkDate = subDays(checkDate, 1);
+      } else {
+        break;
+      }
+    }
+    
+    return streak;
+  }, [getEntryForDate]);
+
+  const getDaysBehindSchedule = useCallback((): number => {
+    const today = new Date();
+    const yearStart = startOfYear(today);
+    const daysElapsed = differenceInDays(today, yearStart) + 1;
+    const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
+    const total = getTotalPushUps();
+    const behind = expectedByNow - total;
+    
+    // Convert push-ups behind to days behind
+    if (behind <= 0) return 0;
+    return Math.ceil(behind / dailyTarget);
+  }, [getTotalPushUps, yearlyGoal, dailyTarget]);
+
+  const getWeeklyAverage = useCallback((): number => {
+    const today = new Date();
+    const last7Days = eachDayOfInterval({
+      start: subDays(today, 6),
+      end: today,
+    });
+    const last7Total = last7Days.reduce((sum, day) => sum + getEntryForDate(day), 0);
+    return Math.round(last7Total / 7);
+  }, [getEntryForDate]);
+
+  const setYearlyGoal = useCallback(async (newGoal: number) => {
+    if (!user) return;
+
+    setProfile(prev => prev ? { ...prev, yearly_goal: newGoal } : { yearly_goal: newGoal });
+
+    await supabase
+      .from("profiles")
+      .update({ yearly_goal: newGoal })
+      .eq("id", user.id);
+  }, [user]);
+
   return {
-    userName: userData.name,
-    setUserName,
     getEntryForDate,
     setEntryForDate,
     getTotalPushUps,
@@ -114,8 +198,13 @@ export const usePushUpData = () => {
     getDailyProgress,
     getDaysWithEntries,
     canEditDate,
-    yearlyGoal: YEARLY_GOAL,
-    dailyTarget: DAILY_TARGET,
+    yearlyGoal,
+    dailyTarget,
     isLoaded,
+    // New statistics
+    getCurrentStreak,
+    getDaysBehindSchedule,
+    getWeeklyAverage,
+    setYearlyGoal,
   };
 };
