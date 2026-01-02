@@ -81,12 +81,12 @@ const DailyPage = () => {
 
           {/* Input Controls */}
           {isEditable && (
-            <div className="mt-6 flex items-center gap-4">
+          <div className="mt-6 flex items-center gap-2 sm:gap-4">
               <button
                 onClick={() => adjustCount(-10)}
-                className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors active:scale-95"
+                className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors active:scale-95"
               >
-                <Minus className="w-5 h-5" />
+                <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
               <input
@@ -95,14 +95,14 @@ const DailyPage = () => {
                 value={inputValue}
                 onChange={(e) => handleInputChange(e.target.value)}
                 placeholder="0"
-                className="flex-1 h-14 bg-secondary rounded-xl text-center text-2xl font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                className="flex-1 min-w-0 h-12 sm:h-14 bg-secondary rounded-xl text-center text-xl sm:text-2xl font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
               />
               
               <button
                 onClick={() => adjustCount(10)}
-                className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors active:scale-95"
+                className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors active:scale-95"
               >
-                <Plus className="w-5 h-5" />
+                <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           )}
