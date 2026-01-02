@@ -3,39 +3,31 @@ import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, 
 import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
-
 const DailyPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
-  
   const {
     getEntryForDate,
     setEntryForDate,
     getDailyProgress,
     canEditDate,
     dailyTarget,
-    isLoaded,
+    isLoaded
   } = usePushUpData();
-
   const currentCount = isLoaded ? getEntryForDate(selectedDate) : 0;
   const progress = isLoaded ? getDailyProgress(selectedDate) : 0;
   const isEditable = canEditDate(selectedDate);
-
   useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
   }, [selectedDate, currentCount]);
-
   const monthDays = useMemo(() => eachDayOfInterval({
     start: startOfMonth(currentMonth),
-    end: endOfMonth(currentMonth),
+    end: endOfMonth(currentMonth)
   }), [currentMonth]);
-
   const firstDayOfWeek = startOfMonth(currentMonth).getDay();
   const emptyDays = useMemo(() => Array(firstDayOfWeek).fill(null), [firstDayOfWeek]);
-
   const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
-
   const handleInputChange = (value: string) => {
     const num = parseInt(value) || 0;
     if (num >= 0 && num <= 9999) {
@@ -43,29 +35,21 @@ const DailyPage = () => {
       setEntryForDate(selectedDate, num);
     }
   };
-
   const adjustCount = (delta: number) => {
     const newCount = Math.max(0, Math.min(9999, currentCount + delta));
     setEntryForDate(selectedDate, newCount);
     setInputValue(newCount > 0 ? newCount.toString() : "");
   };
-
   if (!isLoaded) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+    return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="min-h-screen bg-background pb-32 safe-top">
+  return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">
-            TODAY
-          </h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight">Daily</h1>
           <p className="text-lg text-muted-foreground mt-1">
             {format(selectedDate, "EEEE, dd.MM.yyyy")}
           </p>
@@ -89,122 +73,66 @@ const DailyPage = () => {
           </div>
 
           {/* Input Controls */}
-          {isEditable && (
-          <div className="mt-6 flex items-center gap-2 sm:gap-4">
-              <button
-                onClick={() => adjustCount(-10)}
-                className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors active:scale-95"
-              >
+          {isEditable && <div className="mt-6 flex items-center gap-2 sm:gap-4">
+              <button onClick={() => adjustCount(-10)} className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors active:scale-95">
                 <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
-              <input
-                type="number"
-                inputMode="numeric"
-                value={inputValue}
-                onChange={(e) => handleInputChange(e.target.value)}
-                placeholder="0"
-                className="flex-1 min-w-0 h-12 sm:h-14 bg-secondary rounded-xl text-center text-xl sm:text-2xl font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-              />
+              <input type="number" inputMode="numeric" value={inputValue} onChange={e => handleInputChange(e.target.value)} placeholder="0" className="flex-1 min-w-0 h-12 sm:h-14 bg-secondary rounded-xl text-center text-xl sm:text-2xl font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" />
               
-              <button
-                onClick={() => adjustCount(10)}
-                className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors active:scale-95"
-              >
+              <button onClick={() => adjustCount(10)} className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors active:scale-95">
                 <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
-            </div>
-          )}
+            </div>}
 
-          {!isEditable && (
-            <p className="mt-6 text-center text-muted-foreground text-sm">
+          {!isEditable && <p className="mt-6 text-center text-muted-foreground text-sm">
               Future dates cannot be edited
-            </p>
-          )}
+            </p>}
         </div>
 
         {/* Calendar Card */}
-        <div className="card-glass rounded-2xl p-5 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+        <div className="card-glass rounded-2xl p-5 animate-slide-up" style={{
+        animationDelay: "0.1s"
+      }}>
           {/* Month Navigation */}
           <div className="flex items-center justify-between mb-4">
-            <button
-              onClick={() => setCurrentMonth(subDays(currentMonth, 30))}
-              className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors"
-            >
+            <button onClick={() => setCurrentMonth(subDays(currentMonth, 30))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-lg font-bold text-foreground">
               {format(currentMonth, "MMMM yyyy")}
             </h2>
-            <button
-              onClick={() => setCurrentMonth(addDays(currentMonth, 30))}
-              className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors"
-            >
+            <button onClick={() => setCurrentMonth(addDays(currentMonth, 30))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
 
           {/* Week Days Header */}
           <div className="grid grid-cols-7 gap-1 mb-2">
-            {weekDays.map((day, i) => (
-              <div
-                key={i}
-                className="text-center text-xs font-medium text-muted-foreground py-2"
-              >
+            {weekDays.map((day, i) => <div key={i} className="text-center text-xs font-medium text-muted-foreground py-2">
                 {day}
-              </div>
-            ))}
+              </div>)}
           </div>
 
           {/* Calendar Grid */}
           <div className="grid grid-cols-7 gap-1">
-            {emptyDays.map((_, i) => (
-              <div key={`empty-${i}`} className="aspect-square" />
-            ))}
-            {monthDays.map((day) => {
-              const dayCount = getEntryForDate(day);
-              const isSelected = isSameDay(day, selectedDate);
-              const isTodayDate = isToday(day);
-              const isFutureDate = isFuture(startOfDay(day));
-              const hasEntry = dayCount > 0;
-              const metGoal = dayCount >= dailyTarget;
-              const exceededGoal = dayCount > dailyTarget;
-
-              return (
-                <button
-                  key={day.toISOString()}
-                  onClick={() => setSelectedDate(day)}
-                  disabled={false}
-                  className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-medium transition-all ${
-                    isSelected
-                      ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
-                      : isFutureDate
-                      ? "text-muted-foreground/40"
-                      : hasEntry
-                      ? exceededGoal
-                        ? "bg-blue-500 text-white"
-                        : metGoal
-                        ? "bg-green-500 text-white"
-                        : "bg-accent/20 text-accent"
-                      : "text-foreground hover:bg-muted"
-                  } ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
-                >
+            {emptyDays.map((_, i) => <div key={`empty-${i}`} className="aspect-square" />)}
+            {monthDays.map(day => {
+            const dayCount = getEntryForDate(day);
+            const isSelected = isSameDay(day, selectedDate);
+            const isTodayDate = isToday(day);
+            const isFutureDate = isFuture(startOfDay(day));
+            const hasEntry = dayCount > 0;
+            const metGoal = dayCount >= dailyTarget;
+            const exceededGoal = dayCount > dailyTarget;
+            return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-medium transition-all ${isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? exceededGoal ? "bg-blue-500 text-white" : metGoal ? "bg-green-500 text-white" : "bg-accent/20 text-accent" : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
                   <span>{format(day, "d")}</span>
-                  {hasEntry && !isSelected && (
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full mt-0.5 ${
-                        exceededGoal ? "bg-blue-300" : metGoal ? "bg-green-300" : "bg-accent"
-                      }`}
-                    />
-                  )}
-                </button>
-              );
-            })}
+                  {hasEntry && !isSelected && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${exceededGoal ? "bg-blue-300" : metGoal ? "bg-green-300" : "bg-accent"}`} />}
+                </button>;
+          })}
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default DailyPage;
