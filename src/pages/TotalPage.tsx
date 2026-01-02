@@ -124,7 +124,7 @@ const TotalPage = () => {
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button */}
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-start mb-4">
           <Button
             onClick={() => navigate("/daily")}
             variant="outline"
