@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { User, LogOut, Pencil, Check, X } from "lucide-react";
+import { User, LogOut, Pencil, Check, X, Download } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -65,6 +65,46 @@ const ProfilePage = () => {
     setDisplayName(trimmedValue);
     setIsEditing(false);
     toast.success("Nickname saved!");
+  };
+
+  const handleBackup = async () => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from("push_up_entries")
+      .select("date, count, created_at, updated_at")
+      .eq("user_id", user.id)
+      .order("date", { ascending: true });
+
+    if (error) {
+      toast.error("Failed to export data");
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      toast.info("No push-up entries to export");
+      return;
+    }
+
+    const headers = ["date", "count", "created_at", "updated_at"];
+    const csvContent = [
+      headers.join(","),
+      ...data.map((row) =>
+        headers.map((h) => `"${row[h as keyof typeof row] ?? ""}"`).join(",")
+      ),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `pushups_backup_${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    toast.success(`Exported ${data.length} entries`);
   };
 
   return (
@@ -145,15 +185,25 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Sign Out */}
-          <Button
-            variant="outline"
-            onClick={handleSignOut}
-            className="w-full mt-6 h-12"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+          {/* Actions */}
+          <div className="flex gap-3 mt-6">
+            <Button
+              variant="outline"
+              onClick={handleBackup}
+              className="flex-1 h-12"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Backup
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleSignOut}
+              className="flex-1 h-12"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
 
         {/* Info Card */}
