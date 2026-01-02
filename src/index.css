@@ -102,7 +102,7 @@
   }
 
   .nav-pill {
-    @apply bg-secondary/90 backdrop-blur-xl rounded-full border border-border/30;
+    @apply bg-white/10 backdrop-blur-2xl rounded-full border border-white/20 shadow-lg shadow-black/20;
   }
 
   .animate-fade-in {
