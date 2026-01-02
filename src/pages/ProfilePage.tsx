@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { User, LogOut, Pencil, Check, X, Download } from "lucide-react";
+import { User, LogOut, Pencil, Check, X, Download, Users } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -106,6 +106,45 @@ const ProfilePage = () => {
     toast.success(`Exported ${data.length} entries`);
   };
 
+  const handleUsersBackup = async () => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, display_name, yearly_goal, created_at, updated_at")
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      toast.error("Failed to export users data");
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      toast.info("No users to export");
+      return;
+    }
+
+    const headers = ["id", "display_name", "yearly_goal", "created_at", "updated_at"];
+    const csvContent = [
+      headers.join(","),
+      ...data.map((row) =>
+        headers.map((h) => `"${row[h as keyof typeof row] ?? ""}"`).join(",")
+      ),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `users_backup_${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    toast.success(`Exported ${data.length} users`);
+  };
+
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
@@ -185,19 +224,29 @@ const ProfilePage = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 mt-6">
-            <Button
-              variant="outline"
-              onClick={handleBackup}
-              className="flex-1 h-12"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Backup
-            </Button>
+          <div className="flex flex-col gap-3 mt-6">
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={handleBackup}
+                className="flex-1 h-12"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Backup
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleUsersBackup}
+                className="flex-1 h-12"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Users Backup
+              </Button>
+            </div>
             <Button
               variant="outline"
               onClick={handleSignOut}
-              className="flex-1 h-12"
+              className="w-full h-12"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
