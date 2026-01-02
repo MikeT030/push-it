@@ -7,7 +7,7 @@ const BottomNav = () => {
 
   const tabs = [
     { id: "group", label: "Group", icon: Users, path: "/" },
-    { id: "total", label: "Total", icon: BarChart3, path: "/total" },
+    { id: "total", label: "You", icon: BarChart3, path: "/total" },
     { id: "daily", label: "Daily", icon: Calendar, path: "/daily" },
     { id: "profile", label: "Profile", icon: User, path: "/profile" },
   ];
