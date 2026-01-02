@@ -98,7 +98,7 @@
   }
 
   .card-glass {
-    @apply bg-white/10 backdrop-blur-2xl border border-white/20 shadow-lg shadow-black/20;
+    @apply bg-card/80 backdrop-blur-xl border border-border/50;
   }
 
   .nav-pill {
