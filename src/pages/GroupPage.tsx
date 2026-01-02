@@ -76,12 +76,12 @@ const GroupPage = () => {
 
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">
-            {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
-          </p>
-          <h1 className="text-4xl font-black text-foreground tracking-tight mt-1">
+          <h1 className="text-4xl font-black text-foreground tracking-tight">
             Group Progress
           </h1>
+          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mt-1">
+            {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
+          </p>
         </header>
 
         {/* Group Stats Cards */}
