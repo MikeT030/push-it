@@ -75,18 +75,14 @@ const GroupPage = () => {
         </div>
 
         {/* Header */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
-            <Users className="w-4 h-4" />
-            <span className="text-sm font-semibold">Together We're Stronger</span>
-          </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+        <header className="mb-8 animate-fade-in">
+          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">
+            {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
+          </p>
+          <h1 className="text-4xl font-black text-foreground tracking-tight mt-1">
             Group Progress
           </h1>
-          <p className="text-muted-foreground">
-            {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing towards their goals
-          </p>
-        </div>
+        </header>
 
         {/* Group Stats Cards */}
         <div className="grid grid-cols-2 gap-3 mb-8 animate-slide-up">
