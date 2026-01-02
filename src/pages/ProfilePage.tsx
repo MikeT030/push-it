@@ -1,16 +1,70 @@
-import { User, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { User, LogOut, Pencil, Check, X } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const ProfilePage = () => {
   const { yearlyGoal, dailyTarget } = usePushUpData();
   const { user, signOut } = useAuth();
+  const [displayName, setDisplayName] = useState<string>("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState("");
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchProfile = async () => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (data?.display_name) {
+        setDisplayName(data.display_name);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
 
   const handleSignOut = async () => {
     await signOut();
     toast.success("Signed out successfully");
+  };
+
+  const startEditing = () => {
+    setEditValue(displayName);
+    setIsEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setIsEditing(false);
+    setEditValue("");
+  };
+
+  const saveNickname = async () => {
+    if (!user) return;
+
+    const trimmedValue = editValue.trim().slice(0, 30);
+
+    const { error } = await supabase
+      .from("profiles")
+      .update({ display_name: trimmedValue || null })
+      .eq("id", user.id);
+
+    if (error) {
+      toast.error("Failed to save nickname");
+      return;
+    }
+
+    setDisplayName(trimmedValue);
+    setIsEditing(false);
+    toast.success("Nickname saved!");
   };
 
   return (
@@ -35,8 +89,52 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Email */}
+          {/* Nickname */}
           <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-muted-foreground">
+                Nickname
+              </label>
+              {isEditing ? (
+                <div className="flex gap-2 mt-1.5">
+                  <Input
+                    value={editValue}
+                    onChange={(e) => setEditValue(e.target.value)}
+                    maxLength={30}
+                    placeholder="Enter your nickname"
+                    className="h-12"
+                    autoFocus
+                  />
+                  <Button
+                    size="icon"
+                    onClick={saveNickname}
+                    className="h-12 w-12 shrink-0"
+                  >
+                    <Check className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    onClick={cancelEditing}
+                    className="h-12 w-12 shrink-0"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+              ) : (
+                <div
+                  className="h-12 bg-secondary rounded-xl px-4 flex items-center justify-between mt-1.5 cursor-pointer hover:bg-secondary/80 transition-colors"
+                  onClick={startEditing}
+                >
+                  <span className="text-foreground font-medium">
+                    {displayName || "Set a nickname"}
+                  </span>
+                  <Pencil className="w-4 h-4 text-muted-foreground" />
+                </div>
+              )}
+            </div>
+
+            {/* Email */}
             <div>
               <label className="text-sm font-medium text-muted-foreground">
                 Email

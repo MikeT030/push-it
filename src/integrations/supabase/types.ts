@@ -17,18 +17,21 @@ export type Database = {
       profiles: {
         Row: {
           created_at: string
+          display_name: string | null
           id: string
           updated_at: string
           yearly_goal: number
         }
         Insert: {
           created_at?: string
+          display_name?: string | null
           id: string
           updated_at?: string
           yearly_goal?: number
         }
         Update: {
           created_at?: string
+          display_name?: string | null
           id?: string
           updated_at?: string
           yearly_goal?: number
@@ -67,6 +70,7 @@ export type Database = {
       user_progress: {
         Row: {
           days_logged: number | null
+          display_name: string | null
           progress_percent: number | null
           total_pushups: number | null
           user_id: string | null
