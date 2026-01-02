@@ -38,7 +38,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const AppContent = () => {
   const location = useLocation();
   const { user } = useAuth();
-  const showNav = user && ["/", "/daily", "/total", "/profile"].includes(location.pathname);
+  const showNav = user && ["/", "/daily", "/total", "/profile", "/group"].includes(location.pathname);
 
   return (
     <>
