@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, User } from "lucide-react";
+import { Calendar, BarChart3, User, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNav = () => {
@@ -8,6 +8,7 @@ const BottomNav = () => {
   const tabs = [
     { id: "daily", label: "Daily", icon: Calendar, path: "/" },
     { id: "total", label: "Total", icon: BarChart3, path: "/total" },
+    { id: "group", label: "Group", icon: Users, path: "/group" },
     { id: "profile", label: "Profile", icon: User, path: "/profile" },
   ];
 

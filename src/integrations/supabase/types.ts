@@ -64,7 +64,16 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_progress: {
+        Row: {
+          days_logged: number | null
+          progress_percent: number | null
+          total_pushups: number | null
+          user_id: string | null
+          yearly_goal: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
