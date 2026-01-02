@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-route
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import TotalPage from "./pages/TotalPage";
+import GroupPage from "./pages/GroupPage";
 import ProfilePage from "./pages/ProfilePage";
 import AuthPage from "./pages/AuthPage";
 import BottomNav from "./components/BottomNav";
@@ -37,7 +38,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const AppContent = () => {
   const location = useLocation();
   const { user } = useAuth();
-  const showNav = user && ["/", "/total", "/profile"].includes(location.pathname);
+  const showNav = user && ["/", "/total", "/group", "/profile"].includes(location.pathname);
 
   return (
     <>
@@ -56,6 +57,14 @@ const AppContent = () => {
           element={
             <ProtectedRoute>
               <TotalPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/group"
+          element={
+            <ProtectedRoute>
+              <GroupPage />
             </ProtectedRoute>
           }
         />
