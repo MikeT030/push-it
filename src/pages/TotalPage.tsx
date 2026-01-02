@@ -1,10 +1,13 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Target, Flame, Calendar } from "lucide-react";
+import { TrendingUp, Target, Flame, Calendar, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 
 const TotalPage = () => {
+  const navigate = useNavigate();
   const {
     getTotalPushUps,
     getYearProgress,
@@ -120,6 +123,17 @@ const TotalPage = () => {
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
+        {/* Add Push-ups Button */}
+        <div className="flex justify-end mb-4">
+          <Button
+            onClick={() => navigate("/daily")}
+            size="icon"
+            className="rounded-full w-12 h-12 shadow-lg"
+          >
+            <Plus className="w-5 h-5" />
+          </Button>
+        </div>
+
         {/* Header */}
         <header className="mb-2 animate-fade-in">
           <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">

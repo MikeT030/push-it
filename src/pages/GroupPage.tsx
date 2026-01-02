@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
-import { Users, Trophy, Flame, Target, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Users, Trophy, Flame, Target, TrendingUp, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
 
@@ -13,6 +15,7 @@ interface UserProgress {
 }
 
 const GroupPage = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState<UserProgress[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -60,6 +63,17 @@ const GroupPage = () => {
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
+        {/* Add Push-ups Button */}
+        <div className="flex justify-end mb-4">
+          <Button
+            onClick={() => navigate("/daily")}
+            size="icon"
+            className="rounded-full w-12 h-12 shadow-lg"
+          >
+            <Plus className="w-5 h-5" />
+          </Button>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
