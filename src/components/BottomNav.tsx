@@ -6,9 +6,9 @@ const BottomNav = () => {
   const navigate = useNavigate();
 
   const tabs = [
-    { id: "daily", label: "Daily", icon: Calendar, path: "/" },
+    { id: "group", label: "Group", icon: Users, path: "/" },
+    { id: "daily", label: "Daily", icon: Calendar, path: "/daily" },
     { id: "total", label: "Total", icon: BarChart3, path: "/total" },
-    { id: "group", label: "Group", icon: Users, path: "/group" },
     { id: "profile", label: "Profile", icon: User, path: "/profile" },
   ];
 
