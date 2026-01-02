@@ -11,7 +11,16 @@ const TotalPage = () => {
     getEntryForDate,
     yearlyGoal,
     dailyTarget,
+    isLoaded,
   } = usePushUpData();
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const totalPushUps = getTotalPushUps();
   const yearProgress = getYearProgress();
@@ -176,7 +185,7 @@ const TotalPage = () => {
         {/* Goal Card */}
         <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.3s" }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
-            2025 Goal
+            {new Date().getFullYear()} Goal
           </h2>
           
           <div className="flex items-center justify-between">
