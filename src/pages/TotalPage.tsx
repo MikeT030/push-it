@@ -119,7 +119,7 @@ const TotalPage = () => {
 
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
-      <div className="px-6 pt-12">
+      <div className="max-w-lg mx-auto px-6 py-8">
         {/* Header */}
         <header className="mb-2 animate-fade-in">
           <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">
