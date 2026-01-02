@@ -1,0 +1,217 @@
+import { useMemo } from "react";
+import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
+import { TrendingUp, Target, Flame, Calendar } from "lucide-react";
+import { usePushUpData } from "@/hooks/usePushUpData";
+import ProgressRing from "@/components/ProgressRing";
+
+const TotalPage = () => {
+  const {
+    getTotalPushUps,
+    getYearProgress,
+    getEntryForDate,
+    yearlyGoal,
+    dailyTarget,
+  } = usePushUpData();
+
+  const totalPushUps = getTotalPushUps();
+  const yearProgress = getYearProgress();
+  const remaining = Math.max(0, yearlyGoal - totalPushUps);
+  
+  const stats = useMemo(() => {
+    const today = new Date();
+    const yearStart = startOfYear(today);
+    const daysElapsed = differenceInDays(today, yearStart) + 1;
+    const daysRemaining = 365 - daysElapsed;
+    
+    // Calculate streak
+    let streak = 0;
+    let checkDate = today;
+    while (true) {
+      const count = getEntryForDate(checkDate);
+      if (count > 0) {
+        streak++;
+        checkDate = subDays(checkDate, 1);
+      } else {
+        break;
+      }
+    }
+
+    // Calculate average
+    const last7Days = eachDayOfInterval({
+      start: subDays(today, 6),
+      end: today,
+    });
+    const last7Total = last7Days.reduce((sum, day) => sum + getEntryForDate(day), 0);
+    const weeklyAvg = Math.round(last7Total / 7);
+
+    // Pace calculation
+    const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
+    const paceStatus = totalPushUps >= expectedByNow ? "ahead" : "behind";
+    const paceDiff = Math.abs(totalPushUps - expectedByNow);
+
+    // Required daily to meet goal
+    const requiredDaily = daysRemaining > 0 ? Math.ceil(remaining / daysRemaining) : 0;
+
+    return {
+      daysElapsed,
+      daysRemaining,
+      streak,
+      weeklyAvg,
+      paceStatus,
+      paceDiff,
+      requiredDaily,
+      expectedByNow,
+    };
+  }, [totalPushUps, getEntryForDate, remaining]);
+
+  const statCards = [
+    {
+      label: "Current Streak",
+      value: `${stats.streak}`,
+      unit: "days",
+      icon: Flame,
+      color: "text-accent",
+    },
+    {
+      label: "Weekly Average",
+      value: `${stats.weeklyAvg}`,
+      unit: "/day",
+      icon: TrendingUp,
+      color: "text-primary",
+    },
+    {
+      label: "Days Left",
+      value: `${stats.daysRemaining}`,
+      unit: "days",
+      icon: Calendar,
+      color: "text-muted-foreground",
+    },
+    {
+      label: "Need Daily",
+      value: `${stats.requiredDaily}`,
+      unit: "to goal",
+      icon: Target,
+      color: stats.requiredDaily > dailyTarget ? "text-accent" : "text-primary",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background pb-32 safe-top">
+      <div className="px-6 pt-12">
+        {/* Header */}
+        <header className="mb-2 animate-fade-in">
+          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">
+            {format(new Date(), "EEEE, d. MMMM")}
+          </p>
+          <h1 className="text-4xl font-black text-foreground tracking-tight mt-1">
+            Overview
+          </h1>
+        </header>
+
+        {/* Main Progress Card */}
+        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up">
+          <h2 className="text-lg font-bold text-foreground mb-4">
+            Yearly Progress
+          </h2>
+          
+          <div className="flex items-center gap-6">
+            <ProgressRing progress={yearProgress} size={140} strokeWidth={14} />
+            
+            <div className="flex-1">
+              <div className="mb-4">
+                <p className="text-sm text-muted-foreground">Completed</p>
+                <p className="text-3xl font-black text-primary">
+                  {totalPushUps.toLocaleString()}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Remaining</p>
+                <p className="text-xl font-bold text-foreground">
+                  {remaining.toLocaleString()}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Pace indicator */}
+          <div className={`mt-4 p-3 rounded-xl ${
+            stats.paceStatus === "ahead" ? "bg-primary/10" : "bg-accent/10"
+          }`}>
+            <p className={`text-sm font-medium ${
+              stats.paceStatus === "ahead" ? "text-primary" : "text-accent"
+            }`}>
+              {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
+              You're {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus} schedule
+            </p>
+          </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          {statCards.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <div
+                key={stat.label}
+                className="card-glass rounded-2xl p-5 animate-slide-up"
+                style={{ animationDelay: `${0.1 + index * 0.05}s` }}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <Icon className={`w-5 h-5 ${stat.color}`} />
+                  <p className="text-sm text-muted-foreground font-medium">
+                    {stat.label}
+                  </p>
+                </div>
+                <p className="text-3xl font-black text-foreground">
+                  {stat.value}
+                  <span className="text-base font-medium text-muted-foreground ml-1">
+                    {stat.unit}
+                  </span>
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Goal Card */}
+        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.3s" }}>
+          <h2 className="text-lg font-bold text-foreground mb-4">
+            2025 Goal
+          </h2>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-4xl font-black text-gradient">
+                {yearlyGoal.toLocaleString()}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                push-ups this year
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-foreground">
+                {dailyTarget}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                per day target
+              </p>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700"
+              style={{ width: `${yearProgress}%` }}
+            />
+          </div>
+          <p className="text-sm text-muted-foreground mt-2 text-center">
+            Day {stats.daysElapsed} of 365
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TotalPage;
