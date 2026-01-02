@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { format, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, differenceInDays } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "@/hooks/use-toast";
 
 interface PushUpEntry {
   date: string; // YYYY-MM-DD
@@ -94,19 +95,31 @@ export const usePushUpData = () => {
 
     // Persist to database
     if (count === 0) {
-      await supabase
+      const { error } = await supabase
         .from("push_up_entries")
         .delete()
         .eq("user_id", user.id)
         .eq("date", dateStr);
+      
+      if (error) {
+        toast({ title: "Failed to save", description: error.message, variant: "destructive" });
+      } else {
+        toast({ title: "Entry cleared", description: `Removed push-ups for ${format(date, "MMM d")}` });
+      }
     } else {
-      await supabase
+      const { error } = await supabase
         .from("push_up_entries")
         .upsert({
           user_id: user.id,
           date: dateStr,
           count,
         }, { onConflict: "user_id,date" });
+      
+      if (error) {
+        toast({ title: "Failed to save", description: error.message, variant: "destructive" });
+      } else {
+        toast({ title: "Saved!", description: `${count} push-ups recorded for ${format(date, "MMM d")}` });
+      }
     }
   }, [user]);
 
