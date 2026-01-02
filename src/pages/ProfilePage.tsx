@@ -1,22 +1,16 @@
-import { useState } from "react";
-import { User, Edit3, Check, X } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const ProfilePage = () => {
-  const { userName, setUserName } = usePushUpData();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(userName);
+  const { yearlyGoal, dailyTarget } = usePushUpData();
+  const { user, signOut } = useAuth();
 
-  const handleSave = () => {
-    if (editValue.trim()) {
-      setUserName(editValue.trim());
-      setIsEditing(false);
-    }
-  };
-
-  const handleCancel = () => {
-    setEditValue(userName);
-    setIsEditing(false);
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Signed out successfully");
   };
 
   return (
@@ -41,52 +35,27 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Name Section */}
+          {/* Email */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div>
               <label className="text-sm font-medium text-muted-foreground">
-                Display Name
+                Email
               </label>
-              {!isEditing && (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-1 text-primary text-sm font-medium hover:text-primary/80 transition-colors"
-                >
-                  <Edit3 className="w-4 h-4" />
-                  Edit
-                </button>
-              )}
+              <div className="h-12 bg-secondary rounded-xl px-4 flex items-center mt-1.5">
+                <span className="text-foreground font-medium">{user?.email}</span>
+              </div>
             </div>
-
-            {isEditing ? (
-              <div className="flex items-center gap-3">
-                <input
-                  type="text"
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                  autoFocus
-                  className="flex-1 h-12 bg-secondary rounded-xl px-4 text-foreground font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                  maxLength={30}
-                />
-                <button
-                  onClick={handleSave}
-                  className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors"
-                >
-                  <Check className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={handleCancel}
-                  className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            ) : (
-              <div className="h-12 bg-secondary rounded-xl px-4 flex items-center">
-                <span className="text-foreground font-medium">{userName}</span>
-              </div>
-            )}
           </div>
+
+          {/* Sign Out */}
+          <Button
+            variant="outline"
+            onClick={handleSignOut}
+            className="w-full mt-6 h-12"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
         </div>
 
         {/* Info Card */}
@@ -97,10 +66,10 @@ const ProfilePage = () => {
           <div className="space-y-3 text-muted-foreground text-sm">
             <p>
               Push-it helps you track your daily push-ups and reach your goal of{" "}
-              <span className="text-primary font-semibold">30,000 push-ups</span> per year.
+              <span className="text-primary font-semibold">{yearlyGoal.toLocaleString()} push-ups</span> per year.
             </p>
             <p>
-              That's just <span className="text-foreground font-semibold">82 push-ups</span> per day.
+              That's just <span className="text-foreground font-semibold">{dailyTarget} push-ups</span> per day.
               You've got this! 💪
             </p>
           </div>
