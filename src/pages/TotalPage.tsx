@@ -67,7 +67,7 @@ const TotalPage = () => {
     const paceDiff = Math.abs(totalPushUps - expectedByNow);
 
     // Required daily to meet goal
-    const requiredDaily = daysRemaining > 0 ? Math.ceil(remaining / daysRemaining) : 0;
+    const requiredDaily = daysRemaining > 0 ? Math.round(remaining / daysRemaining) : 0;
 
     return {
       daysElapsed,
