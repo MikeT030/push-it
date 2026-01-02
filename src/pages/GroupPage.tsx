@@ -90,7 +90,7 @@ const GroupPage = () => {
               <TrendingUp className="w-5 h-5 text-accent" />
             </div>
             <p className="text-2xl font-bold text-foreground">
-              {stats.avgProgress.toFixed(1)}%
+              {Math.round(stats.avgProgress)}%
             </p>
             <p className="text-xs text-muted-foreground">Avg Progress</p>
           </div>
