@@ -48,7 +48,7 @@ const AppContent = () => {
           path="/"
           element={
             <ProtectedRoute>
-              <GroupPage />
+              <TotalPage />
             </ProtectedRoute>
           }
         />
@@ -61,14 +61,14 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/total"
+          path="/group"
           element={
             <ProtectedRoute>
-              <TotalPage />
+              <GroupPage />
             </ProtectedRoute>
           }
         />
-        <Route path="/group" element={<Navigate to="/" replace />} />
+        <Route path="/total" element={<Navigate to="/" replace />} />
         <Route
           path="/profile"
           element={
