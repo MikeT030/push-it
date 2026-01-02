@@ -127,10 +127,10 @@ const TotalPage = () => {
         <div className="flex justify-end mb-4">
           <Button
             onClick={() => navigate("/daily")}
-            size="icon"
-            className="rounded-full w-12 h-12 shadow-lg"
+            className="rounded-full px-5 py-2 shadow-lg"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-4 h-4" />
+            Add push-ups
           </Button>
         </div>
 
