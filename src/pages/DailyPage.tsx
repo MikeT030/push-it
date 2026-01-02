@@ -58,7 +58,7 @@ const DailyPage = () => {
             TODAY
           </h1>
           <p className="text-lg text-muted-foreground mt-1">
-            {format(selectedDate, "dd.MM.yyyy")}
+            {format(selectedDate, "EEEE, dd.MM.yyyy")}
           </p>
         </header>
 
