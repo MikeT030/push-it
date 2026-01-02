@@ -72,7 +72,7 @@ const ProfilePage = () => {
 
     const { data, error } = await supabase
       .from("push_up_entries")
-      .select("date, count, created_at, updated_at")
+      .select("id, user_id, date, count, created_at, updated_at")
       .eq("user_id", user.id)
       .order("date", { ascending: true });
 
@@ -86,7 +86,7 @@ const ProfilePage = () => {
       return;
     }
 
-    const headers = ["date", "count", "created_at", "updated_at"];
+    const headers = ["id", "user_id", "date", "count", "created_at", "updated_at"];
     const csvContent = [
       headers.join(","),
       ...data.map((row) =>
