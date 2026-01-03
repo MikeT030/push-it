@@ -175,9 +175,9 @@ const DailyPage = () => {
             const hasEntry = dayCount > 0;
             const metGoal = dayCount >= dailyTarget;
             const exceededGoal = dayCount > dailyTarget;
-            return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-medium transition-all ${isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? exceededGoal ? "bg-blue-500 text-white" : metGoal ? "bg-green-500 text-white" : "bg-accent/20 text-accent" : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+            return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-medium transition-all ${isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? exceededGoal ? "bg-[hsl(var(--overflow))] text-white" : metGoal ? "bg-primary text-primary-foreground" : "bg-accent/20 text-accent" : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
                   <span>{format(day, "d")}</span>
-                  {hasEntry && !isSelected && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${exceededGoal ? "bg-blue-300" : metGoal ? "bg-green-300" : "bg-accent"}`} />}
+                  {hasEntry && !isSelected && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${exceededGoal ? "bg-[hsl(var(--overflow)/0.6)]" : metGoal ? "bg-primary/60" : "bg-accent"}`} />}
                 </button>;
           })}
           </div>
