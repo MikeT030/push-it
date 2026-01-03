@@ -1,5 +1,5 @@
 interface ProgressRingProps {
-  progress: number; // 0 to 100
+  progress: number; // 0 to 100+
   size?: number;
   strokeWidth?: number;
   className?: string;
@@ -13,7 +13,13 @@ const ProgressRing = ({
 }: ProgressRingProps) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  const offset = circumference - (progress / 100) * circumference;
+  
+  // Cap base progress at 100%, calculate overflow
+  const baseProgress = Math.min(progress, 100);
+  const overflowProgress = progress > 100 ? Math.min(progress - 100, 100) : 0;
+  
+  const baseOffset = circumference - (baseProgress / 100) * circumference;
+  const overflowOffset = circumference - (overflowProgress / 100) * circumference;
 
   return (
     <div className={`relative ${className}`} style={{ width: size, height: size }}>
@@ -27,7 +33,7 @@ const ProgressRing = ({
           stroke="hsl(var(--muted))"
           strokeWidth={strokeWidth}
         />
-        {/* Progress ring */}
+        {/* Base progress ring (green/primary) */}
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -37,12 +43,30 @@ const ProgressRing = ({
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
-          strokeDashoffset={offset}
+          strokeDashoffset={baseOffset}
           className="transition-all duration-700 ease-out"
           style={{
             filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))",
           }}
         />
+        {/* Overflow ring (orange) - only visible when > 100% */}
+        {overflowProgress > 0 && (
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="hsl(25 95% 53%)"
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={overflowOffset}
+            className="transition-all duration-700 ease-out"
+            style={{
+              filter: "drop-shadow(0 0 8px hsl(25 95% 53% / 0.5))",
+            }}
+          />
+        )}
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="text-2xl font-bold text-foreground">
