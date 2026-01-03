@@ -201,7 +201,7 @@ const ProfilePage = () => {
                 </div>
               ) : (
                 <div
-                  className="h-12 bg-secondary rounded-xl px-4 flex items-center justify-between mt-1.5 cursor-pointer hover:bg-secondary/80 transition-colors"
+                  className="h-12 bg-white/[0.14] rounded-xl px-4 flex items-center justify-between mt-1.5 cursor-pointer hover:bg-white/20 transition-colors"
                   onClick={startEditing}
                 >
                   <span className="text-foreground font-medium">
@@ -217,7 +217,7 @@ const ProfilePage = () => {
               <label className="text-sm font-medium text-muted-foreground">
                 Email
               </label>
-              <div className="h-12 bg-secondary rounded-xl px-4 flex items-center mt-1.5">
+              <div className="h-12 bg-white/[0.14] rounded-xl px-4 flex items-center mt-1.5">
                 <span className="text-foreground font-medium">{user?.email}</span>
               </div>
             </div>
