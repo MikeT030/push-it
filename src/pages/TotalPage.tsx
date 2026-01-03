@@ -211,7 +211,7 @@ const TotalPage = () => {
         </div>
 
         {/* Goal Card */}
-        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.3s" }}>
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.3s" }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             {new Date().getFullYear()} Goal
           </h2>
