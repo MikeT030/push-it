@@ -15,8 +15,8 @@
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 172 100% 50%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 178 90% 38%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
@@ -32,27 +32,27 @@
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 172 100% 50%;
+    --ring: 178 90% 38%;
 
     --radius: 1rem;
 
     /* Custom tokens */
-    --success: 172 100% 50%;
+    --success: 178 90% 38%;
     --warning: 25 95% 53%;
     --overflow: 255 100% 50%;
-    --progress-ring: 172 100% 50%;
+    --progress-ring: 178 90% 38%;
     --card-glass: 0 0% 10%;
     --nav-bg: 0 0% 12%;
-    --nav-active: 172 100% 50%;
+    --nav-active: 178 90% 38%;
 
     --sidebar-background: 0 0% 7%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 172 100% 50%;
-    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-primary: 178 90% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 172 100% 50%;
+    --sidebar-ring: 178 90% 38%;
   }
 
   .dark {
@@ -62,8 +62,8 @@
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
-    --primary: 172 100% 50%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 178 90% 38%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
@@ -74,7 +74,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 172 100% 50%;
+    --ring: 178 90% 38%;
   }
 }
 
