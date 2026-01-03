@@ -91,7 +91,7 @@ const DailyPage = () => {
         </div>
 
         {/* Calendar Card */}
-        <div className="card-glass rounded-2xl p-5 animate-slide-up" style={{
+        <div className="bg-card rounded-2xl p-5 animate-slide-up" style={{
         animationDelay: "0.1s"
       }}>
           {/* Month Navigation */}
