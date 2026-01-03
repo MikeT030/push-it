@@ -78,7 +78,7 @@ const DailyPage = () => {
                 <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
-              <input type="number" inputMode="numeric" value={inputValue} onChange={e => handleInputChange(e.target.value)} placeholder="0" className="flex-1 min-w-0 h-12 sm:h-14 bg-secondary rounded-xl text-center text-xl sm:text-2xl font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" />
+              <input type="number" inputMode="numeric" value={inputValue} onChange={e => handleInputChange(e.target.value)} placeholder="0" className="flex-1 min-w-0 h-12 sm:h-14 bg-white/[0.14] rounded-xl text-center text-xl sm:text-2xl font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" />
               
               <button onClick={() => adjustCount(10)} className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors active:scale-95">
                 <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
