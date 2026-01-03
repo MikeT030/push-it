@@ -56,7 +56,7 @@ const DailyPage = () => {
         </header>
 
         {/* Progress Card */}
-        <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up">
+        <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <p className="text-sm text-muted-foreground font-medium mb-1">
