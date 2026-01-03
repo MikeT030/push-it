@@ -15,7 +15,7 @@
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 142 76% 46%;
+    --primary: 172 100% 50%;
     --primary-foreground: 0 0% 0%;
 
     --secondary: 0 0% 12%;
@@ -32,26 +32,26 @@
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 142 76% 46%;
+    --ring: 172 100% 50%;
 
     --radius: 1rem;
 
     /* Custom tokens */
-    --success: 142 76% 46%;
+    --success: 172 100% 50%;
     --warning: 25 95% 53%;
-    --progress-ring: 142 76% 46%;
+    --progress-ring: 172 100% 50%;
     --card-glass: 0 0% 10%;
     --nav-bg: 0 0% 12%;
-    --nav-active: 142 76% 46%;
+    --nav-active: 172 100% 50%;
 
     --sidebar-background: 0 0% 7%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 142 76% 46%;
+    --sidebar-primary: 172 100% 50%;
     --sidebar-primary-foreground: 0 0% 0%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 142 76% 46%;
+    --sidebar-ring: 172 100% 50%;
   }
 
   .dark {
@@ -61,7 +61,7 @@
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
-    --primary: 142 76% 46%;
+    --primary: 172 100% 50%;
     --primary-foreground: 0 0% 0%;
     --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
@@ -73,7 +73,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 142 76% 46%;
+    --ring: 172 100% 50%;
   }
 }
 
