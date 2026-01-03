@@ -229,11 +229,11 @@ const ProfilePage = () => {
           <h2 className="text-lg font-bold text-foreground mb-4">
             Backups
           </h2>
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3">
             <Button
               variant="outline"
               onClick={handleBackup}
-              className="flex-1 h-12"
+              className="w-full h-12"
             >
               <Download className="w-4 h-4 mr-2" />
               Push Ups Backup
@@ -241,7 +241,7 @@ const ProfilePage = () => {
             <Button
               variant="outline"
               onClick={handleUsersBackup}
-              className="flex-1 h-12"
+              className="w-full h-12"
             >
               <Users className="w-4 h-4 mr-2" />
               Users Backup
