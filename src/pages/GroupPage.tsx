@@ -137,14 +137,14 @@ const GroupPage = () => {
 
           <div className="space-y-3">
             {users.length === 0 ? (
-              <div className="card-glass rounded-2xl p-6 text-center">
+              <div className="bg-card rounded-2xl p-6 text-center">
                 <p className="text-muted-foreground">No members yet. Be the first!</p>
               </div>
             ) : (
               users.map((user, index) => (
                 <div
                   key={user.user_id}
-                  className={`card-glass rounded-2xl p-4 transition-all hover:scale-[1.02] ${
+                  className={`bg-card rounded-2xl p-4 transition-all hover:scale-[1.02] ${
                     index === 0 ? "ring-2 ring-accent/50" : ""
                   }`}
                 >
