@@ -39,6 +39,7 @@
     /* Custom tokens */
     --success: 172 100% 50%;
     --warning: 25 95% 53%;
+    --overflow: 255 100% 50%;
     --progress-ring: 172 100% 50%;
     --card-glass: 0 0% 10%;
     --nav-bg: 0 0% 12%;
