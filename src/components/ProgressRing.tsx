@@ -49,21 +49,21 @@ const ProgressRing = ({
             filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))",
           }}
         />
-        {/* Overflow ring (orange) - only visible when > 100% */}
+        {/* Overflow ring (blue) - only visible when > 100% */}
         {overflowProgress > 0 && (
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="hsl(25 95% 53%)"
+            stroke="hsl(var(--overflow))"
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={overflowOffset}
             className="transition-all duration-700 ease-out"
             style={{
-              filter: "drop-shadow(0 0 8px hsl(25 95% 53% / 0.5))",
+              filter: "drop-shadow(0 0 8px hsl(var(--overflow) / 0.5))",
             }}
           />
         )}
