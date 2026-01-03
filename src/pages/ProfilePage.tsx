@@ -255,7 +255,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Info Card */}
-        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             About Push-it
           </h2>
