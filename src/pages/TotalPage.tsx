@@ -123,7 +123,7 @@ const TotalPage = () => {
           <h1 className="text-4xl font-black text-foreground tracking-tight">
             Your progress
           </h1>
-          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mt-1">
+          <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide mt-1">
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
         </header>
