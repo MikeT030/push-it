@@ -146,7 +146,7 @@ const TotalPage = () => {
         </header>
 
         {/* Main Progress Card */}
-        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up">
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up">
           <h2 className="text-lg font-bold text-foreground mb-4">
             Yearly Progress
           </h2>
