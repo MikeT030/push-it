@@ -106,7 +106,10 @@ const TotalPage = () => {
       </div>;
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      <div className="max-w-lg mx-auto px-6 py-8">
+      {/* Top Gradient */}
+      <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-br from-[#0ABAB5] to-[#FF6D00] opacity-80 blur-3xl pointer-events-none" />
+      
+      <div className="relative max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button */}
         <div className="flex justify-start mb-4">
           <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-primary/10">
