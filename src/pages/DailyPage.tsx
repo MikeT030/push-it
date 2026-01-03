@@ -3,6 +3,7 @@ import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, 
 import { ChevronLeft, ChevronRight, Plus, Minus, Share2 } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
+import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 
 const DailyPage = () => {
@@ -108,16 +109,7 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
             </div>
-            <div className="flex items-center gap-3">
-              <ProgressRing progress={progress} size={100} strokeWidth={10} />
-              <button
-                onClick={handleShare}
-                className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors active:scale-95"
-                aria-label="Share progress"
-              >
-                <Share2 className="w-5 h-5" />
-              </button>
-            </div>
+            <ProgressRing progress={progress} size={100} strokeWidth={10} />
           </div>
 
           {/* Input Controls */}
@@ -136,6 +128,16 @@ const DailyPage = () => {
           {!isEditable && <p className="mt-6 text-center text-muted-foreground text-sm">
               Future dates cannot be edited
             </p>}
+
+          {/* Share Button */}
+          <Button
+            variant="outline"
+            onClick={handleShare}
+            className="w-full h-12 mt-6"
+          >
+            <Share2 className="w-4 h-4 mr-2" />
+            Share Progress
+          </Button>
         </div>
 
         {/* Calendar Card */}
