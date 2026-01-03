@@ -87,7 +87,7 @@ const GroupPage = () => {
 
         {/* Group Stats Cards */}
         <div className="grid grid-cols-2 gap-3 mb-8 animate-slide-up">
-          <div className="card-glass rounded-2xl p-4 text-center">
+          <div className="bg-card rounded-2xl p-4 text-center">
             <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
               <Flame className="w-5 h-5 text-primary" />
             </div>
@@ -97,7 +97,7 @@ const GroupPage = () => {
             <p className="text-xs text-muted-foreground">Total Push-ups</p>
           </div>
           
-          <div className="card-glass rounded-2xl p-4 text-center">
+          <div className="bg-card rounded-2xl p-4 text-center">
             <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-2">
               <TrendingUp className="w-5 h-5 text-accent" />
             </div>
@@ -107,7 +107,7 @@ const GroupPage = () => {
             <p className="text-xs text-muted-foreground">Avg Progress</p>
           </div>
           
-          <div className="card-glass rounded-2xl p-4 text-center col-span-2">
+          <div className="bg-card rounded-2xl p-4 text-center col-span-2">
             <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
               <Target className="w-5 h-5 text-primary" />
             </div>
