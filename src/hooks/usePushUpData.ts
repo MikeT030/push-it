@@ -135,7 +135,7 @@ export const usePushUpData = () => {
   const getDailyProgress = useCallback(
     (date: Date): number => {
       const count = getEntryForDate(date);
-      return Math.min((count / dailyTarget) * 100, 100);
+      return (count / dailyTarget) * 100;
     },
     [getEntryForDate, dailyTarget]
   );
