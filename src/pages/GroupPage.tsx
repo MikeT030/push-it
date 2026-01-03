@@ -144,9 +144,7 @@ const GroupPage = () => {
               users.map((user, index) => (
                 <div
                   key={user.user_id}
-                  className={`bg-card rounded-2xl p-4 transition-all hover:scale-[1.02] ${
-                    index === 0 ? "ring-2 ring-accent/50" : ""
-                  }`}
+                  className="bg-card rounded-2xl p-4 transition-all hover:scale-[1.02]"
                 >
                   <div className="flex items-center gap-4">
                     {/* Rank */}
