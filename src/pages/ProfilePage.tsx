@@ -225,24 +225,6 @@ const ProfilePage = () => {
 
           {/* Actions */}
           <div className="flex flex-col gap-3 mt-6">
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={handleBackup}
-                className="flex-1 h-12"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Push Ups Backup
-              </Button>
-              <Button
-                variant="outline"
-                onClick={handleUsersBackup}
-                className="flex-1 h-12"
-              >
-                <Users className="w-4 h-4 mr-2" />
-                Users Backup
-              </Button>
-            </div>
             <Button
               variant="outline"
               onClick={handleSignOut}
@@ -250,6 +232,31 @@ const ProfilePage = () => {
             >
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
+            </Button>
+          </div>
+        </div>
+
+        {/* Backups Card */}
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+          <h2 className="text-lg font-bold text-foreground mb-4">
+            Backups
+          </h2>
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              onClick={handleBackup}
+              className="flex-1 h-12"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Push Ups Backup
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleUsersBackup}
+              className="flex-1 h-12"
+            >
+              <Users className="w-4 h-4 mr-2" />
+              Users Backup
             </Button>
           </div>
         </div>
