@@ -190,7 +190,7 @@ const TotalPage = () => {
             return (
               <div
                 key={stat.label}
-                className="card-glass rounded-2xl p-5 animate-slide-up"
+                className="bg-card rounded-2xl p-5 animate-slide-up"
                 style={{ animationDelay: `${0.1 + index * 0.05}s` }}
               >
                 <div className="flex items-center gap-2 mb-3">
