@@ -152,8 +152,8 @@ const GroupPage = () => {
                     {/* Rank */}
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
                       index === 0 
-                        ? "bg-gradient-to-br from-accent to-accent/60 text-accent-foreground" 
-                        : index === 1 
+                        ? "bg-gradient-to-br from-[#FFD41D] to-[#FFD41D]/60 text-black" 
+                        : index === 1
                         ? "bg-gradient-to-br from-muted-foreground to-muted text-foreground"
                         : index === 2
                         ? "bg-gradient-to-br from-accent/60 to-accent/30 text-foreground"
