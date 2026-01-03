@@ -5,7 +5,6 @@ import { TrendingUp, Target, Flame, Calendar, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
-
 const TotalPage = () => {
   const navigate = useNavigate();
   const {
@@ -14,13 +13,11 @@ const TotalPage = () => {
     getEntryForDate,
     yearlyGoal,
     dailyTarget,
-    isLoaded,
+    isLoaded
   } = usePushUpData();
-
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
   const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
-  
   const stats = useMemo(() => {
     if (!isLoaded) {
       return {
@@ -31,15 +28,14 @@ const TotalPage = () => {
         paceStatus: "behind" as const,
         paceDiff: 0,
         requiredDaily: 0,
-        expectedByNow: 0,
+        expectedByNow: 0
       };
     }
-
     const today = new Date();
     const yearStart = startOfYear(today);
     const daysElapsed = differenceInDays(today, yearStart) + 1;
     const daysRemaining = 365 - daysElapsed;
-    
+
     // Calculate streak
     let streak = 0;
     let checkDate = today;
@@ -56,19 +52,18 @@ const TotalPage = () => {
     // Calculate average
     const last7Days = eachDayOfInterval({
       start: subDays(today, 6),
-      end: today,
+      end: today
     });
     const last7Total = last7Days.reduce((sum, day) => sum + getEntryForDate(day), 0);
     const weeklyAvg = Math.round(last7Total / 7);
 
     // Pace calculation
-    const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
+    const expectedByNow = Math.round(daysElapsed / 365 * yearlyGoal);
     const paceStatus = totalPushUps >= expectedByNow ? "ahead" : "behind";
     const paceDiff = Math.abs(totalPushUps - expectedByNow);
 
     // Required daily to meet goal
     const requiredDaily = daysRemaining > 0 ? Math.floor(remaining / daysRemaining) : 0;
-
     return {
       daysElapsed,
       daysRemaining,
@@ -77,59 +72,44 @@ const TotalPage = () => {
       paceStatus,
       paceDiff,
       requiredDaily,
-      expectedByNow,
+      expectedByNow
     };
   }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
-
-  const statCards = useMemo(() => [
-    {
-      label: "Current Streak",
-      value: `${stats.streak}`,
-      unit: "days",
-      icon: Flame,
-      color: "text-accent",
-    },
-    {
-      label: "Weekly Average",
-      value: `${stats.weeklyAvg}`,
-      unit: "/day",
-      icon: TrendingUp,
-      color: "text-primary",
-    },
-    {
-      label: "Days Left",
-      value: `${stats.daysRemaining}`,
-      unit: "days",
-      icon: Calendar,
-      color: "text-muted-foreground",
-    },
-    {
-      label: "Need Daily",
-      value: `${stats.requiredDaily}`,
-      unit: "to goal",
-      icon: Target,
-      color: stats.requiredDaily > dailyTarget ? "text-accent" : "text-primary",
-    },
-  ], [stats, dailyTarget]);
-
+  const statCards = useMemo(() => [{
+    label: "Current Streak",
+    value: `${stats.streak}`,
+    unit: "days",
+    icon: Flame,
+    color: "text-accent"
+  }, {
+    label: "Weekly Average",
+    value: `${stats.weeklyAvg}`,
+    unit: "/day",
+    icon: TrendingUp,
+    color: "text-primary"
+  }, {
+    label: "Days Left",
+    value: `${stats.daysRemaining}`,
+    unit: "days",
+    icon: Calendar,
+    color: "text-muted-foreground"
+  }, {
+    label: "Need Daily",
+    value: `${stats.requiredDaily}`,
+    unit: "to goal",
+    icon: Target,
+    color: stats.requiredDaily > dailyTarget ? "text-accent" : "text-primary"
+  }], [stats, dailyTarget]);
   if (!isLoaded) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+    return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="min-h-screen bg-background pb-32 safe-top">
+  return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button */}
         <div className="flex justify-start mb-4">
-          <Button
-            onClick={() => navigate("/daily")}
-            variant="outline"
-            className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-primary/10"
-          >
+          <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-primary/10">
             <Plus className="w-4 h-4" />
             Add push-ups
           </Button>
@@ -157,7 +137,7 @@ const TotalPage = () => {
             <div className="flex-1">
               <div className="mb-4">
                 <p className="text-sm text-muted-foreground">Completed</p>
-                <p className="text-3xl font-black text-primary">
+                <p className="text-3xl font-black text-[#00ffdd]">
                   {totalPushUps.toLocaleString()}
                 </p>
               </div>
@@ -171,12 +151,8 @@ const TotalPage = () => {
           </div>
 
           {/* Pace indicator */}
-          <div className={`mt-4 p-3 rounded-xl ${
-            stats.paceStatus === "ahead" ? "bg-primary/10" : "bg-accent/10"
-          }`}>
-            <p className={`text-sm font-medium ${
-              stats.paceStatus === "ahead" ? "text-primary" : "text-accent"
-            }`}>
+          <div className={`mt-4 p-3 rounded-xl ${stats.paceStatus === "ahead" ? "bg-primary/10" : "bg-accent/10"}`}>
+            <p className={`text-sm font-medium ${stats.paceStatus === "ahead" ? "text-primary" : "text-accent"}`}>
               {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
               You're {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus} schedule
             </p>
@@ -186,13 +162,10 @@ const TotalPage = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-4 mt-6">
           {statCards.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={stat.label}
-                className="bg-card rounded-2xl p-5 animate-slide-up"
-                style={{ animationDelay: `${0.1 + index * 0.05}s` }}
-              >
+          const Icon = stat.icon;
+          return <div key={stat.label} className="bg-card rounded-2xl p-5 animate-slide-up" style={{
+            animationDelay: `${0.1 + index * 0.05}s`
+          }}>
                 <div className="flex items-center gap-2 mb-3">
                   <Icon className={`w-5 h-5 ${stat.color}`} />
                   <p className="text-sm text-muted-foreground font-medium">
@@ -205,13 +178,14 @@ const TotalPage = () => {
                     {stat.unit}
                   </span>
                 </p>
-              </div>
-            );
-          })}
+              </div>;
+        })}
         </div>
 
         {/* Goal Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.3s" }}>
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.3s"
+      }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             {new Date().getFullYear()} Goal
           </h2>
@@ -237,18 +211,15 @@ const TotalPage = () => {
 
           {/* Progress bar */}
           <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700"
-              style={{ width: `${yearProgress}%` }}
-            />
+            <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
+            width: `${yearProgress}%`
+          }} />
           </div>
           <p className="text-sm text-muted-foreground mt-2 text-center">
             Day {stats.daysElapsed} of 365
           </p>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default TotalPage;
