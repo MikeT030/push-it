@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, Share2 } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
+import { toast } from "@/hooks/use-toast";
+
 const DailyPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -13,7 +15,8 @@ const DailyPage = () => {
     getDailyProgress,
     canEditDate,
     dailyTarget,
-    isLoaded
+    isLoaded,
+    getCurrentStreak
   } = usePushUpData();
   const currentCount = isLoaded ? getEntryForDate(selectedDate) : 0;
   const progress = isLoaded ? getDailyProgress(selectedDate) : 0;
@@ -40,6 +43,43 @@ const DailyPage = () => {
     setEntryForDate(selectedDate, newCount);
     setInputValue(newCount > 0 ? newCount.toString() : "");
   };
+
+  const handleShare = async () => {
+    const streak = getCurrentStreak();
+    const progressPercent = Math.round(progress);
+    const dateStr = format(selectedDate, "MMMM d, yyyy");
+    
+    const shareText = `💪 I did ${currentCount} push-ups on ${dateStr}!\n📊 ${progressPercent}% of daily target (${dailyTarget})\n🔥 ${streak} day streak\n\n#PushIt #Fitness`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "My Push-ups",
+          text: shareText,
+        });
+      } catch (error) {
+        // User cancelled or share failed - silently ignore
+        if ((error as Error).name !== "AbortError") {
+          console.error("Share failed:", error);
+        }
+      }
+    } else {
+      // Fallback: copy to clipboard
+      try {
+        await navigator.clipboard.writeText(shareText);
+        toast({
+          title: "Copied to clipboard!",
+          description: "Share your progress anywhere",
+        });
+      } catch (error) {
+        toast({
+          title: "Could not copy",
+          description: "Please try again",
+          variant: "destructive",
+        });
+      }
+    }
+  };
   if (!isLoaded) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -55,7 +95,6 @@ const DailyPage = () => {
           </p>
         </header>
 
-        {/* Progress Card */}
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex items-center justify-between">
             <div className="flex-1">
@@ -69,7 +108,16 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
             </div>
-            <ProgressRing progress={progress} size={100} strokeWidth={10} />
+            <div className="flex items-center gap-3">
+              <ProgressRing progress={progress} size={100} strokeWidth={10} />
+              <button
+                onClick={handleShare}
+                className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors active:scale-95"
+                aria-label="Share progress"
+              >
+                <Share2 className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Input Controls */}
