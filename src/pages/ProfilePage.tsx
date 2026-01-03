@@ -222,18 +222,6 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-
-          {/* Actions */}
-          <div className="flex flex-col gap-3 mt-6">
-            <Button
-              variant="outline"
-              onClick={handleSignOut}
-              className="w-full h-12"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
-            </Button>
-          </div>
         </div>
 
         {/* Backups Card */}
@@ -276,6 +264,18 @@ const ProfilePage = () => {
               You've got this! 💪
             </p>
           </div>
+        </div>
+
+        {/* Sign Out Card */}
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
+          <Button
+            variant="outline"
+            onClick={handleSignOut}
+            className="w-full h-12"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
         </div>
 
         {/* Version */}
