@@ -89,21 +89,34 @@ const DailyPage = () => {
       </div>;
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      <div className="px-6 pt-12">
-        {/* Header */}
-        <header className="mb-8 animate-fade-in flex items-start justify-between">
-          <div>
-            <h1 className="text-4xl font-black text-foreground tracking-tight">Daily</h1>
-            <p className="text-lg text-muted-foreground mt-1">
-              {format(selectedDate, "EEEE, dd.MM.yyyy")}
-            </p>
-          </div>
+      <div className="px-6 pt-8">
+        {/* Add Push-ups Button & Profile */}
+        <div className="flex justify-between items-center mb-4 animate-fade-in">
+          <Button
+            onClick={() => {
+              const inputEl = document.querySelector('input[type="number"]');
+              if (inputEl) (inputEl as HTMLInputElement).focus();
+            }}
+            variant="outline"
+            className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-primary/10"
+          >
+            <Plus className="w-4 h-4" />
+            Add push-ups
+          </Button>
           <button
             onClick={() => navigate("/profile")}
             className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors"
           >
             <User className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Header */}
+        <header className="mb-8 animate-fade-in">
+          <h1 className="text-4xl font-black text-foreground tracking-tight">Daily</h1>
+          <p className="text-lg text-muted-foreground mt-1">
+            {format(selectedDate, "EEEE, dd.MM.yyyy")}
+          </p>
         </header>
 
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
