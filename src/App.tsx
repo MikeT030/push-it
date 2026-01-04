@@ -90,14 +90,14 @@ const App = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    const splashShown = localStorage.getItem("splashShownEver");
+    const splashShown = sessionStorage.getItem("splashShown");
     if (splashShown) {
       setShowSplash(false);
     }
   }, []);
 
   const handleSplashComplete = () => {
-    localStorage.setItem("splashShownEver", "true");
+    sessionStorage.setItem("splashShown", "true");
     setShowSplash(false);
   };
 
