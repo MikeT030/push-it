@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Trophy, Flame, Target, TrendingUp, Plus, User } from "lucide-react";
+import { Users, Trophy, Flame, Target, TrendingUp, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
@@ -63,8 +63,8 @@ const GroupPage = () => {
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
-        {/* Add Push-ups Button & Profile Icon */}
-        <div className="flex justify-between items-center mb-4">
+        {/* Add Push-ups Button */}
+        <div className="flex justify-start mb-4">
           <Button
             onClick={() => navigate("/daily")}
             variant="outline"
@@ -73,12 +73,6 @@ const GroupPage = () => {
             <Plus className="w-4 h-4" />
             Add push-ups
           </Button>
-          <button
-            onClick={() => navigate("/profile")}
-            className="w-9 h-9 rounded-full bg-card/80 backdrop-blur-sm border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 shadow-lg"
-          >
-            <User className="w-4 h-4" />
-          </button>
         </div>
 
         {/* Header */}
@@ -94,8 +88,8 @@ const GroupPage = () => {
         {/* Group Stats Cards */}
         <div className="grid grid-cols-2 gap-3 mb-8 animate-slide-up">
           <div className="bg-card rounded-2xl p-4 text-center">
-            <div className="w-10 h-10 rounded-full bg-[#C029DE]/20 flex items-center justify-center mx-auto mb-2">
-              <Flame className="w-5 h-5 text-[#C029DE]" />
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
+              <Flame className="w-5 h-5 text-primary" />
             </div>
             <p className="text-2xl font-bold text-foreground">
               {stats.totalPushups.toLocaleString()}
@@ -104,8 +98,8 @@ const GroupPage = () => {
           </div>
           
           <div className="bg-card rounded-2xl p-4 text-center">
-            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
-              <TrendingUp className="w-5 h-5 text-primary" />
+            <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-2">
+              <TrendingUp className="w-5 h-5 text-accent" />
             </div>
             <p className="text-2xl font-bold text-foreground">
               {Math.round(stats.avgProgress)}%
