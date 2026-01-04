@@ -233,7 +233,7 @@ const ProfilePage = () => {
             <Button
               variant="outline"
               onClick={handleBackup}
-              className="w-full h-12 hover:bg-[#C029DE] hover:text-white hover:border-[#C029DE] active:bg-[#C029DE] active:text-white active:border-[#C029DE]"
+              className="w-full h-12 hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]"
             >
               <Download className="w-4 h-4 mr-2" />
               Push Ups Backup
@@ -241,7 +241,7 @@ const ProfilePage = () => {
             <Button
               variant="outline"
               onClick={handleUsersBackup}
-              className="w-full h-12 hover:bg-[#C029DE] hover:text-white hover:border-[#C029DE] active:bg-[#C029DE] active:text-white active:border-[#C029DE]"
+              className="w-full h-12 hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]"
             >
               <Users className="w-4 h-4 mr-2" />
               Users Backup
@@ -271,7 +271,7 @@ const ProfilePage = () => {
           <Button
             variant="outline"
             onClick={handleSignOut}
-            className="w-full h-12"
+            className="w-full h-12 hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Sign Out

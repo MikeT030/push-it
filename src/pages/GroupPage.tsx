@@ -69,7 +69,7 @@ const GroupPage = () => {
           <Button
             onClick={() => navigate("/daily")}
             variant="outline"
-            className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-primary/10"
+            className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]"
           >
             <Plus className="w-4 h-4" />
             Add push-ups
