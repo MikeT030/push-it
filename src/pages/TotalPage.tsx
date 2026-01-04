@@ -154,8 +154,8 @@ const TotalPage = () => {
           </div>
 
           {/* Pace indicator */}
-          <div className={`mt-4 p-3 rounded-xl ${stats.paceStatus === "ahead" ? "bg-primary/10" : "bg-accent/10"}`}>
-            <p className={`text-sm font-medium ${stats.paceStatus === "ahead" ? "text-primary" : "text-accent"}`}>
+          <div className={`mt-4 p-3 rounded-xl ${stats.paceStatus === "ahead" ? "bg-primary/10" : "bg-[#C029DE]/10"}`}>
+            <p className={`text-sm font-medium ${stats.paceStatus === "ahead" ? "text-primary" : "text-[#C029DE]"}`}>
               {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
               You're {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus} schedule
             </p>
