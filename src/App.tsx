@@ -1,16 +1,18 @@
+import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import Index from "./pages/Index";
+import DailyPage from "./pages/DailyPage";
 import TotalPage from "./pages/TotalPage";
 import GroupPage from "./pages/GroupPage";
 import ProfilePage from "./pages/ProfilePage";
 import AuthPage from "./pages/AuthPage";
 import BottomNav from "./components/BottomNav";
 import NotFound from "./pages/NotFound";
+import SplashScreen from "./components/SplashScreen";
 
 const queryClient = new QueryClient();
 
@@ -56,7 +58,7 @@ const AppContent = () => {
           path="/daily"
           element={
             <ProtectedRoute>
-              <Index />
+              <DailyPage />
             </ProtectedRoute>
           }
         />
@@ -84,18 +86,38 @@ const AppContent = () => {
   );
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const splashShown = localStorage.getItem("splashShownEver");
+    if (splashShown) {
+      setShowSplash(false);
+    }
+  }, []);
+
+  const handleSplashComplete = () => {
+    localStorage.setItem("splashShownEver", "true");
+    setShowSplash(false);
+  };
+
+  if (showSplash) {
+    return <SplashScreen onComplete={handleSplashComplete} />;
+  }
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
