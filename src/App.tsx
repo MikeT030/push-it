@@ -41,7 +41,7 @@ const AppContent = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const showNav = user && ["/", "/daily", "/total", "/profile", "/group"].includes(location.pathname);
-  const showProfileIcon = user && !["/profile", "/auth", "/", "/group"].includes(location.pathname);
+  const showProfileIcon = user && !["/profile", "/auth", "/", "/group", "/daily"].includes(location.pathname);
 
   return (
     <>

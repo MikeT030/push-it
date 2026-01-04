@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
 import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, Share2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, Share2, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 
 const DailyPage = () => {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
@@ -87,7 +89,17 @@ const DailyPage = () => {
       </div>;
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      <div className="px-6 pt-12">
+      <div className="px-6 pt-8">
+        {/* Profile Icon */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => navigate("/profile")}
+            className="w-9 h-9 rounded-full bg-card/80 backdrop-blur-sm border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 shadow-lg"
+          >
+            <User className="w-4 h-4" />
+          </button>
+        </div>
+
         {/* Header */}
         <header className="mb-8 animate-fade-in">
           <h1 className="text-4xl font-black text-foreground tracking-tight">Daily</h1>
