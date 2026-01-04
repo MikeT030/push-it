@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Target, Flame, Calendar, Plus } from "lucide-react";
+import { TrendingUp, Flame, Calendar, Plus } from "lucide-react";
+import ColoredTargetIcon from "@/components/icons/ColoredTargetIcon";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
@@ -97,8 +98,9 @@ const TotalPage = () => {
     label: "Need Daily",
     value: `${stats.requiredDaily}`,
     unit: "to goal",
-    icon: Target,
-    color: stats.requiredDaily > dailyTarget ? "text-accent" : "text-primary"
+    icon: null, // Using custom ColoredTargetIcon
+    color: stats.requiredDaily > dailyTarget ? "text-accent" : "text-primary",
+    isCustomIcon: true
   }], [stats, dailyTarget]);
   if (!isLoaded) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
@@ -170,7 +172,11 @@ const TotalPage = () => {
             animationDelay: `${0.1 + index * 0.05}s`
           }}>
                 <div className="flex items-center gap-2 mb-3">
-                  <Icon className={`w-5 h-5 ${stat.color}`} />
+                  {stat.isCustomIcon ? (
+                    <ColoredTargetIcon className={stat.color} size={20} />
+                  ) : (
+                    Icon && <Icon className={`w-5 h-5 ${stat.color}`} />
+                  )}
                   <p className="text-sm text-muted-foreground font-medium">
                     {stat.label}
                   </p>
