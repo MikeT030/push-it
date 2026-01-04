@@ -135,7 +135,7 @@ const GroupPage = () => {
         {/* Leaderboard */}
         <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
           <div className="flex items-center gap-2 mb-4">
-            <Trophy className="w-5 h-5 text-accent" />
+            <Trophy className="w-5 h-5 text-[#ffffff]" />
             <h2 className="text-lg font-semibold text-foreground">Leaderboard</h2>
           </div>
 
