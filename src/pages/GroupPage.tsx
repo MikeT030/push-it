@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Trophy, Flame, Target, TrendingUp, Plus, User } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
+import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 
 interface UserProgress {
   user_id: string;
@@ -111,8 +112,8 @@ const GroupPage = () => {
           </div>
           
           <div className="bg-card rounded-2xl p-4 text-center col-span-2">
-            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
-              <Target className="w-5 h-5 text-primary" />
+            <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
+              <MultiColorTargetIcon size={20} />
             </div>
             <p className="text-2xl font-bold text-foreground">
               {stats.onTrackCount} / {stats.totalMembers}
