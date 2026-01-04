@@ -2,8 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { User } from "lucide-react";
 import Index from "./pages/Index";
 import TotalPage from "./pages/TotalPage";
 import GroupPage from "./pages/GroupPage";
@@ -37,11 +38,21 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 const AppContent = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const showNav = user && ["/", "/daily", "/total", "/profile", "/group"].includes(location.pathname);
+  const showProfileIcon = user && location.pathname !== "/profile" && location.pathname !== "/auth";
 
   return (
     <>
+      {showProfileIcon && (
+        <button
+          onClick={() => navigate("/profile")}
+          className="fixed top-4 right-4 z-50 w-9 h-9 rounded-full bg-card/80 backdrop-blur-sm border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 shadow-lg"
+        >
+          <User className="w-4 h-4" />
+        </button>
+      )}
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route
