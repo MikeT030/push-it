@@ -80,7 +80,7 @@ const TotalPage = () => {
     value: `${stats.streak}`,
     unit: "days",
     icon: Flame,
-    color: "text-accent"
+    color: "text-[#C029DE]"
   }, {
     label: "Weekly Average",
     value: `${stats.weeklyAvg}`,
