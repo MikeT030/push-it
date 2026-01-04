@@ -9,7 +9,6 @@ const BottomNav = () => {
     { id: "total", label: "You", icon: BarChart3, path: "/" },
     { id: "group", label: "Group", icon: Users, path: "/group" },
     { id: "daily", label: "Daily", icon: Calendar, path: "/daily" },
-    { id: "profile", label: "Profile", icon: User, path: "/profile" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
