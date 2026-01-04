@@ -101,8 +101,8 @@ const GroupPage = () => {
           </div>
           
           <div className="bg-card rounded-2xl p-4 text-center">
-            <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-2">
-              <TrendingUp className="w-5 h-5 text-accent" />
+            <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
+              <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
             </div>
             <p className="text-2xl font-bold text-foreground">
               {Math.round(stats.avgProgress)}%
