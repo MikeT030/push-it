@@ -93,7 +93,7 @@ const TotalPage = () => {
     value: `${stats.daysRemaining}`,
     unit: "days",
     icon: Calendar,
-    color: "text-[#0ABAB5]"
+    color: "text-primary"
   }, {
     label: "Need Daily",
     value: `${stats.requiredDaily}`,
