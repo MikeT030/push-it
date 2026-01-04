@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Trophy, Flame, Target, TrendingUp, Plus } from "lucide-react";
+import { Users, Trophy, Flame, Target, TrendingUp, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
@@ -63,8 +63,8 @@ const GroupPage = () => {
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
-        {/* Add Push-ups Button */}
-        <div className="flex justify-start mb-4">
+        {/* Add Push-ups Button & Profile */}
+        <div className="flex justify-between items-center mb-4">
           <Button
             onClick={() => navigate("/daily")}
             variant="outline"
@@ -73,6 +73,9 @@ const GroupPage = () => {
             <Plus className="w-4 h-4" />
             Add push-ups
           </Button>
+          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors">
+            <User className="w-5 h-5 text-foreground" />
+          </button>
         </div>
 
         {/* Header */}
