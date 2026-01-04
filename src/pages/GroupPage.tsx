@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
-
 interface UserProgress {
   user_id: string;
   display_name: string | null;
@@ -14,63 +13,52 @@ interface UserProgress {
   progress_percent: number;
   days_logged: number;
 }
-
 const GroupPage = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState<UserProgress[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const fetchGroupProgress = async () => {
-      const { data, error } = await supabase
-        .from("user_progress")
-        .select("*")
-        .order("total_pushups", { ascending: false });
-
+      const {
+        data,
+        error
+      } = await supabase.from("user_progress").select("*").order("total_pushups", {
+        ascending: false
+      });
       if (!error && data) {
         setUsers(data);
       }
       setIsLoading(false);
     };
-
     fetchGroupProgress();
   }, []);
-
   const stats = useMemo(() => {
     const totalMembers = users.length;
     const totalPushups = users.reduce((sum, u) => sum + u.total_pushups, 0);
-    const avgProgress = totalMembers > 0 
-      ? users.reduce((sum, u) => sum + u.progress_percent, 0) / totalMembers 
-      : 0;
-    
+    const avgProgress = totalMembers > 0 ? users.reduce((sum, u) => sum + u.progress_percent, 0) / totalMembers : 0;
     const today = new Date();
     const yearStart = startOfYear(today);
     const daysElapsed = differenceInDays(today, yearStart) + 1;
-    const expectedProgress = (daysElapsed / 365) * 100;
-    
+    const expectedProgress = daysElapsed / 365 * 100;
     const onTrackCount = users.filter(u => u.progress_percent >= expectedProgress).length;
-    
-    return { totalMembers, totalPushups, avgProgress, onTrackCount, expectedProgress };
+    return {
+      totalMembers,
+      totalPushups,
+      avgProgress,
+      onTrackCount,
+      expectedProgress
+    };
   }, [users]);
-
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center pb-32">
+    return <div className="min-h-screen bg-background flex items-center justify-center pb-32">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="min-h-screen bg-background pb-32 safe-top">
+  return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4">
-          <Button
-            onClick={() => navigate("/daily")}
-            variant="outline"
-            className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]"
-          >
+          <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]">
             <Plus className="w-4 h-4" />
             Add push-ups
           </Button>
@@ -81,9 +69,7 @@ const GroupPage = () => {
 
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">
-            Group Progress
-          </h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight">Group progress</h1>
           <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mt-1">
             {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
           </p>
@@ -125,7 +111,9 @@ const GroupPage = () => {
         </div>
 
         {/* Motivational Banner */}
-        <div className="bg-card rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{ animationDelay: "0.1s" }}>
+        <div className="bg-card rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{
+        animationDelay: "0.1s"
+      }}>
           <p className="text-sm text-foreground font-medium leading-relaxed">
             💪 Every push-up counts! When we work together, we stay accountable and motivated. 
             Your effort inspires others to keep going.
@@ -133,34 +121,21 @@ const GroupPage = () => {
         </div>
 
         {/* Leaderboard */}
-        <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
+        <div className="animate-slide-up" style={{
+        animationDelay: "0.2s"
+      }}>
           <div className="flex items-center gap-2 mb-4">
             <Trophy className="w-5 h-5 text-[#ffffff]" />
             <h2 className="text-lg font-semibold text-foreground">Leaderboard</h2>
           </div>
 
           <div className="space-y-3">
-            {users.length === 0 ? (
-              <div className="bg-card rounded-2xl p-6 text-center">
+            {users.length === 0 ? <div className="bg-card rounded-2xl p-6 text-center">
                 <p className="text-muted-foreground">No members yet. Be the first!</p>
-              </div>
-            ) : (
-              users.map((user, index) => (
-                <div
-                  key={user.user_id}
-                  className="bg-card rounded-2xl p-4 transition-all hover:scale-[1.02]"
-                >
+              </div> : users.map((user, index) => <div key={user.user_id} className="bg-card rounded-2xl p-4 transition-all hover:scale-[1.02]">
                   <div className="flex items-center gap-4">
                     {/* Rank */}
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                      index === 0 
-                        ? "bg-gradient-to-br from-gold to-gold/60 text-black" 
-                        : index === 1
-                        ? "bg-gradient-to-br from-muted-foreground to-muted text-foreground"
-                        : index === 2
-                        ? "bg-gradient-to-br from-accent/60 to-accent/30 text-foreground"
-                        : "bg-muted text-muted-foreground"
-                    }`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${index === 0 ? "bg-gradient-to-br from-gold to-gold/60 text-black" : index === 1 ? "bg-gradient-to-br from-muted-foreground to-muted text-foreground" : index === 2 ? "bg-gradient-to-br from-accent/60 to-accent/30 text-foreground" : "bg-muted text-muted-foreground"}`}>
                       {index + 1}
                     </div>
 
@@ -179,11 +154,7 @@ const GroupPage = () => {
                       <p className="text-lg font-bold text-foreground">
                         {user.total_pushups.toLocaleString()}
                       </p>
-                      <p className={`text-xs font-medium ${
-                        user.progress_percent >= stats.expectedProgress 
-                          ? "text-primary" 
-                          : "text-accent"
-                      }`}>
+                      <p className={`text-xs font-medium ${user.progress_percent >= stats.expectedProgress ? "text-primary" : "text-accent"}`}>
                         {user.progress_percent.toFixed(1)}%
                       </p>
                     </div>
@@ -191,30 +162,23 @@ const GroupPage = () => {
 
                   {/* Progress bar */}
                   <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full rounded-full transition-all duration-500 ${
-                        user.progress_percent >= stats.expectedProgress 
-                          ? "bg-primary" 
-                          : "bg-accent"
-                      }`}
-                      style={{ width: `${Math.min(user.progress_percent, 100)}%` }}
-                    />
+                    <div className={`h-full rounded-full transition-all duration-500 ${user.progress_percent >= stats.expectedProgress ? "bg-primary" : "bg-accent"}`} style={{
+                width: `${Math.min(user.progress_percent, 100)}%`
+              }} />
                   </div>
-                </div>
-              ))
-            )}
+                </div>)}
           </div>
         </div>
 
         {/* Call to Action */}
-        <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <div className="mt-8 text-center animate-fade-in" style={{
+        animationDelay: "0.3s"
+      }}>
           <p className="text-sm text-muted-foreground">
             Keep pushing! Your progress motivates the entire group. 🔥
           </p>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default GroupPage;
