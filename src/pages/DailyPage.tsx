@@ -93,12 +93,9 @@ const DailyPage = () => {
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4 animate-fade-in">
           <Button
-            onClick={() => {
-              const inputEl = document.querySelector('input[type="number"]');
-              if (inputEl) (inputEl as HTMLInputElement).focus();
-            }}
+            disabled
             variant="outline"
-            className="rounded-full px-5 py-2 border-2 border-primary text-primary bg-transparent hover:bg-primary/10"
+            className="rounded-full px-5 py-2 border-2 border-transparent text-transparent bg-transparent pointer-events-none opacity-0"
           >
             <Plus className="w-4 h-4" />
             Add push-ups
