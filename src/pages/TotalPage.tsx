@@ -107,7 +107,7 @@ const TotalPage = () => {
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
       {/* Top Gradient */}
-      <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00E5D4] via-[#D946EF] to-[#8B5CF6] opacity-90 blur-2xl pointer-events-none" />
       
       <div className="relative max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button */}
