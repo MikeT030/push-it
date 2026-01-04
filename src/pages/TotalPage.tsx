@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, Plus } from "lucide-react";
+import { TrendingUp, Flame, Calendar, Plus, User } from "lucide-react";
 import ColoredTargetIcon from "@/components/icons/ColoredTargetIcon";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
@@ -112,12 +112,18 @@ const TotalPage = () => {
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
       
       <div className="relative max-w-lg mx-auto px-6 py-8">
-        {/* Add Push-ups Button */}
-        <div className="flex justify-start mb-4">
+        {/* Add Push-ups Button & Profile Icon */}
+        <div className="flex justify-between items-center mb-4">
           <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-full px-5 py-2 border-2 border-[#ffffff] text-[#ffffff] bg-transparent hover:bg-white/10">
             <Plus className="w-4 h-4 text-[#ffffff]" />
             Add push-ups
           </Button>
+          <button
+            onClick={() => navigate("/profile")}
+            className="w-9 h-9 rounded-full bg-card/80 backdrop-blur-sm border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 shadow-lg"
+          >
+            <User className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Header */}
