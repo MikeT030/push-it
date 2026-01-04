@@ -170,7 +170,7 @@ const TotalPage = () => {
             animationDelay: `${0.1 + index * 0.05}s`
           }}>
                 <div className="flex items-center gap-2 mb-3">
-                  <Icon className={`w-5 h-5 ${stat.color}`} />
+                  <Icon className="w-5 h-5 text-[#C029DE]" />
                   <p className="text-sm text-muted-foreground font-medium">
                     {stat.label}
                   </p>
