@@ -140,7 +140,7 @@ const TotalPage = () => {
             <div className="flex-1">
               <div className="mb-4">
                 <p className="text-sm text-muted-foreground">Completed</p>
-                <p className="text-3xl font-black text-primary-foreground">
+                <p className="text-3xl font-black text-[#0ab8b2]">
                   {totalPushUps.toLocaleString()}
                 </p>
               </div>
