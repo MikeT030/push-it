@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Target, Flame, Calendar, Plus } from "lucide-react";
+import { TrendingUp, Target, Flame, Calendar, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
@@ -110,12 +110,15 @@ const TotalPage = () => {
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
       
       <div className="relative max-w-lg mx-auto px-6 py-8">
-        {/* Add Push-ups Button */}
-        <div className="flex justify-start mb-4">
+        {/* Add Push-ups Button & Profile */}
+        <div className="flex justify-between items-center mb-4">
           <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-full px-5 py-2 border-2 border-[#ffffff] text-[#ffffff] bg-transparent hover:bg-white/10">
             <Plus className="w-4 h-4 text-[#ffffff]" />
             Add push-ups
           </Button>
+          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+            <User className="w-5 h-5 text-[#ffffff]" />
+          </button>
         </div>
 
         {/* Header */}
