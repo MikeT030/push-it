@@ -49,21 +49,21 @@ const ProgressRing = ({
             filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))",
           }}
         />
-        {/* Overflow ring (blue) - only visible when > 100% */}
+        {/* Overflow ring - only visible when > 100% */}
         {overflowProgress > 0 && (
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="hsl(var(--overflow))"
+            stroke={progress >= 200 ? '#C029DE' : 'hsl(var(--overflow))'}
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={overflowOffset}
             className="transition-all duration-700 ease-out"
             style={{
-              filter: "drop-shadow(0 0 8px hsl(var(--overflow) / 0.5))",
+              filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'hsl(var(--overflow) / 0.5)'})`,
             }}
           />
         )}
@@ -71,7 +71,7 @@ const ProgressRing = ({
       <div className="absolute inset-0 flex items-center justify-center">
         <span 
           className="text-2xl font-bold"
-          style={{ color: progress >= 200 ? '#C029DE' : 'hsl(var(--foreground))' }}
+          style={{ color: '#ffffff' }}
         >
           {Math.round(progress)}%
         </span>
