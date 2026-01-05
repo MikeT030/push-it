@@ -233,7 +233,7 @@ const ProfilePage = () => {
             <Button
               variant="outline"
               onClick={handleBackup}
-              className="w-full h-12 bg-[#0ABAB5]/15 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+              className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
             >
               <Download className="w-4 h-4 mr-2" />
               Push Ups Backup
