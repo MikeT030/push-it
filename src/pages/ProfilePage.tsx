@@ -271,7 +271,7 @@ const ProfilePage = () => {
           <Button
             variant="outline"
             onClick={handleSignOut}
-            className="w-full h-12 hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]"
+            className="w-full h-12 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5] active:text-white"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Sign Out
