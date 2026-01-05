@@ -79,7 +79,7 @@ const TotalPage = () => {
   const statCards = useMemo(() => [{
     label: "Today",
     value: `${getEntryForDate(new Date())}`,
-    unit: "push-ups",
+    unit: "P-Ups",
     icon: null,
     customIcon: <MultiColorTargetIcon size={20} />,
     color: ""
