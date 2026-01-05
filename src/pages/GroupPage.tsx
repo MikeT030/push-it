@@ -181,7 +181,7 @@ const GroupPage = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-4xl font-black text-gradient">
-                {(users.reduce((sum, u) => sum + u.yearly_goal, 0)).toLocaleString()}
+                {(users.filter(u => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0)).toLocaleString()}
               </p>
               <p className="text-sm text-muted-foreground mt-1">
                 combined push-ups goal
@@ -189,7 +189,7 @@ const GroupPage = () => {
             </div>
             <div className="text-right">
               <p className="text-2xl font-bold text-foreground">
-                {stats.totalMembers}
+                {users.filter(u => u.total_pushups >= 82).length}
               </p>
               <p className="text-sm text-muted-foreground">
                 members
