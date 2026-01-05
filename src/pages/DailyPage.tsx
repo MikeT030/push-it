@@ -1,9 +1,10 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, Share2, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
+import MuscleConfetti from "@/components/MuscleConfetti";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 
@@ -12,6 +13,8 @@ const DailyPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
+  const previousCountRef = useRef<number>(0);
   const {
     getEntryForDate,
     setEntryForDate,
@@ -37,14 +40,26 @@ const DailyPage = () => {
   const handleInputChange = (value: string) => {
     const num = parseInt(value) || 0;
     if (num >= 0 && num <= 9999) {
+      const prevCount = currentCount;
       setInputValue(value);
       setEntryForDate(selectedDate, num);
+      
+      // Trigger confetti when count increases
+      if (num > prevCount && num > 0) {
+        setShowConfetti(true);
+      }
     }
   };
   const adjustCount = (delta: number) => {
+    const prevCount = currentCount;
     const newCount = Math.max(0, Math.min(9999, currentCount + delta));
     setEntryForDate(selectedDate, newCount);
     setInputValue(newCount > 0 ? newCount.toString() : "");
+    
+    // Trigger confetti when count increases
+    if (newCount > prevCount && newCount > 0) {
+      setShowConfetti(true);
+    }
   };
 
   const handleShare = async () => {
@@ -89,6 +104,7 @@ const DailyPage = () => {
       </div>;
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
+      <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
       <div className="px-6 pt-8">
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4 animate-fade-in">
