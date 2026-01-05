@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, Share2, User } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, User } from "lucide-react";
+import ShareIcon from "@/components/ShareIcon";
 import { useNavigate } from "react-router-dom";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
@@ -171,7 +172,7 @@ const DailyPage = () => {
             onClick={handleShare}
             className="w-full h-12 mt-6 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
           >
-            <Share2 className="w-4 h-4 mr-2" />
+            <ShareIcon className="mr-2" size={16} />
             Share Progress
           </Button>
         </div>
