@@ -108,28 +108,6 @@ const GroupPage = () => {
               Members on track (≥{stats.expectedProgress.toFixed(0)}% expected by now)
             </p>
           </div>
-
-          {/* Group Total Card */}
-          <div className="bg-card rounded-2xl p-6 col-span-2">
-            <h2 className="text-lg font-bold text-foreground mb-4">
-              {new Date().getFullYear()} Group Total
-            </h2>
-            
-            {/* Progress bar */}
-            <div className="h-3 bg-muted rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" 
-                style={{ width: `${Math.min((stats.totalPushups / (users.reduce((sum, u) => sum + u.yearly_goal, 0) || 1)) * 100, 100)}%` }} 
-              />
-            </div>
-            
-            <p className="text-4xl font-black text-gradient mt-4 text-center">
-              {stats.totalPushups.toLocaleString()}
-            </p>
-            <p className="text-sm text-muted-foreground text-center">
-              push-ups combined
-            </p>
-          </div>
         </div>
 
         {/* Motivational Banner */}
