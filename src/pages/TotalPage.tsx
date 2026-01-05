@@ -84,11 +84,11 @@ const TotalPage = () => {
     customIcon: <MultiColorTargetIcon size={20} />,
     color: ""
   }, {
-    label: "Weekly Average",
-    value: `${stats.weeklyAvg}`,
-    unit: "/day",
-    icon: TrendingUp,
-    color: "text-primary"
+    label: "Current Streak",
+    value: `${stats.streak}`,
+    unit: "days",
+    icon: Flame,
+    color: "text-[#C029DE]"
   }, {
     label: "Days Left",
     value: `${stats.daysRemaining}`,
@@ -96,11 +96,11 @@ const TotalPage = () => {
     icon: Calendar,
     color: "text-[#0ABAB5]"
   }, {
-    label: "Current Streak",
-    value: `${stats.streak}`,
-    unit: "days",
-    icon: Flame,
-    color: "text-[#C029DE]"
+    label: "Weekly Average",
+    value: `${stats.weeklyAvg}`,
+    unit: "/day",
+    icon: TrendingUp,
+    color: "text-primary"
   }], [stats, getEntryForDate]);
   if (!isLoaded) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
