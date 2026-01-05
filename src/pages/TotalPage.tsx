@@ -115,7 +115,7 @@ const TotalPage = () => {
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4">
           <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-md px-5 py-2 border-2 border-[#0ABAB5] text-[#0ABAB5] bg-[#0ABAB5]/25 hover:bg-[#0ABAB5]/35">
-            <Plus className="w-4 h-4 text-[#ffffff]" />
+            <Plus className="w-4 h-4 text-[#0ab8b2]" />
             Add push-ups
           </Button>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
