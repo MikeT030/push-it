@@ -25,8 +25,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
     >
       {/* Target Icon - Concentric circles */}
       <div className="relative w-40 h-40 flex items-center justify-center mb-8">
-        {/* Outer circle - Teal */}
-        <div className="absolute w-40 h-40 rounded-full border-[6px] border-[#0ABAB5]" />
+      {/* Outer circle - Teal with pulse */}
+        <div className="absolute w-40 h-40 rounded-full border-[6px] border-[#0ABAB5] animate-pulse" />
         {/* Middle circle - Purple/Magenta */}
         <div className="absolute w-28 h-28 rounded-full border-[6px] border-[#C029DE]" />
         {/* Inner circle - Blue */}
