@@ -96,7 +96,7 @@ const TotalPage = () => {
     icon: Calendar,
     color: "text-[#0ABAB5]"
   }, {
-    label: "Weekly Average",
+    label: "Weekly Avg.",
     value: `${stats.weeklyAvg}`,
     unit: "/day",
     icon: TrendingUp,
