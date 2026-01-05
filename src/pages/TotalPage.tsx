@@ -174,7 +174,7 @@ const TotalPage = () => {
           const isClickable = stat.label === "Today";
           return <div 
             key={stat.label} 
-            className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:bg-card/80 active:scale-[0.98] transition-all" : ""}`}
+            className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`}
             style={{
               animationDelay: `${0.1 + index * 0.05}s`
             }}
