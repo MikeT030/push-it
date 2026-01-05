@@ -170,9 +170,47 @@ const GroupPage = () => {
           </div>
         </div>
 
+        {/* Goal Card */}
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.3s"
+      }}>
+          <h2 className="text-lg font-bold text-foreground mb-4">
+            {new Date().getFullYear()} Goal
+          </h2>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-4xl font-black text-gradient">
+                {(users.reduce((sum, u) => sum + u.yearly_goal, 0)).toLocaleString()}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                combined push-ups goal
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-foreground">
+                {stats.totalMembers}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                members
+              </p>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
+            width: `${stats.avgProgress}%`
+          }} />
+          </div>
+          <p className="text-sm text-muted-foreground mt-2 text-center">
+            {Math.round(stats.avgProgress)}% average progress
+          </p>
+        </div>
+
         {/* Call to Action */}
         <div className="mt-8 text-center animate-fade-in" style={{
-        animationDelay: "0.3s"
+        animationDelay: "0.4s"
       }}>
           <p className="text-sm text-muted-foreground">
             Keep pushing! Your progress motivates the entire group. 🔥
