@@ -77,11 +77,12 @@ const TotalPage = () => {
     };
   }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
   const statCards = useMemo(() => [{
-    label: "Current Streak",
-    value: `${stats.streak}`,
-    unit: "days",
-    icon: Flame,
-    color: "text-[#C029DE]"
+    label: "Today",
+    value: `${getEntryForDate(new Date())}`,
+    unit: "push-ups",
+    icon: null,
+    customIcon: <MultiColorTargetIcon size={20} />,
+    color: ""
   }, {
     label: "Weekly Average",
     value: `${stats.weeklyAvg}`,
@@ -95,12 +96,11 @@ const TotalPage = () => {
     icon: Calendar,
     color: "text-[#0ABAB5]"
   }, {
-    label: "Today",
-    value: `${getEntryForDate(new Date())}`,
-    unit: "push-ups",
-    icon: null,
-    customIcon: <MultiColorTargetIcon size={20} />,
-    color: ""
+    label: "Current Streak",
+    value: `${stats.streak}`,
+    unit: "days",
+    icon: Flame,
+    color: "text-[#C029DE]"
   }], [stats, getEntryForDate]);
   if (!isLoaded) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
