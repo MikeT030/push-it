@@ -169,7 +169,7 @@ const DailyPage = () => {
           <Button
             variant="outline"
             onClick={handleShare}
-            className="w-full h-12 mt-6 hover:bg-[#0ABAB5] hover:text-white hover:border-[#0ABAB5] active:bg-[#0ABAB5] active:text-white active:border-[#0ABAB5]"
+            className="w-full h-12 mt-6 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5] active:text-white"
           >
             <Share2 className="w-4 h-4 mr-2" />
             Share Progress
