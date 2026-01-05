@@ -77,7 +77,7 @@ const GroupPage = () => {
         </header>
 
         {/* Group Stats Cards */}
-        <div className="grid grid-cols-2 gap-3 mb-8 animate-slide-up">
+        <div className="grid grid-cols-2 gap-3 mb-4 animate-slide-up">
           <div className="bg-card rounded-2xl p-4 text-center">
             <div className="w-10 h-10 rounded-full bg-[#C029DE]/20 flex items-center justify-center mx-auto mb-2">
               <Flame className="w-5 h-5 text-[#C029DE]" />
@@ -109,6 +109,60 @@ const GroupPage = () => {
               Members on track (≥{stats.expectedProgress.toFixed(0)}% expected by now)
             </p>
           </div>
+        </div>
+
+        {/* Goal Card */}
+        <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up" style={{
+          animationDelay: "0.1s"
+        }}>
+          <h2 className="text-lg font-bold text-foreground mb-4">
+            {new Date().getFullYear()} Goal
+          </h2>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-2xl font-black line-through text-white">
+                {users.filter(u => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
+              </p>
+              <p className="text-4xl font-black text-gradient">
+                {users.filter(u => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal - u.total_pushups, 0).toLocaleString()}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                push-ups remaining
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-foreground">
+                {users.filter(u => u.total_pushups >= 82).length}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                members
+              </p>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
+              width: `${stats.avgProgress}%`
+            }} />
+          </div>
+          <p className="text-sm text-muted-foreground mt-2 text-center">
+            {Math.round(stats.avgProgress)}% average progress
+          </p>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex justify-center mt-4">
+                  <Info className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">Only members with 82+ push-ups logged are included</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         {/* Motivational Banner */}
@@ -169,60 +223,6 @@ const GroupPage = () => {
                   </div>
                 </div>)}
           </div>
-        </div>
-
-        {/* Goal Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
-        animationDelay: "0.3s"
-      }}>
-          <h2 className="text-lg font-bold text-foreground mb-4">
-            {new Date().getFullYear()} Goal
-          </h2>
-          
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-2xl font-black line-through text-white">
-                {users.filter(u => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
-              </p>
-              <p className="text-4xl font-black text-gradient">
-                {users.filter(u => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal - u.total_pushups, 0).toLocaleString()}
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">
-                push-ups remaining
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-2xl font-bold text-foreground">
-                {users.filter(u => u.total_pushups >= 82).length}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                members
-              </p>
-            </div>
-          </div>
-
-          {/* Progress bar */}
-          <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
-            width: `${stats.avgProgress}%`
-          }} />
-          </div>
-          <p className="text-sm text-muted-foreground mt-2 text-center">
-            {Math.round(stats.avgProgress)}% average progress
-          </p>
-          
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex justify-center mt-4">
-                  <Info className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs">Only members with 82+ push-ups logged are included</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </div>
 
         {/* Call to Action */}
