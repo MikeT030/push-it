@@ -69,7 +69,10 @@ const ProgressRing = ({
         )}
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-bold text-foreground">
+        <span 
+          className="text-2xl font-bold"
+          style={{ color: progress >= 200 ? '#C029DE' : 'hsl(var(--foreground))' }}
+        >
           {Math.round(progress)}%
         </span>
       </div>
