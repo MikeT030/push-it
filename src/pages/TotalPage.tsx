@@ -116,7 +116,7 @@ const TotalPage = () => {
         <div className="flex justify-between items-center mb-4">
           <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-md px-5 py-2 border-2 border-[#0ABAB5] text-[#0ABAB5] bg-[#0ABAB5]/15 hover:bg-[#0ABAB5]/20 active:bg-[#0ABAB5]/25 active:text-white">
             <Plus className="w-4 h-4" />
-            + Add push-ups
+            Add Push-Ups
           </Button>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
             <User className="w-5 h-5 text-[#ffffff]" />
