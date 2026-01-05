@@ -171,9 +171,15 @@ const TotalPage = () => {
         <div className="grid grid-cols-2 gap-4 mt-6">
           {statCards.map((stat, index) => {
           const Icon = stat.icon;
-          return <div key={stat.label} className="bg-card rounded-2xl p-5 animate-slide-up" style={{
-            animationDelay: `${0.1 + index * 0.05}s`
-          }}>
+          const isClickable = stat.label === "Today";
+          return <div 
+            key={stat.label} 
+            className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:bg-card/80 active:scale-[0.98] transition-all" : ""}`}
+            style={{
+              animationDelay: `${0.1 + index * 0.05}s`
+            }}
+            onClick={isClickable ? () => navigate("/daily") : undefined}
+          >
                 <div className="flex items-center gap-2 mb-3">
                   {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
                   <p className="text-sm text-muted-foreground font-medium">
