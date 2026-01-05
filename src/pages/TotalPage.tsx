@@ -84,7 +84,7 @@ const TotalPage = () => {
     customIcon: <MultiColorTargetIcon size={20} />,
     color: ""
   }, {
-    label: "Current Streak",
+    label: "Streak",
     value: `${stats.streak}`,
     unit: "days",
     icon: Flame,
