@@ -1,6 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Trophy, Flame, TrendingUp, Plus, User } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Plus, User, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
@@ -206,6 +212,19 @@ const GroupPage = () => {
           <p className="text-sm text-muted-foreground mt-2 text-center">
             {Math.round(stats.avgProgress)}% average progress
           </p>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex justify-center mt-4">
+                  <Info className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">Only members with 82+ push-ups logged are included</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         {/* Call to Action */}
