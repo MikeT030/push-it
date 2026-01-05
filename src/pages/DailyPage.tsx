@@ -68,7 +68,7 @@ const DailyPage = () => {
     const progressPercent = Math.round(progress);
     const dateStr = format(selectedDate, "MMMM d, yyyy");
     
-    const shareText = `💪 I did ${currentCount} push-ups on ${dateStr}!\n📊 ${progressPercent}% of daily target (${dailyTarget})\n🔥 ${streak} day streak\n\n#PushIt #Fitness`;
+    const shareText = `💪 I did ${currentCount} push-ups on ${dateStr}!\n📊 ${progressPercent}% of daily target (${dailyTarget})\n🔥 ${streak} day streak\n\n#PushIt`;
 
     if (navigator.share) {
       try {
