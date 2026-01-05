@@ -195,7 +195,7 @@ const TotalPage = () => {
         animationDelay: "0.3s"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
-            {new Date().getFullYear()} Goal
+            {new Date().getFullYear()} Personal Goal
           </h2>
           
           <div className="flex items-center justify-between">
