@@ -200,11 +200,14 @@ const TotalPage = () => {
           
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-4xl font-black text-gradient">
+              <p className="text-2xl font-black line-through text-white">
                 {yearlyGoal.toLocaleString()}
               </p>
+              <p className="text-4xl font-black text-gradient">
+                {remaining.toLocaleString()}
+              </p>
               <p className="text-sm text-muted-foreground mt-1">
-                push-ups this year
+                push-ups remaining
               </p>
             </div>
             <div className="text-right">
