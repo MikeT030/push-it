@@ -88,12 +88,26 @@ export default {
           "0%": { opacity: "1", transform: "scale(1)" },
           "100%": { opacity: "0", transform: "scale(1.1)" },
         },
+        "muscle-fall": {
+          "0%": { 
+            transform: "translateY(-20px) rotate(0deg)", 
+            opacity: "0" 
+          },
+          "10%": { 
+            opacity: "1" 
+          },
+          "100%": { 
+            transform: "translateY(100vh) rotate(720deg)", 
+            opacity: "0" 
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "count-up": "count-up 0.4s ease-out",
         "splash-fade": "splash-fade 0.5s ease-in-out forwards",
+        "muscle-fall": "muscle-fall 2s ease-in forwards",
       },
     },
   },
