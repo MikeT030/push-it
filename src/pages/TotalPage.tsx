@@ -95,13 +95,13 @@ const TotalPage = () => {
     icon: Calendar,
     color: "text-[#0ABAB5]"
   }, {
-    label: "Need Daily",
-    value: `${stats.requiredDaily}`,
-    unit: "to goal",
+    label: "Today",
+    value: `${getEntryForDate(new Date())}`,
+    unit: "push-ups",
     icon: null,
     customIcon: <MultiColorTargetIcon size={20} />,
     color: ""
-  }], [stats, dailyTarget]);
+  }], [stats, getEntryForDate]);
   if (!isLoaded) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
