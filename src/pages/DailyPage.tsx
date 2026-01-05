@@ -189,15 +189,25 @@ const DailyPage = () => {
             {emptyDays.map((_, i) => <div key={`empty-${i}`} className="aspect-square" />)}
             {monthDays.map(day => {
             const dayCount = getEntryForDate(day);
+            const dayProgress = getDailyProgress(day);
             const isSelected = isSameDay(day, selectedDate);
             const isTodayDate = isToday(day);
             const isFutureDate = isFuture(startOfDay(day));
             const hasEntry = dayCount > 0;
-            const metGoal = dayCount >= dailyTarget;
-            const exceededGoal = dayCount > dailyTarget;
-            return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-medium transition-all ${isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? exceededGoal ? "bg-[hsl(var(--overflow))] text-white" : metGoal ? "bg-primary text-primary-foreground" : "bg-accent/20 text-accent" : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+            
+            // Color based on progress percentage
+            const getProgressColor = () => {
+              if (dayProgress >= 200) return { bg: "bg-[#C029DE]", text: "text-white", dot: "bg-[#C029DE]/60" };
+              if (dayProgress >= 100) return { bg: "bg-[hsl(var(--overflow))]", text: "text-white", dot: "bg-[hsl(var(--overflow)/0.6)]" };
+              if (dayProgress > 0) return { bg: "bg-primary/20", text: "text-primary", dot: "bg-primary" };
+              return { bg: "", text: "text-foreground", dot: "" };
+            };
+            
+            const colors = getProgressColor();
+            
+            return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-medium transition-all ${isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
                   <span>{format(day, "d")}</span>
-                  {hasEntry && !isSelected && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${exceededGoal ? "bg-[hsl(var(--overflow)/0.6)]" : metGoal ? "bg-primary/60" : "bg-accent"}`} />}
+                  {hasEntry && !isSelected && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
                 </button>;
           })}
           </div>
