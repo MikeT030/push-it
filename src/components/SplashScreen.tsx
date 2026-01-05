@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import pushUpsImage from "@/assets/push-ups.png";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -22,50 +23,33 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         isExiting ? "opacity-0 scale-110" : "opacity-100 scale-100"
       }`}
     >
-      <div className="relative">
-        {/* Animated rings */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-32 h-32 rounded-full border-4 border-primary/20 animate-ping" />
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-24 h-24 rounded-full border-2 border-primary/40 animate-pulse" />
-        </div>
-        
-        {/* Logo/Icon */}
-        <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-2xl shadow-primary/30">
-          <svg
-            className="w-14 h-14 text-primary-foreground"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.5 12.75l6 6 9-13.5"
-            />
-          </svg>
-        </div>
+      {/* Target Icon - Concentric circles */}
+      <div className="relative w-40 h-40 flex items-center justify-center mb-8">
+        {/* Outer circle - Teal */}
+        <div className="absolute w-40 h-40 rounded-full border-[6px] border-[#0ABAB5]" />
+        {/* Middle circle - Purple/Magenta */}
+        <div className="absolute w-28 h-28 rounded-full border-[6px] border-[#C029DE]" />
+        {/* Inner circle - Blue */}
+        <div className="absolute w-16 h-16 rounded-full border-[6px] border-[#4300FF]" />
+        {/* Center filled circle */}
+        <div className="absolute w-6 h-6 rounded-full bg-[#4300FF]" />
       </div>
 
-      <h1 className="mt-8 text-5xl font-black tracking-tight text-foreground">
-        Push-it
-      </h1>
-      <p className="mt-2 text-muted-foreground text-lg font-medium">
-        30,000 push-ups challenge
-      </p>
-      
-      {/* Loading indicator */}
-      <div className="mt-12 flex gap-1">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className="w-2 h-2 rounded-full bg-primary animate-bounce"
-            style={{ animationDelay: `${i * 0.15}s` }}
-          />
-        ))}
+      {/* App name with push-ups icon */}
+      <div className="flex items-center gap-2">
+        <h1 className="text-5xl font-black tracking-tight text-foreground">
+          Push-it
+        </h1>
+        <img 
+          src={pushUpsImage} 
+          alt="Person doing push-ups" 
+          className="h-12 w-auto"
+        />
       </div>
+      
+      <p className="mt-3 text-muted-foreground text-lg font-medium">
+        30k push-up challenge
+      </p>
     </div>
   );
 };
