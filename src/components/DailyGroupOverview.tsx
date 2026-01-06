@@ -1,35 +1,59 @@
-import { useState, useEffect } from "react";
-import { format } from "date-fns";
+import { useState, useEffect, useMemo } from "react";
+import { format, eachDayOfInterval, isSameDay } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { supabase } from "@/integrations/supabase/client";
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
+const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
 
-interface DailyGroupEntry {
+interface DayOption {
+  date: Date;
+  label: string;
+  isToday: boolean;
+}
+
+interface DailyEntry {
   date: string;
-  total_count: number;
+  count: number;
 }
 
 const DailyGroupOverview = () => {
-  const [todayTotal, setTodayTotal] = useState(0);
+  const [dailyTotals, setDailyTotals] = useState<Map<string, number>>(new Map());
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+
+  // Generate day options from year start to today
+  const dayOptions = useMemo((): DayOption[] => {
+    const today = new Date();
+    const days = eachDayOfInterval({ start: YEAR_START, end: today });
+    
+    return days.map((date) => ({
+      date,
+      label: format(date, "EEEE, MMM d"),
+      isToday: isSameDay(date, today),
+    })).reverse(); // Most recent first
+  }, []);
+
+  const selectedDay = dayOptions[selectedDayIndex];
 
   useEffect(() => {
     const fetchDailyData = async () => {
-      const today = format(new Date(), "yyyy-MM-dd");
-
-      // Fetch today's push up entries
+      // Fetch all push up entries
       const { data: entries } = await supabase
         .from("push_up_entries")
-        .select("count")
-        .eq("date", today);
+        .select("date, count");
 
       if (entries) {
-        const total = entries.reduce((sum, entry) => sum + entry.count, 0);
-        setTodayTotal(total);
+        const totalsMap = new Map<string, number>();
+        entries.forEach((entry: DailyEntry) => {
+          const current = totalsMap.get(entry.date) || 0;
+          totalsMap.set(entry.date, current + entry.count);
+        });
+        setDailyTotals(totalsMap);
       }
 
       // Fetch member count (users with 82+ push-ups)
@@ -48,8 +72,10 @@ const DailyGroupOverview = () => {
     fetchDailyData();
   }, []);
 
+  const selectedDateStr = selectedDay ? format(selectedDay.date, "yyyy-MM-dd") : "";
+  const dayTotal = dailyTotals.get(selectedDateStr) || 0;
   const dailyTarget = DAILY_TARGET * Math.max(memberCount, 1);
-  const percentage = dailyTarget > 0 ? Math.round((todayTotal / dailyTarget) * 100) : 0;
+  const percentage = dailyTarget > 0 ? Math.round((dayTotal / dailyTarget) * 100) : 0;
 
   if (!isLoaded) {
     return (
@@ -75,15 +101,44 @@ const DailyGroupOverview = () => {
         </CollapsibleTrigger>
 
         <CollapsibleContent className="space-y-4">
-          {/* Date Display */}
-          <p className="text-primary font-medium text-base">
-            {format(new Date(), "EEEE, MMM d")}
-          </p>
+          {/* Day Selector Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity">
+                {selectedDay?.label}
+                {selectedDay?.isToday && (
+                  <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                    Today
+                  </span>
+                )}
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
+              align="start"
+            >
+              {dayOptions.map((day, index) => (
+                <DropdownMenuItem
+                  key={format(day.date, "yyyy-MM-dd")}
+                  onClick={() => setSelectedDayIndex(index)}
+                  className={`cursor-pointer ${index === selectedDayIndex ? "bg-primary/10 text-primary" : ""}`}
+                >
+                  {day.label}
+                  {day.isToday && (
+                    <span className="ml-2 text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                      Today
+                    </span>
+                  )}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* Daily Summary */}
           <div className="flex items-center justify-between p-3 bg-muted/50 rounded-xl">
             <div>
-              <p className="text-2xl font-black text-foreground">{todayTotal.toLocaleString()}</p>
+              <p className="text-2xl font-black text-foreground">{dayTotal.toLocaleString()}</p>
               <p className="text-sm text-muted-foreground">group push-ups</p>
             </div>
             <div className="text-right">
