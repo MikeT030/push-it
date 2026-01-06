@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
+import WeeklyOverview from "@/components/WeeklyOverview";
 const TotalPage = () => {
   const navigate = useNavigate();
   const {
@@ -197,9 +198,12 @@ const TotalPage = () => {
         })}
         </div>
 
+        {/* Weekly Overview Card */}
+        <WeeklyOverview />
+
         {/* Goal Card */}
         <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
-        animationDelay: "0.3s"
+        animationDelay: "0.35s"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             {new Date().getFullYear()} Personal Goal
