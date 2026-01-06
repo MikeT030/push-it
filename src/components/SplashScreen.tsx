@@ -29,8 +29,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         <div className="absolute w-[160px] h-[160px] rounded-full border-[14px] border-[#0ABAB5] box-border" />
         {/* Middle circle - Purple/Magenta: 120x120px, 14pt stroke inside */}
         <div className="absolute w-[120px] h-[120px] rounded-full border-[14px] border-[#C029DE] box-border" />
-        {/* Inner circle - Blue filled: 80x80px */}
-        <div className="absolute w-[80px] h-[80px] rounded-full bg-[#4300FF]" />
+        {/* Inner circle - Blue: 80x80px, 14pt stroke inside */}
+        <div className="absolute w-[80px] h-[80px] rounded-full border-[14px] border-[#4300FF] box-border" />
       </div>
 
       {/* App name with push-ups icon */}
