@@ -64,18 +64,28 @@ const WeeklyOverview = () => {
       percentage: 0,
       weeklyTarget: 0
     };
-    const days = eachDayOfInterval({
-      start: selectedWeek.startDate,
-      end: selectedWeek.endDate
+    
+    // Always show full week (Mon-Sun)
+    const weekStart = startOfWeek(selectedWeek.startDate, { weekStartsOn: 1 });
+    const weekEnd = endOfWeek(selectedWeek.startDate, { weekStartsOn: 1 });
+    const allDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+    
+    const dailyLogs = allDays.map(day => {
+      const isBeforeYearStart = day < YEAR_START;
+      return {
+        date: day,
+        count: isBeforeYearStart ? 0 : getEntryForDate(day),
+        isToday: isSameDay(day, new Date()),
+        isBeforeYearStart
+      };
     });
-    const dailyLogs = days.map(day => ({
-      date: day,
-      count: getEntryForDate(day),
-      isToday: isSameDay(day, new Date())
-    }));
-    const total = dailyLogs.reduce((sum, d) => sum + d.count, 0);
-    const weeklyTarget = days.length * DAILY_TARGET; // Dynamic target based on days in week
-    const percentage = Math.round(total / weeklyTarget * 100);
+    
+    // Only count days from YEAR_START onwards for target
+    const countableDays = dailyLogs.filter(d => !d.isBeforeYearStart);
+    const total = countableDays.reduce((sum, d) => sum + d.count, 0);
+    const weeklyTarget = countableDays.length * DAILY_TARGET;
+    const percentage = weeklyTarget > 0 ? Math.round(total / weeklyTarget * 100) : 0;
+    
     return {
       days: dailyLogs,
       total,
@@ -148,7 +158,7 @@ const WeeklyOverview = () => {
 
       {/* Daily Logs List */}
       <div className="space-y-2">
-        {weeklyData.days.map(day => <div key={format(day.date, "yyyy-MM-dd")} className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isToday ? "bg-primary/10 border border-primary/20" : "bg-muted/30"}`}>
+        {weeklyData.days.map(day => <div key={format(day.date, "yyyy-MM-dd")} className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : day.isToday ? "bg-primary/10 border border-primary/20" : "bg-muted/30"}`}>
             <div className="flex items-center gap-3">
               <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
                 {format(day.date, "EEE")}
@@ -160,8 +170,8 @@ const WeeklyOverview = () => {
                   Today
                 </span>}
             </div>
-            <span className={`font-bold ${day.count > 0 ? "text-foreground" : "text-muted-foreground"}`}>
-              {day.count > 0 ? day.count : "—"}
+            <span className={`font-bold ${day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"}`}>
+              {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count : "—"}
             </span>
           </div>)}
       </div>
