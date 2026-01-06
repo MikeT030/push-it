@@ -3,7 +3,7 @@ import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay,
 import { ChevronDown } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { usePushUpData } from "@/hooks/usePushUpData";
-const WEEKLY_TARGET = 82;
+const WEEKLY_TARGET = 574; // 82 push-ups × 7 days
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
 
 interface WeekOption {
@@ -65,7 +65,7 @@ const WeeklyOverview = () => {
       isToday: isSameDay(day, new Date())
     }));
     const total = dailyLogs.reduce((sum, d) => sum + d.count, 0);
-    const percentage = Math.min(Math.round(total / WEEKLY_TARGET * 100), 100);
+    const percentage = Math.round(total / WEEKLY_TARGET * 100);
     return {
       days: dailyLogs,
       total,
@@ -114,11 +114,25 @@ const WeeklyOverview = () => {
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="h-2 bg-muted rounded-full overflow-hidden mb-4">
-        <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500" style={{
-        width: `${weeklyData.percentage}%`
-      }} />
+      {/* Progress bar with overflow */}
+      <div className="h-2 bg-muted rounded-full overflow-hidden mb-4 relative">
+        {/* Base progress (up to 100%) */}
+        <div 
+          className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0" 
+          style={{ width: `${Math.min(weeklyData.percentage, 100)}%` }} 
+        />
+        {/* Overflow progress (above 100%) */}
+        {weeklyData.percentage > 100 && (
+          <div 
+            className="h-full rounded-full transition-all duration-500 absolute left-0 top-0" 
+            style={{ 
+              width: `${Math.min(weeklyData.percentage, 200)}%`,
+              background: weeklyData.percentage >= 200 
+                ? 'linear-gradient(to right, #C029DE, #C029DE99)' 
+                : 'linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))'
+            }} 
+          />
+        )}
       </div>
 
       {/* Daily Logs List */}
