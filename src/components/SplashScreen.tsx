@@ -25,14 +25,12 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
     >
       {/* Target Icon - Concentric circles */}
       <div className="relative w-40 h-40 flex items-center justify-center mb-8">
-      {/* Outer circle - Teal with pulse */}
-        <div className="absolute w-40 h-40 rounded-full border-[6px] border-[#0ABAB5] animate-pulse" />
-        {/* Middle circle - Purple/Magenta */}
-        <div className="absolute w-28 h-28 rounded-full border-[6px] border-[#C029DE]" />
-        {/* Inner circle - Blue */}
-        <div className="absolute w-16 h-16 rounded-full border-[6px] border-[#4300FF]" />
-        {/* Center filled circle */}
-        <div className="absolute w-6 h-6 rounded-full bg-[#4300FF]" />
+        {/* Outer circle - Teal: 160x160px, 14pt stroke inside */}
+        <div className="absolute w-[160px] h-[160px] rounded-full border-[14px] border-[#0ABAB5] box-border" />
+        {/* Middle circle - Purple/Magenta: 120x120px, 14pt stroke inside */}
+        <div className="absolute w-[120px] h-[120px] rounded-full border-[14px] border-[#C029DE] box-border" />
+        {/* Inner circle - Blue filled: 80x80px */}
+        <div className="absolute w-[80px] h-[80px] rounded-full bg-[#4300FF]" />
       </div>
 
       {/* App name with push-ups icon */}
