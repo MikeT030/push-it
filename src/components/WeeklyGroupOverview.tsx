@@ -1,7 +1,8 @@
 import { useMemo, useState, useEffect } from "react";
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay } from "date-fns";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
@@ -23,6 +24,7 @@ const WeeklyGroupOverview = () => {
   const [dailyTotals, setDailyTotals] = useState<DailyGroupEntry[]>([]);
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   // Fetch group data
   useEffect(() => {
@@ -145,107 +147,120 @@ const WeeklyGroupOverview = () => {
   }
 
   return (
-    <div className="bg-card rounded-2xl p-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
-      <h2 className="text-lg font-bold text-foreground mb-4">Weekly Group</h2>
-
-      {/* Week Selector Dropdown */}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 text-primary font-medium text-base mb-4 hover:opacity-80 transition-opacity">
-            {selectedWeek?.label}
-            <ChevronDown className="w-4 h-4" />
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <div className="bg-card rounded-2xl p-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
+        <CollapsibleTrigger asChild>
+          <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
+            <h2 className="text-lg font-bold text-foreground">Weekly Group</h2>
+            {isOpen ? (
+              <ChevronDown className="w-5 h-5 text-muted-foreground" />
+            ) : (
+              <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            )}
           </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
-          align="start"
-        >
-          {weekOptions.map((week, index) => (
-            <DropdownMenuItem
-              key={week.weekNumber}
-              onClick={() => setSelectedWeekIndex(index)}
-              className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}
+        </CollapsibleTrigger>
+
+        <CollapsibleContent className="space-y-4">
+          {/* Week Selector Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity">
+                {selectedWeek?.label}
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
+              align="start"
             >
-              {week.label}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+              {weekOptions.map((week, index) => (
+                <DropdownMenuItem
+                  key={week.weekNumber}
+                  onClick={() => setSelectedWeekIndex(index)}
+                  className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}
+                >
+                  {week.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-      {/* Weekly Summary */}
-      <div className="flex items-center justify-between mb-4 p-3 bg-muted/50 rounded-xl">
-        <div>
-          <p className="text-2xl font-black text-foreground">{weeklyData.total.toLocaleString()}</p>
-          <p className="text-sm text-muted-foreground">group push-ups</p>
-        </div>
-        <div className="text-right">
-          <p className={`text-2xl font-bold ${weeklyData.percentage >= 100 ? "text-primary" : "text-foreground"}`}>
-            {weeklyData.percentage}%
-          </p>
-          <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget.toLocaleString()} target</p>
-        </div>
-      </div>
-
-      {/* Progress bar with overflow */}
-      <div className="h-2 bg-muted rounded-full overflow-hidden mb-4 relative">
-        <div
-          className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
-          style={{ width: `${Math.min(weeklyData.percentage, 100)}%` }}
-        />
-        {weeklyData.percentage > 100 && (
-          <div
-            className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
-            style={{
-              width: `${Math.min(weeklyData.percentage, 200)}%`,
-              background:
-                weeklyData.percentage >= 200
-                  ? "linear-gradient(to right, #C029DE, #C029DE99)"
-                  : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
-            }}
-          />
-        )}
-      </div>
-
-      {/* Daily Logs List */}
-      <div className="space-y-2">
-        {weeklyData.days.map((day) => (
-          <div
-            key={format(day.date, "yyyy-MM-dd")}
-            className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-              day.isBeforeYearStart
-                ? "opacity-40"
-                : day.isToday
-                ? "bg-primary/10 border border-primary/20"
-                : "bg-muted/30"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
-                {format(day.date, "EEE")}
-              </span>
-              <span className="text-sm text-muted-foreground">{format(day.date, "MMM d")}</span>
-              {day.isToday && (
-                <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
-                  Today
-                </span>
-              )}
+          {/* Weekly Summary */}
+          <div className="flex items-center justify-between p-3 bg-muted/50 rounded-xl">
+            <div>
+              <p className="text-2xl font-black text-foreground">{weeklyData.total.toLocaleString()}</p>
+              <p className="text-sm text-muted-foreground">group push-ups</p>
             </div>
-            <span
-              className={`font-bold ${
-                day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"
-              }`}
-            >
-              {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count.toLocaleString() : "—"}
-            </span>
+            <div className="text-right">
+              <p className={`text-2xl font-bold ${weeklyData.percentage >= 100 ? "text-primary" : "text-foreground"}`}>
+                {weeklyData.percentage}%
+              </p>
+              <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget.toLocaleString()} target</p>
+            </div>
           </div>
-        ))}
-      </div>
 
-      {/* Member count note */}
-      <p className="text-xs text-muted-foreground mt-4 text-center">
-        Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (82+ push-ups)
-      </p>
-    </div>
+          {/* Progress bar with overflow */}
+          <div className="h-2 bg-muted rounded-full overflow-hidden relative">
+            <div
+              className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
+              style={{ width: `${Math.min(weeklyData.percentage, 100)}%` }}
+            />
+            {weeklyData.percentage > 100 && (
+              <div
+                className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
+                style={{
+                  width: `${Math.min(weeklyData.percentage, 200)}%`,
+                  background:
+                    weeklyData.percentage >= 200
+                      ? "linear-gradient(to right, #C029DE, #C029DE99)"
+                      : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
+                }}
+              />
+            )}
+          </div>
+
+          {/* Daily Logs List */}
+          <div className="space-y-2">
+            {weeklyData.days.map((day) => (
+              <div
+                key={format(day.date, "yyyy-MM-dd")}
+                className={`flex items-center justify-between py-2 px-3 rounded-lg ${
+                  day.isBeforeYearStart
+                    ? "opacity-40"
+                    : day.isToday
+                    ? "bg-primary/10 border border-primary/20"
+                    : "bg-muted/30"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
+                    {format(day.date, "EEE")}
+                  </span>
+                  <span className="text-sm text-muted-foreground">{format(day.date, "MMM d")}</span>
+                  {day.isToday && (
+                    <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                      Today
+                    </span>
+                  )}
+                </div>
+                <span
+                  className={`font-bold ${
+                    day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                >
+                  {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count.toLocaleString() : "—"}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Member count note */}
+          <p className="text-xs text-muted-foreground text-center">
+            Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (82+ push-ups)
+          </p>
+        </CollapsibleContent>
+      </div>
+    </Collapsible>
   );
 };
 
