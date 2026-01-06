@@ -217,14 +217,9 @@ const DailyGroupOverview = () => {
                   key={member.user_id}
                   className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm font-medium text-muted-foreground w-6">
-                      #{index + 1}
-                    </span>
-                    <span className="text-sm text-foreground">
-                      {member.display_name || "Member"}
-                    </span>
-                  </div>
+                  <span className="text-sm text-foreground">
+                    {member.display_name || "Member"}
+                  </span>
                   <span className="font-bold text-foreground">
                     {member.count.toLocaleString()}
                   </span>
