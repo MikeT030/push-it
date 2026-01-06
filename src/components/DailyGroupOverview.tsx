@@ -14,13 +14,21 @@ interface DayOption {
   isToday: boolean;
 }
 
-interface DailyEntry {
-  date: string;
+interface MemberContribution {
+  user_id: string;
+  display_name: string | null;
   count: number;
 }
 
+interface EntryWithUser {
+  date: string;
+  count: number;
+  user_id: string;
+}
+
 const DailyGroupOverview = () => {
-  const [dailyTotals, setDailyTotals] = useState<Map<string, number>>(new Map());
+  const [allEntries, setAllEntries] = useState<EntryWithUser[]>([]);
+  const [profiles, setProfiles] = useState<Map<string, string | null>>(new Map());
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
@@ -42,18 +50,26 @@ const DailyGroupOverview = () => {
 
   useEffect(() => {
     const fetchDailyData = async () => {
-      // Fetch all push up entries
+      // Fetch all push up entries with user_id
       const { data: entries } = await supabase
         .from("push_up_entries")
-        .select("date, count");
+        .select("date, count, user_id");
 
       if (entries) {
-        const totalsMap = new Map<string, number>();
-        entries.forEach((entry: DailyEntry) => {
-          const current = totalsMap.get(entry.date) || 0;
-          totalsMap.set(entry.date, current + entry.count);
+        setAllEntries(entries);
+      }
+
+      // Fetch profiles for display names
+      const { data: profilesData } = await supabase
+        .from("profiles")
+        .select("id, display_name");
+
+      if (profilesData) {
+        const profilesMap = new Map<string, string | null>();
+        profilesData.forEach((p) => {
+          profilesMap.set(p.id, p.display_name);
         });
-        setDailyTotals(totalsMap);
+        setProfiles(profilesMap);
       }
 
       // Fetch member count (users with 82+ push-ups)
@@ -72,8 +88,32 @@ const DailyGroupOverview = () => {
     fetchDailyData();
   }, []);
 
+  // Calculate data for selected day
   const selectedDateStr = selectedDay ? format(selectedDay.date, "yyyy-MM-dd") : "";
-  const dayTotal = dailyTotals.get(selectedDateStr) || 0;
+  
+  const { dayTotal, memberContributions } = useMemo(() => {
+    const dayEntries = allEntries.filter((e) => e.date === selectedDateStr);
+    
+    // Group by user and sum their counts
+    const userTotals = new Map<string, number>();
+    dayEntries.forEach((entry) => {
+      const current = userTotals.get(entry.user_id) || 0;
+      userTotals.set(entry.user_id, current + entry.count);
+    });
+
+    const contributions: MemberContribution[] = Array.from(userTotals.entries())
+      .map(([user_id, count]) => ({
+        user_id,
+        display_name: profiles.get(user_id) || null,
+        count,
+      }))
+      .sort((a, b) => b.count - a.count); // Sort by count descending
+
+    const total = contributions.reduce((sum, c) => sum + c.count, 0);
+
+    return { dayTotal: total, memberContributions: contributions };
+  }, [allEntries, selectedDateStr, profiles]);
+
   const dailyTarget = DAILY_TARGET * Math.max(memberCount, 1);
   const percentage = dailyTarget > 0 ? Math.round((dayTotal / dailyTarget) * 100) : 0;
 
@@ -168,6 +208,34 @@ const DailyGroupOverview = () => {
               />
             )}
           </div>
+
+          {/* Member Contributions List */}
+          {memberContributions.length > 0 ? (
+            <div className="space-y-2">
+              {memberContributions.map((member, index) => (
+                <div
+                  key={member.user_id}
+                  className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-medium text-muted-foreground w-6">
+                      #{index + 1}
+                    </span>
+                    <span className="text-sm text-foreground">
+                      {member.display_name || "Member"}
+                    </span>
+                  </div>
+                  <span className="font-bold text-foreground">
+                    {member.count.toLocaleString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground text-center py-2">
+              No push-ups logged for this day
+            </p>
+          )}
 
           {/* Member count note */}
           <p className="text-xs text-muted-foreground text-center">
