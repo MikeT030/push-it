@@ -136,9 +136,7 @@ const TotalPage = () => {
 
         {/* Main Progress Card */}
         <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up">
-          <h2 className="text-lg font-bold text-foreground mb-4">
-            Yearly Progress
-          </h2>
+          <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
           
           <div className="flex items-center gap-6">
             <ProgressRing progress={yearProgress} size={140} strokeWidth={14} />
@@ -173,15 +171,12 @@ const TotalPage = () => {
           {statCards.map((stat, index) => {
           const Icon = stat.icon;
           const isClickable = stat.label === "Today";
-          return <div 
-            key={stat.label} 
-            className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`}
-            style={{
-              animationDelay: `${0.1 + index * 0.05}s`,
-              ...(isClickable && { boxShadow: "0 0 20px 2px rgba(10, 186, 181, 0.32)" })
-            }}
-            onClick={isClickable ? () => navigate("/daily") : undefined}
-          >
+          return <div key={stat.label} className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
+            animationDelay: `${0.1 + index * 0.05}s`,
+            ...(isClickable && {
+              boxShadow: "0 0 20px 2px rgba(10, 186, 181, 0.32)"
+            })
+          }} onClick={isClickable ? () => navigate("/daily") : undefined}>
                 <div className="flex items-center gap-2 mb-3">
                   {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
                   <p className="text-sm text-muted-foreground font-medium">
@@ -236,8 +231,8 @@ const TotalPage = () => {
           {/* Progress bar */}
           <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
-            width: `${yearProgress}%`
-          }} />
+              width: `${yearProgress}%`
+            }} />
           </div>
           <p className="text-sm text-muted-foreground mt-2 text-center">
             Day {stats.daysElapsed} of 365

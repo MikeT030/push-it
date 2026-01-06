@@ -22,33 +22,36 @@ const WeeklyOverview = () => {
   const weekOptions = useMemo((): WeekOption[] => {
     const today = new Date();
     const weeks: WeekOption[] = [];
-    
+
     // Week 1 starts on January 1, 2026
     let weekStart = new Date(YEAR_START);
     let weekNumber = 1;
-    
     while (weekStart <= today) {
       // Week ends on the following Sunday (or end of partial week)
       let weekEnd: Date;
       if (weekNumber === 1) {
         // First week: Jan 1 to the next Sunday
-        weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+        weekEnd = endOfWeek(weekStart, {
+          weekStartsOn: 1
+        });
       } else {
-        weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+        weekEnd = endOfWeek(weekStart, {
+          weekStartsOn: 1
+        });
       }
-      
       weeks.push({
         weekNumber,
         startDate: weekStart,
         endDate: weekEnd,
         label: `Week ${weekNumber} (${format(weekStart, "MMM d")} - ${format(weekEnd, "MMM d")})`
       });
-      
+
       // Next week starts the day after this week ends
-      weekStart = addWeeks(startOfWeek(weekEnd, { weekStartsOn: 1 }), 1);
+      weekStart = addWeeks(startOfWeek(weekEnd, {
+        weekStartsOn: 1
+      }), 1);
       weekNumber++;
     }
-    
     return weeks.reverse(); // Most recent first
   }, []);
 
@@ -64,12 +67,18 @@ const WeeklyOverview = () => {
       percentage: 0,
       weeklyTarget: 0
     };
-    
+
     // Always show full week (Mon-Sun)
-    const weekStart = startOfWeek(selectedWeek.startDate, { weekStartsOn: 1 });
-    const weekEnd = endOfWeek(selectedWeek.startDate, { weekStartsOn: 1 });
-    const allDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
-    
+    const weekStart = startOfWeek(selectedWeek.startDate, {
+      weekStartsOn: 1
+    });
+    const weekEnd = endOfWeek(selectedWeek.startDate, {
+      weekStartsOn: 1
+    });
+    const allDays = eachDayOfInterval({
+      start: weekStart,
+      end: weekEnd
+    });
     const dailyLogs = allDays.map(day => {
       const isBeforeYearStart = day < YEAR_START;
       return {
@@ -79,13 +88,12 @@ const WeeklyOverview = () => {
         isBeforeYearStart
       };
     });
-    
+
     // Only count days from YEAR_START onwards for target
     const countableDays = dailyLogs.filter(d => !d.isBeforeYearStart);
     const total = countableDays.reduce((sum, d) => sum + d.count, 0);
     const weeklyTarget = countableDays.length * DAILY_TARGET;
     const percentage = weeklyTarget > 0 ? Math.round(total / weeklyTarget * 100) : 0;
-    
     return {
       days: dailyLogs,
       total,
@@ -104,7 +112,7 @@ const WeeklyOverview = () => {
   return <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up" style={{
     animationDelay: "0.25s"
   }}>
-      <h2 className="text-lg font-bold text-foreground mb-4">Weekly overview</h2>
+      <h2 className="text-lg font-bold text-foreground mb-4">Weekly</h2>
 
       {/* Week Selector Dropdown */}
       <DropdownMenu>
@@ -138,22 +146,14 @@ const WeeklyOverview = () => {
       {/* Progress bar with overflow */}
       <div className="h-2 bg-muted rounded-full overflow-hidden mb-4 relative">
         {/* Base progress (up to 100%) */}
-        <div 
-          className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0" 
-          style={{ width: `${Math.min(weeklyData.percentage, 100)}%` }} 
-        />
+        <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0" style={{
+        width: `${Math.min(weeklyData.percentage, 100)}%`
+      }} />
         {/* Overflow progress (above 100%) */}
-        {weeklyData.percentage > 100 && (
-          <div 
-            className="h-full rounded-full transition-all duration-500 absolute left-0 top-0" 
-            style={{ 
-              width: `${Math.min(weeklyData.percentage, 200)}%`,
-              background: weeklyData.percentage >= 200 
-                ? 'linear-gradient(to right, #C029DE, #C029DE99)' 
-                : 'linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))'
-            }} 
-          />
-        )}
+        {weeklyData.percentage > 100 && <div className="h-full rounded-full transition-all duration-500 absolute left-0 top-0" style={{
+        width: `${Math.min(weeklyData.percentage, 200)}%`,
+        background: weeklyData.percentage >= 200 ? 'linear-gradient(to right, #C029DE, #C029DE99)' : 'linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))'
+      }} />}
       </div>
 
       {/* Daily Logs List */}
