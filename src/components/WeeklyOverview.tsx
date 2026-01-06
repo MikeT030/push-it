@@ -115,7 +115,7 @@ const WeeklyOverview = () => {
       </div>
 
       {/* Progress bar */}
-      <div className="h-1 bg-muted rounded-full overflow-hidden mb-4">
+      <div className="h-2 bg-muted rounded-full overflow-hidden mb-4">
         <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500" style={{
         width: `${weeklyData.percentage}%`
       }} />
