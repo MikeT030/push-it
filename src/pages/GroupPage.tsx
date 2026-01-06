@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Trophy, Flame, TrendingUp, Plus, User, Info } from "lucide-react";
+import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -173,9 +174,14 @@ const GroupPage = () => {
           </p>
         </div>
 
+        {/* Weekly Group Overview */}
+        <div className="mb-6">
+          <WeeklyGroupOverview />
+        </div>
+
         {/* Leaderboard */}
         <div className="animate-slide-up" style={{
-        animationDelay: "0.2s"
+        animationDelay: "0.25s"
       }}>
           <div className="flex items-center gap-2 mb-4">
             <Trophy className="w-5 h-5 text-[#ffffff]" />
