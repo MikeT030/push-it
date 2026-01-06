@@ -3,7 +3,7 @@ import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay,
 import { ChevronDown } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { usePushUpData } from "@/hooks/usePushUpData";
-const WEEKLY_TARGET = 574; // 82 push-ups × 7 days
+const DAILY_TARGET = 82; // 82 push-ups per day
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
 
 interface WeekOption {
@@ -18,29 +18,37 @@ const WeeklyOverview = () => {
     isLoaded
   } = usePushUpData();
 
-  // Generate week options starting from Week 1 of 2026
+  // Generate week options starting from January 1, 2026
   const weekOptions = useMemo((): WeekOption[] => {
     const today = new Date();
-    const week1Start = startOfWeek(YEAR_START, {
-      weekStartsOn: 1
-    });
-    const currentWeekStart = startOfWeek(today, {
-      weekStartsOn: 1
-    });
-    const totalWeeks = Math.max(1, differenceInWeeks(currentWeekStart, week1Start) + 1);
     const weeks: WeekOption[] = [];
-    for (let i = 0; i < totalWeeks; i++) {
-      const weekStart = addWeeks(week1Start, i);
-      const weekEnd = endOfWeek(weekStart, {
-        weekStartsOn: 1
-      });
+    
+    // Week 1 starts on January 1, 2026
+    let weekStart = new Date(YEAR_START);
+    let weekNumber = 1;
+    
+    while (weekStart <= today) {
+      // Week ends on the following Sunday (or end of partial week)
+      let weekEnd: Date;
+      if (weekNumber === 1) {
+        // First week: Jan 1 to the next Sunday
+        weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+      } else {
+        weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+      }
+      
       weeks.push({
-        weekNumber: i + 1,
+        weekNumber,
         startDate: weekStart,
         endDate: weekEnd,
-        label: `Week ${i + 1} (${format(weekStart, "MMM d")} - ${format(weekEnd, "MMM d")})`
+        label: `Week ${weekNumber} (${format(weekStart, "MMM d")} - ${format(weekEnd, "MMM d")})`
       });
+      
+      // Next week starts the day after this week ends
+      weekStart = addWeeks(startOfWeek(weekEnd, { weekStartsOn: 1 }), 1);
+      weekNumber++;
     }
+    
     return weeks.reverse(); // Most recent first
   }, []);
 
@@ -53,7 +61,8 @@ const WeeklyOverview = () => {
     if (!selectedWeek || !isLoaded) return {
       days: [],
       total: 0,
-      percentage: 0
+      percentage: 0,
+      weeklyTarget: 0
     };
     const days = eachDayOfInterval({
       start: selectedWeek.startDate,
@@ -65,11 +74,13 @@ const WeeklyOverview = () => {
       isToday: isSameDay(day, new Date())
     }));
     const total = dailyLogs.reduce((sum, d) => sum + d.count, 0);
-    const percentage = Math.round(total / WEEKLY_TARGET * 100);
+    const weeklyTarget = days.length * DAILY_TARGET; // Dynamic target based on days in week
+    const percentage = Math.round(total / weeklyTarget * 100);
     return {
       days: dailyLogs,
       total,
-      percentage
+      percentage,
+      weeklyTarget
     };
   }, [selectedWeek, getEntryForDate, isLoaded]);
   if (!isLoaded) {
@@ -110,7 +121,7 @@ const WeeklyOverview = () => {
           <p className={`text-2xl font-bold ${weeklyData.percentage >= 100 ? "text-primary" : "text-foreground"}`}>
             {weeklyData.percentage}%
           </p>
-          <p className="text-sm text-muted-foreground">of {WEEKLY_TARGET} target</p>
+          <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget} target</p>
         </div>
       </div>
 
