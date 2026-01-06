@@ -198,13 +198,15 @@ const TotalPage = () => {
         })}
         </div>
 
-        {/* Weekly Overview Card */}
-        <WeeklyOverview />
+        {/* Weekly Overview & Goal Cards Grid */}
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          {/* Weekly Overview Card */}
+          <WeeklyOverview />
 
-        {/* Goal Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
-        animationDelay: "0.35s"
-      }}>
+          {/* Goal Card */}
+          <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up" style={{
+          animationDelay: "0.35s"
+        }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             {new Date().getFullYear()} Personal Goal
           </h2>
@@ -240,6 +242,7 @@ const TotalPage = () => {
           <p className="text-sm text-muted-foreground mt-2 text-center">
             Day {stats.daysElapsed} of 365
           </p>
+        </div>
         </div>
       </div>
     </div>;

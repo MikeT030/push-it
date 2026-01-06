@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, subWeeks, isSameDay } from "date-fns";
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay, differenceInWeeks } from "date-fns";
 import { ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
 import { usePushUpData } from "@/hooks/usePushUpData";
 
 const WEEKLY_TARGET = 82;
+const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
 
 interface WeekOption {
   weekNumber: number;
@@ -20,29 +21,33 @@ interface WeekOption {
 
 const WeeklyOverview = () => {
   const { getEntryForDate, isLoaded } = usePushUpData();
-  const [selectedWeekIndex, setSelectedWeekIndex] = useState(0);
-
-  // Generate week options (current week + past weeks)
+  
+  // Generate week options starting from Week 1 of 2026
   const weekOptions = useMemo((): WeekOption[] => {
     const today = new Date();
+    const week1Start = startOfWeek(YEAR_START, { weekStartsOn: 1 });
+    const currentWeekStart = startOfWeek(today, { weekStartsOn: 1 });
+    const totalWeeks = Math.max(1, differenceInWeeks(currentWeekStart, week1Start) + 1);
+    
     const weeks: WeekOption[] = [];
     
-    // Generate last 12 weeks
-    for (let i = 0; i < 12; i++) {
-      const weekStart = startOfWeek(subWeeks(today, i), { weekStartsOn: 1 });
-      const weekEnd = endOfWeek(subWeeks(today, i), { weekStartsOn: 1 });
+    for (let i = 0; i < totalWeeks; i++) {
+      const weekStart = addWeeks(week1Start, i);
+      const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
       
       weeks.push({
-        weekNumber: 12 - i,
+        weekNumber: i + 1,
         startDate: weekStart,
         endDate: weekEnd,
-        label: `Week ${12 - i} (${format(weekStart, "MMM d")} - ${format(weekEnd, "MMM d")})`,
+        label: `Week ${i + 1} (${format(weekStart, "MMM d")} - ${format(weekEnd, "MMM d")})`,
       });
     }
     
-    return weeks.reverse().slice(-12).reverse(); // Most recent first
+    return weeks.reverse(); // Most recent first
   }, []);
 
+  // Default to most recent (current) week
+  const [selectedWeekIndex, setSelectedWeekIndex] = useState(0);
   const selectedWeek = weekOptions[selectedWeekIndex];
 
   // Get daily logs for selected week
@@ -81,7 +86,7 @@ const WeeklyOverview = () => {
 
   return (
     <div
-      className="bg-card rounded-2xl p-6 animate-slide-up"
+      className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up"
       style={{ animationDelay: "0.25s" }}
     >
       <h2 className="text-lg font-bold text-foreground mb-4">Weekly Overview</h2>
@@ -95,7 +100,7 @@ const WeeklyOverview = () => {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 
-          className="bg-card border-border max-h-64 overflow-y-auto z-50"
+          className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
           align="start"
         >
           {weekOptions.map((week, index) => (
