@@ -140,74 +140,75 @@ const DailyGroupOverview = () => {
           </button>
         </CollapsibleTrigger>
 
-        <CollapsibleContent className="space-y-4">
-          {/* Day Selector Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity">
-                {selectedDay?.label}
-                {selectedDay?.isToday && (
-                  <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+        {/* Day Selector Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity mb-4">
+              {selectedDay?.label}
+              {selectedDay?.isToday && (
+                <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                  Today
+                </span>
+              )}
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
+            align="start"
+          >
+            {dayOptions.map((day, index) => (
+              <DropdownMenuItem
+                key={format(day.date, "yyyy-MM-dd")}
+                onClick={() => setSelectedDayIndex(index)}
+                className={`cursor-pointer ${index === selectedDayIndex ? "bg-primary/10 text-primary" : ""}`}
+              >
+                {day.label}
+                {day.isToday && (
+                  <span className="ml-2 text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
                     Today
                   </span>
                 )}
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
-              align="start"
-            >
-              {dayOptions.map((day, index) => (
-                <DropdownMenuItem
-                  key={format(day.date, "yyyy-MM-dd")}
-                  onClick={() => setSelectedDayIndex(index)}
-                  className={`cursor-pointer ${index === selectedDayIndex ? "bg-primary/10 text-primary" : ""}`}
-                >
-                  {day.label}
-                  {day.isToday && (
-                    <span className="ml-2 text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
-                      Today
-                    </span>
-                  )}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-          {/* Daily Summary */}
-          <div className="flex items-center justify-between p-3 bg-muted/50 rounded-xl">
-            <div>
-              <p className="text-2xl font-black text-foreground">{dayTotal.toLocaleString()}</p>
-              <p className="text-sm text-muted-foreground">group push-ups</p>
-            </div>
-            <div className="text-right">
-              <p className={`text-2xl font-bold ${percentage >= 100 ? "text-primary" : "text-foreground"}`}>
-                {percentage}%
-              </p>
-              <p className="text-sm text-muted-foreground">of {dailyTarget.toLocaleString()} target</p>
-            </div>
+        {/* Daily Summary */}
+        <div className="flex items-center justify-between p-3 bg-muted/50 rounded-xl mb-4">
+          <div>
+            <p className="text-2xl font-black text-foreground">{dayTotal.toLocaleString()}</p>
+            <p className="text-sm text-muted-foreground">group push-ups</p>
           </div>
+          <div className="text-right">
+            <p className={`text-2xl font-bold ${percentage >= 100 ? "text-primary" : "text-foreground"}`}>
+              {percentage}%
+            </p>
+            <p className="text-sm text-muted-foreground">of {dailyTarget.toLocaleString()} target</p>
+          </div>
+        </div>
 
-          {/* Progress bar with overflow */}
-          <div className="h-2 bg-muted rounded-full overflow-hidden relative">
+        {/* Progress bar with overflow */}
+        <div className="h-2 bg-muted rounded-full overflow-hidden relative mb-4">
+          <div
+            className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
+            style={{ width: `${Math.min(percentage, 100)}%` }}
+          />
+          {percentage > 100 && (
             <div
-              className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
-              style={{ width: `${Math.min(percentage, 100)}%` }}
+              className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
+              style={{
+                width: `${Math.min(percentage, 200)}%`,
+                background:
+                  percentage >= 200
+                    ? "linear-gradient(to right, #C029DE, #C029DE99)"
+                    : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
+              }}
             />
-            {percentage > 100 && (
-              <div
-                className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
-                style={{
-                  width: `${Math.min(percentage, 200)}%`,
-                  background:
-                    percentage >= 200
-                      ? "linear-gradient(to right, #C029DE, #C029DE99)"
-                      : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
-                }}
-              />
-            )}
-          </div>
+          )}
+        </div>
+
+        <CollapsibleContent className="space-y-4">
 
           {/* Member Contributions List */}
           {memberContributions.length > 0 ? (

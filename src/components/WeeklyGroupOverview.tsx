@@ -160,64 +160,65 @@ const WeeklyGroupOverview = () => {
           </button>
         </CollapsibleTrigger>
 
-        <CollapsibleContent className="space-y-4">
-          {/* Week Selector Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity">
-                {selectedWeek?.label}
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
-              align="start"
-            >
-              {weekOptions.map((week, index) => (
-                <DropdownMenuItem
-                  key={week.weekNumber}
-                  onClick={() => setSelectedWeekIndex(index)}
-                  className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}
-                >
-                  {week.label}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {/* Week Selector Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity mb-4">
+              {selectedWeek?.label}
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
+            align="start"
+          >
+            {weekOptions.map((week, index) => (
+              <DropdownMenuItem
+                key={week.weekNumber}
+                onClick={() => setSelectedWeekIndex(index)}
+                className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}
+              >
+                {week.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-          {/* Weekly Summary */}
-          <div className="flex items-center justify-between p-3 bg-muted/50 rounded-xl">
-            <div>
-              <p className="text-2xl font-black text-foreground">{weeklyData.total.toLocaleString()}</p>
-              <p className="text-sm text-muted-foreground">group push-ups</p>
-            </div>
-            <div className="text-right">
-              <p className={`text-2xl font-bold ${weeklyData.percentage >= 100 ? "text-primary" : "text-foreground"}`}>
-                {weeklyData.percentage}%
-              </p>
-              <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget.toLocaleString()} target</p>
-            </div>
+        {/* Weekly Summary */}
+        <div className="flex items-center justify-between p-3 bg-muted/50 rounded-xl mb-4">
+          <div>
+            <p className="text-2xl font-black text-foreground">{weeklyData.total.toLocaleString()}</p>
+            <p className="text-sm text-muted-foreground">group push-ups</p>
           </div>
+          <div className="text-right">
+            <p className={`text-2xl font-bold ${weeklyData.percentage >= 100 ? "text-primary" : "text-foreground"}`}>
+              {weeklyData.percentage}%
+            </p>
+            <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget.toLocaleString()} target</p>
+          </div>
+        </div>
 
-          {/* Progress bar with overflow */}
-          <div className="h-2 bg-muted rounded-full overflow-hidden relative">
+        {/* Progress bar with overflow */}
+        <div className="h-2 bg-muted rounded-full overflow-hidden relative mb-4">
+          <div
+            className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
+            style={{ width: `${Math.min(weeklyData.percentage, 100)}%` }}
+          />
+          {weeklyData.percentage > 100 && (
             <div
-              className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
-              style={{ width: `${Math.min(weeklyData.percentage, 100)}%` }}
+              className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
+              style={{
+                width: `${Math.min(weeklyData.percentage, 200)}%`,
+                background:
+                  weeklyData.percentage >= 200
+                    ? "linear-gradient(to right, #C029DE, #C029DE99)"
+                    : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
+              }}
             />
-            {weeklyData.percentage > 100 && (
-              <div
-                className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
-                style={{
-                  width: `${Math.min(weeklyData.percentage, 200)}%`,
-                  background:
-                    weeklyData.percentage >= 200
-                      ? "linear-gradient(to right, #C029DE, #C029DE99)"
-                      : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
-                }}
-              />
-            )}
-          </div>
+          )}
+        </div>
+
+        <CollapsibleContent className="space-y-4">
 
           {/* Daily Logs List */}
           <div className="space-y-2">
