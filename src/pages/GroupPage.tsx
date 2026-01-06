@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Trophy, Flame, TrendingUp, Plus, User, Info } from "lucide-react";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
+import DailyGroupOverview from "@/components/DailyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -172,6 +173,11 @@ const GroupPage = () => {
             💪 Every push-up counts! When we work together, we stay accountable and motivated. 
             Your effort inspires others to keep going.
           </p>
+        </div>
+
+        {/* Daily Group Overview */}
+        <div className="mb-6">
+          <DailyGroupOverview />
         </div>
 
         {/* Weekly Group Overview */}
