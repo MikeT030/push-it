@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { GameProvider, useGame } from "@/contexts/GameContext";
 import DailyPage from "./pages/DailyPage";
 import TotalPage from "./pages/TotalPage";
 import GroupPage from "./pages/GroupPage";
@@ -41,7 +40,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const AppContent = () => {
   const location = useLocation();
   const { user } = useAuth();
-  const { isGameActive } = useGame();
   const showNav = user && ["/", "/daily", "/total", "/profile", "/group"].includes(location.pathname);
 
   return (
@@ -83,7 +81,7 @@ const AppContent = () => {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {showNav && <BottomNav disabled={isGameActive} />}
+      {showNav && <BottomNav />}
     </>
   );
 };
@@ -114,9 +112,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
-            <GameProvider>
-              <AppContent />
-            </GameProvider>
+            <AppContent />
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
