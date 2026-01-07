@@ -112,8 +112,8 @@ const WeeklyOverview = () => {
       </div>;
   }
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up" style={{ animationDelay: "0.25s" }}>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="col-span-2">
+      <div className="bg-card rounded-2xl p-6 animate-slide-up" style={{ animationDelay: "0.25s" }}>
         <CollapsibleTrigger asChild>
           <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
             <h2 className="text-lg font-bold text-foreground">Weekly</h2>
