@@ -48,6 +48,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     bricks: [] as Brick[],
     targetHole: { x: 200, y: 250, innerRadius: 26, outerRadius: 80 },
     ballOnPaddle: true,
+    ringHits: { outer: 0, middle: 0, inner: 0 },
+    ringDestroyed: { outer: false, middle: false, inner: false },
   });
 
   const resetBallToPaddle = useCallback(() => {
@@ -101,13 +103,15 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       bricks,
       targetHole: { x: 200, y: 220, innerRadius: 26, outerRadius: 80 },
       ballOnPaddle: true,
+      ringHits: { outer: 0, middle: 0, inner: 0 },
+      ringDestroyed: { outer: false, middle: false, inner: false },
     };
     setScore(0);
     setGameState("waiting");
   }, []);
 
   const drawTarget = useCallback((ctx: CanvasRenderingContext2D) => {
-    const { targetHole } = gameRef.current;
+    const { targetHole, ringDestroyed } = gameRef.current;
     const { x, y, outerRadius } = targetHole;
     
     // Gap angle at the bottom for entry (in radians)
@@ -116,28 +120,34 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     const gapEnd = Math.PI / 2 + gapAngle; // End just after bottom
     
     // Outer circle - Teal (with gap at bottom)
-    ctx.beginPath();
-    ctx.arc(x, y, outerRadius, gapEnd, gapStart + Math.PI * 2);
-    ctx.strokeStyle = "#0ABAB5";
-    ctx.lineWidth = 14;
-    ctx.lineCap = "round";
-    ctx.stroke();
+    if (!ringDestroyed.outer) {
+      ctx.beginPath();
+      ctx.arc(x, y, outerRadius, gapEnd, gapStart + Math.PI * 2);
+      ctx.strokeStyle = "#0ABAB5";
+      ctx.lineWidth = 14;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    }
 
     // Middle circle - Purple/Magenta (with gap at bottom)
-    ctx.beginPath();
-    ctx.arc(x, y, 60, gapEnd, gapStart + Math.PI * 2);
-    ctx.strokeStyle = "#C029DE";
-    ctx.lineWidth = 14;
-    ctx.lineCap = "round";
-    ctx.stroke();
+    if (!ringDestroyed.middle) {
+      ctx.beginPath();
+      ctx.arc(x, y, 60, gapEnd, gapStart + Math.PI * 2);
+      ctx.strokeStyle = "#C029DE";
+      ctx.lineWidth = 14;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    }
 
     // Inner circle - Blue (with gap at bottom)
-    ctx.beginPath();
-    ctx.arc(x, y, 40, gapEnd, gapStart + Math.PI * 2);
-    ctx.strokeStyle = "#4300FF";
-    ctx.lineWidth = 14;
-    ctx.lineCap = "round";
-    ctx.stroke();
+    if (!ringDestroyed.inner) {
+      ctx.beginPath();
+      ctx.arc(x, y, 40, gapEnd, gapStart + Math.PI * 2);
+      ctx.strokeStyle = "#4300FF";
+      ctx.lineWidth = 14;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    }
   }, []);
 
   const draw = useCallback((ctx: CanvasRenderingContext2D) => {
@@ -276,12 +286,64 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     }
 
     // Target ring collision (bounces off the rings, but not in gap area)
-    if (!isInGap && distToCenter > targetHole.innerRadius && distToCenter < targetHole.outerRadius + 14) {
-      // Calculate bounce direction
-      const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
-      const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
-      ball.dx = Math.cos(angle) * speed;
-      ball.dy = Math.sin(angle) * speed;
+    const { ringDestroyed, ringHits } = gameRef.current;
+    const lineWidth = 7; // Half of the stroke width (14/2)
+    
+    // Define ring radii
+    const outerRingRadius = targetHole.outerRadius;
+    const middleRingRadius = 60;
+    const innerRingRadius = 40;
+    
+    // Check collision with each ring (from outer to inner)
+    if (!isInGap) {
+      // Outer ring collision (radius 80, lineWidth 7 -> hits between 73-87)
+      if (!ringDestroyed.outer && 
+          distToCenter > outerRingRadius - lineWidth && 
+          distToCenter < outerRingRadius + lineWidth) {
+        ringHits.outer++;
+        setScore((s) => s + 1);
+        if (ringHits.outer >= 10) {
+          ringDestroyed.outer = true;
+          setScore((s) => s + 50);
+        }
+        // Bounce
+        const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
+        const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
+        ball.dx = Math.cos(angle) * speed;
+        ball.dy = Math.sin(angle) * speed;
+      }
+      // Middle ring collision (radius 60)
+      else if (!ringDestroyed.middle && 
+          distToCenter > middleRingRadius - lineWidth && 
+          distToCenter < middleRingRadius + lineWidth) {
+        ringHits.middle++;
+        setScore((s) => s + 1);
+        if (ringHits.middle >= 20) {
+          ringDestroyed.middle = true;
+          setScore((s) => s + 100);
+        }
+        // Bounce
+        const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
+        const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
+        ball.dx = Math.cos(angle) * speed;
+        ball.dy = Math.sin(angle) * speed;
+      }
+      // Inner ring collision (radius 40)
+      else if (!ringDestroyed.inner && 
+          distToCenter > innerRingRadius - lineWidth && 
+          distToCenter < innerRingRadius + lineWidth) {
+        ringHits.inner++;
+        setScore((s) => s + 1);
+        if (ringHits.inner >= 50) {
+          ringDestroyed.inner = true;
+          setScore((s) => s + 200);
+        }
+        // Bounce
+        const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
+        const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
+        ball.dx = Math.cos(angle) * speed;
+        ball.dy = Math.sin(angle) * speed;
+      }
     }
   }, [gameState, resetBallToPaddle]);
 
