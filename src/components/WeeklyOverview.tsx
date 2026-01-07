@@ -18,7 +18,7 @@ const WeeklyOverview = () => {
     getEntryForDate,
     isLoaded
   } = usePushUpData();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Generate week options starting from January 1, 2026
   const weekOptions = useMemo((): WeekOption[] => {
