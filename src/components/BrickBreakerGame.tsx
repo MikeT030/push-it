@@ -61,7 +61,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
       { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
     ] as Ring[],
-    passThroughUntil: 0, // Timestamp when pass-through expires
+    passThrough: false, // Ball passes through everything once when a ring is destroyed
   });
 
   const initGame = useCallback(() => {
@@ -97,7 +97,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
         { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
       ],
-      passThroughUntil: 0,
+      passThrough: false,
     };
     setScore(0);
     setGameState("playing");
@@ -170,11 +170,11 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ctx.roundRect(paddle.x, paddle.y, paddle.width, paddle.height, 6);
     ctx.fill();
 
-    // Draw ball with glow (golden glow when golden mode is active)
-    const isGolden = Date.now() < gameRef.current.passThroughUntil;
-    ctx.shadowColor = isGolden ? "#FFD700" : "#fff";
-    ctx.shadowBlur = isGolden ? 25 : 15;
-    ctx.fillStyle = isGolden ? "#FFD700" : "#fff";
+    // Draw ball with glow (golden glow when pass-through is active)
+    const isPassThrough = gameRef.current.passThrough;
+    ctx.shadowColor = isPassThrough ? "#FFD700" : "#fff";
+    ctx.shadowBlur = isPassThrough ? 25 : 15;
+    ctx.fillStyle = isPassThrough ? "#FFD700" : "#fff";
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fill();
@@ -229,26 +229,45 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       ball.dy = Math.sin(angle) * newSpeed;
     }
 
-    // Check if golden mode is active (ball damages everything it touches)
-    const isGolden = Date.now() < gameRef.current.passThroughUntil;
-
-    // Brick collisions
-    bricks.forEach((brick) => {
-      if (brick.active) {
-        if (
-          ball.x + ball.radius > brick.x &&
-          ball.x - ball.radius < brick.x + brick.width &&
-          ball.y + ball.radius > brick.y &&
-          ball.y - ball.radius < brick.y + brick.height
-        ) {
-          brick.active = false;
-          if (!isGolden) {
+    // Brick collisions (skip if pass-through is active)
+    let hitBrick = false;
+    if (!gameRef.current.passThrough) {
+      bricks.forEach((brick) => {
+        if (brick.active) {
+          if (
+            ball.x + ball.radius > brick.x &&
+            ball.x - ball.radius < brick.x + brick.width &&
+            ball.y + ball.radius > brick.y &&
+            ball.y - ball.radius < brick.y + brick.height
+          ) {
+            brick.active = false;
             ball.dy = -ball.dy;
+            setScore((s) => s + 10);
+            hitBrick = true;
           }
-          setScore((s) => s + 10);
         }
+      });
+    } else {
+      // Pass-through mode: destroy bricks without bouncing
+      bricks.forEach((brick) => {
+        if (brick.active) {
+          if (
+            ball.x + ball.radius > brick.x &&
+            ball.x - ball.radius < brick.x + brick.width &&
+            ball.y + ball.radius > brick.y &&
+            ball.y - ball.radius < brick.y + brick.height
+          ) {
+            brick.active = false;
+            setScore((s) => s + 10);
+            hitBrick = true;
+          }
+        }
+      });
+      // Disable pass-through after hitting something
+      if (hitBrick) {
+        gameRef.current.passThrough = false;
       }
-    });
+    }
 
     // Check distance to center for ring collisions
     const distToCenter = Math.sqrt(
@@ -273,57 +292,71 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       return;
     }
 
-    // Ring collision detection (from outer to inner)
-    for (const ring of rings) {
-      if (!ring.active) continue;
-      
-      const innerEdge = ring.radius - ring.lineWidth / 2;
-      const outerEdge = ring.radius + ring.lineWidth / 2;
-      
-      // Check if ball is touching this ring
-      if (distToCenter + ball.radius > innerEdge && distToCenter - ball.radius < outerEdge) {
-        // Hit the ring
-        ring.hits++;
+    // Ring collision detection (from outer to inner) - skip if pass-through is active
+    if (!gameRef.current.passThrough) {
+      for (const ring of rings) {
+        if (!ring.active) continue;
         
-        if (ring.hits >= ring.maxHits) {
-          ring.active = false;
-          setScore((s) => s + ring.maxHits * 5);
+        const innerEdge = ring.radius - ring.lineWidth / 2;
+        const outerEdge = ring.radius + ring.lineWidth / 2;
+        
+        // Check if ball is touching this ring
+        if (distToCenter + ball.radius > innerEdge && distToCenter - ball.radius < outerEdge) {
+          // Hit the ring
+          ring.hits++;
           
-          // Enable golden mode for 2 seconds
-          gameRef.current.passThroughUntil = Date.now() + 2000;
-          
-          // Spawn new bricks equal to double maxHits
-          const brickWidth = 45;
-          const brickHeight = 18;
-          const padding = 6;
-          const cols = 8;
-          const offsetX = 20;
-          const numBricks = ring.maxHits * 2;
-          
-          for (let i = 0; i < numBricks; i++) {
-            const col = i % cols;
-            const row = Math.floor(i / cols);
-            gameRef.current.bricks.push({
-              x: offsetX + col * (brickWidth + padding),
-              y: -30 - row * (brickHeight + padding), // Start above screen
-              width: brickWidth,
-              height: brickHeight,
-              color: ring.color,
-              active: true,
-            });
+          if (ring.hits >= ring.maxHits) {
+            ring.active = false;
+            setScore((s) => s + ring.maxHits * 5);
+            
+            // Enable pass-through for one collision
+            gameRef.current.passThrough = true;
+            
+            // Spawn new bricks equal to double maxHits
+            const brickWidth = 45;
+            const brickHeight = 18;
+            const padding = 6;
+            const cols = 8;
+            const offsetX = 20;
+            const numBricks = ring.maxHits * 2;
+            
+            for (let i = 0; i < numBricks; i++) {
+              const col = i % cols;
+              const row = Math.floor(i / cols);
+              gameRef.current.bricks.push({
+                x: offsetX + col * (brickWidth + padding),
+                y: -30 - row * (brickHeight + padding), // Start above screen
+                width: brickWidth,
+                height: brickHeight,
+                color: ring.color,
+                active: true,
+              });
+            }
+          } else {
+            setScore((s) => s + 5);
           }
-        } else {
-          setScore((s) => s + 5);
-        }
-        
-        // Bounce off the ring (unless golden)
-        if (!isGolden) {
+          
+          // Bounce off the ring
           const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
           const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
           ball.dx = Math.cos(angle) * speed;
           ball.dy = Math.sin(angle) * speed;
+          break; // Only hit one ring per frame
         }
-        break; // Only hit one ring per frame
+      }
+    } else {
+      // In pass-through mode, check if we're passing through a ring to disable it
+      for (const ring of rings) {
+        if (!ring.active) continue;
+        
+        const innerEdge = ring.radius - ring.lineWidth / 2;
+        const outerEdge = ring.radius + ring.lineWidth / 2;
+        
+        if (distToCenter + ball.radius > innerEdge && distToCenter - ball.radius < outerEdge) {
+          // Passed through a ring, disable pass-through
+          gameRef.current.passThrough = false;
+          break;
+        }
       }
     }
     
