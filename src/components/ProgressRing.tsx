@@ -1,3 +1,6 @@
+import { useState } from "react";
+import BrickBreakerGame from "./BrickBreakerGame";
+
 interface ProgressRingProps {
   progress: number; // 0 to 100+
   size?: number;
@@ -11,6 +14,7 @@ const ProgressRing = ({
   strokeWidth = 12,
   className = "",
 }: ProgressRingProps) => {
+  const [showGame, setShowGame] = useState(false);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   
@@ -22,61 +26,69 @@ const ProgressRing = ({
   const overflowOffset = circumference - (overflowProgress / 100) * circumference;
 
   return (
-    <div className={`relative ${className}`} style={{ width: size, height: size }}>
-      <svg className="transform -rotate-90" width={size} height={size}>
-        {/* Background ring */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="hsl(var(--muted))"
-          strokeWidth={strokeWidth}
-        />
-        {/* Base progress ring (green/primary) */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={baseOffset}
-          className="transition-all duration-700 ease-out"
-          style={{
-            filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))",
-          }}
-        />
-        {/* Overflow ring - only visible when > 100% */}
-        {overflowProgress > 0 && (
+    <>
+      <div 
+        className={`relative cursor-pointer ${className}`} 
+        style={{ width: size, height: size }}
+        onClick={() => setShowGame(true)}
+      >
+        <svg className="transform -rotate-90" width={size} height={size}>
+          {/* Background ring */}
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke={progress >= 200 ? '#C029DE' : 'hsl(var(--overflow))'}
+            stroke="hsl(var(--muted))"
+            strokeWidth={strokeWidth}
+          />
+          {/* Base progress ring (green/primary) */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="hsl(var(--primary))"
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circumference}
-            strokeDashoffset={overflowOffset}
+            strokeDashoffset={baseOffset}
             className="transition-all duration-700 ease-out"
             style={{
-              filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'hsl(var(--overflow) / 0.5)'})`,
+              filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))",
             }}
           />
-        )}
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span 
-          className="text-2xl font-bold"
-          style={{ color: '#ffffff' }}
-        >
-          {Math.round(progress)}%
-        </span>
+          {/* Overflow ring - only visible when > 100% */}
+          {overflowProgress > 0 && (
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              fill="none"
+              stroke={progress >= 200 ? '#C029DE' : 'hsl(var(--overflow))'}
+              strokeWidth={strokeWidth}
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={overflowOffset}
+              className="transition-all duration-700 ease-out"
+              style={{
+                filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'hsl(var(--overflow) / 0.5)'})`,
+              }}
+            />
+          )}
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span 
+            className="text-2xl font-bold"
+            style={{ color: '#ffffff' }}
+          >
+            {Math.round(progress)}%
+          </span>
+        </div>
       </div>
-    </div>
+      
+      <BrickBreakerGame isOpen={showGame} onClose={() => setShowGame(false)} />
+    </>
   );
 };
 
