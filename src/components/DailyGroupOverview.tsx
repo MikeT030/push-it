@@ -31,7 +31,7 @@ const DailyGroupOverview = () => {
   const [profiles, setProfiles] = useState<Map<string, string | null>>(new Map());
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
 
   // Generate day options from year start to today

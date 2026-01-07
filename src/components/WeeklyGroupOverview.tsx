@@ -24,7 +24,7 @@ const WeeklyGroupOverview = () => {
   const [dailyTotals, setDailyTotals] = useState<DailyGroupEntry[]>([]);
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Fetch group data
   useEffect(() => {
