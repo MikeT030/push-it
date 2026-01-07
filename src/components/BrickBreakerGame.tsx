@@ -118,14 +118,6 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         ctx.lineWidth = ring.lineWidth;
         ctx.stroke();
         ctx.globalAlpha = 1;
-        
-        // Show hit count on ring
-        if (ring.hits > 0) {
-          ctx.fillStyle = "#fff";
-          ctx.font = "bold 10px sans-serif";
-          ctx.textAlign = "center";
-          ctx.fillText(`${ring.maxHits - ring.hits}`, x + ring.radius - 5, y - 3);
-        }
       }
     });
   }, []);
