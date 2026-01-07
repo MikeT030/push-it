@@ -61,7 +61,9 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
       { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
     ] as Ring[],
-    passThrough: false, // Ball passes through everything once when a ring is destroyed
+    passThrough: false, // Ball passes through everything when a ring is destroyed
+    passThroughEndTime: 0, // Timestamp when pass-through ends
+    hitObjects: new Set<string>(), // Track objects hit during pass-through to apply 3 hits once
   });
 
   const initGame = useCallback(() => {
@@ -98,6 +100,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
       ],
       passThrough: false,
+      passThroughEndTime: 0,
+      hitObjects: new Set<string>(),
     };
     setScore(0);
     setGameState("playing");
@@ -171,7 +175,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ctx.fill();
 
     // Draw ball with glow (golden glow when pass-through is active)
-    const isPassThrough = gameRef.current.passThrough;
+    const isPassThrough = gameRef.current.passThrough && Date.now() < gameRef.current.passThroughEndTime;
     ctx.shadowColor = isPassThrough ? "#FFD700" : "#fff";
     ctx.shadowBlur = isPassThrough ? 25 : 15;
     ctx.fillStyle = isPassThrough ? "#FFD700" : "#fff";
@@ -229,9 +233,15 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       ball.dy = Math.sin(angle) * newSpeed;
     }
 
-    // Brick collisions (skip if pass-through is active)
-    let hitBrick = false;
-    if (!gameRef.current.passThrough) {
+    // Check if pass-through has expired
+    const isPassThroughActive = gameRef.current.passThrough && Date.now() < gameRef.current.passThroughEndTime;
+    if (gameRef.current.passThrough && !isPassThroughActive) {
+      gameRef.current.passThrough = false;
+      gameRef.current.hitObjects.clear();
+    }
+
+    // Brick collisions
+    if (!isPassThroughActive) {
       bricks.forEach((brick) => {
         if (brick.active) {
           if (
@@ -241,15 +251,27 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
             ball.y - ball.radius < brick.y + brick.height
           ) {
             brick.active = false;
-            ball.dy = -ball.dy;
             setScore((s) => s + 10);
-            hitBrick = true;
+
+            // Bounce off brick
+            const overlapLeft = ball.x + ball.radius - brick.x;
+            const overlapRight = brick.x + brick.width - (ball.x - ball.radius);
+            const overlapTop = ball.y + ball.radius - brick.y;
+            const overlapBottom = brick.y + brick.height - (ball.y - ball.radius);
+            const minOverlapX = Math.min(overlapLeft, overlapRight);
+            const minOverlapY = Math.min(overlapTop, overlapBottom);
+
+            if (minOverlapX < minOverlapY) {
+              ball.dx = -ball.dx;
+            } else {
+              ball.dy = -ball.dy;
+            }
           }
         }
       });
     } else {
-      // Pass-through mode: destroy bricks without bouncing
-      bricks.forEach((brick) => {
+      // Pass-through mode: deal 3 hits to bricks without bouncing
+      bricks.forEach((brick, index) => {
         if (brick.active) {
           if (
             ball.x + ball.radius > brick.x &&
@@ -257,16 +279,15 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
             ball.y + ball.radius > brick.y &&
             ball.y - ball.radius < brick.y + brick.height
           ) {
-            brick.active = false;
-            setScore((s) => s + 10);
-            hitBrick = true;
+            const brickKey = `brick_${index}`;
+            if (!gameRef.current.hitObjects.has(brickKey)) {
+              gameRef.current.hitObjects.add(brickKey);
+              brick.active = false;
+              setScore((s) => s + 30);
+            }
           }
         }
       });
-      // Disable pass-through after hitting something
-      if (hitBrick) {
-        gameRef.current.passThrough = false;
-      }
     }
 
     // Check distance to center for ring collisions
@@ -292,8 +313,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       return;
     }
 
-    // Ring collision detection (from outer to inner) - skip if pass-through is active
-    if (!gameRef.current.passThrough) {
+    // Ring collision detection (from outer to inner)
+    if (!isPassThroughActive) {
       for (const ring of rings) {
         if (!ring.active) continue;
         
@@ -309,8 +330,10 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
             ring.active = false;
             setScore((s) => s + ring.maxHits * 5);
             
-            // Enable pass-through for one collision
+            // Enable pass-through for 2 seconds
             gameRef.current.passThrough = true;
+            gameRef.current.passThroughEndTime = Date.now() + 2000;
+            gameRef.current.hitObjects.clear();
             
             // Spawn new bricks equal to double maxHits
             const brickWidth = 45;
@@ -345,7 +368,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         }
       }
     } else {
-      // In pass-through mode, check if we're passing through a ring to disable it
+      // In pass-through mode: deal 3 hits to rings without bouncing
       for (const ring of rings) {
         if (!ring.active) continue;
         
@@ -353,9 +376,40 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         const outerEdge = ring.radius + ring.lineWidth / 2;
         
         if (distToCenter + ball.radius > innerEdge && distToCenter - ball.radius < outerEdge) {
-          // Passed through a ring, disable pass-through
-          gameRef.current.passThrough = false;
-          break;
+          const ringKey = `ring_${ring.radius}`;
+          if (!gameRef.current.hitObjects.has(ringKey)) {
+            gameRef.current.hitObjects.add(ringKey);
+            // Deal 3 hits to the ring
+            ring.hits += 3;
+            setScore((s) => s + 15); // 3x score for 3 hits
+            
+            if (ring.hits >= ring.maxHits) {
+              ring.active = false;
+              setScore((s) => s + ring.maxHits * 5);
+              
+              // Spawn new bricks equal to double maxHits
+              const brickWidth = 45;
+              const brickHeight = 18;
+              const padding = 6;
+              const cols = 8;
+              const offsetX = 20;
+              const numBricks = ring.maxHits * 2;
+              
+              for (let i = 0; i < numBricks; i++) {
+                const col = i % cols;
+                const row = Math.floor(i / cols);
+                gameRef.current.bricks.push({
+                  x: offsetX + col * (brickWidth + padding),
+                  y: -30 - row * (brickHeight + padding),
+                  width: brickWidth,
+                  height: brickHeight,
+                  color: ring.color,
+                  active: true,
+                });
+              }
+            }
+          }
+          // Don't bounce - pass through
         }
       }
     }
