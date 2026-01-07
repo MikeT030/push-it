@@ -181,7 +181,16 @@ const DailyGroupOverview = () => {
             <p className="text-sm text-muted-foreground">group push-ups</p>
           </div>
           <div className="text-right">
-            <p className={`text-2xl font-bold ${percentage >= 100 ? "text-primary" : "text-foreground"}`}>
+            <p 
+              className="text-2xl font-bold"
+              style={{ 
+                color: percentage >= 200 
+                  ? "#C029DE" 
+                  : percentage >= 101 
+                    ? "#4300FF" 
+                    : "#0ABAB5" 
+              }}
+            >
               {percentage}%
             </p>
             <p className="text-sm text-muted-foreground">of {dailyTarget.toLocaleString()} target</p>
