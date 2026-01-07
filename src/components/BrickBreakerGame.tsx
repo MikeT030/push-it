@@ -187,10 +187,21 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       ball.x > paddle.x &&
       ball.x < paddle.x + paddle.width
     ) {
+      // Speed boost on paddle hit
+      const speedBoost = 1.05;
+      const maxSpeed = 12;
+      const currentSpeed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
+      const newSpeed = Math.min(currentSpeed * speedBoost, maxSpeed);
+      
       ball.dy = -Math.abs(ball.dy);
       // Add angle based on where ball hits paddle
       const hitPos = (ball.x - paddle.x) / paddle.width;
       ball.dx = 8 * (hitPos - 0.5);
+      
+      // Normalize and apply boosted speed
+      const angle = Math.atan2(ball.dy, ball.dx);
+      ball.dx = Math.cos(angle) * newSpeed;
+      ball.dy = Math.sin(angle) * newSpeed;
     }
 
     // Brick collisions
