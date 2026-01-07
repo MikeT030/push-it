@@ -368,7 +368,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         }
       }
     } else {
-      // In pass-through mode: deal 3 hits to rings without bouncing
+      // In pass-through mode: deal 5 hits to rings without bouncing
       for (const ring of rings) {
         if (!ring.active) continue;
         
@@ -379,9 +379,9 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
           const ringKey = `ring_${ring.radius}`;
           if (!gameRef.current.hitObjects.has(ringKey)) {
             gameRef.current.hitObjects.add(ringKey);
-            // Deal 3 hits to the ring
-            ring.hits += 3;
-            setScore((s) => s + 15); // 3x score for 3 hits
+            // Deal 5 hits to the ring
+            ring.hits += 5;
+            setScore((s) => s + 25); // 5x score for 5 hits
             
             if (ring.hits >= ring.maxHits) {
               ring.active = false;
