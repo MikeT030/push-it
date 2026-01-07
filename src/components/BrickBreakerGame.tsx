@@ -39,15 +39,38 @@ const BRICK_COLORS = [
 const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const [gameState, setGameState] = useState<"playing" | "won" | "lost">("playing");
+  const [gameState, setGameState] = useState<"playing" | "waiting" | "lost">("waiting");
   const [score, setScore] = useState(0);
   
   const gameRef = useRef({
-    ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 } as Ball,
+    ball: { x: 200, y: 450, dx: 0, dy: 0, radius: 8 } as Ball,
     paddle: { x: 150, y: 520, width: 100, height: 12 } as Paddle,
     bricks: [] as Brick[],
     targetHole: { x: 200, y: 250, innerRadius: 26, outerRadius: 80 },
+    ballOnPaddle: true,
   });
+
+  const resetBallToPaddle = useCallback(() => {
+    const { paddle } = gameRef.current;
+    gameRef.current.ball = {
+      x: paddle.x + paddle.width / 2,
+      y: paddle.y - 10,
+      dx: 0,
+      dy: 0,
+      radius: 8,
+    };
+    gameRef.current.ballOnPaddle = true;
+    setGameState("waiting");
+  }, []);
+
+  const launchBall = useCallback(() => {
+    if (gameRef.current.ballOnPaddle && gameState === "waiting") {
+      gameRef.current.ball.dx = 4;
+      gameRef.current.ball.dy = -5;
+      gameRef.current.ballOnPaddle = false;
+      setGameState("playing");
+    }
+  }, [gameState]);
 
   const initGame = useCallback(() => {
     const bricks: Brick[] = [];
@@ -73,13 +96,14 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     }
 
     gameRef.current = {
-      ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 },
+      ball: { x: 200, y: 510, dx: 0, dy: 0, radius: 8 },
       paddle: { x: 150, y: 520, width: 100, height: 12 },
       bricks,
       targetHole: { x: 200, y: 220, innerRadius: 26, outerRadius: 80 },
+      ballOnPaddle: true,
     };
     setScore(0);
-    setGameState("playing");
+    setGameState("waiting");
   }, []);
 
   const drawTarget = useCallback((ctx: CanvasRenderingContext2D) => {
@@ -158,7 +182,15 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
 
   const update = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || gameState !== "playing") return;
+    if (!canvas || gameState !== "playing") {
+      // Still update ball position when waiting (on paddle)
+      if (gameRef.current.ballOnPaddle) {
+        const { paddle } = gameRef.current;
+        gameRef.current.ball.x = paddle.x + paddle.width / 2;
+        gameRef.current.ball.y = paddle.y - 10;
+      }
+      return;
+    }
 
     const { ball, paddle, bricks, targetHole } = gameRef.current;
 
@@ -220,12 +252,13 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       }
     });
 
-    // Check if ball goes through the hole (win condition)
+    // Check if ball goes through the hole - score 100 points and reset to paddle
     const distToCenter = Math.sqrt(
       (ball.x - targetHole.x) ** 2 + (ball.y - targetHole.y) ** 2
     );
     if (distToCenter < targetHole.innerRadius - ball.radius) {
-      setGameState("won");
+      setScore((s) => s + 100);
+      resetBallToPaddle();
       return;
     }
 
@@ -237,7 +270,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       ball.dx = Math.cos(angle) * speed;
       ball.dy = Math.sin(angle) * speed;
     }
-  }, [gameState]);
+  }, [gameState, resetBallToPaddle]);
 
   const gameLoop = useCallback(() => {
     const canvas = canvasRef.current;
@@ -247,7 +280,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     update();
     draw(ctx);
 
-    if (gameState === "playing") {
+    if (gameState === "playing" || gameState === "waiting") {
       animationRef.current = requestAnimationFrame(gameLoop);
     }
   }, [update, draw, gameState]);
@@ -333,14 +366,23 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
           ref={canvasRef}
           width={400}
           height={550}
-          className="rounded-xl mt-8"
+          className="rounded-xl mt-8 cursor-pointer"
+          onClick={launchBall}
+          onTouchStart={launchBall}
         />
 
+        {/* Tap to start hint */}
+        {gameState === "waiting" && (
+          <div className="absolute inset-0 flex items-end justify-center pb-24 pointer-events-none">
+            <p className="text-white/70 text-sm animate-pulse">Tap to launch</p>
+          </div>
+        )}
+
         {/* Game over overlay */}
-        {gameState !== "playing" && (
+        {gameState === "lost" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-2xl">
             <h2 className="text-3xl font-bold text-white mb-4">
-              {gameState === "won" ? "🎉 You Win!" : "💥 Game Over"}
+              💥 Game Over
             </h2>
             <p className="text-white/80 mb-6">Score: {score}</p>
             <button
