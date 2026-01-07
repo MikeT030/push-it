@@ -1,7 +1,11 @@
 import { Calendar, Target, User, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const BottomNav = () => {
+interface BottomNavProps {
+  disabled?: boolean;
+}
+
+const BottomNav = ({ disabled = false }: BottomNavProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -14,7 +18,7 @@ const BottomNav = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 safe-bottom">
+    <nav className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 safe-bottom transition-opacity duration-300 ${disabled ? "opacity-50 pointer-events-none" : ""}`}>
       <div className="nav-pill px-2 py-2 flex items-center gap-1 shadow-2xl shadow-background/50">
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -23,7 +27,8 @@ const BottomNav = () => {
           return (
             <button
               key={tab.id}
-              onClick={() => navigate(tab.path)}
+              onClick={() => !disabled && navigate(tab.path)}
+              disabled={disabled}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-300 ${
                 active
                   ? "bg-[#0ABAB5]/15 text-[#0ABAB5] border border-[#0ABAB5] shadow-lg shadow-[#0ABAB5]/30"
