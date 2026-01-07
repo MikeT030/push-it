@@ -109,26 +109,34 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   const drawTarget = useCallback((ctx: CanvasRenderingContext2D) => {
     const { targetHole } = gameRef.current;
     const { x, y, outerRadius } = targetHole;
-
-    // Outer circle - Teal
+    
+    // Gap angle at the bottom for entry (in radians)
+    const gapAngle = 0.4; // Width of the gap
+    const gapStart = Math.PI / 2 - gapAngle; // Start just before bottom
+    const gapEnd = Math.PI / 2 + gapAngle; // End just after bottom
+    
+    // Outer circle - Teal (with gap at bottom)
     ctx.beginPath();
-    ctx.arc(x, y, outerRadius, 0, Math.PI * 2);
+    ctx.arc(x, y, outerRadius, gapEnd, gapStart + Math.PI * 2);
     ctx.strokeStyle = "#0ABAB5";
     ctx.lineWidth = 14;
+    ctx.lineCap = "round";
     ctx.stroke();
 
-    // Middle circle - Purple/Magenta
+    // Middle circle - Purple/Magenta (with gap at bottom)
     ctx.beginPath();
-    ctx.arc(x, y, 60, 0, Math.PI * 2);
+    ctx.arc(x, y, 60, gapEnd, gapStart + Math.PI * 2);
     ctx.strokeStyle = "#C029DE";
     ctx.lineWidth = 14;
+    ctx.lineCap = "round";
     ctx.stroke();
 
-    // Inner circle - Blue (this is the hole)
+    // Inner circle - Blue (with gap at bottom)
     ctx.beginPath();
-    ctx.arc(x, y, 40, 0, Math.PI * 2);
+    ctx.arc(x, y, 40, gapEnd, gapStart + Math.PI * 2);
     ctx.strokeStyle = "#4300FF";
     ctx.lineWidth = 14;
+    ctx.lineCap = "round";
     ctx.stroke();
   }, []);
 
@@ -252,6 +260,11 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       }
     });
 
+    // Check if ball is in the gap area (bottom entry)
+    const angleToCenter = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
+    const gapAngle = 0.4;
+    const isInGap = angleToCenter > (Math.PI / 2 - gapAngle) && angleToCenter < (Math.PI / 2 + gapAngle);
+    
     // Check if ball goes through the hole - score 100 points and reset to paddle
     const distToCenter = Math.sqrt(
       (ball.x - targetHole.x) ** 2 + (ball.y - targetHole.y) ** 2
@@ -262,8 +275,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       return;
     }
 
-    // Target ring collision (bounces off the rings)
-    if (distToCenter > targetHole.innerRadius && distToCenter < targetHole.outerRadius + 14) {
+    // Target ring collision (bounces off the rings, but not in gap area)
+    if (!isInGap && distToCenter > targetHole.innerRadius && distToCenter < targetHole.outerRadius + 14) {
       // Calculate bounce direction
       const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
       const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
