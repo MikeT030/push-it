@@ -61,7 +61,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
       { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
     ] as Ring[],
-    passThrough: false, // Ball passes through everything once when a ring is destroyed
+    passThroughUntil: 0, // Timestamp when pass-through expires
   });
 
   const initGame = useCallback(() => {
@@ -97,7 +97,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
         { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
       ],
-      passThrough: false,
+      passThroughUntil: 0,
     };
     setScore(0);
     setGameState("playing");
@@ -171,7 +171,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ctx.fill();
 
     // Draw ball with glow (golden glow when pass-through is active)
-    const isPassThrough = gameRef.current.passThrough;
+    const isPassThrough = Date.now() < gameRef.current.passThroughUntil;
     ctx.shadowColor = isPassThrough ? "#FFD700" : "#fff";
     ctx.shadowBlur = isPassThrough ? 25 : 15;
     ctx.fillStyle = isPassThrough ? "#FFD700" : "#fff";
@@ -229,9 +229,11 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       ball.dy = Math.sin(angle) * newSpeed;
     }
 
-    // Brick collisions (skip if pass-through is active)
-    let hitBrick = false;
-    if (!gameRef.current.passThrough) {
+    // Check if pass-through is active
+    const isPassThrough = Date.now() < gameRef.current.passThroughUntil;
+
+    // Brick collisions (skip bounce if pass-through is active)
+    if (!isPassThrough) {
       bricks.forEach((brick) => {
         if (brick.active) {
           if (
@@ -243,7 +245,6 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
             brick.active = false;
             ball.dy = -ball.dy;
             setScore((s) => s + 10);
-            hitBrick = true;
           }
         }
       });
@@ -259,14 +260,9 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
           ) {
             brick.active = false;
             setScore((s) => s + 10);
-            hitBrick = true;
           }
         }
       });
-      // Disable pass-through after hitting something
-      if (hitBrick) {
-        gameRef.current.passThrough = false;
-      }
     }
 
     // Check distance to center for ring collisions
@@ -293,7 +289,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     }
 
     // Ring collision detection (from outer to inner) - skip if pass-through is active
-    if (!gameRef.current.passThrough) {
+    if (!isPassThrough) {
       for (const ring of rings) {
         if (!ring.active) continue;
         
@@ -309,8 +305,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
             ring.active = false;
             setScore((s) => s + ring.maxHits * 5);
             
-            // Enable pass-through for one collision
-            gameRef.current.passThrough = true;
+            // Enable pass-through for 3 seconds
+            gameRef.current.passThroughUntil = Date.now() + 3000;
             
             // Spawn new bricks equal to double maxHits
             const brickWidth = 45;
@@ -344,21 +340,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
           break; // Only hit one ring per frame
         }
       }
-    } else {
-      // In pass-through mode, check if we're passing through a ring to disable it
-      for (const ring of rings) {
-        if (!ring.active) continue;
-        
-        const innerEdge = ring.radius - ring.lineWidth / 2;
-        const outerEdge = ring.radius + ring.lineWidth / 2;
-        
-        if (distToCenter + ball.radius > innerEdge && distToCenter - ball.radius < outerEdge) {
-          // Passed through a ring, disable pass-through
-          gameRef.current.passThrough = false;
-          break;
-        }
-      }
     }
+    // In pass-through mode, ball just passes through rings without any collision
     
     // Animate new bricks falling down
     gameRef.current.bricks.forEach((brick) => {
