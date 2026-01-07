@@ -63,8 +63,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ] as Ring[],
     passThrough: false, // Ball passes through everything when a ring is destroyed
     passThroughEndTime: 0, // Timestamp when pass-through ends
-    hitObjects: new Set<string>(), // Track objects hit during pass-through to apply hits once
-    paddleBounceCount: 0, // Track paddle bounces for golden ball activation
+    hitObjects: new Set<string>(), // Track objects hit during pass-through to apply 3 hits once
   });
 
   const initGame = useCallback(() => {
@@ -103,7 +102,6 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       passThrough: false,
       passThroughEndTime: 0,
       hitObjects: new Set<string>(),
-      paddleBounceCount: 0,
     };
     setScore(0);
     setGameState("playing");
@@ -233,15 +231,6 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       const angle = Math.atan2(ball.dy, ball.dx);
       ball.dx = Math.cos(angle) * newSpeed;
       ball.dy = Math.sin(angle) * newSpeed;
-      
-      // Increment paddle bounce counter and check for golden ball activation
-      gameRef.current.paddleBounceCount++;
-      if (gameRef.current.paddleBounceCount >= 10 && !gameRef.current.passThrough) {
-        gameRef.current.passThrough = true;
-        gameRef.current.passThroughEndTime = Date.now() + 2000;
-        gameRef.current.hitObjects.clear();
-        gameRef.current.paddleBounceCount = 0;
-      }
     }
 
     // Check if pass-through has expired
