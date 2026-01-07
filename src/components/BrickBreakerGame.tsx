@@ -272,6 +272,26 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         if (ring.hits >= ring.maxHits) {
           ring.active = false;
           setScore((s) => s + ring.maxHits * 5);
+          
+          // Spawn new bricks equal to maxHits
+          const brickWidth = 45;
+          const brickHeight = 18;
+          const padding = 6;
+          const cols = 8;
+          const offsetX = 20;
+          
+          for (let i = 0; i < ring.maxHits; i++) {
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            gameRef.current.bricks.push({
+              x: offsetX + col * (brickWidth + padding),
+              y: -30 - row * (brickHeight + padding), // Start above screen
+              width: brickWidth,
+              height: brickHeight,
+              color: ring.color,
+              active: true,
+            });
+          }
         } else {
           setScore((s) => s + 5);
         }
@@ -284,6 +304,13 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         break; // Only hit one ring per frame
       }
     }
+    
+    // Animate new bricks falling down
+    gameRef.current.bricks.forEach((brick) => {
+      if (brick.y < 40 && brick.active) {
+        brick.y += 2; // Fall speed
+      }
+    });
   }, [gameState]);
 
   const gameLoop = useCallback(() => {
