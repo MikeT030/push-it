@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface GameContextType {
   isGameActive: boolean;
@@ -9,18 +9,6 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [isGameActive, setIsGameActive] = useState(false);
-
-  // Lock scroll when game is active
-  useEffect(() => {
-    if (isGameActive) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isGameActive]);
 
   return (
     <GameContext.Provider value={{ isGameActive, setIsGameActive }}>
