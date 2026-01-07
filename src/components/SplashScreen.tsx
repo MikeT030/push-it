@@ -33,17 +33,10 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         <div className="absolute w-[80px] h-[80px] rounded-full border-[14px] border-[#4300FF] box-border" />
       </div>
 
-      {/* App name with push-ups icon */}
-      <div className="flex items-center gap-2">
-        <h1 className="text-5xl font-black tracking-tight text-foreground">
-          Push-it
-        </h1>
-        <img 
-          src={pushUpsImage} 
-          alt="Person doing push-ups" 
-          className="h-12 w-auto"
-        />
-      </div>
+      {/* App name */}
+      <h1 className="text-5xl font-black tracking-tight text-foreground">
+        Push-it
+      </h1>
       
       <p className="mt-3 text-muted-foreground text-lg font-medium">
         30k push-up challenge
