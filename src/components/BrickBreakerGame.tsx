@@ -111,7 +111,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     const { x, y, outerRadius } = targetHole;
     
     // Gap angle at the bottom for entry (in radians)
-    const gapAngle = 0.4; // Width of the gap
+    const gapAngle = 0.6; // Width of the gap
     const gapStart = Math.PI / 2 - gapAngle; // Start just before bottom
     const gapEnd = Math.PI / 2 + gapAngle; // End just after bottom
     
@@ -262,7 +262,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
 
     // Check if ball is in the gap area (bottom entry)
     const angleToCenter = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
-    const gapAngle = 0.4;
+    const gapAngle = 0.6;
     const isInGap = angleToCenter > (Math.PI / 2 - gapAngle) && angleToCenter < (Math.PI / 2 + gapAngle);
     
     // Check if ball goes through the hole - score 100 points and reset to paddle
