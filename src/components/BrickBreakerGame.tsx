@@ -36,6 +36,15 @@ const BRICK_COLORS = [
   "#F8B500", "#FF6F61", "#6B5B95", "#88B04B", "#F7CAC9",
 ];
 
+interface Ring {
+  radius: number;
+  lineWidth: number;
+  color: string;
+  hits: number;
+  maxHits: number;
+  active: boolean;
+}
+
 const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
@@ -46,7 +55,12 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 } as Ball,
     paddle: { x: 150, y: 520, width: 100, height: 12 } as Paddle,
     bricks: [] as Brick[],
-    targetHole: { x: 200, y: 250, innerRadius: 26, outerRadius: 80 },
+    targetHole: { x: 200, y: 220 },
+    rings: [
+      { radius: 80, lineWidth: 14, color: "#0ABAB5", hits: 0, maxHits: 10, active: true },  // Outer
+      { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 20, active: true },  // Middle
+      { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 50, active: true },  // Inner
+    ] as Ring[],
   });
 
   const initGame = useCallback(() => {
@@ -76,36 +90,44 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 },
       paddle: { x: 150, y: 520, width: 100, height: 12 },
       bricks,
-      targetHole: { x: 200, y: 220, innerRadius: 26, outerRadius: 80 },
+      targetHole: { x: 200, y: 220 },
+      rings: [
+        { radius: 80, lineWidth: 14, color: "#0ABAB5", hits: 0, maxHits: 10, active: true },  // Outer
+        { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 20, active: true },  // Middle
+        { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 50, active: true },  // Inner
+      ],
     };
     setScore(0);
     setGameState("playing");
   }, []);
 
   const drawTarget = useCallback((ctx: CanvasRenderingContext2D) => {
-    const { targetHole } = gameRef.current;
-    const { x, y, outerRadius } = targetHole;
+    const { targetHole, rings } = gameRef.current;
+    const { x, y } = targetHole;
 
-    // Outer circle - Teal
-    ctx.beginPath();
-    ctx.arc(x, y, outerRadius, 0, Math.PI * 2);
-    ctx.strokeStyle = "#0ABAB5";
-    ctx.lineWidth = 14;
-    ctx.stroke();
-
-    // Middle circle - Purple/Magenta
-    ctx.beginPath();
-    ctx.arc(x, y, 60, 0, Math.PI * 2);
-    ctx.strokeStyle = "#C029DE";
-    ctx.lineWidth = 14;
-    ctx.stroke();
-
-    // Inner circle - Blue (this is the hole)
-    ctx.beginPath();
-    ctx.arc(x, y, 40, 0, Math.PI * 2);
-    ctx.strokeStyle = "#4300FF";
-    ctx.lineWidth = 14;
-    ctx.stroke();
+    // Draw each active ring with health indicator
+    rings.forEach((ring) => {
+      if (ring.active) {
+        ctx.beginPath();
+        ctx.arc(x, y, ring.radius, 0, Math.PI * 2);
+        
+        // Fade color based on remaining health
+        const healthPercent = 1 - (ring.hits / ring.maxHits);
+        ctx.globalAlpha = 0.3 + (healthPercent * 0.7);
+        ctx.strokeStyle = ring.color;
+        ctx.lineWidth = ring.lineWidth;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        
+        // Show hit count on ring
+        if (ring.hits > 0) {
+          ctx.fillStyle = "#fff";
+          ctx.font = "bold 10px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(`${ring.maxHits - ring.hits}`, x + ring.radius - 5, y - 3);
+        }
+      }
+    });
   }, []);
 
   const draw = useCallback((ctx: CanvasRenderingContext2D) => {
@@ -220,22 +242,55 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       }
     });
 
-    // Check if ball goes through the hole (win condition)
+    // Check distance to center for ring collisions
     const distToCenter = Math.sqrt(
       (ball.x - targetHole.x) ** 2 + (ball.y - targetHole.y) ** 2
     );
-    if (distToCenter < targetHole.innerRadius - ball.radius) {
+
+    // Find the innermost active ring
+    const { rings } = gameRef.current;
+    const activeRings = rings.filter(r => r.active).sort((a, b) => a.radius - b.radius);
+    const innermostRing = activeRings[0];
+
+    // Win condition: ball reaches center when no rings are active, or passes innermost ring
+    if (!innermostRing) {
+      // All rings destroyed, check if ball is in center
+      if (distToCenter < 26) {
+        setGameState("won");
+        return;
+      }
+    } else if (distToCenter < innermostRing.radius - innermostRing.lineWidth / 2 - ball.radius) {
+      // Ball passed through the innermost ring opening
       setGameState("won");
       return;
     }
 
-    // Target ring collision (bounces off the rings)
-    if (distToCenter > targetHole.innerRadius && distToCenter < targetHole.outerRadius + 14) {
-      // Calculate bounce direction
-      const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
-      const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
-      ball.dx = Math.cos(angle) * speed;
-      ball.dy = Math.sin(angle) * speed;
+    // Ring collision detection (from outer to inner)
+    for (const ring of rings) {
+      if (!ring.active) continue;
+      
+      const innerEdge = ring.radius - ring.lineWidth / 2;
+      const outerEdge = ring.radius + ring.lineWidth / 2;
+      
+      // Check if ball is touching this ring
+      if (distToCenter + ball.radius > innerEdge && distToCenter - ball.radius < outerEdge) {
+        // Hit the ring
+        ring.hits++;
+        
+        if (ring.hits >= ring.maxHits) {
+          ring.active = false;
+          setScore((s) => s + ring.maxHits * 5);
+        } else {
+          setScore((s) => s + 5);
+        }
+        
+        // Bounce off the ring
+        const angle = Math.atan2(ball.y - targetHole.y, ball.x - targetHole.x);
+        const speed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
+        ball.dx = Math.cos(angle) * speed;
+        ball.dy = Math.sin(angle) * speed;
+        break; // Only hit one ring per frame
+      }
     }
   }, [gameState]);
 
