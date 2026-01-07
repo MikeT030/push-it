@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BrickBreakerGame from "./BrickBreakerGame";
 
 interface ProgressRingProps {
@@ -6,6 +6,7 @@ interface ProgressRingProps {
   size?: number;
   strokeWidth?: number;
   className?: string;
+  onGameStateChange?: (isOpen: boolean) => void;
 }
 
 const ProgressRing = ({
@@ -13,8 +14,13 @@ const ProgressRing = ({
   size = 120,
   strokeWidth = 12,
   className = "",
+  onGameStateChange,
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
+  
+  useEffect(() => {
+    onGameStateChange?.(showGame);
+  }, [showGame, onGameStateChange]);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   
