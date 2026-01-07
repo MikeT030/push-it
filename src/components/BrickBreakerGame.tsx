@@ -58,8 +58,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     targetHole: { x: 200, y: 220 },
     rings: [
       { radius: 80, lineWidth: 14, color: "#0ABAB5", hits: 0, maxHits: 10, active: true },  // Outer
-      { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 20, active: true },  // Middle
-      { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 50, active: true },  // Inner
+      { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
+      { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
     ] as Ring[],
   });
 
@@ -93,8 +93,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       targetHole: { x: 200, y: 220 },
       rings: [
         { radius: 80, lineWidth: 14, color: "#0ABAB5", hits: 0, maxHits: 10, active: true },  // Outer
-        { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 20, active: true },  // Middle
-        { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 50, active: true },  // Inner
+        { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
+        { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
       ],
     };
     setScore(0);
@@ -118,6 +118,14 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         ctx.lineWidth = ring.lineWidth;
         ctx.stroke();
         ctx.globalAlpha = 1;
+        
+        // Show remaining hits on ring
+        const remaining = ring.maxHits - ring.hits;
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 10px sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`${remaining}`, x + ring.radius - 5, y);
       }
     });
   }, []);
