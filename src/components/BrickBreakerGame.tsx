@@ -213,7 +213,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       ball.x < paddle.x + paddle.width
     ) {
       // Speed boost on paddle hit
-      const speedBoost = 1.02;
+      const speedBoost = 1.035;
       const maxSpeed = 12;
       const currentSpeed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
       const newSpeed = Math.min(currentSpeed * speedBoost, maxSpeed);
