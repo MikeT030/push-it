@@ -191,7 +191,7 @@ const WeeklyGroupOverview = () => {
             <p className="text-sm text-muted-foreground">group push-ups</p>
           </div>
           <div className="text-right">
-            <p className={`text-2xl font-bold ${weeklyData.percentage >= 100 ? "text-primary" : "text-foreground"}`}>
+            <p className="text-2xl font-bold text-white">
               {weeklyData.percentage}%
             </p>
             <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget.toLocaleString()} target</p>
