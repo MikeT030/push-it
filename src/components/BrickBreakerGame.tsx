@@ -281,14 +281,15 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
           ring.active = false;
           setScore((s) => s + ring.maxHits * 5);
           
-          // Spawn new bricks equal to maxHits
+          // Spawn new bricks equal to double maxHits
           const brickWidth = 45;
           const brickHeight = 18;
           const padding = 6;
           const cols = 8;
           const offsetX = 20;
+          const numBricks = ring.maxHits * 2;
           
-          for (let i = 0; i < ring.maxHits; i++) {
+          for (let i = 0; i < numBricks; i++) {
             const col = i % cols;
             const row = Math.floor(i / cols);
             gameRef.current.bricks.push({
