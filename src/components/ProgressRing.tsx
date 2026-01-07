@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BrickBreakerGame from "./BrickBreakerGame";
+import { useGame } from "@/contexts/GameContext";
 
 interface ProgressRingProps {
   progress: number; // 0 to 100+
@@ -15,6 +16,11 @@ const ProgressRing = ({
   className = "",
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
+  const { setIsGameActive } = useGame();
+  
+  useEffect(() => {
+    setIsGameActive(showGame);
+  }, [showGame, setIsGameActive]);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   

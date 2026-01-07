@@ -1,9 +1,11 @@
 import { Calendar, Target, User, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useGame } from "@/contexts/GameContext";
 
 const BottomNav = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isGameActive } = useGame();
 
   const tabs = [
     { id: "total", label: "You", icon: Target, path: "/" },
@@ -14,7 +16,7 @@ const BottomNav = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 safe-bottom">
+    <nav className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 safe-bottom transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
       <div className="nav-pill px-2 py-2 flex items-center gap-1 shadow-2xl shadow-background/50">
         {tabs.map((tab) => {
           const Icon = tab.icon;

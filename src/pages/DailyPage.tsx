@@ -8,6 +8,7 @@ import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { useGame } from "@/contexts/GameContext";
 
 const DailyPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const DailyPage = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
+  const { isGameActive } = useGame();
   const previousCountRef = useRef<number>(0);
   const {
     getEntryForDate,
@@ -178,7 +180,7 @@ const DailyPage = () => {
         </div>
 
         {/* Calendar Card */}
-        <div className="bg-card rounded-2xl p-5 animate-slide-up" style={{
+        <div className={`bg-card rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
         animationDelay: "0.1s"
       }}>
           {/* Month Navigation */}
