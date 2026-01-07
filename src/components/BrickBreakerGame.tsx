@@ -501,13 +501,13 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+          className="absolute top-3 right-[calc(0.75rem+15px)] z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
         >
           <X className="w-5 h-5 text-foreground" />
         </button>
 
         {/* Score */}
-        <div className="absolute top-3 left-4 text-foreground font-bold text-lg">
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 text-foreground font-bold text-lg">
           Score: {score}
         </div>
 
