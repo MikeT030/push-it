@@ -496,8 +496,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 animate-fade-in">
-      <div className="relative bg-background rounded-2xl p-4 shadow-2xl">
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-background rounded-2xl animate-fade-in">
+      <div className="relative bg-background rounded-2xl p-4">
         {/* Close button */}
         <button
           onClick={onClose}
