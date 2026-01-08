@@ -40,8 +40,8 @@ const BottomNav = () => {
                   className="w-5 h-5 flex-shrink-0"
                   style={{
                     filter: active 
-                      ? 'invert(58%) sepia(83%) saturate(416%) hue-rotate(127deg) brightness(95%) contrast(92%)' 
-                      : 'invert(60%) sepia(7%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(85%)'
+                      ? 'invert(64%) sepia(52%) saturate(600%) hue-rotate(127deg) brightness(92%) contrast(90%)' 
+                      : 'invert(45%) sepia(0%) saturate(0%) brightness(100%) contrast(85%)'
                   }}
                 />
               ) : Icon ? (
