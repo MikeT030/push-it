@@ -501,7 +501,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-[calc(0.75rem+15px)] z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+          className="absolute top-3 right-[calc(0.75rem+25px)] z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
         >
           <X className="w-5 h-5 text-foreground" />
         </button>
