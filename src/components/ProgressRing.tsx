@@ -46,7 +46,14 @@ const ProgressRing = ({
         style={{ width: size, height: size }}
         onClick={() => enableGame && setShowGame(true)}
       >
-        <svg className="transform -rotate-90" width={size} height={size}>
+        <svg 
+          className="transform -rotate-90" 
+          width={size} 
+          height={size}
+          style={{
+            filter: "drop-shadow(0 0 6px rgba(186, 37, 216, 0.4))",
+          }}
+        >
           {/* Background ring */}
           <circle
             cx={size / 2}
