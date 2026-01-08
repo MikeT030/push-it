@@ -8,6 +8,7 @@ interface ProgressRingProps {
   strokeWidth?: number;
   className?: string;
   enableGame?: boolean;
+  enableAnimation?: boolean;
 }
 
 const ProgressRing = ({
@@ -16,6 +17,7 @@ const ProgressRing = ({
   strokeWidth = 12,
   className = "",
   enableGame = false,
+  enableAnimation = true,
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
   const { setIsGameActive } = useGame();
@@ -87,9 +89,9 @@ const ProgressRing = ({
         </svg>
         <div 
           className="absolute inset-0 flex items-center justify-center rounded-full"
-          style={{
+          style={enableAnimation ? {
             animation: 'heartbeatGlow 2.3s ease-in-out infinite',
-          }}
+          } : undefined}
         >
           <span 
             className="text-2xl font-bold"

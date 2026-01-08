@@ -139,7 +139,7 @@ const TotalPage = () => {
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
           
           <div className="flex items-center gap-6">
-            <ProgressRing progress={yearProgress} size={140} strokeWidth={14} />
+            <ProgressRing progress={yearProgress} size={140} strokeWidth={14} enableAnimation={false} />
             
             <div className="flex-1">
               <div className="mb-4">
