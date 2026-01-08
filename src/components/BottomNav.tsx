@@ -18,7 +18,7 @@ const BottomNav = () => {
 
   return (
     <nav className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 safe-bottom transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
-      <div className="nav-pill px-[18px] py-2 flex items-center gap-1 shadow-2xl shadow-background/50">
+      <div className="nav-pill px-1.5 py-1.5 flex items-center gap-1 shadow-2xl shadow-background/50">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = isActive(tab.path);
