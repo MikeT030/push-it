@@ -27,7 +27,7 @@ const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-300 ${
+              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-full transition-all duration-300 whitespace-nowrap ${
                 active
                   ? "bg-[#0ABAB5]/15 text-[#0ABAB5] border border-[#0ABAB5] shadow-lg shadow-[#0ABAB5]/30"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -37,10 +37,10 @@ const BottomNav = () => {
                 <img 
                   src={tab.customIcon} 
                   alt={tab.label} 
-                  className={`w-5 h-5 ${active ? "brightness-0 invert-[0.6] sepia saturate-[10] hue-rotate-[140deg]" : "opacity-60"}`}
+                  className={`w-5 h-5 flex-shrink-0 ${active ? "brightness-0 invert-[0.6] sepia saturate-[10] hue-rotate-[140deg]" : "opacity-60"}`}
                 />
               ) : Icon ? (
-                <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
+                <Icon className="w-5 h-5 flex-shrink-0" strokeWidth={active ? 2.5 : 2} />
               ) : null}
               {active && (
                 <span className="text-sm font-semibold animate-fade-in">
