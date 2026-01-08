@@ -10,6 +10,7 @@ interface ProgressRingProps {
   enableGame?: boolean;
   enableAnimation?: boolean;
   enableGlow?: boolean;
+  enableSunReflection?: boolean;
 }
 
 const ProgressRing = ({
@@ -20,6 +21,7 @@ const ProgressRing = ({
   enableGame = false,
   enableAnimation = true,
   enableGlow = false,
+  enableSunReflection = false,
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
   const { setIsGameActive } = useGame();
@@ -90,7 +92,7 @@ const ProgressRing = ({
           )}
         </svg>
         <div 
-          className="absolute inset-0 flex items-center justify-center rounded-full"
+          className={`absolute inset-0 flex items-center justify-center rounded-full overflow-hidden ${enableSunReflection ? 'sun-reflection' : ''}`}
           style={enableGlow ? {
             filter: 'drop-shadow(0 0 12px #BA25D8) drop-shadow(0 0 24px rgba(186, 37, 216, 0.4))',
           } : undefined}
