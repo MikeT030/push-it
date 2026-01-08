@@ -83,7 +83,12 @@ const ProgressRing = ({
             />
           )}
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div 
+          className="absolute inset-0 flex items-center justify-center rounded-full"
+          style={{
+            animation: 'heartbeatGlow 1s ease-in-out infinite',
+          }}
+        >
           <span 
             className="text-2xl font-bold"
             style={{ color: '#ffffff' }}
