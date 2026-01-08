@@ -164,6 +164,25 @@ const TotalPage = () => {
               You're {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus} schedule
             </p>
           </div>
+
+          {/* Projected completion date */}
+          <div className="mt-3 p-3 rounded-xl bg-muted/50">
+            <p className="text-sm text-muted-foreground">
+              {stats.weeklyAvg > 0 ? (
+                <>
+                  🎯 At your current pace, you'll hit your goal on{" "}
+                  <span className="font-semibold text-foreground">
+                    {format(
+                      new Date(Date.now() + (remaining / stats.weeklyAvg) * 24 * 60 * 60 * 1000),
+                      "MMMM d, yyyy"
+                    )}
+                  </span>
+                </>
+              ) : (
+                "Start logging push-ups to see your projected completion date"
+              )}
+            </p>
+          </div>
         </div>
 
         {/* Stats Grid */}
