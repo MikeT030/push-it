@@ -2,7 +2,6 @@ import { Target, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGame } from "@/contexts/GameContext";
 import muscleIcon from "@/assets/muscle-icon.png";
-import muscleIconInactive from "@/assets/muscle-icon-inactive.png";
 
 const BottomNav = () => {
   const location = useLocation();
@@ -12,7 +11,7 @@ const BottomNav = () => {
   const tabs = [
     { id: "total", label: "You", icon: Target, path: "/" },
     { id: "group", label: "Group", icon: Users, path: "/group" },
-    { id: "push", label: "Push", icon: null, customIcon: muscleIcon, customIconInactive: muscleIconInactive, path: "/daily" },
+    { id: "push", label: "Push", icon: null, customIcon: muscleIcon, path: "/daily" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -36,13 +35,13 @@ const BottomNav = () => {
             >
               {tab.customIcon ? (
                 <img 
-                  src={active ? tab.customIcon : tab.customIconInactive} 
+                  src={tab.customIcon} 
                   alt={tab.label} 
                   className="w-5 h-5 flex-shrink-0"
                   style={{
                     filter: active 
                       ? 'invert(64%) sepia(52%) saturate(600%) hue-rotate(127deg) brightness(92%) contrast(90%)' 
-                      : undefined
+                      : 'invert(60%) brightness(100%)'
                   }}
                 />
               ) : Icon ? (
