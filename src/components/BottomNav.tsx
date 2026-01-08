@@ -41,7 +41,7 @@ const BottomNav = () => {
                   style={{
                     filter: active 
                       ? 'invert(64%) sepia(52%) saturate(600%) hue-rotate(127deg) brightness(92%) contrast(90%)' 
-                      : 'invert(45%) sepia(0%) saturate(0%) brightness(100%) contrast(85%)'
+                      : 'invert(60%) sepia(0%) saturate(0%) brightness(100%) contrast(100%)'
                   }}
                 />
               ) : Icon ? (
