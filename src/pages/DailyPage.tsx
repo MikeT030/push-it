@@ -148,7 +148,7 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
             </div>
-            <ProgressRing progress={progress} size={100} strokeWidth={10} enableGame={true} enableAnimation={false} enableGlow={true} />
+            <ProgressRing progress={progress} size={100} strokeWidth={10} enableGame={true} enableAnimation={false} />
           </div>
 
           {/* Input Controls */}
