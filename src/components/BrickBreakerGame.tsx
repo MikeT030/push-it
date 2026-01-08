@@ -528,7 +528,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
             <p className="text-white/80 mb-6">Score: {score}</p>
             <button
               onClick={initGame}
-              className="px-6 py-3 bg-primary text-primary-foreground font-bold rounded-lg hover:opacity-90 transition-opacity"
+              className="px-8 py-3 w-[75%] bg-[hsl(292,75%,52%)] text-white font-bold rounded-lg hover:opacity-90 transition-opacity"
             >
               Play Again
             </button>
