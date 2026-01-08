@@ -27,7 +27,7 @@ const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-full transition-all duration-300 whitespace-nowrap ${
+              className={`flex items-center justify-center gap-2 px-[22px] py-2.5 rounded-full transition-all duration-300 whitespace-nowrap ${
                 active
                   ? "bg-[#0ABAB5]/15 text-[#0ABAB5] border border-[#0ABAB5] shadow-lg shadow-[#0ABAB5]/30"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
