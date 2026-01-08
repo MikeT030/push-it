@@ -1,6 +1,7 @@
-import { Calendar, Target, User, Users } from "lucide-react";
+import { Target, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGame } from "@/contexts/GameContext";
+import muscleIcon from "@/assets/muscle-icon.png";
 
 const BottomNav = () => {
   const location = useLocation();
@@ -10,7 +11,7 @@ const BottomNav = () => {
   const tabs = [
     { id: "total", label: "You", icon: Target, path: "/" },
     { id: "group", label: "Group", icon: Users, path: "/group" },
-    { id: "daily", label: "Daily", icon: Calendar, path: "/daily" },
+    { id: "push", label: "Push", icon: null, customIcon: muscleIcon, path: "/daily" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -32,7 +33,15 @@ const BottomNav = () => {
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               }`}
             >
-              <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
+              {tab.customIcon ? (
+                <img 
+                  src={tab.customIcon} 
+                  alt={tab.label} 
+                  className={`w-5 h-5 ${active ? "brightness-0 invert-[0.6] sepia saturate-[10] hue-rotate-[140deg]" : "opacity-60"}`}
+                />
+              ) : Icon ? (
+                <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
+              ) : null}
               {active && (
                 <span className="text-sm font-semibold animate-fade-in">
                   {tab.label}
