@@ -9,6 +9,7 @@ import MuscleConfetti from "@/components/MuscleConfetti";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
+import WeeklyOverview from "@/components/WeeklyOverview";
 
 const DailyPage = () => {
   const navigate = useNavigate();
@@ -230,6 +231,11 @@ const DailyPage = () => {
                 </button>;
           })}
           </div>
+        </div>
+
+        {/* Weekly Overview */}
+        <div className="mt-6">
+          <WeeklyOverview />
         </div>
       </div>
     </div>;
