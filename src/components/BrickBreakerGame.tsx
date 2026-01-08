@@ -1,27 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { X, Trophy } from "lucide-react";
-
-interface HighScore {
-  score: number;
-  date: string;
-}
-
-const getHighScores = (): HighScore[] => {
-  try {
-    const stored = localStorage.getItem("brickbreaker_highscores");
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
-};
-
-const saveHighScore = (score: number) => {
-  const scores = getHighScores();
-  scores.push({ score, date: new Date().toLocaleDateString() });
-  scores.sort((a, b) => b.score - a.score);
-  const top10 = scores.slice(0, 10);
-  localStorage.setItem("brickbreaker_highscores", JSON.stringify(top10));
-};
+import { X } from "lucide-react";
 
 interface BrickBreakerGameProps {
   isOpen: boolean;
@@ -72,8 +50,6 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   const animationRef = useRef<number>();
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">("playing");
   const [score, setScore] = useState(0);
-  const [showScoreboard, setShowScoreboard] = useState(false);
-  const [highScores, setHighScores] = useState<HighScore[]>([]);
   
   const gameRef = useRef({
     ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 } as Ball,
@@ -551,56 +527,10 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
             </h2>
             <p className="text-white/80 mb-6">Score: {score}</p>
             <button
-              onClick={() => {
-                saveHighScore(score);
-                initGame();
-              }}
+              onClick={initGame}
               className="px-6 py-3 bg-primary text-primary-foreground font-bold rounded-lg hover:opacity-90 transition-opacity"
             >
               Play Again
-            </button>
-            <button
-              onClick={() => {
-                saveHighScore(score);
-                setHighScores(getHighScores());
-                setShowScoreboard(true);
-              }}
-              className="mt-3 px-6 py-3 bg-muted text-foreground font-bold rounded-lg hover:bg-muted/80 transition-opacity flex items-center gap-2"
-            >
-              <Trophy className="w-5 h-5" />
-              Scoreboard
-            </button>
-          </div>
-        )}
-
-        {/* Scoreboard modal */}
-        {showScoreboard && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 rounded-2xl p-6">
-            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-              <Trophy className="w-6 h-6 text-yellow-400" />
-              Top 10 Scores
-            </h2>
-            <div className="bg-muted rounded-lg p-4 w-64 max-h-80 overflow-y-auto">
-              {highScores.length === 0 ? (
-                <p className="text-muted-foreground text-center">No scores yet!</p>
-              ) : (
-                <ol className="space-y-2">
-                  {highScores.map((hs, index) => (
-                    <li key={index} className="flex justify-between text-foreground">
-                      <span className="font-medium">
-                        {index + 1}. {hs.score}
-                      </span>
-                      <span className="text-muted-foreground text-sm">{hs.date}</span>
-                    </li>
-                  ))}
-                </ol>
-              )}
-            </div>
-            <button
-              onClick={() => setShowScoreboard(false)}
-              className="mt-4 px-6 py-2 bg-primary text-primary-foreground font-bold rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Close
             </button>
           </div>
         )}
