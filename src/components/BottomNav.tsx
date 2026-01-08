@@ -1,7 +1,7 @@
 import { Target, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGame } from "@/contexts/GameContext";
-import muscleIcon from "@/assets/muscle-icon.png";
+import muscleIcon from "@/assets/muscle-icon.svg";
 
 const BottomNav = () => {
   const location = useLocation();
