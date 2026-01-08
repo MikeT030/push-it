@@ -169,8 +169,8 @@ const TotalPage = () => {
           <div className="mt-3 p-3 rounded-xl bg-muted/50">
             <p className="text-sm text-muted-foreground">
               {stats.weeklyAvg > 0 ? (
-                <>
-                  🎯 At your current pace, you'll hit your goal on{" "}
+              <>
+                  🎯 At this pace you'll hit the 30k on{" "}
                   <span className="font-semibold text-foreground">
                     {format(
                       new Date(Date.now() + (remaining / stats.weeklyAvg) * 24 * 60 * 60 * 1000),
