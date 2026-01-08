@@ -300,15 +300,9 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     const activeRings = rings.filter(r => r.active).sort((a, b) => a.radius - b.radius);
     const innermostRing = activeRings[0];
 
-    // Win condition: ball reaches center when no rings are active, or passes innermost ring
+    // Win condition: all rings must be destroyed
     if (!innermostRing) {
-      // All rings destroyed, check if ball is in center
-      if (distToCenter < 26) {
-        setGameState("won");
-        return;
-      }
-    } else if (distToCenter < innermostRing.radius - innermostRing.lineWidth / 2 - ball.radius) {
-      // Ball passed through the innermost ring opening
+      // All rings destroyed - player wins!
       setGameState("won");
       return;
     }
