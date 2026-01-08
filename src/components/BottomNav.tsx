@@ -37,7 +37,7 @@ const BottomNav = () => {
                 <img 
                   src={tab.customIcon} 
                   alt={tab.label} 
-                  className={`w-5 h-5 flex-shrink-0 ${active ? "brightness-0 invert-[0.6] sepia saturate-[10] hue-rotate-[140deg]" : "invert opacity-60"}`}
+                  className={`w-5 h-5 flex-shrink-0 ${active ? "brightness-0 invert-[0.6] sepia saturate-[10] hue-rotate-[140deg]" : "invert"}`}
                 />
               ) : Icon ? (
                 <Icon className="w-5 h-5 flex-shrink-0" strokeWidth={active ? 2.5 : 2} />
