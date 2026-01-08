@@ -181,7 +181,7 @@ const DailyPage = () => {
         </div>
 
         {/* Weekly Overview */}
-        <div className="mt-6 mb-6">
+        <div className={`mt-6 mb-6 transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
           <WeeklyOverview />
         </div>
 
