@@ -180,6 +180,11 @@ const DailyPage = () => {
           </Button>
         </div>
 
+        {/* Weekly Overview */}
+        <div className="mt-6 mb-6">
+          <WeeklyOverview />
+        </div>
+
         {/* Calendar Card */}
         <div className={`bg-card rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
         animationDelay: "0.1s"
@@ -231,11 +236,6 @@ const DailyPage = () => {
                 </button>;
           })}
           </div>
-        </div>
-
-        {/* Weekly Overview */}
-        <div className="mt-6">
-          <WeeklyOverview />
         </div>
       </div>
     </div>;
