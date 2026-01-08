@@ -11,6 +11,7 @@ interface ProgressRingProps {
   enableAnimation?: boolean;
   enableGlow?: boolean;
   enableSunReflection?: boolean;
+  enableOuterGlow?: boolean;
 }
 
 const ProgressRing = ({
@@ -22,6 +23,7 @@ const ProgressRing = ({
   enableAnimation = true,
   enableGlow = false,
   enableSunReflection = false,
+  enableOuterGlow = false,
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
   const { setIsGameActive } = useGame();
@@ -43,7 +45,14 @@ const ProgressRing = ({
     <>
       <div 
         className={`relative ${enableGame ? 'cursor-pointer' : ''} ${className}`} 
-        style={{ width: size, height: size }}
+        style={{ 
+          width: size, 
+          height: size,
+          ...(enableOuterGlow && {
+            borderRadius: '50%',
+            boxShadow: '0 0 0 2px #BA25D8, 0 4px 20px rgba(186, 37, 216, 0.4)',
+          }),
+        }}
         onClick={() => enableGame && setShowGame(true)}
       >
         <svg className="transform -rotate-90" width={size} height={size}>
