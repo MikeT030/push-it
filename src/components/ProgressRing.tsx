@@ -86,7 +86,7 @@ const ProgressRing = ({
         <div 
           className="absolute inset-0 flex items-center justify-center rounded-full"
           style={{
-            animation: 'heartbeatGlow 1s ease-in-out infinite',
+            animation: 'heartbeatGlow 2s ease-in-out infinite',
           }}
         >
           <span 
