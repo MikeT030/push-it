@@ -7,6 +7,7 @@ interface ProgressRingProps {
   size?: number;
   strokeWidth?: number;
   className?: string;
+  enableGame?: boolean;
 }
 
 const ProgressRing = ({
@@ -14,6 +15,7 @@ const ProgressRing = ({
   size = 120,
   strokeWidth = 12,
   className = "",
+  enableGame = false,
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
   const { setIsGameActive } = useGame();
@@ -34,9 +36,9 @@ const ProgressRing = ({
   return (
     <>
       <div 
-        className={`relative cursor-pointer ${className}`} 
+        className={`relative ${enableGame ? 'cursor-pointer' : ''} ${className}`} 
         style={{ width: size, height: size }}
-        onClick={() => setShowGame(true)}
+        onClick={() => enableGame && setShowGame(true)}
       >
         <svg className="transform -rotate-90" width={size} height={size}>
           {/* Background ring */}
