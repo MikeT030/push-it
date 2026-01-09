@@ -1,6 +1,11 @@
-import { Calendar, Target, User, Users } from "lucide-react";
+import { Target, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGame } from "@/contexts/GameContext";
+import muscleIcon from "@/assets/muscle-icon.svg";
+
+const MuscleIcon = ({ className, strokeWidth }: { className?: string; strokeWidth?: number }) => (
+  <img src={muscleIcon} alt="Push" className={className} style={{ filter: 'var(--muscle-icon-filter)' }} />
+);
 
 const BottomNav = () => {
   const location = useLocation();
@@ -10,7 +15,7 @@ const BottomNav = () => {
   const tabs = [
     { id: "total", label: "You", icon: Target, path: "/" },
     { id: "group", label: "Group", icon: Users, path: "/group" },
-    { id: "daily", label: "Daily", icon: Calendar, path: "/daily" },
+    { id: "daily", label: "Push", icon: MuscleIcon, path: "/daily" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
