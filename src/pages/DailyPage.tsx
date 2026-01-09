@@ -10,14 +10,15 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import WeeklyOverview from "@/components/WeeklyOverview";
-
 const DailyPage = () => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
-  const { isGameActive } = useGame();
+  const {
+    isGameActive
+  } = useGame();
   const previousCountRef = useRef<number>(0);
   const {
     getEntryForDate,
@@ -47,7 +48,7 @@ const DailyPage = () => {
       const prevCount = currentCount;
       setInputValue(value);
       setEntryForDate(selectedDate, num);
-      
+
       // Trigger confetti when count increases
       if (num > prevCount && num > 0) {
         setShowConfetti(true);
@@ -59,25 +60,22 @@ const DailyPage = () => {
     const newCount = Math.max(0, Math.min(9999, currentCount + delta));
     setEntryForDate(selectedDate, newCount);
     setInputValue(newCount > 0 ? newCount.toString() : "");
-    
+
     // Trigger confetti when count increases
     if (newCount > prevCount && newCount > 0) {
       setShowConfetti(true);
     }
   };
-
   const handleShare = async () => {
     const streak = getCurrentStreak();
     const progressPercent = Math.round(progress);
     const dateStr = format(selectedDate, "MMMM d, yyyy");
-    
     const shareText = `💪 I did ${currentCount} push-ups on ${dateStr}!\n📊 ${progressPercent}% of daily target (${dailyTarget})\n🔥 ${streak} day streak\n\n#PushIt`;
-
     if (navigator.share) {
       try {
         await navigator.share({
           title: "My Push-ups",
-          text: shareText,
+          text: shareText
         });
       } catch (error) {
         // User cancelled or share failed - silently ignore
@@ -91,13 +89,13 @@ const DailyPage = () => {
         await navigator.clipboard.writeText(shareText);
         toast({
           title: "Copied to clipboard!",
-          description: "Share your progress anywhere",
+          description: "Share your progress anywhere"
         });
       } catch (error) {
         toast({
           title: "Could not copy",
           description: "Please try again",
-          variant: "destructive",
+          variant: "destructive"
         });
       }
     }
@@ -112,25 +110,18 @@ const DailyPage = () => {
       <div className="px-6 pt-8">
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4 animate-fade-in">
-          <Button
-            disabled
-            variant="outline"
-            className="rounded-full px-5 py-2 border-2 border-transparent text-transparent bg-transparent pointer-events-none opacity-0"
-          >
+          <Button disabled variant="outline" className="rounded-full px-5 py-2 border-2 border-transparent text-transparent bg-transparent pointer-events-none opacity-0">
             <Plus className="w-4 h-4" />
             Add push-ups
           </Button>
-          <button
-            onClick={() => navigate("/profile")}
-            className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors"
-          >
+          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
             <User className="w-5 h-5" />
           </button>
         </div>
 
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">Daily</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight">Push</h1>
           <p className="text-lg text-muted-foreground mt-1">
             {format(selectedDate, "EEEE, dd.MM.yyyy")}
           </p>
@@ -170,11 +161,7 @@ const DailyPage = () => {
             </p>}
 
           {/* Share Button */}
-          <Button
-            variant="outline"
-            onClick={handleShare}
-            className="w-full h-12 mt-6 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
-          >
+          <Button variant="outline" onClick={handleShare} className="w-full h-12 mt-6 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
             <ShareIcon className="mr-2" size={16} />
             Share Progress
           </Button>
@@ -219,17 +206,31 @@ const DailyPage = () => {
             const isTodayDate = isToday(day);
             const isFutureDate = isFuture(startOfDay(day));
             const hasEntry = dayCount > 0;
-            
+
             // Color based on progress percentage
             const getProgressColor = () => {
-              if (dayProgress >= 200) return { bg: "bg-[#C029DE]", text: "text-white", dot: "bg-[#C029DE]/60" };
-              if (dayProgress >= 100) return { bg: "bg-[hsl(var(--overflow))]", text: "text-white", dot: "bg-[hsl(var(--overflow)/0.6)]" };
-              if (dayProgress > 0) return { bg: "bg-primary/20", text: "text-primary", dot: "bg-primary" };
-              return { bg: "", text: "text-foreground", dot: "" };
+              if (dayProgress >= 200) return {
+                bg: "bg-[#C029DE]",
+                text: "text-white",
+                dot: "bg-[#C029DE]/60"
+              };
+              if (dayProgress >= 100) return {
+                bg: "bg-[hsl(var(--overflow))]",
+                text: "text-white",
+                dot: "bg-[hsl(var(--overflow)/0.6)]"
+              };
+              if (dayProgress > 0) return {
+                bg: "bg-primary/20",
+                text: "text-primary",
+                dot: "bg-primary"
+              };
+              return {
+                bg: "",
+                text: "text-foreground",
+                dot: ""
+              };
             };
-            
             const colors = getProgressColor();
-            
             return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-medium transition-all ${isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
                   <span>{format(day, "d")}</span>
                   {hasEntry && !isSelected && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
