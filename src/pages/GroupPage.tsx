@@ -72,7 +72,7 @@ const GroupPage = () => {
 
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">Group progress</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight">Group</h1>
           <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mt-1">
             {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
           </p>
@@ -103,8 +103,8 @@ const GroupPage = () => {
 
         {/* Goal Card */}
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up" style={{
-          animationDelay: "0.1s"
-        }}>
+        animationDelay: "0.1s"
+      }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             Group Goal {new Date().getFullYear()}
           </h2>
@@ -134,8 +134,8 @@ const GroupPage = () => {
           {/* Progress bar */}
           <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
-              width: `${stats.avgProgress}%`
-            }} />
+            width: `${stats.avgProgress}%`
+          }} />
           </div>
           <p className="text-sm text-muted-foreground mt-2 text-center">
             {Math.round(stats.avgProgress)}% average progress
@@ -175,8 +175,8 @@ const GroupPage = () => {
 
         {/* Members on Track Card */}
         <div className="bg-card rounded-2xl p-4 text-center mb-6 animate-slide-up" style={{
-          animationDelay: "0.2s"
-        }}>
+        animationDelay: "0.2s"
+      }}>
           <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
             <MultiColorTargetIcon size={20} />
           </div>
