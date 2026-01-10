@@ -6,13 +6,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import AvatarSelector from "@/components/AvatarSelector";
+import { getAvatarById, AvatarOption } from "@/data/avatars";
 
 const ProfilePage = () => {
   const { yearlyGoal, dailyTarget } = usePushUpData();
   const { user, signOut } = useAuth();
   const [displayName, setDisplayName] = useState<string>("");
+  const [avatarId, setAvatarId] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
+  const [isAvatarSelectorOpen, setIsAvatarSelectorOpen] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -20,12 +24,15 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       const { data } = await supabase
         .from("profiles")
-        .select("display_name")
+        .select("display_name, avatar_url")
         .eq("id", user.id)
         .maybeSingle();
 
       if (data?.display_name) {
         setDisplayName(data.display_name);
+      }
+      if (data?.avatar_url) {
+        setAvatarId(data.avatar_url);
       }
     };
 
@@ -65,6 +72,23 @@ const ProfilePage = () => {
     setDisplayName(trimmedValue);
     setIsEditing(false);
     toast.success("Nickname saved!");
+  };
+
+  const handleAvatarSelect = async (avatar: AvatarOption) => {
+    if (!user) return;
+
+    const { error } = await supabase
+      .from("profiles")
+      .update({ avatar_url: avatar.id })
+      .eq("id", user.id);
+
+    if (error) {
+      toast.error("Failed to save avatar");
+      return;
+    }
+
+    setAvatarId(avatar.id);
+    toast.success("Avatar updated!");
   };
 
   const handleBackup = async () => {
@@ -145,6 +169,8 @@ const ProfilePage = () => {
     toast.success(`Exported ${data.length} users`);
   };
 
+  const selectedAvatar = getAvatarById(avatarId);
+
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
@@ -162,9 +188,24 @@ const ProfilePage = () => {
         <div className="bg-card rounded-2xl p-6 animate-slide-up">
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-xl shadow-primary/20">
-              <User className="w-12 h-12 text-primary-foreground" />
-            </div>
+            <button
+              onClick={() => setIsAvatarSelectorOpen(true)}
+              className="relative w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-xl shadow-primary/20 hover:ring-4 hover:ring-primary/30 transition-all group"
+            >
+              {selectedAvatar ? (
+                <img
+                  src={selectedAvatar.src}
+                  alt={selectedAvatar.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User className="w-12 h-12 text-primary-foreground" />
+              )}
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <Pencil className="w-6 h-6 text-white" />
+              </div>
+            </button>
+            <p className="text-sm text-muted-foreground mt-2">Tap to change</p>
           </div>
 
           {/* Nickname */}
@@ -283,6 +324,14 @@ const ProfilePage = () => {
           Push-it v1.0.0
         </p>
       </div>
+
+      {/* Avatar Selector Dialog */}
+      <AvatarSelector
+        open={isAvatarSelectorOpen}
+        onOpenChange={setIsAvatarSelectorOpen}
+        selectedAvatarId={avatarId}
+        onSelect={handleAvatarSelect}
+      />
     </div>
   );
 };

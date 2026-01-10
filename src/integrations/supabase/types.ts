@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           display_name: string | null
           id: string
@@ -23,6 +24,7 @@ export type Database = {
           yearly_goal: number
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           display_name?: string | null
           id: string
@@ -30,6 +32,7 @@ export type Database = {
           yearly_goal?: number
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
