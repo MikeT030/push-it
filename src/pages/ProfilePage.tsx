@@ -8,26 +8,26 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import AvatarSelector from "@/components/AvatarSelector";
 import { getAvatarById, AvatarOption } from "@/data/avatars";
-
 const ProfilePage = () => {
-  const { yearlyGoal, dailyTarget } = usePushUpData();
-  const { user, signOut } = useAuth();
+  const {
+    yearlyGoal,
+    dailyTarget
+  } = usePushUpData();
+  const {
+    user,
+    signOut
+  } = useAuth();
   const [displayName, setDisplayName] = useState<string>("");
   const [avatarId, setAvatarId] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
   const [isAvatarSelectorOpen, setIsAvatarSelectorOpen] = useState(false);
-
   useEffect(() => {
     if (!user) return;
-
     const fetchProfile = async () => {
-      const { data } = await supabase
-        .from("profiles")
-        .select("display_name, avatar_url")
-        .eq("id", user.id)
-        .maybeSingle();
-
+      const {
+        data
+      } = await supabase.from("profiles").select("display_name, avatar_url").eq("id", user.id).maybeSingle();
       if (data?.display_name) {
         setDisplayName(data.display_name);
       }
@@ -35,89 +35,71 @@ const ProfilePage = () => {
         setAvatarId(data.avatar_url);
       }
     };
-
     fetchProfile();
   }, [user]);
-
   const handleSignOut = async () => {
     await signOut();
     toast.success("Signed out successfully");
   };
-
   const startEditing = () => {
     setEditValue(displayName);
     setIsEditing(true);
   };
-
   const cancelEditing = () => {
     setIsEditing(false);
     setEditValue("");
   };
-
   const saveNickname = async () => {
     if (!user) return;
-
     const trimmedValue = editValue.trim().slice(0, 30);
-
-    const { error } = await supabase
-      .from("profiles")
-      .update({ display_name: trimmedValue || null })
-      .eq("id", user.id);
-
+    const {
+      error
+    } = await supabase.from("profiles").update({
+      display_name: trimmedValue || null
+    }).eq("id", user.id);
     if (error) {
       toast.error("Failed to save nickname");
       return;
     }
-
     setDisplayName(trimmedValue);
     setIsEditing(false);
     toast.success("Nickname saved!");
   };
-
   const handleAvatarSelect = async (avatar: AvatarOption) => {
     if (!user) return;
-
-    const { error } = await supabase
-      .from("profiles")
-      .update({ avatar_url: avatar.id })
-      .eq("id", user.id);
-
+    const {
+      error
+    } = await supabase.from("profiles").update({
+      avatar_url: avatar.id
+    }).eq("id", user.id);
     if (error) {
       toast.error("Failed to save avatar");
       return;
     }
-
     setAvatarId(avatar.id);
     toast.success("Avatar updated!");
   };
-
   const handleBackup = async () => {
     if (!user) return;
-
-    const { data, error } = await supabase
-      .from("push_up_entries")
-      .select("id, user_id, date, count, created_at, updated_at")
-      .order("date", { ascending: true });
-
+    const {
+      data,
+      error
+    } = await supabase.from("push_up_entries").select("id, user_id, date, count, created_at, updated_at").order("date", {
+      ascending: true
+    });
     if (error) {
       toast.error("Failed to export data");
       return;
     }
-
     if (!data || data.length === 0) {
       toast.info("No push-up entries to export");
       return;
     }
-
     const headers = ["id", "user_id", "date", "count", "created_at", "updated_at"];
-    const csvContent = [
-      headers.join(","),
-      ...data.map((row) =>
-        headers.map((h) => `"${row[h as keyof typeof row] ?? ""}"`).join(",")
-      ),
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const csvContent = [headers.join(","), ...data.map(row => headers.map(h => `"${row[h as keyof typeof row] ?? ""}"`).join(","))].join("\n");
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;"
+    });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -126,37 +108,29 @@ const ProfilePage = () => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-
     toast.success(`Exported ${data.length} entries`);
   };
-
   const handleUsersBackup = async () => {
     if (!user) return;
-
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("id, display_name, yearly_goal, created_at, updated_at")
-      .order("created_at", { ascending: true });
-
+    const {
+      data,
+      error
+    } = await supabase.from("profiles").select("id, display_name, yearly_goal, created_at, updated_at").order("created_at", {
+      ascending: true
+    });
     if (error) {
       toast.error("Failed to export users data");
       return;
     }
-
     if (!data || data.length === 0) {
       toast.info("No users to export");
       return;
     }
-
     const headers = ["id", "display_name", "yearly_goal", "created_at", "updated_at"];
-    const csvContent = [
-      headers.join(","),
-      ...data.map((row) =>
-        headers.map((h) => `"${row[h as keyof typeof row] ?? ""}"`).join(",")
-      ),
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const csvContent = [headers.join(","), ...data.map(row => headers.map(h => `"${row[h as keyof typeof row] ?? ""}"`).join(","))].join("\n");
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;"
+    });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -165,14 +139,10 @@ const ProfilePage = () => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-
     toast.success(`Exported ${data.length} users`);
   };
-
   const selectedAvatar = getAvatarById(avatarId);
-
-  return (
-    <div className="min-h-screen bg-background pb-32 safe-top">
+  return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
         {/* Header */}
         <header className="mb-8 animate-fade-in">
@@ -188,19 +158,8 @@ const ProfilePage = () => {
         <div className="bg-card rounded-2xl p-6 animate-slide-up">
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
-            <button
-              onClick={() => setIsAvatarSelectorOpen(true)}
-              className="relative w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-xl shadow-primary/20 hover:ring-4 hover:ring-primary/30 transition-all group"
-            >
-              {selectedAvatar ? (
-                <img
-                  src={selectedAvatar.src}
-                  alt={selectedAvatar.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <User className="w-12 h-12 text-primary-foreground" />
-              )}
+            <button onClick={() => setIsAvatarSelectorOpen(true)} className="relative w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-xl shadow-primary/20 hover:ring-4 hover:ring-primary/30 transition-all group">
+              {selectedAvatar ? <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full border-primary object-scale-down" /> : <User className="w-12 h-12 text-primary-foreground" />}
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 group-active:opacity-0 transition-opacity pointer-events-none">
                 <Pencil className="w-6 h-6 text-white" />
               </div>
@@ -214,43 +173,20 @@ const ProfilePage = () => {
               <label className="text-sm font-medium text-muted-foreground">
                 Nickname
               </label>
-              {isEditing ? (
-                <div className="flex gap-2 mt-1.5">
-                  <Input
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    maxLength={30}
-                    placeholder="Enter your nickname"
-                    className="h-12"
-                    autoFocus
-                  />
-                  <Button
-                    size="icon"
-                    onClick={saveNickname}
-                    className="h-12 w-12 shrink-0"
-                  >
+              {isEditing ? <div className="flex gap-2 mt-1.5">
+                  <Input value={editValue} onChange={e => setEditValue(e.target.value)} maxLength={30} placeholder="Enter your nickname" className="h-12" autoFocus />
+                  <Button size="icon" onClick={saveNickname} className="h-12 w-12 shrink-0">
                     <Check className="w-4 h-4" />
                   </Button>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    onClick={cancelEditing}
-                    className="h-12 w-12 shrink-0"
-                  >
+                  <Button size="icon" variant="outline" onClick={cancelEditing} className="h-12 w-12 shrink-0">
                     <X className="w-4 h-4" />
                   </Button>
-                </div>
-              ) : (
-                <div
-                  className="h-12 bg-white/[0.14] rounded-xl px-4 flex items-center justify-between mt-1.5 cursor-pointer hover:bg-white/20 transition-colors"
-                  onClick={startEditing}
-                >
+                </div> : <div className="h-12 bg-white/[0.14] rounded-xl px-4 flex items-center justify-between mt-1.5 cursor-pointer hover:bg-white/20 transition-colors" onClick={startEditing}>
                   <span className="text-foreground font-medium">
                     {displayName || "Set a nickname"}
                   </span>
                   <Pencil className="w-4 h-4 text-muted-foreground" />
-                </div>
-              )}
+                </div>}
             </div>
 
             {/* Email */}
@@ -266,24 +202,18 @@ const ProfilePage = () => {
         </div>
 
         {/* Backups Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.05s"
+      }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             Backups
           </h2>
           <div className="flex flex-col gap-3">
-            <Button
-              variant="outline"
-              onClick={handleBackup}
-              className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
-            >
+            <Button variant="outline" onClick={handleBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
               <Download className="w-4 h-4 mr-2" />
               Push Ups Backup
             </Button>
-            <Button
-              variant="outline"
-              onClick={handleUsersBackup}
-              className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
-            >
+            <Button variant="outline" onClick={handleUsersBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
               <Users className="w-4 h-4 mr-2" />
               Users Backup
             </Button>
@@ -291,7 +221,9 @@ const ProfilePage = () => {
         </div>
 
         {/* Info Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.1s"
+      }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             About Push-it
           </h2>
@@ -308,12 +240,10 @@ const ProfilePage = () => {
         </div>
 
         {/* Sign Out Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
-          <Button
-            variant="outline"
-            onClick={handleSignOut}
-            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
-          >
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.15s"
+      }}>
+          <Button variant="outline" onClick={handleSignOut} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
             <LogOut className="w-4 h-4 mr-2" />
             Sign Out
           </Button>
@@ -326,14 +256,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Avatar Selector Dialog */}
-      <AvatarSelector
-        open={isAvatarSelectorOpen}
-        onOpenChange={setIsAvatarSelectorOpen}
-        selectedAvatarId={avatarId}
-        onSelect={handleAvatarSelect}
-      />
-    </div>
-  );
+      <AvatarSelector open={isAvatarSelectorOpen} onOpenChange={setIsAvatarSelectorOpen} selectedAvatarId={avatarId} onSelect={handleAvatarSelect} />
+    </div>;
 };
-
 export default ProfilePage;
