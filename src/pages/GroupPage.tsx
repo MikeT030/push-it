@@ -61,10 +61,21 @@ const GroupPage = () => {
       <div className="max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4">
-          <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-md px-5 py-2 border-2 border-[#0ABAB5] text-[#0ABAB5] bg-[#0ABAB5]/10 hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
-            <Plus className="w-4 h-4" />
+          <button 
+            onClick={() => navigate("/daily")} 
+            className="group relative px-5 py-2.5 rounded-xl font-semibold text-sm
+              bg-[#0ABAB5]/15 backdrop-blur-sm border border-[#0ABAB5]/40 text-[#0ABAB5]
+              shadow-[0_4px_0_0_rgba(10,186,181,0.3),0_6px_16px_rgba(10,186,181,0.2)]
+              hover:bg-[#0ABAB5]/25 hover:border-[#0ABAB5]/60
+              hover:shadow-[0_4px_0_0_rgba(10,186,181,0.4),0_8px_20px_rgba(10,186,181,0.3)]
+              active:shadow-[0_0px_0_0_rgba(10,186,181,0.2),0_2px_4px_rgba(10,186,181,0.15)]
+              active:translate-y-1 active:bg-[#0ABAB5]/30
+              transition-all duration-100 ease-out
+              flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4 transition-transform group-active:scale-90" />
             Add Push-Ups
-          </Button>
+          </button>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors">
             <User className="w-5 h-5 text-foreground" />
           </button>

@@ -118,11 +118,12 @@ const TotalPage = () => {
           <button 
             onClick={() => navigate("/daily")} 
             className="group relative px-5 py-2.5 rounded-xl font-semibold text-sm
-              bg-gradient-to-b from-[#0ABAB5] to-[#089E9A] text-white
-              shadow-[0_4px_0_0_#067A77,0_6px_12px_rgba(10,186,181,0.4)]
-              hover:shadow-[0_4px_0_0_#067A77,0_8px_16px_rgba(10,186,181,0.5)]
-              active:shadow-[0_0px_0_0_#067A77,0_2px_4px_rgba(10,186,181,0.3)]
-              active:translate-y-1
+              bg-[#0ABAB5]/15 backdrop-blur-sm border border-[#0ABAB5]/40 text-[#0ABAB5]
+              shadow-[0_4px_0_0_rgba(10,186,181,0.3),0_6px_16px_rgba(10,186,181,0.2)]
+              hover:bg-[#0ABAB5]/25 hover:border-[#0ABAB5]/60
+              hover:shadow-[0_4px_0_0_rgba(10,186,181,0.4),0_8px_20px_rgba(10,186,181,0.3)]
+              active:shadow-[0_0px_0_0_rgba(10,186,181,0.2),0_2px_4px_rgba(10,186,181,0.15)]
+              active:translate-y-1 active:bg-[#0ABAB5]/30
               transition-all duration-100 ease-out
               flex items-center gap-2"
           >
