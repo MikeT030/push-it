@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { User, LogOut, Pencil, Check, X, Download, Users } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import AvatarSelector from "@/components/AvatarSelector";
-import { getAvatarById, AvatarOption } from "@/data/avatars";
+import { AvatarOption } from "@/data/avatars";
 const ProfilePage = () => {
   const {
     yearlyGoal,
@@ -17,8 +18,8 @@ const ProfilePage = () => {
     user,
     signOut
   } = useAuth();
+  const { avatar: selectedAvatar, avatarId, setAvatarId } = useUserAvatar();
   const [displayName, setDisplayName] = useState<string>("");
-  const [avatarId, setAvatarId] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
   const [isAvatarSelectorOpen, setIsAvatarSelectorOpen] = useState(false);
@@ -27,12 +28,9 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       const {
         data
-      } = await supabase.from("profiles").select("display_name, avatar_url").eq("id", user.id).maybeSingle();
+      } = await supabase.from("profiles").select("display_name").eq("id", user.id).maybeSingle();
       if (data?.display_name) {
         setDisplayName(data.display_name);
-      }
-      if (data?.avatar_url) {
-        setAvatarId(data.avatar_url);
       }
     };
     fetchProfile();
@@ -141,7 +139,6 @@ const ProfilePage = () => {
     URL.revokeObjectURL(url);
     toast.success(`Exported ${data.length} users`);
   };
-  const selectedAvatar = getAvatarById(avatarId);
   return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
         {/* Header */}
