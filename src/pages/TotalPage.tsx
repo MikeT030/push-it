@@ -115,10 +115,20 @@ const TotalPage = () => {
       <div className="relative max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4">
-          <Button onClick={() => navigate("/daily")} variant="outline" className="rounded-md px-5 py-2 border-2 border-[#0ABAB5] text-[#0ABAB5] bg-[#0ABAB5]/10 hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
-            <Plus className="w-4 h-4" />
+          <button 
+            onClick={() => navigate("/daily")} 
+            className="group relative px-5 py-2.5 rounded-xl font-semibold text-sm
+              bg-gradient-to-b from-[#0ABAB5] to-[#089E9A] text-white
+              shadow-[0_4px_0_0_#067A77,0_6px_12px_rgba(10,186,181,0.4)]
+              hover:shadow-[0_4px_0_0_#067A77,0_8px_16px_rgba(10,186,181,0.5)]
+              active:shadow-[0_0px_0_0_#067A77,0_2px_4px_rgba(10,186,181,0.3)]
+              active:translate-y-1
+              transition-all duration-100 ease-out
+              flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4 transition-transform group-active:scale-90" />
             Add Push-Ups
-          </Button>
+          </button>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
             <User className="w-5 h-5 text-[#ffffff]" />
           </button>
