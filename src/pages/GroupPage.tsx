@@ -61,9 +61,7 @@ const GroupPage = () => {
       <div className="max-w-lg mx-auto px-6 py-8">
         {/* Add Push-ups Button & Profile */}
         <div className="flex justify-between items-center mb-4">
-          <button 
-            onClick={() => navigate("/daily")} 
-            className="group relative px-5 py-2.5 rounded-xl font-semibold text-sm
+          <button onClick={() => navigate("/daily")} className="group relative px-5 py-2.5 rounded-xl font-semibold text-sm
               bg-[#0ABAB5]/15 backdrop-blur-sm border border-[#0ABAB5]/40 text-[#0ABAB5]
               shadow-[0_4px_0_0_rgba(10,186,181,0.3),0_6px_16px_rgba(10,186,181,0.2)]
               hover:bg-[#0ABAB5]/25 hover:border-[#0ABAB5]/60
@@ -71,8 +69,7 @@ const GroupPage = () => {
               active:shadow-[0_0px_0_0_rgba(10,186,181,0.2),0_2px_4px_rgba(10,186,181,0.15)]
               active:translate-y-1 active:bg-[#0ABAB5]/30
               transition-all duration-100 ease-out
-              flex items-center gap-2"
-          >
+              flex items-center gap-2">
             <Plus className="w-4 h-4 transition-transform group-active:scale-90" />
             Add Push-Ups
           </button>
@@ -83,7 +80,7 @@ const GroupPage = () => {
 
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">Group</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px]">Group</h1>
           <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mt-1">
             {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
           </p>
