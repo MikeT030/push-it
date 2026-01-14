@@ -127,7 +127,7 @@ const TotalPage = () => {
             <Plus className="w-4 h-4 transition-transform group-active:scale-90" />
             Add Push-Ups
           </button>
-          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-[#1E1E1E] flex items-center justify-center hover:bg-white/20 transition-colors">
             <User className="w-5 h-5 text-[#ffffff]" />
           </button>
         </div>
