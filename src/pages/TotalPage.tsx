@@ -213,7 +213,7 @@ const TotalPage = () => {
                     {stat.label}
                   </p>
                 </div>
-                <p className="text-3xl font-black text-foreground">
+                <p className="text-[1.625rem] font-black text-foreground">
                   {stat.value}
                   <span className="text-base font-medium text-muted-foreground ml-1">
                     {stat.unit}
