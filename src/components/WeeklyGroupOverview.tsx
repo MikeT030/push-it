@@ -186,7 +186,7 @@ const WeeklyGroupOverview = () => {
         </DropdownMenu>
 
         {/* Weekly Summary */}
-        <div className="flex items-center justify-between p-3 bg-muted/50 rounded-xl mb-4">
+        <div className="flex items-center justify-between p-3 mb-4">
           <div>
             <p className="text-2xl font-black text-foreground">{weeklyData.total.toLocaleString()}</p>
             <p className="text-sm text-muted-foreground">group push-ups</p>
