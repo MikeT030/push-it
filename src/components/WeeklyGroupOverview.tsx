@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
+import WeeklyBarChart from "./WeeklyBarChart";
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
@@ -198,25 +199,8 @@ const WeeklyGroupOverview = () => {
           </div>
         </div>
 
-        {/* Progress bar with overflow */}
-        <div className="h-2 bg-muted rounded-full overflow-hidden relative mb-4">
-          <div
-            className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
-            style={{ width: `${Math.min(weeklyData.percentage, 100)}%` }}
-          />
-          {weeklyData.percentage > 100 && (
-            <div
-              className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
-              style={{
-                width: `${Math.min(weeklyData.percentage, 200)}%`,
-                background:
-                  weeklyData.percentage >= 200
-                    ? "linear-gradient(to right, #C029DE, #C029DE99)"
-                    : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
-              }}
-            />
-          )}
-        </div>
+        {/* Bar Chart */}
+        <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET * Math.max(memberCount, 1)} />
 
         <CollapsibleContent className="space-y-4">
 

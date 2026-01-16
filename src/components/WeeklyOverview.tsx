@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay, differenceInWeeks } from "date-fns";
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { usePushUpData } from "@/hooks/usePushUpData";
+import WeeklyBarChart from "./WeeklyBarChart";
+
 const DAILY_TARGET = 82; // 82 push-ups per day
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
 
@@ -160,18 +162,8 @@ const WeeklyOverview = () => {
         </div>
       </div>
 
-      {/* Progress bar with overflow */}
-      <div className="h-2 bg-muted rounded-full overflow-hidden mb-4 relative">
-        {/* Base progress (up to 100%) */}
-        <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0" style={{
-        width: `${Math.min(weeklyData.percentage, 100)}%`
-      }} />
-        {/* Overflow progress (above 100%) */}
-        {weeklyData.percentage > 100 && <div className="h-full rounded-full transition-all duration-500 absolute left-0 top-0" style={{
-        width: `${Math.min(weeklyData.percentage, 200)}%`,
-        background: weeklyData.percentage >= 200 ? 'linear-gradient(to right, #C029DE, #C029DE99)' : 'linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))'
-      }} />}
-      </div>
+      {/* Bar Chart */}
+      <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET} />
 
         <CollapsibleContent className="space-y-2">
           {/* Daily Logs List */}
