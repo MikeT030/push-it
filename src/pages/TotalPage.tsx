@@ -155,6 +155,8 @@ const TotalPage = () => {
         {/* Main Progress Card */}
         <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up">
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
+
+          <div className="h-px bg-border mb-4" />
           
           <div className="flex items-center gap-6">
             <ProgressRing progress={yearProgress} size={140} strokeWidth={14} enableAnimation={false} />
@@ -235,6 +237,8 @@ const TotalPage = () => {
           <h2 className="text-lg font-bold text-foreground mb-4">
             Personal Goal {new Date().getFullYear()}
           </h2>
+
+          <div className="h-px bg-border mb-4" />
           
           <div className="flex items-center justify-between">
             <div>

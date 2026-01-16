@@ -140,6 +140,8 @@ const DailyGroupOverview = () => {
           </button>
         </CollapsibleTrigger>
 
+        <div className="h-px bg-border mb-4" />
+
         {/* Day Selector Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

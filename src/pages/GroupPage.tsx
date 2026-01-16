@@ -181,6 +181,8 @@ const GroupPage = () => {
           <h2 className="text-lg font-bold text-foreground mb-4">
             Group Goal {new Date().getFullYear()}
           </h2>
+
+          <div className="h-px bg-border mb-4" />
           
           <div className="flex items-center justify-between">
             <div>
