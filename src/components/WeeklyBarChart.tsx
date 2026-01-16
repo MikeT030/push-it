@@ -13,15 +13,25 @@ interface WeeklyBarChartProps {
 }
 
 const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
-  // Calculate max value for scaling (at least dailyTarget for reference)
-  const maxCount = Math.max(dailyTarget, ...days.map(d => d.count));
-  
   return (
     <div className="flex items-end justify-between gap-1 h-16 mb-4">
       {days.map((day) => {
-        const percentage = day.isBeforeYearStart ? 0 : (day.count / maxCount) * 100;
-        const isOverTarget = day.count >= dailyTarget;
-        const isDoubleTarget = day.count >= dailyTarget * 2;
+        const percentage = day.isBeforeYearStart ? 0 : (day.count / dailyTarget) * 100;
+        const isTripleTarget = percentage >= 201;
+        const isDoubleTarget = percentage >= 101 && percentage < 201;
+        const isAtOrBelowTarget = percentage > 0 && percentage <= 100;
+        
+        // Color coding: up to 100% = #0ABAB5, 101-200% = #4300FF, 201%+ = #BA25D8
+        const getBarColor = () => {
+          if (day.isBeforeYearStart || day.count === 0) return "bg-muted/50";
+          if (isTripleTarget) return "bg-[#BA25D8]";
+          if (isDoubleTarget) return "bg-[#4300FF]";
+          return "bg-[#0ABAB5]";
+        };
+        
+        // Scale bar height based on max value
+        const maxCount = Math.max(dailyTarget, ...days.map(d => d.count));
+        const heightPercentage = (day.count / maxCount) * 100;
         
         return (
           <div
@@ -31,21 +41,11 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
             {/* Bar container */}
             <div className="flex-1 w-full flex items-end justify-center">
               <div
-                className={`w-full max-w-[20px] rounded-t-sm transition-all duration-500 ${
-                  day.isBeforeYearStart
-                    ? "bg-muted/30"
-                    : isDoubleTarget
-                    ? "bg-[#C029DE]"
-                    : isOverTarget
-                    ? "bg-primary"
-                    : day.count > 0
-                    ? "bg-primary/60"
-                    : "bg-muted/50"
-                }`}
+                className={`w-full max-w-[20px] rounded-t-sm transition-all duration-500 ${getBarColor()}`}
                 style={{
                   height: day.isBeforeYearStart || day.count === 0 
                     ? "4px" 
-                    : `${Math.max(percentage, 8)}%`,
+                    : `${Math.max(heightPercentage, 8)}%`,
                 }}
               />
             </div>
