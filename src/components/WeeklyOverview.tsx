@@ -5,7 +5,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import WeeklyBarChart from "./WeeklyBarChart";
-
 const DAILY_TARGET = 82; // 82 push-ups per day
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
 
@@ -113,17 +112,14 @@ const WeeklyOverview = () => {
         </div>
       </div>;
   }
-  return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="col-span-2">
-      <div className="bg-card rounded-2xl p-6 animate-slide-up" style={{ animationDelay: "0.25s" }}>
+  return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="col-span-2">
+      <div className="bg-card rounded-2xl p-6 animate-slide-up" style={{
+      animationDelay: "0.25s"
+    }}>
         <CollapsibleTrigger asChild>
           <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
             <h2 className="text-lg font-bold text-foreground">Weekly</h2>
-            {isOpen ? (
-              <ChevronDown className="w-5 h-5 text-muted-foreground" />
-            ) : (
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            )}
+            {isOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
           </button>
         </CollapsibleTrigger>
 
@@ -136,15 +132,9 @@ const WeeklyOverview = () => {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50" align="start">
-            {weekOptions.map((week, index) => (
-              <DropdownMenuItem
-                key={week.weekNumber}
-                onClick={() => setSelectedWeekIndex(index)}
-                className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}
-              >
+            {weekOptions.map((week, index) => <DropdownMenuItem key={week.weekNumber} onClick={() => setSelectedWeekIndex(index)} className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}>
                 {week.label}
-              </DropdownMenuItem>
-            ))}
+              </DropdownMenuItem>)}
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -152,7 +142,7 @@ const WeeklyOverview = () => {
       <div className="flex items-center justify-between mb-4 p-3 bg-muted/50 rounded-xl">
         <div>
           <p className="text-2xl font-black text-foreground">{weeklyData.total}</p>
-          <p className="text-sm text-muted-foreground">push-ups logged</p>
+          <p className="text-sm text-muted-foreground">PU logged</p>
         </div>
         <div className="text-right">
           <p className="text-2xl font-bold text-white">
@@ -167,17 +157,7 @@ const WeeklyOverview = () => {
 
         <CollapsibleContent className="space-y-2">
           {/* Daily Logs List */}
-          {weeklyData.days.map(day => (
-            <div
-              key={format(day.date, "yyyy-MM-dd")}
-              className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-                day.isBeforeYearStart
-                  ? "opacity-40"
-                  : day.isToday
-                  ? "bg-primary/10 border border-primary/20"
-                  : "bg-muted/30"
-              }`}
-            >
+          {weeklyData.days.map(day => <div key={format(day.date, "yyyy-MM-dd")} className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : day.isToday ? "bg-primary/10 border border-primary/20" : "bg-muted/30"}`}>
               <div className="flex items-center gap-3">
                 <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
                   {format(day.date, "EEE")}
@@ -185,24 +165,16 @@ const WeeklyOverview = () => {
                 <span className="text-sm text-muted-foreground">
                   {format(day.date, "MMM d")}
                 </span>
-                {day.isToday && (
-                  <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                {day.isToday && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
                     Today
-                  </span>
-                )}
+                  </span>}
               </div>
-              <span
-                className={`font-bold ${
-                  day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"
-                }`}
-              >
+              <span className={`font-bold ${day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"}`}>
                 {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count : "—"}
               </span>
-            </div>
-          ))}
+            </div>)}
         </CollapsibleContent>
       </div>
-    </Collapsible>
-  );
+    </Collapsible>;
 };
 export default WeeklyOverview;
