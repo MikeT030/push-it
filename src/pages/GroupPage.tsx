@@ -109,9 +109,59 @@ const GroupPage = () => {
           </div>
         </div>
 
+        {/* Leaderboard */}
+        <div className="mb-6 animate-slide-up" style={{
+        animationDelay: "0.1s"
+      }}>
+          <div className="flex items-center gap-2 mb-4">
+            <Trophy className="w-5 h-5 text-[#ffffff]" />
+            <h2 className="text-lg font-semibold text-foreground">Leaderboard</h2>
+          </div>
+
+          <div className="space-y-3">
+            {users.length === 0 ? <div className="bg-card rounded-2xl p-6 text-center">
+                <p className="text-muted-foreground">No members yet. Be the first!</p>
+              </div> : users.map((user, index) => <div key={user.user_id} className="bg-card rounded-2xl p-4 transition-all hover:scale-[1.02]">
+                  <div className="flex items-center gap-4">
+                    {/* Rank */}
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${index === 0 ? "bg-gradient-to-br from-gold to-gold/60 text-black" : index === 1 ? "bg-gradient-to-br from-muted-foreground to-muted text-foreground" : index === 2 ? "bg-gradient-to-br from-accent/60 to-accent/30 text-foreground" : "bg-muted text-muted-foreground"}`}>
+                      {index + 1}
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {user.display_name || `Member ${index + 1}`}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {user.days_logged} days logged • Goal: {user.yearly_goal.toLocaleString()}
+                      </p>
+                    </div>
+
+                    {/* Stats */}
+                    <div className="text-right">
+                      <p className="text-lg font-bold text-foreground">
+                        {user.total_pushups.toLocaleString()}
+                      </p>
+                      <p className={`text-xs font-medium ${user.progress_percent >= stats.expectedProgress ? "text-primary" : "text-accent"}`}>
+                        {user.progress_percent.toFixed(1)}%
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all duration-500 ${user.progress_percent >= stats.expectedProgress ? "bg-primary" : "bg-accent"}`} style={{
+                width: `${Math.min(user.progress_percent, 100)}%`
+              }} />
+                  </div>
+                </div>)}
+          </div>
+        </div>
+
         {/* Goal Card */}
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up" style={{
-        animationDelay: "0.1s"
+        animationDelay: "0.15s"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             Group Goal {new Date().getFullYear()}
@@ -163,7 +213,7 @@ const GroupPage = () => {
 
         {/* Motivational Banner */}
         <div className="bg-card rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{
-        animationDelay: "0.1s"
+        animationDelay: "0.2s"
       }}>
           <p className="text-sm text-foreground font-medium leading-relaxed">
             💪 Every push-up counts! When we work together, we stay accountable and motivated. 
@@ -183,7 +233,7 @@ const GroupPage = () => {
 
         {/* Members on Track Card */}
         <div className="bg-card rounded-2xl p-4 text-center mb-6 animate-slide-up" style={{
-        animationDelay: "0.2s"
+        animationDelay: "0.25s"
       }}>
           <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
             <MultiColorTargetIcon size={20} />
@@ -194,56 +244,6 @@ const GroupPage = () => {
           <p className="text-xs text-muted-foreground">
             Members on track<br />(≥{stats.expectedProgress.toFixed(0)}% exp.)
           </p>
-        </div>
-
-        {/* Leaderboard */}
-        <div className="animate-slide-up" style={{
-        animationDelay: "0.25s"
-      }}>
-          <div className="flex items-center gap-2 mb-4">
-            <Trophy className="w-5 h-5 text-[#ffffff]" />
-            <h2 className="text-lg font-semibold text-foreground">Leaderboard</h2>
-          </div>
-
-          <div className="space-y-3">
-            {users.length === 0 ? <div className="bg-card rounded-2xl p-6 text-center">
-                <p className="text-muted-foreground">No members yet. Be the first!</p>
-              </div> : users.map((user, index) => <div key={user.user_id} className="bg-card rounded-2xl p-4 transition-all hover:scale-[1.02]">
-                  <div className="flex items-center gap-4">
-                    {/* Rank */}
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${index === 0 ? "bg-gradient-to-br from-gold to-gold/60 text-black" : index === 1 ? "bg-gradient-to-br from-muted-foreground to-muted text-foreground" : index === 2 ? "bg-gradient-to-br from-accent/60 to-accent/30 text-foreground" : "bg-muted text-muted-foreground"}`}>
-                      {index + 1}
-                    </div>
-
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">
-                        {user.display_name || `Member ${index + 1}`}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {user.days_logged} days logged • Goal: {user.yearly_goal.toLocaleString()}
-                      </p>
-                    </div>
-
-                    {/* Stats */}
-                    <div className="text-right">
-                      <p className="text-lg font-bold text-foreground">
-                        {user.total_pushups.toLocaleString()}
-                      </p>
-                      <p className={`text-xs font-medium ${user.progress_percent >= stats.expectedProgress ? "text-primary" : "text-accent"}`}>
-                        {user.progress_percent.toFixed(1)}%
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full transition-all duration-500 ${user.progress_percent >= stats.expectedProgress ? "bg-primary" : "bg-accent"}`} style={{
-                width: `${Math.min(user.progress_percent, 100)}%`
-              }} />
-                  </div>
-                </div>)}
-          </div>
         </div>
 
         {/* Call to Action */}
