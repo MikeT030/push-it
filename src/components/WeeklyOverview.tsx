@@ -123,6 +123,8 @@ const WeeklyOverview = () => {
           </button>
         </CollapsibleTrigger>
 
+        <div className="h-px bg-border mb-4" />
+
         {/* Week Selector Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
