@@ -97,7 +97,7 @@ const TotalPage = () => {
   }, {
     label: "Daily Avg.",
     value: `${Math.round(stats.allTimeAvg || 0)}`,
-    unit: "/day",
+    unit: "",
     icon: TrendingUp,
     color: "text-primary"
   }, {
