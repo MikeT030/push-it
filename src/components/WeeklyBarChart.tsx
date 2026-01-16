@@ -41,7 +41,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
             {/* Bar container */}
             <div className="flex-1 w-full flex items-end justify-center">
               <div
-                className={`w-full max-w-[20px] rounded-t-sm transition-all duration-500 ${getBarColor()}`}
+                className={`w-full max-w-[14px] rounded-t-sm transition-all duration-500 ${getBarColor()}`}
                 style={{
                   height: day.isBeforeYearStart || day.count === 0 
                     ? "4px" 
