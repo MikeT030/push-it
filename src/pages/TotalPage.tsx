@@ -53,13 +53,16 @@ const TotalPage = () => {
       }
     }
 
-    // Calculate average
+    // Calculate weekly average (for display)
     const last7Days = eachDayOfInterval({
       start: subDays(today, 6),
       end: today
     });
     const last7Total = last7Days.reduce((sum, day) => sum + getEntryForDate(day), 0);
     const weeklyAvg = Math.round(last7Total / 7);
+
+    // Calculate all-time average (for projection)
+    const allTimeAvg = daysElapsed > 0 ? totalPushUps / daysElapsed : 0;
 
     // Pace calculation
     const expectedByNow = Math.round(daysElapsed / 365 * yearlyGoal);
@@ -73,6 +76,7 @@ const TotalPage = () => {
       daysRemaining,
       streak,
       weeklyAvg,
+      allTimeAvg,
       paceStatus,
       paceDiff,
       requiredDaily,
@@ -180,10 +184,10 @@ const TotalPage = () => {
           {/* Projected completion date */}
           <div className="mt-3 p-3 rounded-xl bg-muted/50">
             <p className="text-sm text-muted-foreground text-center">
-              {stats.weeklyAvg > 0 ? <>
-                  🎯 At this pace you'll hit the 30k on{" "}
+              {stats.allTimeAvg > 0 ? <>
+                  🎯 At this pace you'll hit the {yearlyGoal.toLocaleString()} on{" "}
                   <span className="font-semibold text-foreground">
-                    {format(new Date(Date.now() + remaining / stats.weeklyAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
+                    {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
                   </span>
                 </> : "Start logging push-ups to see your projected completion date"}
             </p>
