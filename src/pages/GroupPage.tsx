@@ -159,6 +159,21 @@ const GroupPage = () => {
           </div>
         </div>
 
+        {/* Members on Track Card */}
+        <div className="bg-card rounded-2xl p-4 text-center mb-6 animate-slide-up" style={{
+        animationDelay: "0.15s"
+      }}>
+          <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
+            <MultiColorTargetIcon size={20} />
+          </div>
+          <p className="text-2xl font-bold text-foreground">
+            {stats.onTrackCount} / {stats.totalMembers}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Members on track<br />(≥{stats.expectedProgress.toFixed(0)}% exp.)
+          </p>
+        </div>
+
         {/* Goal Card */}
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up" style={{
         animationDelay: "0.15s"
@@ -229,21 +244,6 @@ const GroupPage = () => {
         {/* Weekly Group Overview */}
         <div className="mb-6">
           <WeeklyGroupOverview />
-        </div>
-
-        {/* Members on Track Card */}
-        <div className="bg-card rounded-2xl p-4 text-center mb-6 animate-slide-up" style={{
-        animationDelay: "0.25s"
-      }}>
-          <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
-            <MultiColorTargetIcon size={20} />
-          </div>
-          <p className="text-2xl font-bold text-foreground">
-            {stats.onTrackCount} / {stats.totalMembers}
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Members on track<br />(≥{stats.expectedProgress.toFixed(0)}% exp.)
-          </p>
         </div>
 
         {/* Call to Action */}
