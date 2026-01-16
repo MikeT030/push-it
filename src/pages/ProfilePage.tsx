@@ -153,12 +153,6 @@ const ProfilePage = () => {
 
         {/* Profile Card */}
         <div className="bg-card rounded-2xl p-6 animate-slide-up">
-          {/* Avatar */}
-          <div className="flex flex-col items-center mb-6">
-          <div className="relative w-24 h-24 rounded-full overflow-hidden bg-[#1E1E1E] flex items-center justify-center shadow-xl shadow-primary/20">
-              {selectedAvatar ? <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full border-primary object-scale-down" /> : <User className="w-12 h-12 text-primary-foreground" />}
-            </div>
-          </div>
 
           {/* Nickname */}
           <div className="space-y-4">
