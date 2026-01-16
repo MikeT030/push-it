@@ -139,7 +139,7 @@ const WeeklyOverview = () => {
         </DropdownMenu>
 
       {/* Weekly Summary */}
-      <div className="flex items-center justify-between mb-4 p-3 bg-[#222222] rounded-xl">
+      <div className="flex items-center justify-between mb-4 p-3 bg-transparent rounded-xl">
         <div>
           <p className="text-2xl font-black text-foreground">{weeklyData.total}</p>
           <p className="text-sm text-muted-foreground">PU logged</p>
