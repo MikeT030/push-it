@@ -56,7 +56,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                   />
                 </PopoverTrigger>
                 <PopoverContent side="top" sideOffset={8} avoidCollisions={false} className="w-auto px-2 py-1">
-                  <p className="font-medium text-sm">{day.count}</p>
+                  <p className="font-medium text-sm">{day.count} PU</p>
                 </PopoverContent>
               </Popover>
             </div>
