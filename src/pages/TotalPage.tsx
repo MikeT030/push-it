@@ -95,7 +95,7 @@ const TotalPage = () => {
     customIcon: <MultiColorTargetIcon size={20} />,
     color: ""
   }, {
-    label: "Daily Avg.",
+    label: "Average",
     value: `${Math.round(stats.allTimeAvg || 0)}`,
     unit: "/day",
     icon: TrendingUp,
