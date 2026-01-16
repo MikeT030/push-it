@@ -216,16 +216,6 @@ const GroupPage = () => {
             {Math.round(stats.avgProgress)}% average progress
           </p>
           
-          <Popover>
-            <PopoverTrigger asChild>
-              <div className="flex justify-center mt-4">
-                <Info className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-2">
-              <p className="text-xs">Only members with 82+ push-ups logged are included</p>
-            </PopoverContent>
-          </Popover>
         </div>
 
         {/* Motivational Banner */}
