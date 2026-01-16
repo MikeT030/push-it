@@ -1,10 +1,9 @@
-import { format, isSameDay } from "date-fns";
+import { format } from "date-fns";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface DayData {
   date: Date;
@@ -20,63 +19,60 @@ interface WeeklyBarChartProps {
 
 const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
   return (
-    <TooltipProvider>
-      <div className="flex items-end justify-between gap-1 h-16 mb-4">
-        {days.map((day) => {
-          const percentage = day.isBeforeYearStart ? 0 : (day.count / dailyTarget) * 100;
-          const isTripleTarget = percentage >= 201;
-          const isDoubleTarget = percentage >= 101 && percentage < 201;
-          const isAtOrBelowTarget = percentage > 0 && percentage <= 100;
-          
-          // Color coding: up to 100% = #0ABAB5, 101-200% = #4300FF, 201%+ = #BA25D8
-          const getBarColor = () => {
-            if (day.isBeforeYearStart || day.count === 0) return "bg-muted/50";
-            if (isTripleTarget) return "bg-[#BA25D8]";
-            if (isDoubleTarget) return "bg-[#4300FF]";
-            return "bg-[#0ABAB5]";
-          };
-          
-          // Scale bar height based on max value
-          const maxCount = Math.max(dailyTarget, ...days.map(d => d.count));
-          const heightPercentage = (day.count / maxCount) * 100;
-          
-          return (
-            <div
-              key={format(day.date, "yyyy-MM-dd")}
-              className="flex flex-col items-center flex-1 h-full"
-            >
-              {/* Bar container */}
-              <div className="flex-1 w-full flex items-end justify-center">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div
-                      className={`w-full max-w-[16px] rounded-t-sm transition-all duration-500 cursor-pointer ${getBarColor()}`}
-                      style={{
-                        height: day.isBeforeYearStart || day.count === 0 
-                          ? "4px" 
-                          : `${Math.max(heightPercentage, 8)}%`,
-                      }}
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className="font-medium">{day.count} push-ups</p>
-                    <p className="text-xs text-muted-foreground">{format(day.date, "EEE, MMM d")}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-              {/* Day label */}
-              <span
-                className={`text-[10px] mt-1 ${
-                  day.isToday ? "text-primary font-bold" : "text-muted-foreground"
-                }`}
-              >
-                {format(day.date, "EEE").charAt(0)}
-              </span>
+    <div className="flex items-end justify-between gap-1 h-16 mb-4">
+      {days.map((day) => {
+        const percentage = day.isBeforeYearStart ? 0 : (day.count / dailyTarget) * 100;
+        const isTripleTarget = percentage >= 201;
+        const isDoubleTarget = percentage >= 101 && percentage < 201;
+        
+        // Color coding: up to 100% = #0ABAB5, 101-200% = #4300FF, 201%+ = #BA25D8
+        const getBarColor = () => {
+          if (day.isBeforeYearStart || day.count === 0) return "bg-muted/50";
+          if (isTripleTarget) return "bg-[#BA25D8]";
+          if (isDoubleTarget) return "bg-[#4300FF]";
+          return "bg-[#0ABAB5]";
+        };
+        
+        // Scale bar height based on max value
+        const maxCount = Math.max(dailyTarget, ...days.map(d => d.count));
+        const heightPercentage = (day.count / maxCount) * 100;
+        
+        return (
+          <div
+            key={format(day.date, "yyyy-MM-dd")}
+            className="flex flex-col items-center flex-1 h-full"
+          >
+            {/* Bar container */}
+            <div className="flex-1 w-full flex items-end justify-center">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div
+                    className={`w-full max-w-[16px] rounded-t-sm transition-all duration-500 cursor-pointer ${getBarColor()}`}
+                    style={{
+                      height: day.isBeforeYearStart || day.count === 0 
+                        ? "4px" 
+                        : `${Math.max(heightPercentage, 8)}%`,
+                    }}
+                  />
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2">
+                  <p className="font-medium text-sm">{day.count} push-ups</p>
+                  <p className="text-xs text-muted-foreground">{format(day.date, "EEE, MMM d")}</p>
+                </PopoverContent>
+              </Popover>
             </div>
-          );
-        })}
-      </div>
-    </TooltipProvider>
+            {/* Day label */}
+            <span
+              className={`text-[10px] mt-1 ${
+                day.isToday ? "text-primary font-bold" : "text-muted-foreground"
+              }`}
+            >
+              {format(day.date, "EEE").charAt(0)}
+            </span>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
