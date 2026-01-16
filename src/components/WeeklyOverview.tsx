@@ -155,7 +155,7 @@ const WeeklyOverview = () => {
           <p className="text-sm text-muted-foreground">push-ups logged</p>
         </div>
         <div className="text-right">
-          <p className={`text-2xl font-bold ${weeklyData.percentage >= 100 ? "text-primary" : "text-foreground"}`}>
+          <p className="text-2xl font-bold text-white">
             {weeklyData.percentage}%
           </p>
           <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget} target</p>
