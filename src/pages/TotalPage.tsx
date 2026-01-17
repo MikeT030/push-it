@@ -101,7 +101,7 @@ const TotalPage = () => {
     icon: TrendingUp,
     color: "text-primary"
   }, {
-    label: "Days Left",
+    label: "Remaining",
     value: `${stats.daysRemaining}`,
     unit: "days",
     icon: Calendar,
