@@ -130,11 +130,6 @@ const GroupPage = () => {
             <TabsContent value="leaderboard" className="mt-0">
               {/* Leaderboard */}
               <div className="mb-6 animate-slide-up">
-                <div className="flex items-center gap-2 mb-4">
-                  <Trophy className="w-5 h-5 text-[#ffffff]" />
-                  <h2 className="text-lg font-semibold text-foreground">Leaderboard</h2>
-                </div>
-
                 <div className="space-y-3">
                   {users.length === 0 ? (
                     <div className="bg-card rounded-2xl p-6 text-center">
