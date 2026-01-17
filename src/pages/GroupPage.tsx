@@ -128,31 +128,8 @@ const GroupPage = () => {
           >
             {/* Leaderboard Tab */}
             <TabsContent value="leaderboard" className="mt-0">
-              {/* Group Stats Cards */}
-              <div className="grid grid-cols-2 gap-3 mb-4 animate-slide-up">
-                <div className="bg-card rounded-2xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#C029DE]/20 flex items-center justify-center mx-auto mb-2">
-                    <Flame className="w-5 h-5 text-[#C029DE]" />
-                  </div>
-                  <p className="text-2xl font-bold text-foreground">
-                    {stats.totalPushups.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Total Push-ups</p>
-                </div>
-                
-                <div className="bg-card rounded-2xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
-                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
-                  </div>
-                  <p className="text-2xl font-bold text-foreground">
-                    {Math.round(stats.avgProgress)}%
-                  </p>
-                  <p className="text-xs text-muted-foreground">Avg Progress</p>
-                </div>
-              </div>
-
               {/* Leaderboard */}
-              <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+              <div className="mb-6 animate-slide-up">
                 <div className="flex items-center gap-2 mb-4">
                   <Trophy className="w-5 h-5 text-[#ffffff]" />
                   <h2 className="text-lg font-semibold text-foreground">Leaderboard</h2>
@@ -202,6 +179,29 @@ const GroupPage = () => {
                       </div>
                     ))
                   )}
+                </div>
+              </div>
+
+              {/* Group Stats Cards */}
+              <div className="grid grid-cols-2 gap-3 mb-4 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+                <div className="bg-card rounded-2xl p-4 text-center">
+                  <div className="w-10 h-10 rounded-full bg-[#C029DE]/20 flex items-center justify-center mx-auto mb-2">
+                    <Flame className="w-5 h-5 text-[#C029DE]" />
+                  </div>
+                  <p className="text-2xl font-bold text-foreground">
+                    {stats.totalPushups.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-muted-foreground">Total Push-ups</p>
+                </div>
+                
+                <div className="bg-card rounded-2xl p-4 text-center">
+                  <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
+                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
+                  </div>
+                  <p className="text-2xl font-bold text-foreground">
+                    {Math.round(stats.avgProgress)}%
+                  </p>
+                  <p className="text-xs text-muted-foreground">Avg Progress</p>
                 </div>
               </div>
 
