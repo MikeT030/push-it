@@ -189,7 +189,8 @@ const TotalPage = () => {
           <div className="mt-3 p-3 rounded-xl bg-muted/50">
             <p className="text-sm text-muted-foreground text-center">
               {stats.allTimeAvg > 0 ? <>
-                  🎯 Hitting {yearlyGoal.toLocaleString()} on{" "}
+                  🎯 Hitting {yearlyGoal.toLocaleString()} on
+                  <br />
                   <span className="font-semibold text-foreground">
                     {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
                   </span>
