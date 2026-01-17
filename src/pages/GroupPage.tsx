@@ -221,8 +221,26 @@ const GroupPage = () => {
 
             {/* Stats Tab */}
             <TabsContent value="stats" className="mt-0">
+              {/* Weekly Group Overview */}
+              <div className="mb-6 animate-slide-up">
+                <WeeklyGroupOverview />
+              </div>
+
+              {/* Daily Group Overview */}
+              <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+                <DailyGroupOverview />
+              </div>
+
+              {/* Motivational Banner */}
+              <div className="bg-card rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{ animationDelay: "0.15s" }}>
+                <p className="text-sm text-foreground font-medium leading-relaxed">
+                  💪 Every push-up counts! When we work together, we stay accountable and motivated. 
+                  Your effort inspires others to keep going.
+                </p>
+              </div>
+
               {/* Goal Card */}
-              <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
+              <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.2s" }}>
                 <h2 className="text-lg font-bold text-foreground mb-4">
                   Group Goal {new Date().getFullYear()}
                 </h2>
@@ -260,24 +278,6 @@ const GroupPage = () => {
                 <p className="text-sm text-muted-foreground mt-2 text-center">
                   {Math.round(stats.avgProgress)}% average progress
                 </p>
-              </div>
-
-              {/* Motivational Banner */}
-              <div className="bg-card rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{ animationDelay: "0.2s" }}>
-                <p className="text-sm text-foreground font-medium leading-relaxed">
-                  💪 Every push-up counts! When we work together, we stay accountable and motivated. 
-                  Your effort inspires others to keep going.
-                </p>
-              </div>
-
-              {/* Daily Group Overview */}
-              <div className="mb-6">
-                <DailyGroupOverview />
-              </div>
-
-              {/* Weekly Group Overview */}
-              <div className="mb-6">
-                <WeeklyGroupOverview />
               </div>
 
               {/* Call to Action */}
