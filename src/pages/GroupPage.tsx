@@ -221,14 +221,14 @@ const GroupPage = () => {
 
             {/* Stats Tab */}
             <TabsContent value="stats" className="mt-0">
-              {/* Weekly Group Overview */}
+              {/* Daily Group Overview */}
               <div className="mb-6 animate-slide-up">
-                <WeeklyGroupOverview />
+                <DailyGroupOverview />
               </div>
 
-              {/* Daily Group Overview */}
+              {/* Weekly Group Overview */}
               <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-                <DailyGroupOverview />
+                <WeeklyGroupOverview />
               </div>
 
               {/* Motivational Banner */}
