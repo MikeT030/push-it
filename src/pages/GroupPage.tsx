@@ -197,7 +197,7 @@ const GroupPage = () => {
                   {stats.onTrackCount} / {stats.totalMembers}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Members on track<br />(≥{stats.expectedProgress.toFixed(0)}% exp.)
+                  Members on track<br />(≥{stats.expectedProgress.toFixed(0)}% exp. yr. Prog.)
                 </p>
               </div>
             </TabsContent>
