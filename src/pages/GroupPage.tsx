@@ -184,7 +184,7 @@ const GroupPage = () => {
                   <p className="text-2xl font-bold text-foreground">
                     {Math.round(stats.avgProgress)}%
                   </p>
-                  <p className="text-xs text-muted-foreground">Avg Progress</p>
+                  <p className="text-xs text-muted-foreground">Avg. yr Prog.</p>
                 </div>
               </div>
 
