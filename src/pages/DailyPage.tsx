@@ -155,15 +155,6 @@ const DailyPage = () => {
           </div>
 
           {/* Input Controls */}
-          {isEditable && <div className="mt-6 flex items-center gap-2 sm:gap-4">
-              <button onClick={() => adjustCount(-10)} className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors active:scale-95">
-                <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
-              
-              <button onClick={() => adjustCount(10)} className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors active:scale-95">
-                <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
-            </div>}
 
           {!isEditable && <p className="mt-6 text-center text-muted-foreground text-sm">
               Future dates cannot be edited
