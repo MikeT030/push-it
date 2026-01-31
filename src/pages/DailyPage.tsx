@@ -129,9 +129,9 @@ const DailyPage = () => {
 
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex items-center justify-between">
-            <div className="flex-1">
+            <div className="flex flex-col items-start">
               <p className="text-sm text-muted-foreground font-medium mb-1">
-                Daily Progress
+                Today
               </p>
               {isEditable ? (
                 <input
@@ -140,7 +140,7 @@ const DailyPage = () => {
                   value={inputValue}
                   onChange={e => handleInputChange(e.target.value)}
                   placeholder="0"
-                  className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-full focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               ) : (
                 <p className="text-5xl font-black text-foreground">
@@ -151,7 +151,7 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
             </div>
-            <ProgressRing progress={progress} size={100} strokeWidth={10} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
+            <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
           </div>
 
           {/* Input Controls */}
