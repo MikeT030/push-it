@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import WeeklyOverview from "@/components/WeeklyOverview";
-import DailyProgressCard from "@/components/DailyProgressCard";
 const DailyPage = () => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -128,23 +127,11 @@ const DailyPage = () => {
           </p>
         </header>
 
-        {/* New Daily Progress Card */}
-        <DailyProgressCard
-          currentCount={currentCount}
-          dailyTarget={dailyTarget}
-          progress={progress}
-          inputValue={inputValue}
-          isEditable={isEditable}
-          onInputChange={handleInputChange}
-          onShare={handleShare}
-        />
-
-        {/* Existing Daily Progress Card with Controls */}
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex items-center justify-between">
-            <div className="flex flex-col items-start">
+            <div className="flex-1">
               <p className="text-sm text-muted-foreground font-medium mb-1">
-                Today
+                Daily Progress
               </p>
               {isEditable ? (
                 <input
@@ -153,7 +140,7 @@ const DailyPage = () => {
                   value={inputValue}
                   onChange={e => handleInputChange(e.target.value)}
                   placeholder="0"
-                  className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-full focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               ) : (
                 <p className="text-5xl font-black text-foreground">
@@ -164,7 +151,7 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
             </div>
-            <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
+            <ProgressRing progress={progress} size={100} strokeWidth={10} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
           </div>
 
           {/* Input Controls */}
