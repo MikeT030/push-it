@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import WeeklyOverview from "@/components/WeeklyOverview";
+import DailyProgressCard from "@/components/DailyProgressCard";
 const DailyPage = () => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -127,6 +128,18 @@ const DailyPage = () => {
           </p>
         </header>
 
+        {/* New Daily Progress Card */}
+        <DailyProgressCard
+          currentCount={currentCount}
+          dailyTarget={dailyTarget}
+          progress={progress}
+          inputValue={inputValue}
+          isEditable={isEditable}
+          onInputChange={handleInputChange}
+          onShare={handleShare}
+        />
+
+        {/* Existing Daily Progress Card with Controls */}
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-start">
