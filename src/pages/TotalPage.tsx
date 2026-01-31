@@ -191,7 +191,7 @@ const TotalPage = () => {
           return <div key={stat.label} className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
             animationDelay: `${0.1 + index * 0.05}s`,
             ...(isClickable && {
-              boxShadow: "0 0 20px 2px rgba(10, 186, 181, 0.32)"
+              boxShadow: "0 0 20px 2px rgba(186, 37, 216, 0.32)"
             })
           }} onClick={isClickable ? () => navigate("/daily") : undefined}>
                 <div className="flex items-center gap-2 mb-3">
