@@ -130,8 +130,8 @@ const DailyPage = () => {
         <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex items-center justify-between">
             <div className="flex-1">
-              <p className="text-sm text-muted-foreground font-medium mb-1">
-                Daily Progress
+              <p className="text-sm text-muted-foreground font-medium mb-2">
+                Today
               </p>
               {isEditable ? (
                 <input
@@ -147,11 +147,11 @@ const DailyPage = () => {
                   {currentCount}
                 </p>
               )}
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-muted-foreground mt-2">
                 of {dailyTarget} target
               </p>
             </div>
-            <ProgressRing progress={progress} size={100} strokeWidth={10} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
+            <ProgressRing progress={progress} size={120} strokeWidth={10} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
           </div>
 
           {/* Input Controls */}
