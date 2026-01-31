@@ -8,7 +8,6 @@ import { useUserAvatar } from "@/hooks/useUserAvatar";
 import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
-
 const TotalPage = () => {
   const navigate = useNavigate();
   const {
@@ -19,11 +18,12 @@ const TotalPage = () => {
     dailyTarget,
     isLoaded
   } = usePushUpData();
-  const { avatar } = useUserAvatar();
+  const {
+    avatar
+  } = useUserAvatar();
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
   const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
-
   const stats = useMemo(() => {
     if (!isLoaded) {
       return {
@@ -86,7 +86,6 @@ const TotalPage = () => {
       expectedByNow
     };
   }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
-
   const statCards = useMemo(() => [{
     label: "Today",
     value: `${getEntryForDate(new Date())}`,
@@ -113,13 +112,11 @@ const TotalPage = () => {
     icon: Flame,
     color: "text-[#C029DE]"
   }], [stats, getEntryForDate]);
-
   if (!isLoaded) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       </div>;
   }
-
   return <div className="min-h-screen bg-background pb-32 safe-top">
       {/* Top Gradient */}
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
@@ -134,7 +131,7 @@ const TotalPage = () => {
 
         {/* Header */}
         <header className="mb-2 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px]">You</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">You</h1>
           <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide mt-1">
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
@@ -264,5 +261,4 @@ const TotalPage = () => {
       </div>
     </div>;
 };
-
 export default TotalPage;
