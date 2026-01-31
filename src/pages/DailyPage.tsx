@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { format, addDays, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, User } from "lucide-react";
 import ShareIcon from "@/components/ShareIcon";
 import { useNavigate } from "react-router-dom";
@@ -163,13 +163,13 @@ const DailyPage = () => {
       }}>
           {/* Month Navigation */}
           <div className="flex items-center justify-between mb-4">
-            <button onClick={() => setCurrentMonth(subDays(currentMonth, 30))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
+            <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-lg font-bold text-foreground">
               {format(currentMonth, "MMMM yyyy")}
             </h2>
-            <button onClick={() => setCurrentMonth(addDays(currentMonth, 30))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
+            <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
