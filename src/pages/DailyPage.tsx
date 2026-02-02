@@ -140,7 +140,7 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
               {isEditable && (
-                <div className="flex items-center gap-2 mt-3">
+                <div className="flex items-center gap-4 mt-3">
                   <button
                     onClick={() => adjustCount(-10)}
                     disabled={currentCount < 10}
