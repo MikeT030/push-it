@@ -144,13 +144,13 @@ const DailyPage = () => {
                   <button
                     onClick={() => adjustCount(-10)}
                     disabled={currentCount < 10}
-                    className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => adjustCount(10)}
-                    className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors"
+                    className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
