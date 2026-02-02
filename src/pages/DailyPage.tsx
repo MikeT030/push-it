@@ -139,6 +139,24 @@ const DailyPage = () => {
               <p className="text-sm text-muted-foreground mt-1">
                 of {dailyTarget} target
               </p>
+              {isEditable && (
+                <div className="flex items-center gap-3 mt-3">
+                  <button
+                    onClick={() => adjustCount(-10)}
+                    disabled={currentCount < 10}
+                    className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <span className="text-xs text-muted-foreground font-medium">±10</span>
+                  <button
+                    onClick={() => adjustCount(10)}
+                    className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
             </div>
             <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
           </div>
