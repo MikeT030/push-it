@@ -58,16 +58,25 @@ const GroupPage = () => {
   // Swipe handling
   const handleTouchStart = (e: React.TouchEvent) => {
     const touch = e.touches[0];
-    (e.currentTarget as HTMLElement).dataset.touchStartX = touch.clientX.toString();
+    const el = e.currentTarget as HTMLElement;
+    el.dataset.touchStartX = touch.clientX.toString();
+    el.dataset.touchStartY = touch.clientY.toString();
   };
   const handleTouchEnd = (e: React.TouchEvent) => {
     const touch = e.changedTouches[0];
-    const startX = parseFloat((e.currentTarget as HTMLElement).dataset.touchStartX || "0");
-    const diff = touch.clientX - startX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0 && activeTab === "stats") {
+    const el = e.currentTarget as HTMLElement;
+    const startX = parseFloat(el.dataset.touchStartX || "0");
+    const startY = parseFloat(el.dataset.touchStartY || "0");
+    const diffX = touch.clientX - startX;
+    const diffY = touch.clientY - startY;
+    // Only switch tabs if swipe is predominantly horizontal (ratio > 2) and exceeds threshold
+    // Also ignore if the touch started inside a horizontally scrollable element
+    const target = e.target as HTMLElement;
+    const isInsideScrollable = target.closest("[data-horizontal-scroll]");
+    if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY) * 2 && !isInsideScrollable) {
+      if (diffX > 0 && activeTab === "stats") {
         setActiveTab("leaderboard");
-      } else if (diff < 0 && activeTab === "leaderboard") {
+      } else if (diffX < 0 && activeTab === "leaderboard") {
         setActiveTab("stats");
       }
     }

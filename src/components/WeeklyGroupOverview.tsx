@@ -198,6 +198,7 @@ const WeeklyGroupOverview = () => {
         {/* Horizontally Scrollable Week Selector */}
         <div
           ref={scrollRef}
+          data-horizontal-scroll
           className="flex gap-2 overflow-x-auto mb-4 scrollbar-hide -mx-2 px-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
