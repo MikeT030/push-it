@@ -1,8 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { format, eachDayOfInterval, isSameDay } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { supabase } from "@/integrations/supabase/client";
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
@@ -32,7 +31,9 @@ const DailyGroupOverview = () => {
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+  const [selectedDayIndex, setSelectedDayIndex] = useState(-1);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Generate day options from year start to today
   const dayOptions = useMemo((): DayOption[] => {
@@ -41,13 +42,32 @@ const DailyGroupOverview = () => {
 
     return days.map((date) => ({
       date,
-      label: format(date, "EEEE, MMM d"),
+      label: format(date, "EEE, MMM d"),
       isToday: isSameDay(date, today)
-    })).reverse(); // Most recent first
+    }));
   }, []);
 
-  const selectedDay = dayOptions[selectedDayIndex];
+  // Set initial selection to today (last item) and scroll to center
+  useEffect(() => {
+    if (dayOptions.length > 0 && selectedDayIndex === -1) {
+      const todayIdx = dayOptions.length - 1;
+      setSelectedDayIndex(todayIdx);
+    }
+  }, [dayOptions, selectedDayIndex]);
 
+  // Scroll selected day to center
+  useEffect(() => {
+    if (selectedDayIndex >= 0 && scrollRef.current) {
+      const container = scrollRef.current;
+      const activeEl = container.children[selectedDayIndex] as HTMLElement;
+      if (activeEl) {
+        const scrollLeft = activeEl.offsetLeft - container.offsetWidth / 2 + activeEl.offsetWidth / 2;
+        container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+      }
+    }
+  }, [selectedDayIndex]);
+
+  const selectedDay = selectedDayIndex >= 0 ? dayOptions[selectedDayIndex] : dayOptions[dayOptions.length - 1];
   useEffect(() => {
     const fetchDailyData = async () => {
       // Fetch all push up entries with user_id
@@ -142,39 +162,30 @@ const DailyGroupOverview = () => {
 
         <div className="h-px mb-4 bg-[#3b404f]" />
 
-        {/* Day Selector Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity mb-4">
-              {selectedDay?.label}
-              {selectedDay?.isToday &&
-              <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
-                  Today
-                </span>
-              }
-              <ChevronDown className="w-4 h-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
-            align="start">
-
-            {dayOptions.map((day, index) =>
-            <DropdownMenuItem
-              key={format(day.date, "yyyy-MM-dd")}
-              onClick={() => setSelectedDayIndex(index)}
-              className={`cursor-pointer ${index === selectedDayIndex ? "bg-primary/10 text-primary" : ""}`}>
-
-                {day.label}
-                {day.isToday &&
-              <span className="ml-2 text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
-                    Today
-                  </span>
-              }
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* Horizontal scrollable day selector */}
+        <div
+          ref={scrollRef}
+          className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {dayOptions.map((day, index) => (
+            <div key={format(day.date, "yyyy-MM-dd")} className="flex items-center flex-shrink-0">
+              {index > 0 && (
+                <div className="w-px h-4 bg-[#3A404F] mr-2" />
+              )}
+              <button
+                onClick={() => setSelectedDayIndex(index)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  index === selectedDayIndex
+                    ? "bg-primary/20 text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {day.isToday ? "Today" : day.label}
+              </button>
+            </div>
+          ))}
+        </div>
 
         {/* Daily Summary */}
         <div className="flex items-center justify-between p-3 mb-4">
