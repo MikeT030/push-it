@@ -31,7 +31,7 @@ const DailyGroupOverview = () => {
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+  const [selectedDayIndex, setSelectedDayIndex] = useState(-1);
   const scrollRef = useRef<HTMLDivElement>(null);
   const dayRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
 
@@ -44,10 +44,17 @@ const DailyGroupOverview = () => {
       date,
       label: format(date, "EEEE, MMM d"),
       isToday: isSameDay(date, today)
-    })).reverse(); // Most recent first
+    })); // Oldest first, newest last (left to right)
   }, []);
 
-  const selectedDay = dayOptions[selectedDayIndex];
+  // Set default to today (last item) once dayOptions is ready
+  useEffect(() => {
+    if (dayOptions.length > 0 && selectedDayIndex === -1) {
+      setSelectedDayIndex(dayOptions.length - 1);
+    }
+  }, [dayOptions, selectedDayIndex]);
+
+  const selectedDay = selectedDayIndex >= 0 ? dayOptions[selectedDayIndex] : dayOptions[dayOptions.length - 1];
 
   // Scroll to center the selected day
   const scrollToCenter = useCallback((index: number, smooth = true) => {
@@ -63,12 +70,13 @@ const DailyGroupOverview = () => {
     });
   }, []);
 
-  // Center today on mount
+  // Center selected day on mount
   useEffect(() => {
-    // Small delay to ensure elements are rendered
-    const timer = setTimeout(() => scrollToCenter(0, false), 50);
-    return () => clearTimeout(timer);
-  }, [scrollToCenter]);
+    if (selectedDayIndex >= 0) {
+      const timer = setTimeout(() => scrollToCenter(selectedDayIndex, false), 50);
+      return () => clearTimeout(timer);
+    }
+  }, [scrollToCenter, selectedDayIndex]);
 
   useEffect(() => {
     const fetchDailyData = async () => {
