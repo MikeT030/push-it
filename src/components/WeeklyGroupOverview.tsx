@@ -112,11 +112,14 @@ const WeeklyGroupOverview = () => {
     });
   }, []);
 
-  // Center selected week on mount
+  // Center selected week on mount/visibility
   useEffect(() => {
     if (selectedWeekIndex >= 0) {
-      const timer = setTimeout(() => scrollToCenter(selectedWeekIndex, false), 50);
-      return () => clearTimeout(timer);
+      const attemptScroll = () => scrollToCenter(selectedWeekIndex, false);
+      const t1 = setTimeout(attemptScroll, 50);
+      const t2 = setTimeout(attemptScroll, 200);
+      const t3 = setTimeout(attemptScroll, 500);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
     }
   }, [scrollToCenter, selectedWeekIndex]);
 

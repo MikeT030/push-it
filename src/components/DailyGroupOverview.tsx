@@ -70,11 +70,15 @@ const DailyGroupOverview = () => {
     });
   }, []);
 
-  // Center selected day on mount
+  // Center selected day on mount/visibility
   useEffect(() => {
     if (selectedDayIndex >= 0) {
-      const timer = setTimeout(() => scrollToCenter(selectedDayIndex, false), 50);
-      return () => clearTimeout(timer);
+      const attemptScroll = () => scrollToCenter(selectedDayIndex, false);
+      // Multiple attempts to handle tab visibility timing
+      const t1 = setTimeout(attemptScroll, 50);
+      const t2 = setTimeout(attemptScroll, 200);
+      const t3 = setTimeout(attemptScroll, 500);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
     }
   }, [scrollToCenter, selectedDayIndex]);
 
