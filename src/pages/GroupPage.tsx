@@ -220,7 +220,7 @@ const GroupPage = () => {
                   Group Goal {new Date().getFullYear()}
                 </h2>
 
-                <div className="h-px bg-border mb-4" />
+                <div className="h-px mb-4 bg-[#3b404f]" />
                 
                 <div className="flex items-center justify-between">
                   <div>
@@ -245,7 +245,7 @@ const GroupPage = () => {
                 </div>
 
                 {/* Progress bar */}
-                <div className="mt-6 h-3 bg-muted rounded-full overflow-hidden">
+                <div className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f]">
                   <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
                   width: `${stats.avgProgress}%`
                 }} />

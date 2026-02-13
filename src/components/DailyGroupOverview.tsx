@@ -38,11 +38,11 @@ const DailyGroupOverview = () => {
   const dayOptions = useMemo((): DayOption[] => {
     const today = new Date();
     const days = eachDayOfInterval({ start: YEAR_START, end: today });
-    
+
     return days.map((date) => ({
       date,
       label: format(date, "EEEE, MMM d"),
-      isToday: isSameDay(date, today),
+      isToday: isSameDay(date, today)
     })).reverse(); // Most recent first
   }, []);
 
@@ -51,18 +51,18 @@ const DailyGroupOverview = () => {
   useEffect(() => {
     const fetchDailyData = async () => {
       // Fetch all push up entries with user_id
-      const { data: entries } = await supabase
-        .from("push_up_entries")
-        .select("date, count, user_id");
+      const { data: entries } = await supabase.
+      from("push_up_entries").
+      select("date, count, user_id");
 
       if (entries) {
         setAllEntries(entries);
       }
 
       // Fetch profiles for display names
-      const { data: profilesData } = await supabase
-        .from("profiles")
-        .select("id, display_name");
+      const { data: profilesData } = await supabase.
+      from("profiles").
+      select("id, display_name");
 
       if (profilesData) {
         const profilesMap = new Map<string, string | null>();
@@ -73,9 +73,9 @@ const DailyGroupOverview = () => {
       }
 
       // Fetch member count (users with 82+ push-ups)
-      const { data: users } = await supabase
-        .from("user_progress")
-        .select("user_id, total_pushups");
+      const { data: users } = await supabase.
+      from("user_progress").
+      select("user_id, total_pushups");
 
       if (users) {
         const activeMembers = users.filter((u) => u.total_pushups >= 82).length;
@@ -90,10 +90,10 @@ const DailyGroupOverview = () => {
 
   // Calculate data for selected day
   const selectedDateStr = selectedDay ? format(selectedDay.date, "yyyy-MM-dd") : "";
-  
+
   const { dayTotal, memberContributions } = useMemo(() => {
     const dayEntries = allEntries.filter((e) => e.date === selectedDateStr);
-    
+
     // Group by user and sum their counts
     const userTotals = new Map<string, number>();
     dayEntries.forEach((entry) => {
@@ -101,13 +101,13 @@ const DailyGroupOverview = () => {
       userTotals.set(entry.user_id, current + entry.count);
     });
 
-    const contributions: MemberContribution[] = Array.from(userTotals.entries())
-      .map(([user_id, count]) => ({
-        user_id,
-        display_name: profiles.get(user_id) || null,
-        count,
-      }))
-      .sort((a, b) => b.count - a.count); // Sort by count descending
+    const contributions: MemberContribution[] = Array.from(userTotals.entries()).
+    map(([user_id, count]) => ({
+      user_id,
+      display_name: profiles.get(user_id) || null,
+      count
+    })).
+    sort((a, b) => b.count - a.count); // Sort by count descending
 
     const total = contributions.reduce((sum, c) => sum + c.count, 0);
 
@@ -115,15 +115,15 @@ const DailyGroupOverview = () => {
   }, [allEntries, selectedDateStr, profiles]);
 
   const dailyTarget = DAILY_TARGET * Math.max(memberCount, 1);
-  const percentage = dailyTarget > 0 ? Math.round((dayTotal / dailyTarget) * 100) : 0;
+  const percentage = dailyTarget > 0 ? Math.round(dayTotal / dailyTarget * 100) : 0;
 
   if (!isLoaded) {
     return (
       <div className="bg-card rounded-2xl p-6 animate-pulse">
         <div className="h-6 bg-muted rounded w-1/2 mb-4" />
         <div className="h-16 bg-muted rounded" />
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -132,47 +132,47 @@ const DailyGroupOverview = () => {
         <CollapsibleTrigger asChild>
           <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
             <h2 className="text-lg font-bold text-foreground">Daily Group</h2>
-            {isOpen ? (
-              <ChevronDown className="w-5 h-5 text-muted-foreground" />
-            ) : (
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            )}
+            {isOpen ?
+            <ChevronDown className="w-5 h-5 text-muted-foreground" /> :
+
+            <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            }
           </button>
         </CollapsibleTrigger>
 
-        <div className="h-px bg-border mb-4" />
+        <div className="h-px mb-4 bg-[#3b404f]" />
 
         {/* Day Selector Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity mb-4">
               {selectedDay?.label}
-              {selectedDay?.isToday && (
-                <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+              {selectedDay?.isToday &&
+              <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
                   Today
                 </span>
-              )}
+              }
               <ChevronDown className="w-4 h-4" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
-            align="start"
-          >
-            {dayOptions.map((day, index) => (
-              <DropdownMenuItem
-                key={format(day.date, "yyyy-MM-dd")}
-                onClick={() => setSelectedDayIndex(index)}
-                className={`cursor-pointer ${index === selectedDayIndex ? "bg-primary/10 text-primary" : ""}`}
-              >
+            align="start">
+
+            {dayOptions.map((day, index) =>
+            <DropdownMenuItem
+              key={format(day.date, "yyyy-MM-dd")}
+              onClick={() => setSelectedDayIndex(index)}
+              className={`cursor-pointer ${index === selectedDayIndex ? "bg-primary/10 text-primary" : ""}`}>
+
                 {day.label}
-                {day.isToday && (
-                  <span className="ml-2 text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                {day.isToday &&
+              <span className="ml-2 text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
                     Today
                   </span>
-                )}
+              }
               </DropdownMenuItem>
-            ))}
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -191,35 +191,35 @@ const DailyGroupOverview = () => {
         </div>
 
         {/* Progress bar with overflow */}
-        <div className="h-2 bg-muted rounded-full overflow-hidden relative mb-4">
+        <div className="h-2 rounded-full overflow-hidden relative mb-4 bg-[#3b404f]">
           <div
             className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
-            style={{ width: `${Math.min(percentage, 100)}%` }}
-          />
-          {percentage > 100 && (
-            <div
-              className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
-              style={{
-                width: `${Math.min(percentage, 200)}%`,
-                background:
-                  percentage >= 200
-                    ? "linear-gradient(to right, #C029DE, #C029DE99)"
-                    : "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))",
-              }}
-            />
-          )}
+            style={{ width: `${Math.min(percentage, 100)}%` }} />
+
+          {percentage > 100 &&
+          <div
+            className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
+            style={{
+              width: `${Math.min(percentage, 200)}%`,
+              background:
+              percentage >= 200 ?
+              "linear-gradient(to right, #C029DE, #C029DE99)" :
+              "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))"
+            }} />
+
+          }
         </div>
 
         <CollapsibleContent className="space-y-4">
 
           {/* Member Contributions List */}
-          {memberContributions.length > 0 ? (
-            <div className="space-y-2">
-              {memberContributions.map((member, index) => (
-                <div
-                  key={member.user_id}
-                  className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30"
-                >
+          {memberContributions.length > 0 ?
+          <div className="space-y-2">
+              {memberContributions.map((member, index) =>
+            <div
+              key={member.user_id}
+              className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
+
                   <span className="text-sm text-foreground">
                     {member.display_name || "Member"}
                   </span>
@@ -227,13 +227,13 @@ const DailyGroupOverview = () => {
                     {member.count.toLocaleString()}
                   </span>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground text-center py-2">
+            )}
+            </div> :
+
+          <p className="text-sm text-muted-foreground text-center py-2">
               No push-ups logged for this day
             </p>
-          )}
+          }
 
           {/* Member count note */}
           <p className="text-xs text-muted-foreground text-center">
@@ -241,8 +241,8 @@ const DailyGroupOverview = () => {
           </p>
         </CollapsibleContent>
       </div>
-    </Collapsible>
-  );
+    </Collapsible>);
+
 };
 
 export default DailyGroupOverview;
