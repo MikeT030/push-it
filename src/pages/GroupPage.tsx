@@ -109,7 +109,7 @@ const GroupPage = () => {
               <div className="bg-card rounded-2xl overflow-hidden">
                   {users.length === 0 ? <div className="p-6 text-center">
                       <p className="text-muted-foreground">No members yet. Be the first!</p>
-                    </div> : users.map((user, index) => <div key={user.user_id} className={`p-4 transition-all ${index < users.length - 1 ? "border-b border-border/30" : ""}`}>
+                    </div> : users.map((user, index) => <div key={user.user_id} className={`p-4 transition-all ${index < users.length - 1 ? "border-b border-[#3A404F]" : ""}`}>
                         <div className="flex items-center gap-4">
                           {/* Rank */}
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${index === 0 ? "bg-gradient-to-br from-gold to-gold/60 text-black" : index === 1 ? "bg-gradient-to-br from-muted-foreground to-muted text-foreground" : index === 2 ? "bg-gradient-to-br from-accent/60 to-accent/30 text-foreground" : "bg-muted text-muted-foreground"}`}>
