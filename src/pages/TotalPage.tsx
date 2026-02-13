@@ -223,7 +223,7 @@ const TotalPage = () => {
             Personal Goal {new Date().getFullYear()}
           </h2>
 
-          <div className="h-px bg-border mb-4" />
+          <div className="h-px mb-4 bg-[#3b404f]" />
           
           <div className="flex items-center justify-between">
             <div>

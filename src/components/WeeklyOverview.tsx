@@ -82,7 +82,7 @@ const WeeklyOverview = () => {
       start: weekStart,
       end: weekEnd
     });
-    const dailyLogs = allDays.map(day => {
+    const dailyLogs = allDays.map((day) => {
       const isBeforeYearStart = day < YEAR_START;
       return {
         date: day,
@@ -93,7 +93,7 @@ const WeeklyOverview = () => {
     });
 
     // Only count days from YEAR_START onwards for target
-    const countableDays = dailyLogs.filter(d => !d.isBeforeYearStart);
+    const countableDays = dailyLogs.filter((d) => !d.isBeforeYearStart);
     const total = countableDays.reduce((sum, d) => sum + d.count, 0);
     const weeklyTarget = countableDays.length * DAILY_TARGET;
     const percentage = weeklyTarget > 0 ? Math.round(total / weeklyTarget * 100) : 0;
@@ -108,7 +108,7 @@ const WeeklyOverview = () => {
     return <div className="bg-card rounded-2xl p-6 animate-pulse">
         <div className="h-6 bg-muted rounded w-1/2 mb-4" />
         <div className="space-y-3">
-          {[1, 2, 3].map(i => <div key={i} className="h-10 bg-muted rounded" />)}
+          {[1, 2, 3].map((i) => <div key={i} className="h-10 bg-muted rounded" />)}
         </div>
       </div>;
   }
@@ -123,7 +123,7 @@ const WeeklyOverview = () => {
           </button>
         </CollapsibleTrigger>
 
-        <div className="h-px bg-border mb-4" />
+        <div className="h-px mb-4 bg-[#3b404f]" />
 
         {/* Week Selector Dropdown */}
         <DropdownMenu>
@@ -159,7 +159,7 @@ const WeeklyOverview = () => {
 
         <CollapsibleContent className="space-y-2">
           {/* Daily Logs List */}
-          {weeklyData.days.map(day => <div key={format(day.date, "yyyy-MM-dd")} className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : day.isToday ? "bg-primary/10 border border-primary/20" : "bg-muted/30"}`}>
+          {weeklyData.days.map((day) => <div key={format(day.date, "yyyy-MM-dd")} className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : day.isToday ? "bg-primary/10 border border-primary/20" : "bg-muted/30"}`}>
               <div className="flex items-center gap-3">
                 <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
                   {format(day.date, "EEE")}
