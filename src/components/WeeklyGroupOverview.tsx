@@ -1,7 +1,6 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 import WeeklyBarChart from "./WeeklyBarChart";
@@ -26,7 +25,9 @@ const WeeklyGroupOverview = () => {
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [selectedWeekIndex, setSelectedWeekIndex] = useState(-1);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const weekRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
   // Fetch group data
   useEffect(() => {
     const fetchGroupData = async () => {
@@ -85,11 +86,39 @@ const WeeklyGroupOverview = () => {
       weekStart = addWeeks(startOfWeek(weekEnd, { weekStartsOn: 1 }), 1);
       weekNumber++;
     }
-    return weeks.reverse();
+    return weeks; // Oldest first, newest last (left to right)
   }, []);
 
-  const [selectedWeekIndex, setSelectedWeekIndex] = useState(0);
-  const selectedWeek = weekOptions[selectedWeekIndex];
+  // Set default to current week (last item) once weekOptions is ready
+  useEffect(() => {
+    if (weekOptions.length > 0 && selectedWeekIndex === -1) {
+      setSelectedWeekIndex(weekOptions.length - 1);
+    }
+  }, [weekOptions, selectedWeekIndex]);
+
+  const selectedWeek = selectedWeekIndex >= 0 ? weekOptions[selectedWeekIndex] : weekOptions[weekOptions.length - 1];
+
+  // Scroll to center the selected week
+  const scrollToCenter = useCallback((index: number, smooth = true) => {
+    const container = scrollRef.current;
+    const el = weekRefs.current.get(index);
+    if (!container || !el) return;
+    const containerWidth = container.offsetWidth;
+    const elLeft = el.offsetLeft;
+    const elWidth = el.offsetWidth;
+    container.scrollTo({
+      left: elLeft - containerWidth / 2 + elWidth / 2,
+      behavior: smooth ? "smooth" : "instant"
+    });
+  }, []);
+
+  // Center selected week on mount
+  useEffect(() => {
+    if (selectedWeekIndex >= 0) {
+      const timer = setTimeout(() => scrollToCenter(selectedWeekIndex, false), 50);
+      return () => clearTimeout(timer);
+    }
+  }, [scrollToCenter, selectedWeekIndex]);
 
   const getEntryForDate = (date: Date): number => {
     const dateStr = format(date, "yyyy-MM-dd");
@@ -163,29 +192,33 @@ const WeeklyGroupOverview = () => {
 
         <div className="h-px mb-4 bg-[#3b404f]" />
 
-        {/* Week Selector Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 text-primary font-medium text-base hover:opacity-80 transition-opacity mb-4">
-              {selectedWeek?.label}
-              <ChevronDown className="w-4 h-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50"
-            align="start">
-
-            {weekOptions.map((week, index) =>
-            <DropdownMenuItem
+        {/* Horizontally Scrollable Week Selector */}
+        <div
+          ref={scrollRef}
+          className="flex gap-2 overflow-x-auto mb-4 scrollbar-hide -mx-2 px-2"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {weekOptions.map((week, index) => (
+            <button
               key={week.weekNumber}
-              onClick={() => setSelectedWeekIndex(index)}
-              className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}>
-
-                {week.label}
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+              ref={(el) => {
+                if (el) weekRefs.current.set(index, el);
+              }}
+              onClick={() => {
+                setSelectedWeekIndex(index);
+                scrollToCenter(index);
+                setIsOpen(true);
+              }}
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                index === selectedWeekIndex
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted/30 text-muted-foreground hover:bg-muted/50"
+              }`}
+            >
+              {`Wk ${week.weekNumber} · ${format(week.startDate, "MMM d")}`}
+            </button>
+          ))}
+        </div>
 
         {/* Weekly Summary */}
         <div className="flex items-center justify-between p-3 mb-4">
