@@ -187,6 +187,7 @@ const DailyGroupOverview = () => {
               onClick={() => {
                 setSelectedDayIndex(index);
                 scrollToCenter(index);
+                setIsOpen(true);
               }}
               className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                 index === selectedDayIndex
