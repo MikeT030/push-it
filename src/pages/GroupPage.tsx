@@ -45,7 +45,7 @@ const GroupPage = () => {
     const yearStart = startOfYear(today);
     const daysElapsed = differenceInDays(today, yearStart) + 1;
     const expectedProgress = daysElapsed / 365 * 100;
-    const onTrackCount = users.filter(u => u.progress_percent >= expectedProgress).length;
+    const onTrackCount = users.filter((u) => u.progress_percent >= expectedProgress).length;
     return {
       totalMembers,
       totalPushups,
@@ -138,7 +138,7 @@ const GroupPage = () => {
                         </div>
 
                         {/* Progress bar */}
-                        <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="mt-3 h-1.5 rounded-full overflow-hidden bg-[#3b404f]">
                           <div className={`h-full rounded-full transition-all duration-500 ${user.progress_percent >= stats.expectedProgress ? "bg-primary" : "bg-accent"}`} style={{
                       width: `${Math.min(user.progress_percent, 100)}%`
                     }} />
@@ -225,10 +225,10 @@ const GroupPage = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-2xl font-black line-through text-white">
-                      {users.filter(u => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
+                      {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
                     </p>
                     <p className="text-4xl font-black text-gradient">
-                      {users.filter(u => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal - u.total_pushups, 0).toLocaleString()}
+                      {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal - u.total_pushups, 0).toLocaleString()}
                     </p>
                     <p className="text-sm text-muted-foreground mt-1">
                       push-ups remaining
@@ -236,7 +236,7 @@ const GroupPage = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-foreground">
-                      {users.filter(u => u.total_pushups >= 82).length}
+                      {users.filter((u) => u.total_pushups >= 82).length}
                     </p>
                     <p className="text-sm text-muted-foreground">
                       members
