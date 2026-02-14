@@ -277,7 +277,7 @@ const GroupPage = () => {
                 ))}
               </div>
               {/* View Toggle */}
-              <div className="flex justify-end mb-3">
+              <div className="flex justify-start mb-3">
                 <button
                   onClick={() => setLeaderboardView(leaderboardView === "podium" ? "list" : "podium")}
                   className="p-1.5 rounded-lg bg-muted/40 hover:bg-muted/60 transition-colors"
