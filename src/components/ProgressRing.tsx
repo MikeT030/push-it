@@ -62,7 +62,7 @@ const ProgressRing = ({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="hsl(var(--muted))"
+            stroke="#3B404F"
             strokeWidth={strokeWidth}
           />
           {/* Base progress ring (green/primary) */}
