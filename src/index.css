@@ -259,3 +259,42 @@
   animation: sun-reflection 3s ease-in-out infinite;
   pointer-events: none;
 }
+
+/* Animated border light reflection */
+@keyframes border-light-sweep {
+  0%, 85%, 100% {
+    background-position: -200% 0;
+  }
+  92% {
+    background-position: 200% 0;
+  }
+}
+
+.border-light-reflection {
+  position: relative;
+}
+
+.border-light-reflection::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    transparent 25%,
+    rgba(10, 186, 181, 0.3) 35%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(10, 186, 181, 0.3) 65%,
+    transparent 75%,
+    transparent 100%
+  );
+  background-size: 300% 100%;
+  background-position: -200% 0;
+  animation: border-light-sweep 4s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

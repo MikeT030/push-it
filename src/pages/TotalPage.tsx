@@ -137,7 +137,7 @@ const TotalPage = () => {
           {statCards.map((stat, index) => {
             const Icon = stat.icon;
             const isClickable = stat.label === "Today";
-            return <div key={stat.label} className={`flex-shrink-0 bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
+            return <div key={stat.label} className={`flex-shrink-0 bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all border-light-reflection" : ""}`} style={{
               minWidth: "140px",
               animationDelay: `${0.1 + index * 0.05}s`
             }} onClick={isClickable ? () => navigate("/daily") : undefined}>
