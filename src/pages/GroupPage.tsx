@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { format, subDays } from "date-fns";
+import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
 import { Users, Trophy, Flame, TrendingUp, User, Info } from "lucide-react";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
@@ -11,6 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
 interface UserProgress {
   user_id: string;
   display_name: string | null;
@@ -27,6 +29,8 @@ const GroupPage = () => {
   const [users, setUsers] = useState<UserProgress[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leaderboard");
+  const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("alltime");
+  const [allEntries, setAllEntries] = useState<any[]>([]);
   useEffect(() => {
     const fetchGroupProgress = async () => {
       const {
@@ -83,6 +87,7 @@ const GroupPage = () => {
           });
         }
 
+        setAllEntries(entries || []);
         setUsers(data.map((u: any) => ({
           ...u,
           avatar_url: avatarMap.get(u.user_id) || null,
@@ -94,6 +99,49 @@ const GroupPage = () => {
     };
     fetchGroupProgress();
   }, []);
+
+  // Compute period-filtered leaderboard users
+  const filteredUsers = useMemo(() => {
+    if (leaderboardPeriod === "alltime") return users;
+
+    const now = new Date();
+    let periodStart: Date;
+    let periodEnd: Date;
+
+    if (leaderboardPeriod === "weekly") {
+      periodStart = startOfWeek(now, { weekStartsOn: 1 });
+      periodEnd = endOfWeek(now, { weekStartsOn: 1 });
+    } else {
+      periodStart = startOfMonth(now);
+      periodEnd = endOfMonth(now);
+    }
+
+    const startStr = format(periodStart, "yyyy-MM-dd");
+    const endStr = format(periodEnd, "yyyy-MM-dd");
+
+    // Sum entries per user within the period
+    const periodTotals = new Map<string, { total: number; days: Set<string> }>();
+    allEntries.forEach((e: any) => {
+      if (e.date >= startStr && e.date <= endStr) {
+        if (!periodTotals.has(e.user_id)) periodTotals.set(e.user_id, { total: 0, days: new Set() });
+        const ut = periodTotals.get(e.user_id)!;
+        ut.total += e.count;
+        ut.days.add(e.date);
+      }
+    });
+
+    return users
+      .map((u) => {
+        const pt = periodTotals.get(u.user_id);
+        return {
+          ...u,
+          total_pushups: pt?.total || 0,
+          days_logged: pt?.days.size || 0,
+          avg_pushups: pt ? pt.total / pt.days.size : 0,
+        };
+      })
+      .sort((a, b) => b.total_pushups - a.total_pushups);
+  }, [users, allEntries, leaderboardPeriod]);
   const stats = useMemo(() => {
     const totalMembers = users.length;
     const totalPushups = users.reduce((sum, u) => sum + u.total_pushups, 0);
@@ -170,12 +218,29 @@ const GroupPage = () => {
           <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} className="touch-pan-y">
             {/* Leaderboard Tab */}
             <TabsContent value="leaderboard" className="mt-0">
-              {users.length === 0 ? (
+              {/* Period Toggle */}
+              <div className="flex bg-muted/30 rounded-full p-1 mb-5">
+                {(["weekly", "monthly", "alltime"] as LeaderboardPeriod[]).map((period) => (
+                  <button
+                    key={period}
+                    onClick={() => setLeaderboardPeriod(period)}
+                    className={`flex-1 py-2 px-3 rounded-full text-sm font-medium transition-all ${
+                      leaderboardPeriod === period
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {period === "weekly" ? "Weekly" : period === "monthly" ? "Monthly" : "All Time"}
+                  </button>
+                ))}
+              </div>
+
+              {filteredUsers.length === 0 ? (
                 <div className="p-6 text-center">
-                  <p className="text-muted-foreground">No members yet. Be the first!</p>
+                  <p className="text-muted-foreground">No data for this period yet.</p>
                 </div>
               ) : (
-                <LeaderboardPodium users={users} />
+                <LeaderboardPodium users={filteredUsers} />
               )}
 
               {/* Group Stats Cards */}
