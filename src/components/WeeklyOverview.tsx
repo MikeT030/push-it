@@ -113,7 +113,7 @@ const WeeklyOverview = () => {
       </div>;
   }
   return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="col-span-2">
-      <div className="rounded-2xl p-6 animate-slide-up bg-[#182734]" style={{
+      <div className="rounded-2xl p-6 animate-slide-up bg-[#323e49]" style={{
       animationDelay: "0.25s"
     }}>
         <CollapsibleTrigger asChild>

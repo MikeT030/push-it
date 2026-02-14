@@ -216,7 +216,7 @@ const TotalPage = () => {
           <WeeklyOverview />
 
           {/* Goal Card */}
-          <div className="col-span-2 rounded-2xl p-6 animate-slide-up bg-[#182734]" style={{
+          <div className="col-span-2 rounded-2xl p-6 animate-slide-up bg-[#323e49]" style={{
           animationDelay: "0.35s"
         }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
