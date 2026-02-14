@@ -87,7 +87,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
     <div className="animate-slide-up">
       {/* Podium Section */}
       {top3.length >= 1 && (
-        <div className="mb-6">
+        <div className="mb-3">
           {/* Avatars row */}
           <div className="flex items-end justify-center gap-4 mb-2">
             {top3.length >= 2 && <PodiumAvatar user={top3[1]} rank={1} />}
