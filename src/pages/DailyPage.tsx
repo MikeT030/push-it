@@ -217,9 +217,9 @@ const DailyPage = () => {
                 dot: "bg-[#C029DE]/60"
               };
               if (dayProgress >= 100) return {
-                bg: "bg-[hsl(var(--overflow))]",
+                bg: "bg-[#7036FF]",
                 text: "text-white",
-                dot: "bg-[hsl(var(--overflow)/0.6)]"
+                dot: "bg-[#7036FF]/60"
               };
               if (dayProgress > 0) return {
                 bg: "bg-primary/20",
