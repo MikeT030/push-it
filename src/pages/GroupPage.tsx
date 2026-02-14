@@ -1,8 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
-import { Users, Trophy, Flame, TrendingUp, User, Info } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, User, Info, List } from "lucide-react";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
+import { getAvatarById } from "@/data/avatars";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
 import DailyGroupOverview from "@/components/DailyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -13,6 +14,7 @@ import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
+type LeaderboardView = "podium" | "list";
 interface UserProgress {
   user_id: string;
   display_name: string | null;
@@ -24,12 +26,52 @@ interface UserProgress {
   streak?: number;
   avg_pushups?: number;
 }
+const LeaderboardListView = ({ users }: { users: UserProgress[] }) => {
+  return (
+    <div className="bg-card rounded-2xl overflow-hidden animate-slide-up">
+      {users.map((user, index) => {
+        const avatar = getAvatarById(user.avatar_url ?? null);
+        return (
+          <div
+            key={user.user_id}
+            className={`flex items-center gap-4 p-4 ${index < users.length - 1 ? "border-b border-[#3A404F]" : ""}`}
+          >
+            <span className="text-sm font-bold text-muted-foreground w-5 text-center">
+              {index + 1}
+            </span>
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-muted flex items-center justify-center flex-shrink-0">
+              {avatar ? (
+                <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" />
+              ) : (
+                <User className="w-5 h-5 text-muted-foreground" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground truncate">
+                {user.display_name || `Member ${index + 1}`}
+              </p>
+              <p className="text-xs text-[#C029DE]">🔥 {user.streak ?? 0}d streak</p>
+              <p className="text-xs text-foreground flex items-center gap-0.5">
+                <TrendingUp className="w-3 h-3 text-primary" /> {Math.round(user.avg_pushups ?? 0)} Avg. PU
+              </p>
+            </div>
+            <div className="flex items-center gap-1 bg-muted/50 rounded-full px-2.5 py-1">
+              <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const GroupPage = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState<UserProgress[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leaderboard");
   const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("alltime");
+  const [leaderboardView, setLeaderboardView] = useState<LeaderboardView>("podium");
   const [allEntries, setAllEntries] = useState<any[]>([]);
   useEffect(() => {
     const fetchGroupProgress = async () => {
@@ -234,13 +276,29 @@ const GroupPage = () => {
                   </button>
                 ))}
               </div>
+              {/* View Toggle */}
+              <div className="flex justify-end mb-3">
+                <button
+                  onClick={() => setLeaderboardView(leaderboardView === "podium" ? "list" : "podium")}
+                  className="p-1.5 rounded-lg bg-muted/40 hover:bg-muted/60 transition-colors"
+                  aria-label="Toggle view"
+                >
+                  {leaderboardView === "podium" ? (
+                    <List className="w-4 h-4 text-muted-foreground" />
+                  ) : (
+                    <Trophy className="w-4 h-4 text-muted-foreground" />
+                  )}
+                </button>
+              </div>
 
               {filteredUsers.length === 0 ? (
                 <div className="p-6 text-center">
                   <p className="text-muted-foreground">No data for this period yet.</p>
                 </div>
-              ) : (
+              ) : leaderboardView === "podium" ? (
                 <LeaderboardPodium users={filteredUsers} />
+              ) : (
+                <LeaderboardListView users={filteredUsers} />
               )}
 
               {/* Group Stats Cards - Horizontal Scrollable Strip */}
