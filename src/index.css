@@ -262,10 +262,13 @@
 
 /* Animated border light reflection */
 @keyframes border-light-sweep {
-  0%, 85%, 100% {
+  0% {
     background-position: -200% 0;
   }
-  92% {
+  15% {
+    background-position: 200% 0;
+  }
+  20%, 100% {
     background-position: 200% 0;
   }
 }
