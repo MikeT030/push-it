@@ -61,7 +61,7 @@ const PodiumAvatar = ({ user, rank }: { user: UserProgress; rank: number }) => {
         🔥 {user.streak ?? 0}d streak
       </p>
       <p className="text-[10px] font-medium text-foreground">
-        {Math.round(user.avg_pushups ?? 0)} Avg. PU
+        Ø {Math.round(user.avg_pushups ?? 0)} Avg. PU
       </p>
 
       {/* Score badge */}
@@ -145,7 +145,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                     {user.display_name || `Member ${index + 4}`}
                   </p>
                   <p className="text-xs text-[#C029DE]">🔥 {user.streak ?? 0}d streak</p>
-                  <p className="text-xs text-foreground">{Math.round(user.avg_pushups ?? 0)} Avg. PU</p>
+                  <p className="text-xs text-foreground">Ø {Math.round(user.avg_pushups ?? 0)} Avg. PU</p>
                 </div>
 
                 {/* Score badge */}
