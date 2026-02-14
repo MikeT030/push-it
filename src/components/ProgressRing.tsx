@@ -88,14 +88,14 @@ const ProgressRing = ({
               cy={size / 2}
               r={radius}
               fill="none"
-              stroke={progress >= 200 ? '#C029DE' : 'hsl(var(--overflow))'}
+              stroke={progress >= 200 ? '#C029DE' : '#7036FF'}
               strokeWidth={strokeWidth}
               strokeLinecap="round"
               strokeDasharray={circumference}
               strokeDashoffset={overflowOffset}
               className="transition-all duration-700 ease-out"
               style={{
-                filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'hsl(var(--overflow) / 0.5)'})`,
+                filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'rgba(112, 54, 255, 0.5)'})`,
               }}
             />
           )}
