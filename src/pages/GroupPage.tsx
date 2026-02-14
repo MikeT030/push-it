@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Trophy, Flame, TrendingUp, User, Info } from "lucide-react";
+import LeaderboardPodium from "@/components/LeaderboardPodium";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
 import DailyGroupOverview from "@/components/DailyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -16,6 +17,7 @@ interface UserProgress {
   yearly_goal: number;
   progress_percent: number;
   days_logged: number;
+  avatar_url?: string | null;
 }
 const GroupPage = () => {
   const navigate = useNavigate();
@@ -31,7 +33,11 @@ const GroupPage = () => {
         ascending: false
       });
       if (!error && data) {
-        setUsers(data);
+        // Fetch avatar URLs from profiles
+        const userIds = data.map((u: any) => u.user_id).filter(Boolean);
+        const { data: profiles } = await supabase.from("profiles").select("id, avatar_url").in("id", userIds);
+        const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
+        setUsers(data.map((u: any) => ({ ...u, avatar_url: avatarMap.get(u.user_id) || null })));
       }
       setIsLoading(false);
     };
@@ -113,48 +119,13 @@ const GroupPage = () => {
           <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} className="touch-pan-y">
             {/* Leaderboard Tab */}
             <TabsContent value="leaderboard" className="mt-0">
-              {/* Leaderboard */}
-              <div className="mb-6 animate-slide-up">
-              <div className="bg-card rounded-2xl overflow-hidden">
-                  {users.length === 0 ? <div className="p-6 text-center">
-                      <p className="text-muted-foreground">No members yet. Be the first!</p>
-                    </div> : users.map((user, index) => <div key={user.user_id} className={`p-4 transition-all ${index < users.length - 1 ? "border-b border-[#3A404F]" : ""}`}>
-                        <div className="flex items-center gap-4">
-                          {/* Rank */}
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${index === 0 ? "bg-gradient-to-br from-gold to-gold/60 text-black" : index === 1 ? "bg-gradient-to-br from-muted-foreground to-muted text-foreground" : index === 2 ? "bg-gradient-to-br from-accent/60 to-accent/30 text-foreground" : "bg-muted text-muted-foreground"}`}>
-                            {index + 1}
-                          </div>
-
-                          {/* Info */}
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-foreground truncate">
-                              {user.display_name || `Member ${index + 1}`}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              {user.days_logged} days logged • Goal: {user.yearly_goal.toLocaleString()}
-                            </p>
-                          </div>
-
-                          {/* Stats */}
-                          <div className="text-right">
-                            <p className="text-lg font-bold text-foreground">
-                              {user.total_pushups.toLocaleString()}
-                            </p>
-                            <p className={`text-xs font-medium ${user.progress_percent >= stats.expectedProgress ? "text-primary" : "text-accent"}`}>
-                              {user.progress_percent.toFixed(1)}%
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Progress bar */}
-                        <div className="mt-3 h-1.5 rounded-full overflow-hidden bg-[#3b404f]">
-                          <div className={`h-full rounded-full transition-all duration-500 ${user.progress_percent >= stats.expectedProgress ? "bg-primary" : "bg-accent"}`} style={{
-                      width: `${Math.min(user.progress_percent, 100)}%`
-                    }} />
-                        </div>
-                      </div>)}
+              {users.length === 0 ? (
+                <div className="p-6 text-center">
+                  <p className="text-muted-foreground">No members yet. Be the first!</p>
                 </div>
-              </div>
+              ) : (
+                <LeaderboardPodium users={users} />
+              )}
 
               {/* Group Stats Cards */}
               <div className="grid grid-cols-2 gap-3 mb-4 animate-slide-up" style={{
