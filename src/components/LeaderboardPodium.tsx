@@ -150,7 +150,6 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
 
                 {/* Score badge */}
                 <div className="flex items-center gap-1 bg-muted/50 rounded-full px-2.5 py-1">
-                  <span className="text-xs font-bold text-[#C029DE]">↑</span>
                   <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
                 </div>
               </div>
