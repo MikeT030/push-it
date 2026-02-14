@@ -179,7 +179,7 @@ const GroupPage = () => {
               )}
 
               {/* Group Stats Cards */}
-              <div className="grid grid-cols-2 gap-3 mb-4 animate-slide-up" style={{
+              <div className="grid grid-cols-2 gap-3 mb-4 mt-6 animate-slide-up" style={{
               animationDelay: "0.1s"
             }}>
                 <div className="bg-card rounded-2xl p-4 text-center">
