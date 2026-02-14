@@ -224,10 +224,10 @@ const GroupPage = () => {
                   <button
                     key={period}
                     onClick={() => setLeaderboardPeriod(period)}
-                    className={`flex-1 py-2 px-3 rounded-full text-sm font-medium transition-all ${
+                    className={`flex-1 py-2 px-3 rounded-full text-sm font-medium transition-all border ${
                       leaderboardPeriod === period
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
+                        : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"
                     }`}
                   >
                     {period === "weekly" ? "Weekly" : period === "monthly" ? "Monthly" : "All Time"}
