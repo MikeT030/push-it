@@ -277,16 +277,16 @@ const GroupPage = () => {
                 ))}
               </div>
               {/* View Toggle */}
-              <div className="flex justify-start mb-3">
+              <div className="flex justify-center mb-3">
                 <button
                   onClick={() => setLeaderboardView(leaderboardView === "podium" ? "list" : "podium")}
-                  className="p-1.5 rounded-lg bg-muted/40 hover:bg-muted/60 transition-colors"
+                  className="p-2.5 rounded-xl bg-muted/40 hover:bg-muted/60 transition-colors"
                   aria-label="Toggle view"
                 >
                   {leaderboardView === "podium" ? (
-                    <List className="w-4 h-4 text-muted-foreground" />
+                    <List className="w-5 h-5 text-muted-foreground" />
                   ) : (
-                    <Trophy className="w-4 h-4 text-muted-foreground" />
+                    <Trophy className="w-5 h-5 text-muted-foreground" />
                   )}
                 </button>
               </div>
