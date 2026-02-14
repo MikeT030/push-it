@@ -30,7 +30,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         {/* Middle circle - Purple/Magenta: 120x120px, 14pt stroke inside */}
         <div className="absolute w-[120px] h-[120px] rounded-full border-[14px] border-[#C029DE] box-border" />
         {/* Inner circle - Blue: 80x80px, 14pt stroke inside */}
-        <div className="absolute w-[80px] h-[80px] rounded-full border-[14px] border-[#4300FF] box-border" />
+        <div className="absolute w-[80px] h-[80px] rounded-full border-[14px] border-[#7036FF] box-border" />
       </div>
 
       {/* App name */}

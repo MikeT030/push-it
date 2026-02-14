@@ -25,11 +25,11 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
         const isTripleTarget = percentage >= 201;
         const isDoubleTarget = percentage >= 101 && percentage < 201;
         
-        // Color coding: up to 100% = #0ABAB5, 101-200% = #4300FF, 201%+ = #BA25D8
+        // Color coding: up to 100% = #0ABAB5, 101-200% = #7036FF, 201%+ = #BA25D8
         const getBarColor = () => {
           if (day.isBeforeYearStart || day.count === 0) return "bg-muted/50";
           if (isTripleTarget) return "bg-[#BA25D8]";
-          if (isDoubleTarget) return "bg-[#4300FF]";
+          if (isDoubleTarget) return "bg-[#7036FF]";
           return "bg-[#0ABAB5]";
         };
         
