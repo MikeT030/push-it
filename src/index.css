@@ -292,7 +292,7 @@
   );
   background-size: 300% 100%;
   background-position: -200% 0;
-  animation: border-light-sweep 4s ease-in-out infinite;
+  animation: border-light-sweep 8s ease-in-out infinite;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
