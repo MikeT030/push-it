@@ -1,12 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import WeeklyBarChart from "./WeeklyBarChart";
-const DAILY_TARGET = 82; // 82 push-ups per day
-const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
+const DAILY_TARGET = 82;
+const YEAR_START = new Date(2026, 0, 1);
 
 interface WeekOption {
   weekNumber: number;
@@ -20,49 +19,49 @@ const WeeklyOverview = () => {
     isLoaded
   } = usePushUpData();
   const [isOpen, setIsOpen] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const weekRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
 
-  // Generate week options starting from January 1, 2026
   const weekOptions = useMemo((): WeekOption[] => {
     const today = new Date();
     const weeks: WeekOption[] = [];
-
-    // Week 1 starts on January 1, 2026
     let weekStart = new Date(YEAR_START);
     let weekNumber = 1;
     while (weekStart <= today) {
-      // Week ends on the following Sunday (or end of partial week)
-      let weekEnd: Date;
-      if (weekNumber === 1) {
-        // First week: Jan 1 to the next Sunday
-        weekEnd = endOfWeek(weekStart, {
-          weekStartsOn: 1
-        });
-      } else {
-        weekEnd = endOfWeek(weekStart, {
-          weekStartsOn: 1
-        });
-      }
+      let weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
       weeks.push({
         weekNumber,
         startDate: weekStart,
         endDate: weekEnd,
         label: `Week ${weekNumber} (${format(weekStart, "MMM d")} - ${format(weekEnd, "MMM d")})`
       });
-
-      // Next week starts the day after this week ends
-      weekStart = addWeeks(startOfWeek(weekEnd, {
-        weekStartsOn: 1
-      }), 1);
+      weekStart = addWeeks(startOfWeek(weekEnd, { weekStartsOn: 1 }), 1);
       weekNumber++;
     }
-    return weeks.reverse(); // Most recent first
+    return weeks;
   }, []);
 
-  // Default to most recent (current) week
-  const [selectedWeekIndex, setSelectedWeekIndex] = useState(0);
+  // Default to current (last) week
+  const [selectedWeekIndex, setSelectedWeekIndex] = useState(weekOptions.length - 1);
   const selectedWeek = weekOptions[selectedWeekIndex];
 
-  // Get daily logs for selected week
+  const scrollToCenter = useCallback((index: number) => {
+    const container = scrollRef.current;
+    const button = weekRefs.current.get(index);
+    if (container && button) {
+      const scrollLeft = button.offsetLeft - container.clientWidth / 2 + button.clientWidth / 2;
+      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+    }
+  }, []);
+
+  useEffect(() => {
+    const currentIndex = weekOptions.length - 1;
+    const attempts = [0, 100, 300, 500];
+    attempts.forEach((delay) => {
+      setTimeout(() => scrollToCenter(currentIndex), delay);
+    });
+  }, [weekOptions.length, scrollToCenter]);
+
   const weeklyData = useMemo(() => {
     if (!selectedWeek || !isLoaded) return {
       days: [],
@@ -70,18 +69,9 @@ const WeeklyOverview = () => {
       percentage: 0,
       weeklyTarget: 0
     };
-
-    // Always show full week (Mon-Sun)
-    const weekStart = startOfWeek(selectedWeek.startDate, {
-      weekStartsOn: 1
-    });
-    const weekEnd = endOfWeek(selectedWeek.startDate, {
-      weekStartsOn: 1
-    });
-    const allDays = eachDayOfInterval({
-      start: weekStart,
-      end: weekEnd
-    });
+    const weekStart = startOfWeek(selectedWeek.startDate, { weekStartsOn: 1 });
+    const weekEnd = endOfWeek(selectedWeek.startDate, { weekStartsOn: 1 });
+    const allDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
     const dailyLogs = allDays.map((day) => {
       const isBeforeYearStart = day < YEAR_START;
       return {
@@ -91,19 +81,13 @@ const WeeklyOverview = () => {
         isBeforeYearStart
       };
     });
-
-    // Only count days from YEAR_START onwards for target
     const countableDays = dailyLogs.filter((d) => !d.isBeforeYearStart);
     const total = countableDays.reduce((sum, d) => sum + d.count, 0);
     const weeklyTarget = countableDays.length * DAILY_TARGET;
     const percentage = weeklyTarget > 0 ? Math.round(total / weeklyTarget * 100) : 0;
-    return {
-      days: dailyLogs,
-      total,
-      percentage,
-      weeklyTarget
-    };
+    return { days: dailyLogs, total, percentage, weeklyTarget };
   }, [selectedWeek, getEntryForDate, isLoaded]);
+
   if (!isLoaded) {
     return <div className="bg-card rounded-2xl p-6 animate-pulse">
         <div className="h-6 bg-muted rounded w-1/2 mb-4" />
@@ -125,20 +109,34 @@ const WeeklyOverview = () => {
 
         <div className="h-px mb-4 bg-[#3b404f]" />
 
-        {/* Week Selector Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 text-primary font-medium text-base mb-4 hover:opacity-80 transition-opacity">
-              {selectedWeek?.label}
-              <ChevronDown className="w-4 h-4" />
+        {/* Horizontally Scrollable Week Selector */}
+        <div
+          ref={scrollRef}
+          data-horizontal-scroll
+          className="flex gap-2 overflow-x-auto mb-4 scrollbar-hide -mx-2 px-2"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {weekOptions.map((week, index) => (
+            <button
+              key={week.weekNumber}
+              ref={(el) => {
+                if (el) weekRefs.current.set(index, el);
+              }}
+              onClick={() => {
+                setSelectedWeekIndex(index);
+                scrollToCenter(index);
+                setIsOpen(true);
+              }}
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
+                index === selectedWeekIndex
+                  ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
+                  : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"
+              }`}
+            >
+              {`Wk ${week.weekNumber} · ${format(week.startDate, "MMM d")}`}
             </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-card/80 backdrop-blur-sm border-border max-h-64 overflow-y-auto z-50" align="start">
-            {weekOptions.map((week, index) => <DropdownMenuItem key={week.weekNumber} onClick={() => setSelectedWeekIndex(index)} className={`cursor-pointer ${index === selectedWeekIndex ? "bg-primary/10 text-primary" : ""}`}>
-                {week.label}
-              </DropdownMenuItem>)}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          ))}
+        </div>
 
       {/* Weekly Summary */}
       <div className="flex items-center justify-between mb-4 p-3">
@@ -158,7 +156,6 @@ const WeeklyOverview = () => {
       <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET} />
 
         <CollapsibleContent className="space-y-2">
-          {/* Daily Logs List */}
           {weeklyData.days.map((day) => <div key={format(day.date, "yyyy-MM-dd")} className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : day.isToday ? "bg-primary/10 border border-primary/20" : "bg-muted/30"}`}>
               <div className="flex items-center gap-3">
                 <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
