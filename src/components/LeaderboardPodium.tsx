@@ -10,6 +10,7 @@ interface UserProgress {
   days_logged: number;
   avatar_url?: string | null;
   streak?: number;
+  avg_pushups?: number;
 }
 
 interface LeaderboardPodiumProps {
@@ -57,7 +58,7 @@ const PodiumAvatar = ({ user, rank }: { user: UserProgress; rank: number }) => {
         {user.display_name || `Member`}
       </p>
       <p className="text-[10px] font-medium text-[#C029DE]">
-        🔥 {user.streak ?? 0}d streak
+        🔥 {user.streak ?? 0}d streak · {Math.round(user.avg_pushups ?? 0)} Avg. PU
       </p>
 
       {/* Score badge */}
@@ -140,7 +141,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                   <p className="text-sm font-medium text-foreground truncate">
                     {user.display_name || `Member ${index + 4}`}
                   </p>
-                  <p className="text-xs text-[#C029DE]">🔥 {user.streak ?? 0}d streak</p>
+                  <p className="text-xs text-[#C029DE]">🔥 {user.streak ?? 0}d streak · {Math.round(user.avg_pushups ?? 0)} Avg. PU</p>
                 </div>
 
                 {/* Score badge */}

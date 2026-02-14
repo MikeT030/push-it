@@ -20,6 +20,7 @@ interface UserProgress {
   days_logged: number;
   avatar_url?: string | null;
   streak?: number;
+  avg_pushups?: number;
 }
 const GroupPage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const GroupPage = () => {
         const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
 
         // Fetch entries to calculate streaks
-        const { data: entries } = await supabase.from("push_up_entries").select("date, user_id");
+        const { data: entries } = await supabase.from("push_up_entries").select("date, user_id, count");
         const streakMap = new Map<string, number>();
         if (entries) {
           // Group dates by user
@@ -67,10 +68,26 @@ const GroupPage = () => {
           });
         }
 
+        // Calculate average push-ups per logged day
+        const avgMap = new Map<string, number>();
+        if (entries) {
+          const userTotals = new Map<string, { total: number; days: Set<string> }>();
+          entries.forEach((e: any) => {
+            if (!userTotals.has(e.user_id)) userTotals.set(e.user_id, { total: 0, days: new Set() });
+            const ut = userTotals.get(e.user_id)!;
+            ut.total += e.count;
+            ut.days.add(e.date);
+          });
+          userTotals.forEach((val, userId) => {
+            avgMap.set(userId, val.days.size > 0 ? val.total / val.days.size : 0);
+          });
+        }
+
         setUsers(data.map((u: any) => ({
           ...u,
           avatar_url: avatarMap.get(u.user_id) || null,
           streak: streakMap.get(u.user_id) || 0,
+          avg_pushups: avgMap.get(u.user_id) || 0,
         })));
       }
       setIsLoading(false);
