@@ -117,7 +117,7 @@ const TotalPage = () => {
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       </div>;
   }
-  return <div className="min-h-screen pb-32 safe-top bg-[#1a2632]">
+  return <div className="min-h-screen bg-background pb-32 safe-top">
       {/* Top Gradient */}
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
       
@@ -138,7 +138,7 @@ const TotalPage = () => {
         </header>
 
         {/* Main Progress Card */}
-        <div className="rounded-2xl p-6 mt-6 animate-slide-up bg-[#323e49]">
+        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up">
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
 
           <div className="h-px mb-4 bg-[#3b404f]" />
@@ -188,7 +188,7 @@ const TotalPage = () => {
           {statCards.map((stat, index) => {
           const Icon = stat.icon;
           const isClickable = stat.label === "Today";
-          return <div key={stat.label} className={`bg-[#323E49] rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
+          return <div key={stat.label} className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
             animationDelay: `${0.1 + index * 0.05}s`,
             ...(isClickable && {
               boxShadow: "0 0 20px 2px rgba(10, 186, 181, 0.32)"
@@ -216,7 +216,7 @@ const TotalPage = () => {
           <WeeklyOverview />
 
           {/* Goal Card */}
-          <div className="col-span-2 rounded-2xl p-6 animate-slide-up bg-[#323e49]" style={{
+          <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up" style={{
           animationDelay: "0.35s"
         }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
