@@ -66,7 +66,7 @@ const PodiumAvatar = ({ user, rank }: {user: UserProgress;rank: number;}) => {
 
       {/* Score badge */}
       <div className="flex items-center gap-1 bg-muted/80 rounded-full px-2.5 py-0.5">
-        <span className="text-xs font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
+        <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
       </div>
     </div>);
 
