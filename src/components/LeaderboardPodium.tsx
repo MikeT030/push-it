@@ -1,4 +1,4 @@
-import { User } from "lucide-react";
+import { User, TrendingUp } from "lucide-react";
 import { getAvatarById } from "@/data/avatars";
 
 interface UserProgress {
@@ -60,8 +60,8 @@ const PodiumAvatar = ({ user, rank }: { user: UserProgress; rank: number }) => {
       <p className="text-[10px] font-medium text-[#C029DE]">
         🔥 {user.streak ?? 0}d streak
       </p>
-      <p className="text-[10px] font-medium text-foreground">
-        Ø {Math.round(user.avg_pushups ?? 0)} Avg. PU
+      <p className="text-[10px] font-medium text-foreground flex items-center gap-0.5 justify-center">
+        <TrendingUp className="w-3 h-3 text-primary" /> {Math.round(user.avg_pushups ?? 0)} Avg. PU
       </p>
 
       {/* Score badge */}
@@ -145,7 +145,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                     {user.display_name || `Member ${index + 4}`}
                   </p>
                   <p className="text-xs text-[#C029DE]">🔥 {user.streak ?? 0}d streak</p>
-                  <p className="text-xs text-foreground">Ø {Math.round(user.avg_pushups ?? 0)} Avg. PU</p>
+                  <p className="text-xs text-foreground flex items-center gap-0.5"><TrendingUp className="w-3 h-3 text-primary" /> {Math.round(user.avg_pushups ?? 0)} Avg. PU</p>
                 </div>
 
                 {/* Score badge */}
