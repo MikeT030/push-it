@@ -117,7 +117,7 @@ const TotalPage = () => {
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       </div>;
   }
-  return <div className="min-h-screen bg-background pb-32 safe-top">
+  return <div className="min-h-screen pb-32 safe-top bg-[#1a2632]">
       {/* Top Gradient */}
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
       
