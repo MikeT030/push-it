@@ -213,10 +213,10 @@ const WeeklyGroupOverview = () => {
                 scrollToCenter(index);
                 setIsOpen(true);
               }}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
                 index === selectedWeekIndex
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted/30 text-muted-foreground hover:bg-muted/50"
+                  ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
+                  : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"
               }`}
             >
               {`Wk ${week.weekNumber} · ${format(week.startDate, "MMM d")}`}
