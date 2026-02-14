@@ -243,44 +243,40 @@ const GroupPage = () => {
                 <LeaderboardPodium users={filteredUsers} />
               )}
 
-              {/* Group Stats Cards */}
-              <div className="grid grid-cols-2 gap-3 mb-4 mt-6 animate-slide-up" style={{
-              animationDelay: "0.1s"
-            }}>
-                <div className="bg-card rounded-2xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#C029DE]/20 flex items-center justify-center mx-auto mb-2">
+              {/* Group Stats Cards - Horizontal Scrollable Strip */}
+              <div className="flex gap-3 overflow-x-auto mt-6 mb-6 -mx-2 px-2 scrollbar-hide animate-slide-up" style={{ scrollbarWidth: "none", msOverflowStyle: "none", animationDelay: "0.1s" }}>
+                <div className="flex-shrink-0 bg-card rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                  <div className="flex items-center gap-2 mb-3">
                     <Flame className="w-5 h-5 text-[#C029DE]" />
+                    <p className="text-sm text-muted-foreground font-medium">Total</p>
                   </div>
-                  <p className="text-2xl font-bold text-foreground">
+                  <p className="text-[1.625rem] font-black text-foreground">
                     {stats.totalPushups.toLocaleString()}
+                    <span className="text-base font-medium text-muted-foreground ml-1">PU</span>
                   </p>
-                  <p className="text-xs text-muted-foreground">Total Push-ups</p>
                 </div>
-                
-                <div className="bg-card rounded-2xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
-                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
-                  </div>
-                  <p className="text-2xl font-bold text-foreground">
-                    {Math.round(stats.avgProgress)}%
-                  </p>
-                  <p className="text-xs text-muted-foreground">Avg. yr Prog.</p>
-                </div>
-              </div>
 
-              {/* Members on Track Card */}
-              <div className="bg-card rounded-2xl p-4 text-center mb-6 animate-slide-up" style={{
-              animationDelay: "0.15s"
-            }}>
-                <div className="w-10 h-10 rounded-full bg-[#0ABAB5]/20 flex items-center justify-center mx-auto mb-2">
-                  <MultiColorTargetIcon size={20} />
+                <div className="flex-shrink-0 bg-card rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
+                    <p className="text-sm text-muted-foreground font-medium">Avg. yr Prog.</p>
+                  </div>
+                  <p className="text-[1.625rem] font-black text-foreground">
+                    {Math.round(stats.avgProgress)}
+                    <span className="text-base font-medium text-muted-foreground ml-1">%</span>
+                  </p>
                 </div>
-                <p className="text-2xl font-bold text-foreground">
-                  {stats.onTrackCount} / {stats.totalMembers}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Members on track<br />(≥{stats.expectedProgress.toFixed(0)}% exp. yr. Prog.)
-                </p>
+
+                <div className="flex-shrink-0 bg-card rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <MultiColorTargetIcon size={20} />
+                    <p className="text-sm text-muted-foreground font-medium">On track</p>
+                  </div>
+                  <p className="text-[1.625rem] font-black text-foreground">
+                    {stats.onTrackCount}
+                    <span className="text-base font-medium text-muted-foreground ml-1">/ {stats.totalMembers}</span>
+                  </p>
+                </div>
               </div>
             </TabsContent>
 
