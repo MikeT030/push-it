@@ -8,6 +8,7 @@ import { useUserAvatar } from "@/hooks/useUserAvatar";
 import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
+
 const TotalPage = () => {
   const navigate = useNavigate();
   const {
@@ -18,12 +19,11 @@ const TotalPage = () => {
     dailyTarget,
     isLoaded
   } = usePushUpData();
-  const {
-    avatar
-  } = useUserAvatar();
+  const { avatar } = useUserAvatar();
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
   const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
+
   const stats = useMemo(() => {
     if (!isLoaded) {
       return {
@@ -43,7 +43,6 @@ const TotalPage = () => {
     const daysElapsed = differenceInDays(today, yearStart) + 1;
     const daysRemaining = 365 - daysElapsed;
 
-    // Calculate streak
     let streak = 0;
     let checkDate = today;
     while (true) {
@@ -56,23 +55,16 @@ const TotalPage = () => {
       }
     }
 
-    // Calculate weekly average (for display)
     const last7Days = eachDayOfInterval({
       start: subDays(today, 6),
       end: today
     });
     const last7Total = last7Days.reduce((sum, day) => sum + getEntryForDate(day), 0);
     const weeklyAvg = Math.round(last7Total / 7);
-
-    // Calculate all-time average (for projection)
     const allTimeAvg = daysElapsed > 0 ? totalPushUps / daysElapsed : 0;
-
-    // Pace calculation
     const expectedByNow = Math.round(daysElapsed / 365 * yearlyGoal);
     const paceStatus = totalPushUps >= expectedByNow ? "ahead" : "behind";
     const paceDiff = Math.abs(totalPushUps - expectedByNow);
-
-    // Required daily to meet goal
     const requiredDaily = daysRemaining > 0 ? Math.floor(remaining / daysRemaining) : 0;
     return {
       daysElapsed,
@@ -86,6 +78,7 @@ const TotalPage = () => {
       expectedByNow
     };
   }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
+
   const statCards = useMemo(() => [{
     label: "Today",
     value: `${getEntryForDate(new Date())}`,
@@ -112,11 +105,13 @@ const TotalPage = () => {
     icon: Flame,
     color: "text-[#C029DE]"
   }], [stats, getEntryForDate]);
+
   if (!isLoaded) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       </div>;
   }
+
   return <div className="min-h-screen bg-background pb-32 safe-top">
       {/* Top Gradient */}
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
@@ -136,6 +131,34 @@ const TotalPage = () => {
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
         </header>
+
+        {/* Stats Strip - Horizontally Scrollable */}
+        <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          {statCards.map((stat, index) => {
+            const Icon = stat.icon;
+            const isClickable = stat.label === "Today";
+            return <div key={stat.label} className={`flex-shrink-0 bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
+              minWidth: "140px",
+              animationDelay: `${0.1 + index * 0.05}s`,
+              ...(isClickable && {
+                boxShadow: "0 0 20px 2px rgba(10, 186, 181, 0.32)"
+              })
+            }} onClick={isClickable ? () => navigate("/daily") : undefined}>
+                <div className="flex items-center gap-2 mb-3">
+                  {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
+                  <p className="text-sm text-muted-foreground font-medium">
+                    {stat.label}
+                  </p>
+                </div>
+                <p className="text-[1.625rem] font-black text-foreground">
+                  {stat.value}
+                  <span className="text-base font-medium text-muted-foreground ml-1">
+                    {stat.unit}
+                  </span>
+                </p>
+              </div>;
+          })}
+        </div>
 
         {/* Main Progress Card */}
         <div className="bg-card/80 rounded-2xl p-6 mt-6 animate-slide-up">
@@ -181,33 +204,6 @@ const TotalPage = () => {
                 </> : "Start logging push-ups to see your projected completion date"}
             </p>
           </div>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-4 mt-6">
-          {statCards.map((stat, index) => {
-          const Icon = stat.icon;
-          const isClickable = stat.label === "Today";
-          return <div key={stat.label} className={`bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
-            animationDelay: `${0.1 + index * 0.05}s`,
-            ...(isClickable && {
-              boxShadow: "0 0 20px 2px rgba(10, 186, 181, 0.32)"
-            })
-          }} onClick={isClickable ? () => navigate("/daily") : undefined}>
-                <div className="flex items-center gap-2 mb-3">
-                  {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
-                  <p className="text-sm text-muted-foreground font-medium">
-                    {stat.label}
-                  </p>
-                </div>
-                <p className="text-[1.625rem] font-black text-foreground">
-                  {stat.value}
-                  <span className="text-base font-medium text-muted-foreground ml-1">
-                    {stat.unit}
-                  </span>
-                </p>
-              </div>;
-        })}
         </div>
 
         {/* Weekly Overview & Goal Cards Grid */}
