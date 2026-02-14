@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { format, subDays } from "date-fns";
 import { Users, Trophy, Flame, TrendingUp, User, Info } from "lucide-react";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
@@ -18,6 +19,7 @@ interface UserProgress {
   progress_percent: number;
   days_logged: number;
   avatar_url?: string | null;
+  streak?: number;
 }
 const GroupPage = () => {
   const navigate = useNavigate();
@@ -37,7 +39,39 @@ const GroupPage = () => {
         const userIds = data.map((u: any) => u.user_id).filter(Boolean);
         const { data: profiles } = await supabase.from("profiles").select("id, avatar_url").in("id", userIds);
         const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
-        setUsers(data.map((u: any) => ({ ...u, avatar_url: avatarMap.get(u.user_id) || null })));
+
+        // Fetch entries to calculate streaks
+        const { data: entries } = await supabase.from("push_up_entries").select("date, user_id");
+        const streakMap = new Map<string, number>();
+        if (entries) {
+          // Group dates by user
+          const userDates = new Map<string, Set<string>>();
+          entries.forEach((e: any) => {
+            if (!userDates.has(e.user_id)) userDates.set(e.user_id, new Set());
+            userDates.get(e.user_id)!.add(e.date);
+          });
+          // Calculate streak for each user
+          userDates.forEach((dates, userId) => {
+            let streak = 0;
+            let checkDate = new Date();
+            while (true) {
+              const dateStr = format(checkDate, "yyyy-MM-dd");
+              if (dates.has(dateStr)) {
+                streak++;
+                checkDate = subDays(checkDate, 1);
+              } else {
+                break;
+              }
+            }
+            streakMap.set(userId, streak);
+          });
+        }
+
+        setUsers(data.map((u: any) => ({
+          ...u,
+          avatar_url: avatarMap.get(u.user_id) || null,
+          streak: streakMap.get(u.user_id) || 0,
+        })));
       }
       setIsLoading(false);
     };

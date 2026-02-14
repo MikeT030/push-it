@@ -9,6 +9,7 @@ interface UserProgress {
   progress_percent: number;
   days_logged: number;
   avatar_url?: string | null;
+  streak?: number;
 }
 
 interface LeaderboardPodiumProps {
@@ -51,10 +52,15 @@ const PodiumAvatar = ({ user, rank }: { user: UserProgress; rank: number }) => {
         )}
       </div>
 
-      {/* Name */}
+      {/* Name + Streak */}
       <p className="text-xs font-medium text-foreground truncate max-w-[80px] text-center">
         {user.display_name || `Member`}
       </p>
+      {(user.streak ?? 0) > 0 && (
+        <p className="text-[10px] font-medium text-[#C029DE]">
+          🔥 {user.streak}d streak
+        </p>
+      )}
 
       {/* Score badge */}
       <div className="flex items-center gap-1 bg-muted/80 rounded-full px-2.5 py-0.5">
@@ -131,10 +137,15 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                   )}
                 </div>
 
-                {/* Name */}
-                <p className="text-sm font-medium text-foreground flex-1 truncate">
-                  {user.display_name || `Member ${index + 4}`}
-                </p>
+                {/* Name + Streak */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">
+                    {user.display_name || `Member ${index + 4}`}
+                  </p>
+                  {(user.streak ?? 0) > 0 && (
+                    <p className="text-xs text-[#C029DE]">🔥 {user.streak}d streak</p>
+                  )}
+                </div>
 
                 {/* Score badge */}
                 <div className="flex items-center gap-1 bg-muted/50 rounded-full px-2.5 py-1">
