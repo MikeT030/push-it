@@ -234,7 +234,7 @@ const DailyGroupOverview = () => {
               background:
               percentage >= 200 ?
               "linear-gradient(to right, #C029DE, #C029DE99)" :
-              "linear-gradient(to right, hsl(var(--overflow)), hsl(var(--overflow) / 0.6))"
+              "linear-gradient(to right, #7036FF, rgba(112, 54, 255, 0.6))"
             }} />
 
           }
