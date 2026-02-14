@@ -138,7 +138,7 @@ const TotalPage = () => {
         </header>
 
         {/* Main Progress Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up">
+        <div className="rounded-2xl p-6 mt-6 animate-slide-up bg-[#182734]">
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
 
           <div className="h-px mb-4 bg-[#3b404f]" />
@@ -216,7 +216,7 @@ const TotalPage = () => {
           <WeeklyOverview />
 
           {/* Goal Card */}
-          <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up" style={{
+          <div className="col-span-2 rounded-2xl p-6 animate-slide-up bg-[#182734]" style={{
           animationDelay: "0.35s"
         }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
