@@ -230,7 +230,7 @@ const GroupPage = () => {
                         : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"
                     }`}
                   >
-                    {period === "weekly" ? "Weekly" : period === "monthly" ? "Monthly" : "All Time"}
+                    {period === "weekly" ? "Week" : period === "monthly" ? "Month" : "All-time"}
                   </button>
                 ))}
               </div>
