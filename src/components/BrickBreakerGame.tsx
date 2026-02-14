@@ -59,7 +59,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     rings: [
       { radius: 80, lineWidth: 14, color: "#0ABAB5", hits: 0, maxHits: 10, active: true },  // Outer
       { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
-      { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
+      { radius: 40, lineWidth: 14, color: "#7036FF", hits: 0, maxHits: 20, active: true },  // Inner
     ] as Ring[],
     passThrough: false, // Ball passes through everything when a ring is destroyed
     passThroughEndTime: 0, // Timestamp when pass-through ends
@@ -97,7 +97,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       rings: [
         { radius: 80, lineWidth: 14, color: "#0ABAB5", hits: 0, maxHits: 10, active: true },  // Outer
         { radius: 60, lineWidth: 14, color: "#C029DE", hits: 0, maxHits: 15, active: true },  // Middle
-        { radius: 40, lineWidth: 14, color: "#4300FF", hits: 0, maxHits: 20, active: true },  // Inner
+        { radius: 40, lineWidth: 14, color: "#7036FF", hits: 0, maxHits: 20, active: true },  // Inner
       ],
       passThrough: false,
       passThroughEndTime: 0,
