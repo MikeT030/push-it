@@ -139,10 +139,7 @@ const TotalPage = () => {
             const isClickable = stat.label === "Today";
             return <div key={stat.label} className={`flex-shrink-0 bg-card rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all" : ""}`} style={{
               minWidth: "140px",
-              animationDelay: `${0.1 + index * 0.05}s`,
-              ...(isClickable && {
-                boxShadow: "0 0 20px 2px rgba(10, 186, 181, 0.32)"
-              })
+              animationDelay: `${0.1 + index * 0.05}s`
             }} onClick={isClickable ? () => navigate("/daily") : undefined}>
                 <div className="flex items-center gap-2 mb-3">
                   {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
