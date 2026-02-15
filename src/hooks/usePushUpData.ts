@@ -155,7 +155,15 @@ export const usePushUpData = () => {
     const today = new Date();
     let streak = 0;
     let checkDate = today;
-    
+
+    // If today has no entry yet, don't break the streak — the day isn't over
+    if (getEntryForDate(checkDate) > 0) {
+      streak++;
+      checkDate = subDays(checkDate, 1);
+    } else {
+      checkDate = subDays(checkDate, 1);
+    }
+
     while (true) {
       const count = getEntryForDate(checkDate);
       if (count > 0) {
