@@ -72,7 +72,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
       </div>
 
       {/* Mountain SVG */}
-      <div className="mt-0 -mx-6">
+      <div className="mt-0 -mx-0 px-0">
         <svg
           viewBox="0 -30 360 330"
           preserveAspectRatio="none"
