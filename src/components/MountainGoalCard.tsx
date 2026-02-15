@@ -76,6 +76,17 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
             strokeWidth="2"
           />
 
+          <text
+            x="342"
+            y="-6"
+            textAnchor="middle"
+            fill="white"
+            fontSize="18"
+            fontWeight="800"
+          >
+            30K
+          </text>
+
           <rect
             x="0"
             y="0"
