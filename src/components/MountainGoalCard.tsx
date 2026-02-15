@@ -78,11 +78,12 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
 
           <text
             x="342"
-            y="-6"
+            y="18"
             textAnchor="middle"
             fill="white"
-            fontSize="18"
+            fontSize="20"
             fontWeight="800"
+            style={{ fontFamily: "inherit" }}
           >
             30K
           </text>
