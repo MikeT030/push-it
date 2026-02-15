@@ -24,7 +24,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
         <h2 className="text-lg font-bold text-foreground mb-4">
           Personal Goal {year}
         </h2>
-        <div className="h-px mb-4 bg-[#3b404f]" />
+        
         <p className="text-4xl font-black text-foreground">
           {remaining.toLocaleString("de-DE")}
         </p>
@@ -54,8 +54,8 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
           <path
             d={mountainPath}
             fill="none"
-            stroke="hsl(var(--muted-foreground) / 0.25)"
-            strokeWidth="1.5"
+            stroke="white"
+            strokeWidth="1"
           />
 
           <rect
