@@ -69,7 +69,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
             width={fillWidth}
             height="300"
             fill={`url(#${gradientId})`}
-            opacity="0.85"
+            opacity="0.8"
             clipPath={`url(#${mountainId})`}
             className="transition-all duration-1000"
           />
