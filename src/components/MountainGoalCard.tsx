@@ -11,8 +11,10 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
   const mountainId = useMemo(() => `mountain-clip-${Math.random().toString(36).slice(2)}`, []);
   const gradientId = useMemo(() => `mountain-gradient-${Math.random().toString(36).slice(2)}`, []);
 
-  // Mountain path - a rugged hill silhouette rising from bottom-left to a peak at top-right
+  // Closed path for clipping/filling
   const mountainPath = "M0,300 L0,280 Q20,270 40,260 L60,240 Q80,230 90,210 L110,200 Q130,195 140,180 L160,170 Q170,155 180,150 L200,130 Q210,120 220,115 L240,100 Q260,85 270,75 L290,60 Q300,50 310,40 L320,25 Q325,18 330,12 L335,8 Q338,5 340,3 L342,2 L345,8 Q348,15 350,20 L355,35 Q358,45 360,55 L360,300 Z";
+  // Open path for the visible hill outline (no bottom or right edge)
+  const hillOutline = "M0,280 Q20,270 40,260 L60,240 Q80,230 90,210 L110,200 Q130,195 140,180 L160,170 Q170,155 180,150 L200,130 Q210,120 220,115 L240,100 Q260,85 270,75 L290,60 Q300,50 310,40 L320,25 Q325,18 330,12 L335,8 Q338,5 340,3 L342,2 L345,8 Q348,15 350,20 L355,35 Q358,45 360,55";
 
   // Fill width: progress fills from left to right
   const fillWidth = (yearProgress / 100) * 360;
@@ -52,7 +54,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
           </defs>
 
           <path
-            d={mountainPath}
+            d={hillOutline}
             fill="none"
             stroke="white"
             strokeWidth="1"
