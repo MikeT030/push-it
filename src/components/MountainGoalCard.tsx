@@ -34,11 +34,11 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
       </div>
 
       {/* Mountain SVG */}
-      <div className="mt-0 -mx-6 -mb-10">
+      <div className="mt-0 -mx-6">
         <svg
           viewBox="0 0 360 300"
           preserveAspectRatio="none"
-          className="w-full h-[220px]"
+          className="w-full h-[180px] block"
         >
           <defs>
             <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
