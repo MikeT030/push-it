@@ -12,6 +12,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
   const gradientId = useMemo(() => `mountain-gradient-${Math.random().toString(36).slice(2)}`, []);
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [displayCount, setDisplayCount] = useState(30000);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,6 +27,19 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
     if (cardRef.current) observer.observe(cardRef.current);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (displayCount <= remaining) {
+      setDisplayCount(remaining);
+      return;
+    }
+    const diff = displayCount - remaining;
+    const step = Math.max(1, Math.floor(diff / 60));
+    const timer = setTimeout(() => {
+      setDisplayCount(prev => Math.max(remaining, prev - step));
+    }, 25);
+    return () => clearTimeout(timer);
+  }, [displayCount, remaining]);
 
   // Closed path for clipping/filling
   const mountainPath = "M0,300 L0,280 Q20,270 40,260 L60,240 Q80,230 90,210 L110,200 Q130,195 140,180 L160,170 Q170,155 180,150 L200,130 Q210,120 220,115 L240,100 Q260,85 270,75 L290,60 Q300,50 310,40 L320,25 Q325,18 330,12 L335,8 Q338,5 340,3 L342,2 L345,8 Q348,15 350,20 L355,35 Q358,45 360,55 L360,300 Z";
@@ -44,7 +58,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
         </h2>
         
         <p className="text-4xl font-black text-foreground">
-          {remaining.toLocaleString("de-DE")}
+          {displayCount.toLocaleString("de-DE")}
         </p>
         <p className="text-sm text-muted-foreground mt-1">
           PU remaining
