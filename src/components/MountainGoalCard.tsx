@@ -123,7 +123,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
 
       {/* Footer */}
       <p className="text-sm text-muted-foreground text-center pt-2">
-        Day {daysElapsed} of 365
+        Day {daysElapsed} of 365 ({yearProgress.toFixed(1)}%)
       </p>
     </div>
   );
