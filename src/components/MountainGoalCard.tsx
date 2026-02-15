@@ -57,7 +57,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
             d={hillOutline}
             fill="none"
             stroke="white"
-            strokeWidth="1"
+            strokeWidth="2"
           />
 
           <rect
