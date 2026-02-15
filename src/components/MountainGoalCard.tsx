@@ -38,7 +38,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
         <svg
           viewBox="0 0 360 300"
           preserveAspectRatio="none"
-          className="absolute bottom-8 right-0 w-[85%] h-[75%]"
+          className="absolute bottom-[-12px] right-0 w-[85%] h-[75%]"
         >
           <defs>
             {/* Gradient for fill */}
