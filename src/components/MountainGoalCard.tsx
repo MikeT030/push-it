@@ -92,7 +92,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
           <path
             d={hillOutline}
             fill="none"
-            stroke="white"
+            stroke="#0ABAB5"
             strokeWidth="2"
           />
 
@@ -113,8 +113,8 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
             y="0"
             width={fillWidth}
             height="300"
-            fill={`url(#${gradientId})`}
-            opacity="0.8"
+            fill="#0ABAB5"
+            opacity="0.7"
             clipPath={`url(#${mountainId})`}
             style={{ transition: "width 2s ease-out" }}
           />
