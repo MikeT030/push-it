@@ -12,7 +12,8 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
   const gradientId = useMemo(() => `mountain-gradient-${Math.random().toString(36).slice(2)}`, []);
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [displayCount, setDisplayCount] = useState(30000);
+  const [displayCount, setDisplayCount] = useState<number | null>(null);
+  const startValue = 30000;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,6 +30,11 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
   }, []);
 
   useEffect(() => {
+    if (remaining <= 0) return;
+    if (displayCount === null) {
+      setDisplayCount(startValue);
+      return;
+    }
     if (displayCount <= remaining) {
       setDisplayCount(remaining);
       return;
@@ -36,7 +42,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
     const diff = displayCount - remaining;
     const step = Math.max(1, Math.floor(diff / 30));
     const timer = setTimeout(() => {
-      setDisplayCount(prev => Math.max(remaining, prev - step));
+      setDisplayCount(prev => Math.max(remaining, (prev ?? startValue) - step));
     }, 16);
     return () => clearTimeout(timer);
   }, [displayCount, remaining]);
@@ -58,7 +64,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
         </h2>
         
         <p className="text-4xl font-black text-foreground">
-          {displayCount.toLocaleString("de-DE")}
+          {(displayCount ?? startValue).toLocaleString("de-DE")}
         </p>
         <p className="text-sm text-muted-foreground mt-1">
           PU remaining
