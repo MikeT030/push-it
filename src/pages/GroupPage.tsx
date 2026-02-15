@@ -101,6 +101,14 @@ const GroupPage = () => {
           userDates.forEach((dates, userId) => {
             let streak = 0;
             let checkDate = new Date();
+            const todayStr = format(checkDate, "yyyy-MM-dd");
+            // If today has an entry, count it; otherwise skip today (day isn't over yet)
+            if (dates.has(todayStr)) {
+              streak++;
+              checkDate = subDays(checkDate, 1);
+            } else {
+              checkDate = subDays(checkDate, 1);
+            }
             while (true) {
               const dateStr = format(checkDate, "yyyy-MM-dd");
               if (dates.has(dateStr)) {
