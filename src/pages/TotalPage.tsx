@@ -45,6 +45,13 @@ const TotalPage = () => {
 
     let streak = 0;
     let checkDate = today;
+    // If today has an entry, count it; otherwise skip (day isn't over yet)
+    if (getEntryForDate(checkDate) > 0) {
+      streak++;
+      checkDate = subDays(checkDate, 1);
+    } else {
+      checkDate = subDays(checkDate, 1);
+    }
     while (true) {
       const count = getEntryForDate(checkDate);
       if (count > 0) {
