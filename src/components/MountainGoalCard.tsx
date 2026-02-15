@@ -18,8 +18,8 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
   const fillWidth = (yearProgress / 100) * 360;
 
   return (
-    <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up relative overflow-hidden" style={{ animationDelay: "0.4s", minHeight: "440px" }}>
-      {/* Text content - positioned above SVG */}
+    <div className="col-span-2 bg-card rounded-2xl p-6 pb-4 animate-slide-up overflow-hidden" style={{ animationDelay: "0.4s" }}>
+      {/* Text content */}
       <div className="relative z-10">
         <h2 className="text-lg font-bold text-foreground mb-4">
           Personal Goal {year}
@@ -34,27 +34,23 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
       </div>
 
       {/* Mountain SVG */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="mt-4 -mx-6 -mb-0">
         <svg
           viewBox="0 0 360 300"
           preserveAspectRatio="none"
-          className="absolute bottom-[-12px] right-0 w-[85%] h-[75%]"
+          className="w-full h-[220px]"
         >
           <defs>
-            {/* Gradient for fill */}
             <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#0ABAB5" />
               <stop offset="50%" stopColor="#7036FF" />
               <stop offset="100%" stopColor="#C029DE" />
             </linearGradient>
-
-            {/* Clip path for the mountain shape */}
             <clipPath id={mountainId}>
               <path d={mountainPath} />
             </clipPath>
           </defs>
 
-          {/* Mountain outline */}
           <path
             d={mountainPath}
             fill="none"
@@ -62,7 +58,6 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
             strokeWidth="1.5"
           />
 
-          {/* Filled portion - rectangle clipped to mountain shape, rising from bottom */}
           <rect
             x="0"
             y="0"
@@ -77,11 +72,9 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-        <p className="text-sm text-muted-foreground text-center">
-          Day {daysElapsed} of 365
-        </p>
-      </div>
+      <p className="text-sm text-muted-foreground text-center pt-2">
+        Day {daysElapsed} of 365
+      </p>
     </div>
   );
 };
