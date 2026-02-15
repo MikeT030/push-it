@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 
 interface MountainGoalCardProps {
   remaining: number;
@@ -10,6 +10,22 @@ interface MountainGoalCardProps {
 const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: MountainGoalCardProps) => {
   const mountainId = useMemo(() => `mountain-clip-${Math.random().toString(36).slice(2)}`, []);
   const gradientId = useMemo(() => `mountain-gradient-${Math.random().toString(36).slice(2)}`, []);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // Closed path for clipping/filling
   const mountainPath = "M0,300 L0,280 Q20,270 40,260 L60,240 Q80,230 90,210 L110,200 Q130,195 140,180 L160,170 Q170,155 180,150 L200,130 Q210,120 220,115 L240,100 Q260,85 270,75 L290,60 Q300,50 310,40 L320,25 Q325,18 330,12 L335,8 Q338,5 340,3 L342,2 L345,8 Q348,15 350,20 L355,35 Q358,45 360,55 L360,300 Z";
@@ -17,10 +33,10 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
   const hillOutline = "M0,280 Q20,270 40,260 L60,240 Q80,230 90,210 L110,200 Q130,195 140,180 L160,170 Q170,155 180,150 L200,130 Q210,120 220,115 L240,100 Q260,85 270,75 L290,60 Q300,50 310,40 L320,25 Q325,18 330,12 L335,8 Q338,5 340,3 L342,2 L345,8 Q348,15 350,20 L355,35 Q358,45 360,55";
 
   // Fill width: progress fills from left to right
-  const fillWidth = (yearProgress / 100) * 360;
+  const fillWidth = isVisible ? (yearProgress / 100) * 360 : 0;
 
   return (
-    <div className="col-span-2 bg-card rounded-2xl p-6 pb-4 animate-slide-up overflow-hidden" style={{ animationDelay: "0.4s" }}>
+    <div ref={cardRef} className="col-span-2 bg-card rounded-2xl p-6 pb-4 animate-slide-up overflow-hidden" style={{ animationDelay: "0.4s" }}>
       {/* Text content */}
       <div className="relative z-10">
         <h2 className="text-lg font-bold text-foreground mb-4">
@@ -68,7 +84,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
             fill={`url(#${gradientId})`}
             opacity="0.8"
             clipPath={`url(#${mountainId})`}
-            className="transition-all duration-1000"
+            style={{ transition: "width 2s ease-out" }}
           />
         </svg>
       </div>
