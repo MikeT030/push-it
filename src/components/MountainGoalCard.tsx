@@ -34,10 +34,10 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
       return;
     }
     const diff = displayCount - remaining;
-    const step = Math.max(1, Math.floor(diff / 60));
+    const step = Math.max(1, Math.floor(diff / 30));
     const timer = setTimeout(() => {
       setDisplayCount(prev => Math.max(remaining, prev - step));
-    }, 25);
+    }, 16);
     return () => clearTimeout(timer);
   }, [displayCount, remaining]);
 
