@@ -18,7 +18,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
   const fillWidth = (yearProgress / 100) * 360;
 
   return (
-    <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up relative overflow-hidden" style={{ animationDelay: "0.4s", minHeight: "380px" }}>
+    <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up relative overflow-hidden" style={{ animationDelay: "0.4s", minHeight: "440px" }}>
       {/* Text content - positioned above SVG */}
       <div className="relative z-10">
         <h2 className="text-lg font-bold text-foreground mb-4">
