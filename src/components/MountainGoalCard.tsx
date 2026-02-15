@@ -114,7 +114,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
             width={fillWidth}
             height="300"
             fill="#0ABAB5"
-            opacity="0.7"
+            opacity="0.3"
             clipPath={`url(#${mountainId})`}
             style={{ transition: "width 2s ease-out" }}
           />
