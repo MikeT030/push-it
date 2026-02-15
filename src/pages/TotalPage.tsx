@@ -8,6 +8,7 @@ import { useUserAvatar } from "@/hooks/useUserAvatar";
 import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
+import MountainGoalCard from "@/components/MountainGoalCard";
 
 const TotalPage = () => {
   const navigate = useNavigate();
@@ -257,6 +258,14 @@ const TotalPage = () => {
             Day {stats.daysElapsed} of 365
           </p>
         </div>
+
+          {/* Mountain Goal Card */}
+          <MountainGoalCard
+            remaining={remaining}
+            yearProgress={yearProgress}
+            daysElapsed={stats.daysElapsed}
+            year={new Date().getFullYear()}
+          />
         </div>
       </div>
     </div>;
