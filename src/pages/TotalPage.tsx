@@ -260,13 +260,6 @@ const TotalPage = () => {
           </p>
         </div>
 
-          {/* Mountain Goal Card */}
-          <MountainGoalCard
-            remaining={remaining}
-            yearProgress={yearProgress}
-            daysElapsed={stats.daysElapsed}
-            year={new Date().getFullYear()}
-          />
 
           {/* Line Chart Goal Card */}
           <LineChartGoalCard
