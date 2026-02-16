@@ -161,18 +161,18 @@ const DailyGroupOverview = () => {
   }
 
   return (
-    <Collapsible open={isOpen}>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className="bg-card rounded-2xl p-6 animate-slide-up">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity"
-          >
+        <CollapsibleTrigger asChild>
+          <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
             <h2 className="text-lg font-bold text-foreground">Daily Group</h2>
             {isOpen ?
             <ChevronDown className="w-5 h-5 text-muted-foreground" /> :
+
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
             }
           </button>
+        </CollapsibleTrigger>
 
         <div className="h-px mb-4 bg-[#3b404f]" />
 
@@ -189,8 +189,7 @@ const DailyGroupOverview = () => {
               ref={(el) => {
                 if (el) dayRefs.current.set(index, el);
               }}
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 setSelectedDayIndex(index);
                 scrollToCenter(index);
                 setIsOpen(true);
