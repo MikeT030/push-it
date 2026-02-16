@@ -216,6 +216,9 @@ const GroupPage = () => {
     const el = e.currentTarget as HTMLElement;
     el.dataset.touchStartX = touch.clientX.toString();
     el.dataset.touchStartY = touch.clientY.toString();
+    // Store whether touch started inside a scrollable element
+    const target = e.target as HTMLElement;
+    el.dataset.touchInsideScrollable = target.closest("[data-horizontal-scroll]") ? "1" : "0";
   };
   const handleTouchEnd = (e: React.TouchEvent) => {
     const touch = e.changedTouches[0];
@@ -224,10 +227,8 @@ const GroupPage = () => {
     const startY = parseFloat(el.dataset.touchStartY || "0");
     const diffX = touch.clientX - startX;
     const diffY = touch.clientY - startY;
+    const isInsideScrollable = el.dataset.touchInsideScrollable === "1";
     // Only switch tabs if swipe is predominantly horizontal (ratio > 2) and exceeds threshold
-    // Also ignore if the touch started inside a horizontally scrollable element
-    const target = e.target as HTMLElement;
-    const isInsideScrollable = target.closest("[data-horizontal-scroll]");
     if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY) * 2 && !isInsideScrollable) {
       if (diffX > 0 && activeTab === "stats") {
         setActiveTab("leaderboard");
@@ -310,7 +311,7 @@ const GroupPage = () => {
               )}
 
               {/* Group Stats Cards - Horizontal Scrollable Strip */}
-              <div className="flex gap-3 overflow-x-auto mt-6 mb-6 -mx-2 px-2 scrollbar-hide animate-slide-up" style={{ scrollbarWidth: "none", msOverflowStyle: "none", animationDelay: "0.1s" }}>
+              <div data-horizontal-scroll className="flex gap-3 overflow-x-auto mt-6 mb-6 -mx-2 px-2 scrollbar-hide animate-slide-up" style={{ scrollbarWidth: "none", msOverflowStyle: "none", animationDelay: "0.1s" }}>
                 <div className="flex-shrink-0 bg-card rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
                     <Flame className="w-5 h-5 text-[#C029DE]" />
