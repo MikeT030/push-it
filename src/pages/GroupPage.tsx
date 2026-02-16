@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { differenceInDays, startOfYear } from "date-fns";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
 type LeaderboardView = "podium" | "list";
@@ -413,6 +414,15 @@ const GroupPage = () => {
                   {Math.round(stats.avgProgress)}% average progress
                 </p>
               </div>
+
+              {/* Group Line Chart Goal Card */}
+              <GroupLineChartGoalCard
+                totalPushUps={stats.totalPushups}
+                groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
+                progressPercent={stats.avgProgress}
+                allEntries={allEntries}
+                year={new Date().getFullYear()}
+              />
 
               {/* Call to Action */}
               <div className="mt-8 text-center animate-fade-in" style={{
