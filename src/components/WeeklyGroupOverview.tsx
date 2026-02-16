@@ -209,9 +209,13 @@ const WeeklyGroupOverview = () => {
                 if (el) weekRefs.current.set(index, el);
               }}
               onClick={() => {
-                setSelectedWeekIndex(index);
-                scrollToCenter(index);
-                setIsOpen(true);
+                if (index === selectedWeekIndex) {
+                  setIsOpen((prev) => !prev);
+                } else {
+                  setSelectedWeekIndex(index);
+                  scrollToCenter(index);
+                  setIsOpen(true);
+                }
               }}
               className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
                 index === selectedWeekIndex
