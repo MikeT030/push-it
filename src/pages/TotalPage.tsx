@@ -9,6 +9,7 @@ import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
 import MountainGoalCard from "@/components/MountainGoalCard";
+import LineChartGoalCard from "@/components/LineChartGoalCard";
 
 const TotalPage = () => {
   const navigate = useNavigate();
@@ -264,6 +265,15 @@ const TotalPage = () => {
             remaining={remaining}
             yearProgress={yearProgress}
             daysElapsed={stats.daysElapsed}
+            year={new Date().getFullYear()}
+          />
+
+          {/* Line Chart Goal Card */}
+          <LineChartGoalCard
+            totalPushUps={totalPushUps}
+            yearlyGoal={yearlyGoal}
+            yearProgress={yearProgress}
+            getEntryForDate={getEntryForDate}
             year={new Date().getFullYear()}
           />
         </div>
