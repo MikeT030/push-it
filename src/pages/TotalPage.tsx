@@ -260,15 +260,6 @@ const TotalPage = () => {
           </p>
         </div>
 
-
-          {/* Line Chart Goal Card */}
-          <LineChartGoalCard
-            totalPushUps={totalPushUps}
-            yearlyGoal={yearlyGoal}
-            yearProgress={yearProgress}
-            getEntryForDate={getEntryForDate}
-            year={new Date().getFullYear()}
-          />
         </div>
       </div>
     </div>;
