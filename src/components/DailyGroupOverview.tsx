@@ -189,7 +189,8 @@ const DailyGroupOverview = () => {
               ref={(el) => {
                 if (el) dayRefs.current.set(index, el);
               }}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setSelectedDayIndex(index);
                 scrollToCenter(index);
                 setIsOpen(true);
