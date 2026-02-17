@@ -256,7 +256,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Avatar Selector Dialog */}
-      <AvatarSelector open={isAvatarSelectorOpen} onOpenChange={setIsAvatarSelectorOpen} selectedAvatarId={avatarId} onSelect={handleAvatarSelect} />
+      <AvatarSelector open={isAvatarSelectorOpen} onOpenChange={setIsAvatarSelectorOpen} selectedAvatarId={avatarId} onSelect={handleAvatarSelect} defaultTab="avatar" />
     </div>;
 };
 export default ProfilePage;
