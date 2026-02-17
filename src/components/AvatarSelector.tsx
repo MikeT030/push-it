@@ -57,7 +57,7 @@ const AvatarSelector = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0">
+      <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0 flex flex-col">
         {/* Tabs */}
         <div className="flex border-b border-border">
           <button
@@ -91,7 +91,7 @@ const AvatarSelector = ({
         </div>
 
         {activeTab === "card" ? (
-          <div className="p-6 overflow-y-auto max-h-[75vh]">
+          <div className="p-6 flex-1 overflow-y-auto flex">
             <PlayerCard
               displayName={displayName}
               avatar={selectedAvatar}
