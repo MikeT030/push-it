@@ -44,9 +44,11 @@ const AvatarSelector = ({
   } = usePushUpData();
 
   const [displayName, setDisplayName] = useState("");
+  const [takenAvatarIds, setTakenAvatarIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!user || !open) return;
+    // Fetch display name and all taken avatars in parallel
     supabase
       .from("profiles")
       .select("display_name")
@@ -54,6 +56,20 @@ const AvatarSelector = ({
       .maybeSingle()
       .then(({ data }) => {
         if (data?.display_name) setDisplayName(data.display_name);
+      });
+
+    supabase
+      .from("profiles")
+      .select("id, avatar_url")
+      .not("avatar_url", "is", null)
+      .neq("avatar_url", "")
+      .then(({ data }) => {
+        if (data) {
+          const taken = new Set<string>(
+            data.filter((p) => p.id !== user.id).map((p) => p.avatar_url!)
+          );
+          setTakenAvatarIds(taken);
+        }
       });
   }, [user, open]);
 
@@ -139,34 +155,44 @@ const AvatarSelector = ({
                   </div>
                 )}
               </button>
-              {avatarOptions.map((avatar) => (
-                <button
-                  key={avatar.id}
-                  onClick={() => {
-                    onSelect(avatar);
-                    onOpenChange(false);
-                  }}
-                  className={cn(
-                    "relative aspect-square rounded-xl overflow-hidden transition-all duration-200",
-                    "hover:scale-105 hover:ring-2 hover:ring-primary/50",
-                    "focus:outline-none focus:ring-2 focus:ring-primary",
-                    selectedAvatarId === avatar.id && "ring-2 ring-primary"
-                  )}
-                >
-                  <img
-                    src={avatar.src}
-                    alt={avatar.name}
-                    className="w-full h-full object-cover bg-white/10"
-                  />
-                  {selectedAvatarId === avatar.id && (
-                    <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
-                      <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                        <Check className="w-4 h-4 text-primary-foreground" />
+              {avatarOptions.map((avatar) => {
+                const isTaken = takenAvatarIds.has(avatar.id);
+                return (
+                  <button
+                    key={avatar.id}
+                    onClick={() => {
+                      if (isTaken) return;
+                      onSelect(avatar);
+                      onOpenChange(false);
+                    }}
+                    disabled={isTaken}
+                    className={cn(
+                      "relative aspect-square rounded-xl overflow-hidden transition-all duration-200",
+                      "focus:outline-none focus:ring-2 focus:ring-primary",
+                      isTaken
+                        ? "cursor-not-allowed opacity-40"
+                        : "hover:scale-105 hover:ring-2 hover:ring-primary/50",
+                      selectedAvatarId === avatar.id && "ring-2 ring-primary"
+                    )}
+                  >
+                    <img
+                      src={avatar.src}
+                      alt={avatar.name}
+                      className={cn(
+                        "w-full h-full object-cover bg-white/10",
+                        isTaken && "grayscale"
+                      )}
+                    />
+                    {selectedAvatarId === avatar.id && (
+                      <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                        <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                          <Check className="w-4 h-4 text-primary-foreground" />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </button>
-              ))}
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
