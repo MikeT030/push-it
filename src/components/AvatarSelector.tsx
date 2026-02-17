@@ -57,7 +57,7 @@ const AvatarSelector = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-hidden p-0">
+      <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0">
         {/* Tabs */}
         <div className="flex border-b border-border">
           <button
