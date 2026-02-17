@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay } from "date-fns";
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, User } from "lucide-react";
 import ShareIcon from "@/components/ShareIcon";
 import { useNavigate } from "react-router-dom";
@@ -35,12 +35,35 @@ const DailyPage = () => {
   useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
   }, [selectedDate, currentCount]);
-  const monthDays = useMemo(() => eachDayOfInterval({
-    start: startOfMonth(currentMonth),
-    end: endOfMonth(currentMonth)
-  }), [currentMonth]);
-  const firstDayOfWeek = (startOfMonth(currentMonth).getDay() + 6) % 7;
-  const emptyDays = useMemo(() => Array(firstDayOfWeek).fill(null), [firstDayOfWeek]);
+  const calendarDays = useMemo(() => {
+    const monthStart = startOfMonth(currentMonth);
+    const monthEnd = endOfMonth(currentMonth);
+    const firstDayOfWeek = (monthStart.getDay() + 6) % 7; // Monday = 0
+    
+    // Get days from previous month to fill the first week
+    const prevMonthEnd = endOfMonth(subMonths(currentMonth, 1));
+    const prevDays: Date[] = [];
+    for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+      const d = new Date(prevMonthEnd);
+      d.setDate(prevMonthEnd.getDate() - i);
+      prevDays.push(d);
+    }
+    
+    const currentDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
+    
+    // Fill remaining days from next month to complete the grid
+    const totalSoFar = prevDays.length + currentDays.length;
+    const remaining = totalSoFar % 7 === 0 ? 0 : 7 - (totalSoFar % 7);
+    const nextMonthStart = startOfMonth(addMonths(currentMonth, 1));
+    const nextDays: Date[] = [];
+    for (let i = 0; i < remaining; i++) {
+      const d = new Date(nextMonthStart);
+      d.setDate(nextMonthStart.getDate() + i);
+      nextDays.push(d);
+    }
+    
+    return [...prevDays, ...currentDays, ...nextDays];
+  }, [currentMonth]);
   const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
   const handleInputChange = (value: string) => {
     const num = parseInt(value) || 0;
@@ -200,8 +223,8 @@ const DailyPage = () => {
 
           {/* Calendar Grid */}
           <div className="grid grid-cols-7 gap-1">
-            {emptyDays.map((_, i) => <div key={`empty-${i}`} className="aspect-square" />)}
-            {monthDays.map(day => {
+            {calendarDays.map(day => {
+            const isCurrentMonth = isSameMonth(day, currentMonth);
             const dayCount = getEntryForDate(day);
             const dayProgress = getDailyProgress(day);
             const isSelected = isSameDay(day, selectedDate);
@@ -233,9 +256,9 @@ const DailyPage = () => {
               };
             };
             const colors = getProgressColor();
-            return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+            return <button key={day.toISOString()} onClick={() => setSelectedDate(day)} disabled={false} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-muted-foreground/30" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
                   <span>{format(day, "d")}</span>
-                  {hasEntry && !isSelected && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
+                  {hasEntry && !isSelected && isCurrentMonth && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
                 </button>;
           })}
           </div>
