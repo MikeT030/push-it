@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { User, TrendingUp } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
 import { getAvatarById } from "@/data/avatars";
 import {
   Dialog,
@@ -82,16 +80,6 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
   const top3 = users.slice(0, 3);
   const rest = users.slice(3);
   const [selectedUser, setSelectedUser] = useState<UserProgress | null>(null);
-  const { user: authUser } = useAuth();
-  const navigate = useNavigate();
-
-  const handleUserClick = (clickedUser: UserProgress) => {
-    if (authUser && clickedUser.user_id === authUser.id) {
-      navigate("/profile", { state: { openAvatarSelector: true } });
-    } else {
-      setSelectedUser(clickedUser);
-    }
-  };
 
   const podiumHeights = ["h-20", "h-28", "h-14"];
 
@@ -101,9 +89,9 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
       {top3.length >= 1 &&
       <div className="mb-3">
           <div className="flex items-end justify-center gap-4 mb-2 pt-[10px]">
-            {top3.length >= 2 && <PodiumAvatar user={top3[1]} rank={1} onClick={() => handleUserClick(top3[1])} />}
-            <PodiumAvatar user={top3[0]} rank={0} onClick={() => handleUserClick(top3[0])} />
-            {top3.length >= 3 && <PodiumAvatar user={top3[2]} rank={2} onClick={() => handleUserClick(top3[2])} />}
+            {top3.length >= 2 && <PodiumAvatar user={top3[1]} rank={1} onClick={() => setSelectedUser(top3[1])} />}
+            <PodiumAvatar user={top3[0]} rank={0} onClick={() => setSelectedUser(top3[0])} />
+            {top3.length >= 3 && <PodiumAvatar user={top3[2]} rank={2} onClick={() => setSelectedUser(top3[2])} />}
           </div>
 
           <div className="flex items-end justify-center gap-1 mx-auto max-w-[280px]">
@@ -133,7 +121,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
             <div
               key={user.user_id}
               className={`flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-colors ${index < rest.length - 1 ? "border-b border-[#3A404F]" : ""}`}
-              onClick={() => handleUserClick(user)}>
+              onClick={() => setSelectedUser(user)}>
 
                 <span className="text-sm font-bold text-muted-foreground w-5 text-center">
                   {index + 4}

@@ -18,7 +18,6 @@ interface AvatarSelectorProps {
   onOpenChange: (open: boolean) => void;
   selectedAvatarId: string | null;
   onSelect: (avatar: AvatarOption) => void;
-  defaultTab?: "card" | "avatar";
 }
 
 const AvatarSelector = ({
@@ -26,13 +25,8 @@ const AvatarSelector = ({
   onOpenChange,
   selectedAvatarId,
   onSelect,
-  defaultTab = "card",
 }: AvatarSelectorProps) => {
-  const [activeTab, setActiveTab] = useState<"card" | "avatar">(defaultTab);
-
-  useEffect(() => {
-    if (open) setActiveTab(defaultTab);
-  }, [open, defaultTab]);
+  const [activeTab, setActiveTab] = useState<"card" | "avatar">("card");
   const { user } = useAuth();
   const {
     getTotalPushUps,
