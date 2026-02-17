@@ -155,8 +155,15 @@ const ProfilePage = () => {
         <div className="bg-card rounded-2xl p-6 animate-slide-up">
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
-          <div className="relative w-24 h-24 rounded-full overflow-hidden bg-[#1E1E1E] flex items-center justify-center shadow-xl shadow-primary/20">
-              <User className="w-12 h-12 text-primary-foreground" />
+          <div
+            className="relative w-24 h-24 rounded-full overflow-hidden bg-[#1E1E1E] flex items-center justify-center shadow-xl shadow-primary/20 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+            onClick={() => setIsAvatarSelectorOpen(true)}
+          >
+              {selectedAvatar ? (
+                <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
+              ) : (
+                <User className="w-12 h-12 text-primary-foreground" />
+              )}
             </div>
           </div>
 
