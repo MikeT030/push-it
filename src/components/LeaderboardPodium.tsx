@@ -1,5 +1,11 @@
+import { useState } from "react";
 import { User, TrendingUp } from "lucide-react";
 import { getAvatarById } from "@/data/avatars";
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog";
+import PlayerCard from "@/components/PlayerCard";
 
 interface UserProgress {
   user_id: string;
@@ -18,9 +24,9 @@ interface LeaderboardPodiumProps {
 }
 
 const rankColors = [
-"bg-gradient-to-b from-yellow-400 to-yellow-600", // 1st - gold
-"bg-gradient-to-b from-gray-300 to-gray-500", // 2nd - silver
-"bg-gradient-to-b from-amber-600 to-amber-800" // 3rd - bronze
+"bg-gradient-to-b from-yellow-400 to-yellow-600",
+"bg-gradient-to-b from-gray-300 to-gray-500",
+"bg-gradient-to-b from-amber-600 to-amber-800"
 ];
 
 const rankBadgeColors = [
@@ -29,16 +35,16 @@ const rankBadgeColors = [
 "bg-amber-700 text-white"];
 
 
-const PodiumAvatar = ({ user, rank }: {user: UserProgress;rank: number;}) => {
+const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress; rank: number; onClick: () => void}) => {
   const avatar = getAvatarById(user.avatar_url ?? null);
   const sizes = [
-  "w-20 h-20", // 1st
-  "w-16 h-16", // 2nd
-  "w-14 h-14" // 3rd
+  "w-20 h-20",
+  "w-16 h-16",
+  "w-14 h-14"
   ];
 
   return (
-    <div className="flex flex-col items-center gap-1.5 relative">
+    <div className="flex flex-col items-center gap-1.5 relative cursor-pointer" onClick={onClick}>
       {/* Rank badge */}
       <div className={`absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold z-10 ${rankBadgeColors[rank]}`}>
         {rank + 1}
@@ -48,7 +54,6 @@ const PodiumAvatar = ({ user, rank }: {user: UserProgress;rank: number;}) => {
       <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-400" : rank === 1 ? "border-gray-400" : "border-amber-700"} bg-muted flex items-center justify-center`}>
         {avatar ?
         <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
-
         <User className="w-1/2 h-1/2 text-muted-foreground" />
         }
       </div>
@@ -69,33 +74,26 @@ const PodiumAvatar = ({ user, rank }: {user: UserProgress;rank: number;}) => {
         <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
       </div>
     </div>);
-
 };
 
 const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
   const top3 = users.slice(0, 3);
   const rest = users.slice(3);
+  const [selectedUser, setSelectedUser] = useState<UserProgress | null>(null);
 
-  // Podium order: 2nd, 1st, 3rd
-  const podiumOrder = top3.length >= 3 ?
-  [top3[1], top3[0], top3[2]] :
-  top3;
-
-  const podiumHeights = ["h-20", "h-28", "h-14"]; // 2nd, 1st, 3rd
+  const podiumHeights = ["h-20", "h-28", "h-14"];
 
   return (
     <div className="animate-slide-up">
       {/* Podium Section */}
       {top3.length >= 1 &&
       <div className="mb-3">
-          {/* Avatars row */}
           <div className="flex items-end justify-center gap-4 mb-2 pt-[10px]">
-            {top3.length >= 2 && <PodiumAvatar user={top3[1]} rank={1} />}
-            <PodiumAvatar user={top3[0]} rank={0} />
-            {top3.length >= 3 && <PodiumAvatar user={top3[2]} rank={2} />}
+            {top3.length >= 2 && <PodiumAvatar user={top3[1]} rank={1} onClick={() => setSelectedUser(top3[1])} />}
+            <PodiumAvatar user={top3[0]} rank={0} onClick={() => setSelectedUser(top3[0])} />
+            {top3.length >= 3 && <PodiumAvatar user={top3[2]} rank={2} onClick={() => setSelectedUser(top3[2])} />}
           </div>
 
-          {/* Podium blocks */}
           <div className="flex items-end justify-center gap-1 mx-auto max-w-[280px]">
             {top3.length >= 2 &&
           <div className={`flex-1 ${podiumHeights[0]} rounded-t-lg bg-gradient-to-b from-[#3B404F] to-[#2A2E3A] flex items-center justify-center`}>
@@ -122,23 +120,20 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
           return (
             <div
               key={user.user_id}
-              className={`flex items-center gap-4 p-4 ${index < rest.length - 1 ? "border-b border-[#3A404F]" : ""}`}>
+              className={`flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-colors ${index < rest.length - 1 ? "border-b border-[#3A404F]" : ""}`}
+              onClick={() => setSelectedUser(user)}>
 
-                {/* Rank number */}
                 <span className="text-sm font-bold text-muted-foreground w-5 text-center">
                   {index + 4}
                 </span>
 
-                {/* Avatar */}
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-muted flex items-center justify-center flex-shrink-0">
                   {avatar ?
                 <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
-
                 <User className="w-5 h-5 text-muted-foreground" />
                 }
                 </div>
 
-                {/* Name + Streak */}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">
                     {user.display_name || `Member ${index + 4}`}
@@ -147,17 +142,32 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                   <p className="text-xs text-foreground flex items-center gap-0.5"><TrendingUp className="w-3 h-3 text-primary" /> {Math.round(user.avg_pushups ?? 0)} Avg. PU</p>
                 </div>
 
-                {/* Score badge */}
                 <div className="flex items-center gap-1 bg-muted/50 rounded-full px-2.5 py-1">
                   <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
                 </div>
               </div>);
-
         })}
         </div>
       }
-    </div>);
 
+      {/* Player Card Dialog */}
+      <Dialog open={!!selectedUser} onOpenChange={(open) => !open && setSelectedUser(null)}>
+        <DialogContent className="max-w-sm p-6 bg-transparent border-none shadow-none">
+          {selectedUser && (
+            <PlayerCard
+              displayName={selectedUser.display_name || "Unknown"}
+              avatar={getAvatarById(selectedUser.avatar_url ?? null)}
+              totalPushUps={selectedUser.total_pushups}
+              yearlyGoal={selectedUser.yearly_goal}
+              currentStreak={selectedUser.streak ?? 0}
+              weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
+              yearProgress={selectedUser.progress_percent}
+              daysWithEntries={selectedUser.days_logged}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>);
 };
 
 export default LeaderboardPodium;
