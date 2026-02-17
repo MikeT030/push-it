@@ -36,11 +36,11 @@ const PlayerCard = ({
   const level = getLevel();
 
   return (
-    <div className="w-full max-w-[320px] mx-auto select-none">
+    <div className="w-full max-w-[320px] mx-auto select-none h-full flex flex-col">
       {/* Card outer frame - metallic silver border */}
-      <div className="rounded-2xl p-[6px] bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 shadow-2xl">
+      <div className="rounded-2xl p-[6px] bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 shadow-2xl flex-1 flex flex-col min-h-0">
         {/* Card inner */}
-        <div className="rounded-xl overflow-hidden bg-gradient-to-br from-amber-50 via-amber-100 to-yellow-100 relative">
+        <div className="rounded-xl overflow-hidden bg-gradient-to-br from-amber-50 via-amber-100 to-yellow-100 relative flex-1 flex flex-col min-h-0">
           {/* Top bar with name and HP */}
           <div className="px-4 pt-3 pb-2 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -59,8 +59,8 @@ const PlayerCard = ({
           </div>
 
           {/* Avatar image frame */}
-          <div className="mx-3 mb-2">
-            <div className="rounded-lg border-[3px] border-gray-300 overflow-hidden bg-gradient-to-br from-sky-200 via-sky-100 to-blue-50 aspect-square flex items-center justify-center relative">
+          <div className="mx-3 mb-2 flex-1 flex flex-col min-h-0">
+            <div className="rounded-lg border-[3px] border-gray-300 overflow-hidden bg-gradient-to-br from-sky-200 via-sky-100 to-blue-50 flex-1 flex items-center justify-center relative">
               {avatar ? (
                 <img
                   src={avatar.src}
