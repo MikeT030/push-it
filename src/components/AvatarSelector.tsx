@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Check, User } from "lucide-react";
+import { Check, User, X } from "lucide-react";
 import { avatarOptions, AvatarOption } from "@/data/avatars";
 import {
   Dialog,
   DialogContent,
+  DialogClose,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -63,7 +64,7 @@ const AvatarSelector = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0">
+      <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0 [&>button.absolute]:hidden">
         {/* Tabs */}
         <div className="flex border-b border-border mt-5">
           <button
@@ -97,7 +98,11 @@ const AvatarSelector = ({
         </div>
 
         {activeTab === "card" ? (
-          <div className="p-6 overflow-y-auto max-h-[75vh]">
+          <div className="p-6 overflow-y-auto max-h-[75vh] relative">
+            <DialogClose className="absolute right-2 top-2 z-10 rounded-sm opacity-70 hover:opacity-100 transition-opacity">
+              <X className="w-6 h-6" />
+              <span className="sr-only">Close</span>
+            </DialogClose>
             <PlayerCard
               displayName={displayName}
               avatar={selectedAvatar}
