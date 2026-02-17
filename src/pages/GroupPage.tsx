@@ -305,7 +305,7 @@ const GroupPage = () => {
             <TabsContent value="leaderboard" className="mt-0">
               {/* Period Toggle */}
               <div className="flex bg-muted/30 rounded-full p-1 mb-5">
-                {(["alltime", "monthly", "weekly"] as LeaderboardPeriod[]).map((period) => (
+                {(["alltime", "weekly", "monthly"] as LeaderboardPeriod[]).map((period) => (
                   <button
                     key={period}
                     onClick={() => setLeaderboardPeriod(period)}
