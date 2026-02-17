@@ -69,7 +69,7 @@ const AvatarSelector = ({
           <button
             onClick={() => setActiveTab("card")}
             className={cn(
-              "flex-1 py-3 text-sm font-semibold transition-colors relative",
+              "flex-1 py-1.5 text-sm font-semibold transition-colors relative",
               activeTab === "card"
                 ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
@@ -83,7 +83,7 @@ const AvatarSelector = ({
           <button
             onClick={() => setActiveTab("avatar")}
             className={cn(
-              "flex-1 py-3 text-sm font-semibold transition-colors relative",
+              "flex-1 py-1.5 text-sm font-semibold transition-colors relative",
               activeTab === "avatar"
                 ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
