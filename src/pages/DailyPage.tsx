@@ -39,9 +39,9 @@ const DailyPage = () => {
     start: startOfMonth(currentMonth),
     end: endOfMonth(currentMonth)
   }), [currentMonth]);
-  const firstDayOfWeek = startOfMonth(currentMonth).getDay();
+  const firstDayOfWeek = (startOfMonth(currentMonth).getDay() + 6) % 7;
   const emptyDays = useMemo(() => Array(firstDayOfWeek).fill(null), [firstDayOfWeek]);
-  const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
+  const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
   const handleInputChange = (value: string) => {
     const num = parseInt(value) || 0;
     if (num >= 0 && num <= 9999) {
