@@ -167,7 +167,7 @@ const TotalPage = () => {
         </div>
 
         {/* Main Progress Card */}
-        <div className="bg-card/80 rounded-2xl p-6 mt-6 animate-slide-up">
+        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up">
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
 
           <div className="h-px mb-4 bg-[#3b404f]" />
