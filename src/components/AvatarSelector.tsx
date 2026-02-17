@@ -65,7 +65,7 @@ const AvatarSelector = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0">
         {/* Tabs */}
-        <div className="flex border-b border-border">
+        <div className="flex border-b border-border mt-5">
           <button
             onClick={() => setActiveTab("card")}
             className={cn(
