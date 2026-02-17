@@ -134,7 +134,7 @@ const WeeklyOverview = () => {
               className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
                 index === selectedWeekIndex
                   ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
-                  : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"
+                  : "text-muted-foreground border-[#3B404F]"
               }`}
             >
               {`Wk ${week.weekNumber} · ${format(week.startDate, "MMM d")}`}
