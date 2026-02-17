@@ -198,10 +198,10 @@ const DailyGroupOverview = () => {
                   setIsOpen(true);
                 }
               }}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
+              className={`flex-shrink-0 px-4 py-0.5 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
                 index === selectedDayIndex
                   ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
-                  : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"
+                  : "text-muted-foreground border-[#3B404F]"
               }`}
             >
               {format(day.date, "EEE, MMM d")}
