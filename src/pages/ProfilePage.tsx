@@ -68,14 +68,14 @@ const ProfilePage = () => {
     const {
       error
     } = await supabase.from("profiles").update({
-      avatar_url: avatar.id
+      avatar_url: avatar.id || null
     }).eq("id", user.id);
     if (error) {
       toast.error("Failed to save avatar");
       return;
     }
-    setAvatarId(avatar.id);
-    toast.success("Avatar updated!");
+    setAvatarId(avatar.id || null);
+    toast.success(avatar.id ? "Avatar updated!" : "Avatar removed!");
   };
   const handleBackup = async () => {
     if (!user) return;
