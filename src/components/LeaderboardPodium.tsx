@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { User, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { getAvatarById } from "@/data/avatars";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Dialog,
   DialogContent,
@@ -80,6 +82,8 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
   const top3 = users.slice(0, 3);
   const rest = users.slice(3);
   const [selectedUser, setSelectedUser] = useState<UserProgress | null>(null);
+  const { user: authUser } = useAuth();
+  const navigate = useNavigate();
 
   const podiumHeights = ["h-20", "h-28", "h-14"];
 
@@ -163,6 +167,14 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
               weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
               yearProgress={selectedUser.progress_percent}
               daysWithEntries={selectedUser.days_logged}
+              onAvatarClick={
+                authUser?.id === selectedUser.user_id
+                  ? () => {
+                      setSelectedUser(null);
+                      navigate("/profile?openAvatar=true");
+                    }
+                  : undefined
+              }
             />
           )}
         </DialogContent>

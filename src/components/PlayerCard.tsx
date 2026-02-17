@@ -11,6 +11,7 @@ interface PlayerCardProps {
   weeklyAverage: number;
   yearProgress: number;
   daysWithEntries: number;
+  onAvatarClick?: () => void;
 }
 
 const PlayerCard = ({
@@ -22,6 +23,7 @@ const PlayerCard = ({
   weeklyAverage,
   yearProgress,
   daysWithEntries,
+  onAvatarClick,
 }: PlayerCardProps) => {
   // Determine "level" based on total push-ups
   const getLevel = () => {
@@ -60,7 +62,10 @@ const PlayerCard = ({
 
           {/* Avatar image frame */}
           <div className="mx-3 mb-2">
-            <div className="rounded-lg border-[3px] border-gray-300 overflow-hidden bg-gradient-to-br from-sky-200 via-sky-100 to-blue-50 aspect-square flex items-center justify-center relative">
+            <div
+              className={`rounded-lg border-[3px] border-gray-300 overflow-hidden bg-gradient-to-br from-sky-200 via-sky-100 to-blue-50 aspect-square flex items-center justify-center relative ${onAvatarClick ? "cursor-pointer" : ""}`}
+              onClick={onAvatarClick}
+            >
               {avatar ? (
                 <img
                   src={avatar.src}

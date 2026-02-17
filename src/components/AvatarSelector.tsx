@@ -18,6 +18,7 @@ interface AvatarSelectorProps {
   onOpenChange: (open: boolean) => void;
   selectedAvatarId: string | null;
   onSelect: (avatar: AvatarOption) => void;
+  defaultTab?: "card" | "avatar";
 }
 
 const AvatarSelector = ({
@@ -25,9 +26,14 @@ const AvatarSelector = ({
   onOpenChange,
   selectedAvatarId,
   onSelect,
+  defaultTab = "card",
 }: AvatarSelectorProps) => {
-  const [activeTab, setActiveTab] = useState<"card" | "avatar">("card");
+  const [activeTab, setActiveTab] = useState<"card" | "avatar">(defaultTab);
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (open) setActiveTab(defaultTab);
+  }, [open, defaultTab]);
   const {
     getTotalPushUps,
     yearlyGoal,
@@ -101,6 +107,7 @@ const AvatarSelector = ({
               weeklyAverage={getWeeklyAverage()}
               yearProgress={getYearProgress()}
               daysWithEntries={getDaysWithEntries().length}
+              onAvatarClick={() => setActiveTab("avatar")}
             />
           </div>
         ) : (

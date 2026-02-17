@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { User, LogOut, Pencil, Check, X, Download, Users } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
@@ -23,6 +24,17 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
   const [isAvatarSelectorOpen, setIsAvatarSelectorOpen] = useState(false);
+  const [defaultAvatarTab, setDefaultAvatarTab] = useState<"card" | "avatar">("card");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("openAvatar") === "true") {
+      setDefaultAvatarTab("avatar");
+      setIsAvatarSelectorOpen(true);
+      searchParams.delete("openAvatar");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
   useEffect(() => {
     if (!user) return;
     const fetchProfile = async () => {
@@ -256,7 +268,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Avatar Selector Dialog */}
-      <AvatarSelector open={isAvatarSelectorOpen} onOpenChange={setIsAvatarSelectorOpen} selectedAvatarId={avatarId} onSelect={handleAvatarSelect} />
+      <AvatarSelector open={isAvatarSelectorOpen} onOpenChange={setIsAvatarSelectorOpen} selectedAvatarId={avatarId} onSelect={handleAvatarSelect} defaultTab={defaultAvatarTab} />
     </div>;
 };
 export default ProfilePage;
