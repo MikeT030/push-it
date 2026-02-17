@@ -30,7 +30,7 @@ interface UserProgress {
   streak?: number;
   avg_pushups?: number;
 }
-const LeaderboardListView = ({ users }: { users: UserProgress[] }) => {
+const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
   const [selectedUser, setSelectedUser] = useState<UserProgress | null>(null);
   const { user: authUser } = useAuth();
   const navigate = useNavigate();
@@ -43,17 +43,17 @@ const LeaderboardListView = ({ users }: { users: UserProgress[] }) => {
           <div
             key={user.user_id}
             className={`flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-colors ${index < users.length - 1 ? "border-b border-[#3A404F]" : ""}`}
-            onClick={() => setSelectedUser(user)}
-          >
+            onClick={() => setSelectedUser(user)}>
+
             <span className="text-sm font-bold text-muted-foreground w-5 text-center">
               {index + 1}
             </span>
             <div className="w-10 h-10 rounded-full overflow-hidden bg-muted flex items-center justify-center flex-shrink-0">
-              {avatar ? (
-                <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" />
-              ) : (
-                <User className="w-5 h-5 text-muted-foreground" />
-              )}
+              {avatar ?
+              <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
+
+              <User className="w-5 h-5 text-muted-foreground" />
+              }
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-foreground truncate">
@@ -67,36 +67,36 @@ const LeaderboardListView = ({ users }: { users: UserProgress[] }) => {
             <div className="flex items-center gap-1 bg-muted/50 rounded-full px-2.5 py-1">
               <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
             </div>
-          </div>
-        );
+          </div>);
+
       })}
 
       <Dialog open={!!selectedUser} onOpenChange={(open) => !open && setSelectedUser(null)}>
         <DialogContent className="max-w-sm p-6 bg-transparent border-none shadow-none" hideCloseButton>
-          {selectedUser && (
-            <PlayerCard
-              displayName={selectedUser.display_name || "Unknown"}
-              avatar={getAvatarById(selectedUser.avatar_url ?? null)}
-              totalPushUps={selectedUser.total_pushups}
-              yearlyGoal={selectedUser.yearly_goal}
-              currentStreak={selectedUser.streak ?? 0}
-              weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
-              yearProgress={selectedUser.progress_percent}
-              daysWithEntries={selectedUser.days_logged}
-              onAvatarClick={
-                authUser?.id === selectedUser.user_id
-                  ? () => {
-                      setSelectedUser(null);
-                      navigate("/profile?openAvatar=true");
-                    }
-                  : undefined
-              }
-            />
-          )}
+          {selectedUser &&
+          <PlayerCard
+            displayName={selectedUser.display_name || "Unknown"}
+            avatar={getAvatarById(selectedUser.avatar_url ?? null)}
+            totalPushUps={selectedUser.total_pushups}
+            yearlyGoal={selectedUser.yearly_goal}
+            currentStreak={selectedUser.streak ?? 0}
+            weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
+            yearProgress={selectedUser.progress_percent}
+            daysWithEntries={selectedUser.days_logged}
+            onAvatarClick={
+            authUser?.id === selectedUser.user_id ?
+            () => {
+              setSelectedUser(null);
+              navigate("/profile?openAvatar=true");
+            } :
+            undefined
+            } />
+
+          }
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    </div>);
+
 };
 
 const GroupPage = () => {
@@ -159,7 +159,7 @@ const GroupPage = () => {
         // Calculate average push-ups per logged day
         const avgMap = new Map<string, number>();
         if (entries) {
-          const userTotals = new Map<string, { total: number; days: Set<string> }>();
+          const userTotals = new Map<string, {total: number;days: Set<string>;}>();
           entries.forEach((e: any) => {
             if (!userTotals.has(e.user_id)) userTotals.set(e.user_id, { total: 0, days: new Set() });
             const ut = userTotals.get(e.user_id)!;
@@ -176,7 +176,7 @@ const GroupPage = () => {
           ...u,
           avatar_url: avatarMap.get(u.user_id) || null,
           streak: streakMap.get(u.user_id) || 0,
-          avg_pushups: avgMap.get(u.user_id) || 0,
+          avg_pushups: avgMap.get(u.user_id) || 0
         })));
       }
       setIsLoading(false);
@@ -204,7 +204,7 @@ const GroupPage = () => {
     const endStr = format(periodEnd, "yyyy-MM-dd");
 
     // Sum entries per user within the period
-    const periodTotals = new Map<string, { total: number; days: Set<string> }>();
+    const periodTotals = new Map<string, {total: number;days: Set<string>;}>();
     allEntries.forEach((e: any) => {
       if (e.date >= startStr && e.date <= endStr) {
         if (!periodTotals.has(e.user_id)) periodTotals.set(e.user_id, { total: 0, days: new Set() });
@@ -214,17 +214,17 @@ const GroupPage = () => {
       }
     });
 
-    return users
-      .map((u) => {
-        const pt = periodTotals.get(u.user_id);
-        return {
-          ...u,
-          total_pushups: pt?.total || 0,
-          days_logged: pt?.days.size || 0,
-          avg_pushups: pt ? pt.total / pt.days.size : 0,
-        };
-      })
-      .sort((a, b) => b.total_pushups - a.total_pushups);
+    return users.
+    map((u) => {
+      const pt = periodTotals.get(u.user_id);
+      return {
+        ...u,
+        total_pushups: pt?.total || 0,
+        days_logged: pt?.days.size || 0,
+        avg_pushups: pt ? pt.total / pt.days.size : 0
+      };
+    }).
+    sort((a, b) => b.total_pushups - a.total_pushups);
   }, [users, allEntries, leaderboardPeriod]);
   const stats = useMemo(() => {
     const totalMembers = users.length;
@@ -304,45 +304,45 @@ const GroupPage = () => {
             {/* Leaderboard Tab */}
             <TabsContent value="leaderboard" className="mt-0">
               {/* Period Toggle */}
-              <div className="flex rounded-full p-1 mb-5">
-                {(["alltime", "weekly", "monthly"] as LeaderboardPeriod[]).map((period) => (
-                  <button
-                    key={period}
-                    onClick={() => setLeaderboardPeriod(period)}
-                    className={`flex-1 py-2 px-3 rounded-full text-sm font-medium transition-all border ${
-                      leaderboardPeriod === period
-                        ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
-                        : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"
-                    }`}
-                  >
+              <div className="flex rounded-full p-1 mb-5 px-[4px]">
+                {(["alltime", "weekly", "monthly"] as LeaderboardPeriod[]).map((period) =>
+              <button
+                key={period}
+                onClick={() => setLeaderboardPeriod(period)}
+                className={`flex-1 py-2 px-3 rounded-full text-sm font-medium transition-all border ${
+                leaderboardPeriod === period ?
+                "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]" :
+                "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-transparent"}`
+                }>
+
                     {period === "weekly" ? "Week" : period === "monthly" ? "Month" : "All-time"}
                   </button>
-                ))}
+              )}
               </div>
               {/* View Toggle */}
               <div className="flex justify-center mb-3">
                 <button
-                  onClick={() => setLeaderboardView(leaderboardView === "podium" ? "list" : "podium")}
-                  className="p-2.5 rounded-xl bg-muted/40 hover:bg-muted/60 transition-colors"
-                  aria-label="Toggle view"
-                >
-                  {leaderboardView === "podium" ? (
-                    <List className="w-5 h-5 text-muted-foreground" />
-                  ) : (
-                    <Trophy className="w-5 h-5 text-muted-foreground" />
-                  )}
+                onClick={() => setLeaderboardView(leaderboardView === "podium" ? "list" : "podium")}
+                className="p-2.5 rounded-xl bg-muted/40 hover:bg-muted/60 transition-colors"
+                aria-label="Toggle view">
+
+                  {leaderboardView === "podium" ?
+                <List className="w-5 h-5 text-muted-foreground" /> :
+
+                <Trophy className="w-5 h-5 text-muted-foreground" />
+                }
                 </button>
               </div>
 
-              {filteredUsers.length === 0 ? (
-                <div className="p-6 text-center">
+              {filteredUsers.length === 0 ?
+            <div className="p-6 text-center">
                   <p className="text-muted-foreground">No data for this period yet.</p>
-                </div>
-              ) : leaderboardView === "podium" ? (
-                <LeaderboardPodium users={filteredUsers} />
-              ) : (
-                <LeaderboardListView users={filteredUsers} />
-              )}
+                </div> :
+            leaderboardView === "podium" ?
+            <LeaderboardPodium users={filteredUsers} /> :
+
+            <LeaderboardListView users={filteredUsers} />
+            }
 
               {/* Group Stats Cards - Horizontal Scrollable Strip */}
               <div data-horizontal-scroll className="flex gap-3 overflow-x-auto mt-6 mb-6 -mx-2 px-2 scrollbar-hide animate-slide-up" style={{ scrollbarWidth: "none", msOverflowStyle: "none", animationDelay: "0.1s" }}>
@@ -450,12 +450,12 @@ const GroupPage = () => {
 
               {/* Group Line Chart Goal Card */}
               <GroupLineChartGoalCard
-                totalPushUps={stats.totalPushups}
-                groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
-                progressPercent={stats.avgProgress}
-                allEntries={allEntries}
-                year={new Date().getFullYear()}
-              />
+              totalPushUps={stats.totalPushups}
+              groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
+              progressPercent={stats.avgProgress}
+              allEntries={allEntries}
+              year={new Date().getFullYear()} />
+
 
               {/* Call to Action */}
               <div className="mt-8 text-center animate-fade-in" style={{
