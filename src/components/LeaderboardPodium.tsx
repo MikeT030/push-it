@@ -156,7 +156,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
 
       {/* Player Card Dialog */}
       <Dialog open={!!selectedUser} onOpenChange={(open) => !open && setSelectedUser(null)}>
-        <DialogContent className="max-w-sm p-6 bg-transparent border-none shadow-none">
+        <DialogContent className="max-w-sm p-6 bg-transparent border-none shadow-none" hideCloseButton>
           {selectedUser && (
             <PlayerCard
               displayName={selectedUser.display_name || "Unknown"}
