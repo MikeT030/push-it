@@ -24,11 +24,11 @@ const AvatarSelector = ({
 }: AvatarSelectorProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md max-h-[80vh] overflow-hidden">
+      <DialogContent className="max-w-lg max-h-[85vh] overflow-hidden">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">Choose your avatar</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-4 gap-3 overflow-y-auto max-h-[50vh] p-1">
+        <div className="grid grid-cols-4 gap-4 overflow-y-auto max-h-[60vh] p-2">
           {/* No avatar option */}
           <button
             onClick={() => {
