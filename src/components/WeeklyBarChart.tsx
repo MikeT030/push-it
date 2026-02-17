@@ -47,7 +47,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
               <Popover>
                 <PopoverTrigger asChild>
                   <div
-                    className={`w-full max-w-[28px] rounded-t-sm transition-all duration-500 cursor-pointer ${getBarColor()}`}
+                    className={`w-full max-w-[32px] rounded-t-sm transition-all duration-500 cursor-pointer ${getBarColor()}`}
                     style={{
                       height: day.isBeforeYearStart || day.count === 0 
                         ? "4px" 
