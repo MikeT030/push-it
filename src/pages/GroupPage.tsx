@@ -13,6 +13,9 @@ import { differenceInDays, startOfYear } from "date-fns";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import PlayerCard from "@/components/PlayerCard";
+import { useAuth } from "@/contexts/AuthContext";
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
 type LeaderboardView = "podium" | "list";
@@ -28,6 +31,10 @@ interface UserProgress {
   avg_pushups?: number;
 }
 const LeaderboardListView = ({ users }: { users: UserProgress[] }) => {
+  const [selectedUser, setSelectedUser] = useState<UserProgress | null>(null);
+  const { user: authUser } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <div className="bg-card rounded-2xl overflow-hidden animate-slide-up">
       {users.map((user, index) => {
@@ -35,7 +42,8 @@ const LeaderboardListView = ({ users }: { users: UserProgress[] }) => {
         return (
           <div
             key={user.user_id}
-            className={`flex items-center gap-4 p-4 ${index < users.length - 1 ? "border-b border-[#3A404F]" : ""}`}
+            className={`flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-colors ${index < users.length - 1 ? "border-b border-[#3A404F]" : ""}`}
+            onClick={() => setSelectedUser(user)}
           >
             <span className="text-sm font-bold text-muted-foreground w-5 text-center">
               {index + 1}
@@ -62,6 +70,31 @@ const LeaderboardListView = ({ users }: { users: UserProgress[] }) => {
           </div>
         );
       })}
+
+      <Dialog open={!!selectedUser} onOpenChange={(open) => !open && setSelectedUser(null)}>
+        <DialogContent className="max-w-sm p-6 bg-transparent border-none shadow-none" hideCloseButton>
+          {selectedUser && (
+            <PlayerCard
+              displayName={selectedUser.display_name || "Unknown"}
+              avatar={getAvatarById(selectedUser.avatar_url ?? null)}
+              totalPushUps={selectedUser.total_pushups}
+              yearlyGoal={selectedUser.yearly_goal}
+              currentStreak={selectedUser.streak ?? 0}
+              weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
+              yearProgress={selectedUser.progress_percent}
+              daysWithEntries={selectedUser.days_logged}
+              onAvatarClick={
+                authUser?.id === selectedUser.user_id
+                  ? () => {
+                      setSelectedUser(null);
+                      navigate("/profile?openAvatar=true");
+                    }
+                  : undefined
+              }
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
