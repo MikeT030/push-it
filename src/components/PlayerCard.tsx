@@ -1,6 +1,7 @@
-import { User, TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import { AvatarOption } from "@/data/avatars";
 import muscleIcon from "@/assets/muscle-icon.svg";
+import defaultAvatarCard from "@/assets/default-avatar-card.svg";
 
 interface PlayerCardProps {
   displayName: string;
@@ -74,7 +75,7 @@ const PlayerCard = ({
 
 
               <div className="w-24 h-24 rounded-full bg-gray-800/20 flex items-center justify-center">
-                  <User className="w-12 h-12 text-gray-500" />
+                  <img src={defaultAvatarCard} alt="Default avatar" className="w-3/4 h-3/4 object-contain" />
                 </div>
               }
               {/* Decorative sparkles */}
