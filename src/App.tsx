@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,14 +6,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { GameProvider } from "@/contexts/GameContext";
-import DailyPage from "./pages/DailyPage";
-import TotalPage from "./pages/TotalPage";
-import GroupPage from "./pages/GroupPage";
-import ProfilePage from "./pages/ProfilePage";
-import AuthPage from "./pages/AuthPage";
 import BottomNav from "./components/BottomNav";
-import NotFound from "./pages/NotFound";
 import SplashScreen from "./components/SplashScreen";
+
+const DailyPage = lazy(() => import("./pages/DailyPage"));
+const TotalPage = lazy(() => import("./pages/TotalPage"));
+const GroupPage = lazy(() => import("./pages/GroupPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
+const AuthPage = lazy(() => import("./pages/AuthPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -43,8 +44,14 @@ const AppContent = () => {
   const { user } = useAuth();
   const showNav = user && ["/", "/daily", "/total", "/profile", "/group"].includes(location.pathname);
 
+  const PageFallback = (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+
   return (
-    <>
+    <Suspense fallback={PageFallback}>
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route
@@ -83,7 +90,7 @@ const AppContent = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       {showNav && <BottomNav />}
-    </>
+    </Suspense>
   );
 };
 
