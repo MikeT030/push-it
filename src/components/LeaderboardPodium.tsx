@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { User, TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
+import defaultAvatar from "@/assets/default-avatar.svg";
 import { useNavigate } from "react-router-dom";
 import { getAvatarById } from "@/data/avatars";
 import { useAuth } from "@/contexts/AuthContext";
@@ -56,7 +57,7 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress; rank: number
       <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-400" : rank === 1 ? "border-gray-400" : "border-amber-700"} flex items-center justify-center`} style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
         {avatar ?
         <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
-        <User className="w-1/2 h-1/2 text-muted-foreground" />
+        <img src={defaultAvatar} alt="Default avatar" className="w-3/4 h-3/4 object-contain" />
         }
       </div>
 
@@ -134,7 +135,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                 <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
                   {avatar ?
                 <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
-                <User className="w-5 h-5 text-muted-foreground" />
+                <img src={defaultAvatar} alt="Default avatar" className="w-3/4 h-3/4 object-contain" />
                 }
                 </div>
 
