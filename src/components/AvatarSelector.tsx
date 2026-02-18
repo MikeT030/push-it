@@ -184,6 +184,8 @@ const AvatarSelector = ({
                     <img
                       src={avatar.src}
                       alt={avatar.name}
+                      loading="lazy"
+                      decoding="async"
                       className={cn(
                         "w-full h-full object-cover bg-white/10",
                         isTaken && "grayscale"
