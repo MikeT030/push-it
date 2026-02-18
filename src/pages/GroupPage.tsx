@@ -54,7 +54,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               {avatar ?
               <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
 
-              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain opacity-40" />
+              <img src={defaultAvatarList} alt="User" className="w-5 h-5 object-contain opacity-40" />
               }
             </div>
             <div className="flex-1 min-w-0">
