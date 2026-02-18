@@ -80,7 +80,7 @@ const AvatarSelector = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0" hideCloseButton>
         {/* Close button row */}
-        <div className="flex justify-end px-4 pt-4 pb-0 flex-shrink-0">
+        <div className="flex justify-end px-4 pb-0 flex-shrink-0" style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}>
           <DialogClose className="rounded-sm opacity-70 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring">
             <X className="w-6 h-6" />
             <span className="sr-only">Close</span>
