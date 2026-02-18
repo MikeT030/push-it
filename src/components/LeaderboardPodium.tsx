@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TrendingUp } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.svg";
+import defaultAvatarList from "@/assets/default-avatar-list.svg";
 import { useNavigate } from "react-router-dom";
 import { getAvatarById } from "@/data/avatars";
 import { useAuth } from "@/contexts/AuthContext";
@@ -135,7 +136,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                 <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
                   {avatar ?
                 <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
-                <img src={defaultAvatar} alt="Default avatar" className="w-3/4 h-3/4 object-contain" />
+                <img src={defaultAvatarList} alt="Default avatar" className="w-5 h-5 object-contain opacity-40" />
                 }
                 </div>
 
