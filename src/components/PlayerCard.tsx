@@ -153,7 +153,7 @@ const PlayerCard = ({
           {/* Footer */}
           <div className="px-4 py-1.5 flex justify-between items-center bg-gradient-to-r from-amber-100/50 to-yellow-100/50">
             <span className="text-[8px] text-gray-400 italic">Push-it © 2026</span>
-            <span className="text-[8px] text-gray-400">💪 Push-Up Challenge</span>
+            <span className="text-[8px] text-gray-400">💪 30K Push-Up Challenge</span>
           </div>
         </div>
       </div>
