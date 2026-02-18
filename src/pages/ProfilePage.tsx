@@ -164,7 +164,7 @@ const ProfilePage = () => {
         </header>
 
         {/* Profile Card */}
-        <div className="rounded-2xl p-6 animate-slide-up" style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
+        <div className="bg-card rounded-2xl p-6 animate-slide-up">
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
           <div
