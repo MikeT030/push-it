@@ -175,7 +175,7 @@ const ProfilePage = () => {
               {selectedAvatar ? (
                 <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
               ) : (
-                <User className="w-12 h-12 text-primary-foreground" />
+                <User className="w-12 h-12 text-muted-foreground" />
               )}
             </div>
           </div>
