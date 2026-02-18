@@ -127,8 +127,8 @@ const AvatarSelector = ({
             />
           </div>
         ) : (
-          <div className="p-4">
-            <div className="grid grid-cols-4 gap-4 overflow-y-auto max-h-[65vh] p-1">
+          <div className="p-4 overflow-y-auto flex-1" style={{ maxHeight: "calc(100vh - 120px)" }}>
+            <div className="grid grid-cols-4 gap-4 p-1">
               {/* No avatar option */}
               <button
                 onClick={() => {
