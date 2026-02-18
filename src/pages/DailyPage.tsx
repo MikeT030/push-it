@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, Smile } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
+import NoAvatarPlaceholder from "@/components/NoAvatarPlaceholder";
 import ShareIcon from "@/components/ShareIcon";
 import { useNavigate } from "react-router-dom";
 import { usePushUpData } from "@/hooks/usePushUpData";
@@ -138,7 +139,7 @@ const DailyPage = () => {
             Add push-ups
           </Button>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center hover:bg-white/10 transition-colors">
-            <Smile className="w-5 h-5 text-white" />
+            <NoAvatarPlaceholder className="w-6 h-6" />
           </button>
         </div>
 
