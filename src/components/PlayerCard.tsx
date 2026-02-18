@@ -138,7 +138,7 @@ const PlayerCard = ({
 
           {/* Bottom bar */}
           <div className="mx-3 h-[1px] bg-gray-300" />
-          <div className="px-4 py-2 flex justify-between items-center">
+          <div className="px-4 py-2 flex justify-between items-center" style={{ background: "linear-gradient(to right, rgba(255, 209, 107, 0.3), rgba(255, 191, 79, 0.3))" }}>
             <div className="flex items-center gap-3 text-[10px] text-gray-500 font-medium">
               <span>Days active: {daysWithEntries}</span>
               <span className="text-gray-300">|</span>
