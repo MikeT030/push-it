@@ -53,7 +53,7 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress; rank: number
       </div>
       
       {/* Avatar */}
-      <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-400" : rank === 1 ? "border-gray-400" : "border-amber-700"} bg-muted flex items-center justify-center`}>
+      <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-400" : rank === 1 ? "border-gray-400" : "border-amber-700"} flex items-center justify-center`} style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
         {avatar ?
         <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
         <User className="w-1/2 h-1/2 text-muted-foreground" />
@@ -131,7 +131,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                   {index + 4}
                 </span>
 
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-muted flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
                   {avatar ?
                 <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
                 <User className="w-5 h-5 text-muted-foreground" />

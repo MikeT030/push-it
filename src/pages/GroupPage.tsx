@@ -48,7 +48,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
             <span className="text-sm font-bold text-muted-foreground w-5 text-center">
               {index + 1}
             </span>
-            <div className="w-10 h-10 rounded-full overflow-hidden bg-muted flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
               {avatar ?
               <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
 
