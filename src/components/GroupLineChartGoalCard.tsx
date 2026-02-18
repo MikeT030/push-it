@@ -60,7 +60,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   const gradientId = useMemo(() => `group-line-grad-${Math.random().toString(36).slice(2)}`, []);
 
   return (
-    <div className="bg-card rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
+    <div className="card-glass rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
       {/* Header */}
       <div className="relative z-10 flex items-start justify-between">
         <div>
