@@ -32,6 +32,8 @@ import raccoon from "@/assets/avatars/raccoon.png";
 import ram from "@/assets/avatars/ram.png";
 import rooster from "@/assets/avatars/rooster.png";
 import tiger from "@/assets/avatars/tiger.png";
+import walrus from "@/assets/avatars/walrus.png";
+import wolf from "@/assets/avatars/wolf.png";
 
 export interface AvatarOption {
   id: string;
@@ -73,6 +75,8 @@ export const avatarOptions: AvatarOption[] = [
   { id: "ram", name: "Ram", src: ram },
   { id: "rooster", name: "Rooster", src: rooster },
   { id: "tiger", name: "Tiger", src: tiger },
+  { id: "walrus", name: "Walrus", src: walrus },
+  { id: "wolf", name: "Wolf", src: wolf },
 ];
 
 export const getAvatarById = (id: string | null): AvatarOption | undefined => {
