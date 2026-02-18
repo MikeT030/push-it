@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { User, LogOut, Pencil, Check, X, Download, Users } from "lucide-react";
+import defaultAvatar from "@/assets/default-avatar.png";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
@@ -175,7 +176,7 @@ const ProfilePage = () => {
               {selectedAvatar ? (
                 <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
               ) : (
-                <User className="w-12 h-12 text-muted-foreground" />
+                <img src={defaultAvatar} alt="Default avatar" className="w-16 h-16 object-contain opacity-60" />
               )}
             </div>
           </div>
