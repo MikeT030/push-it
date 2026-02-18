@@ -165,7 +165,7 @@ const ProfilePage = () => {
         </header>
 
         {/* Profile Card */}
-        <div className="bg-card rounded-2xl p-6 animate-slide-up">
+        <div className="card-glass rounded-2xl p-6 animate-slide-up">
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
           <div
