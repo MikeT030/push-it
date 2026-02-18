@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
 import { Users, Trophy, Flame, TrendingUp, Info, List } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
+import defaultAvatarList from "@/assets/default-avatar-list.svg";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import { getAvatarById } from "@/data/avatars";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
@@ -53,7 +54,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               {avatar ?
               <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
 
-              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain opacity-40" />
+              <img src={defaultAvatarList} alt="User" className="w-5 h-5 object-contain opacity-40" />
               }
             </div>
             <div className="flex-1 min-w-0">
