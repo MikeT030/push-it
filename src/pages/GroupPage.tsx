@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
-import { Users, Trophy, Flame, TrendingUp, User, Info, List } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Info, List } from "lucide-react";
+import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import { getAvatarById } from "@/data/avatars";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
@@ -52,7 +53,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               {avatar ?
               <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
 
-              <User className="w-5 h-5 text-muted-foreground" />
+              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain opacity-40" />
               }
             </div>
             <div className="flex-1 min-w-0">
@@ -279,7 +280,7 @@ const GroupPage = () => {
         {/* Profile Button */}
         <div className="flex justify-end items-center mb-4">
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center hover:bg-white/10 transition-colors">
-            <User className="w-5 h-5 text-white" />
+            <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
           </button>
         </div>
 
