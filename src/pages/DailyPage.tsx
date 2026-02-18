@@ -150,7 +150,7 @@ const DailyPage = () => {
           </p>
         </header>
 
-        <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up">
+        <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex items-center justify-between pb-[12px]">
             <div className="flex flex-col items-start">
               <p className="text-sm text-muted-foreground font-medium mb-1">
@@ -198,7 +198,7 @@ const DailyPage = () => {
         </div>
 
         {/* Calendar Card */}
-        <div className={`bg-card rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
+        <div className={`card-glass rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
         animationDelay: "0.1s"
       }}>
           {/* Month Navigation */}
