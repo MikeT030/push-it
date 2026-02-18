@@ -168,7 +168,8 @@ const ProfilePage = () => {
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
           <div
-            className="relative w-24 h-24 rounded-full overflow-hidden bg-[#1E1E1E] flex items-center justify-center shadow-xl shadow-primary/20 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+            className="relative w-24 h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl shadow-primary/20 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+            style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}
             onClick={() => setIsAvatarSelectorOpen(true)}
           >
               {selectedAvatar ? (
