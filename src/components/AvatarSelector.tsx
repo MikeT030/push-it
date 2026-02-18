@@ -85,29 +85,29 @@ const AvatarSelector = ({
           <button
             onClick={() => setActiveTab("card")}
             className={cn(
-              "flex-1 py-1.5 text-sm font-semibold transition-colors relative",
+              "flex-1 py-1.5 text-lg font-medium transition-colors relative",
               activeTab === "card"
-                ? "text-primary"
+                ? "text-foreground font-semibold"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
             User Card
             {activeTab === "card" && (
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary" />
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full" />
             )}
           </button>
           <button
             onClick={() => setActiveTab("avatar")}
             className={cn(
-              "flex-1 py-1.5 text-sm font-semibold transition-colors relative",
+              "flex-1 py-1.5 text-lg font-medium transition-colors relative",
               activeTab === "avatar"
-                ? "text-primary"
+                ? "text-foreground font-semibold"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
             Choose Avatar
             {activeTab === "avatar" && (
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary" />
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full" />
             )}
           </button>
         </div>
