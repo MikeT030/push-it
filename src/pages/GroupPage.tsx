@@ -36,7 +36,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-card rounded-2xl overflow-hidden animate-slide-up">
+    <div className="card-glass rounded-2xl overflow-hidden animate-slide-up">
       {users.map((user, index) => {
         const avatar = getAvatarById(user.avatar_url ?? null);
         return (
@@ -396,7 +396,7 @@ const GroupPage = () => {
               </div>
 
               {/* Motivational Banner */}
-              <div className="bg-card rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{
+              <div className="card-glass rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{
               animationDelay: "0.15s"
             }}>
                 <p className="text-sm text-foreground font-medium leading-relaxed">
@@ -406,7 +406,7 @@ const GroupPage = () => {
               </div>
 
               {/* Goal Card */}
-              <div className="bg-card rounded-2xl p-6 mb-6 animate-slide-up" style={{
+              <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{
               animationDelay: "0.2s"
             }}>
                 <h2 className="text-lg font-bold text-foreground mb-4">
