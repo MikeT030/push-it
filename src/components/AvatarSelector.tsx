@@ -113,7 +113,7 @@ const AvatarSelector = ({
         </div>
 
         {activeTab === "card" ? (
-          <div className="p-6 overflow-y-auto max-h-[75vh]">
+          <div className="p-6 overflow-y-auto h-[75vh]">
             <PlayerCard
               displayName={displayName}
               avatar={selectedAvatar}
@@ -127,7 +127,7 @@ const AvatarSelector = ({
             />
           </div>
         ) : (
-          <div className="p-4 overflow-y-auto max-h-[75vh]">
+          <div className="p-4 overflow-y-auto h-[75vh]">
             <div className="grid grid-cols-4 gap-4 p-1">
               {/* No avatar option */}
               <button
