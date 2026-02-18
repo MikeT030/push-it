@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, User } from "lucide-react";
+import { TrendingUp, Flame, Calendar } from "lucide-react";
+import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
@@ -129,7 +130,7 @@ const TotalPage = () => {
         {/* Profile Button */}
         <div className="flex justify-end items-center mb-4">
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center hover:bg-white/10 transition-colors">
-            <User className="w-5 h-5 text-white" />
+            <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
           </button>
         </div>
 
