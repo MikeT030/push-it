@@ -1,4 +1,4 @@
-import { User } from "lucide-react";
+import { User, TrendingUp } from "lucide-react";
 import { AvatarOption } from "@/data/avatars";
 import muscleIcon from "@/assets/muscle-icon.svg";
 
@@ -121,7 +121,7 @@ const PlayerCard = ({
 
             {/* Weekly avg stat */}
             <div className="flex items-start gap-2">
-              <span className="text-lg">📊</span>
+              <TrendingUp className="w-5 h-5 text-primary" />
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-bold text-gray-800">Weekly Average</span>
