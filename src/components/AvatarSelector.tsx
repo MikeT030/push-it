@@ -79,9 +79,9 @@ const AvatarSelector = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0">
+      <DialogContent className="w-screen h-screen max-w-none max-h-none rounded-none p-0 flex flex-col">
         {/* Tabs */}
-        <div className="flex border-b border-border mt-5">
+        <div className="flex border-b border-border mt-5 flex-shrink-0">
           <button
             onClick={() => setActiveTab("card")}
             className={cn(
@@ -113,7 +113,7 @@ const AvatarSelector = ({
         </div>
 
         {activeTab === "card" ? (
-          <div className="p-6 overflow-y-auto max-h-[75vh]">
+          <div className="p-6 overflow-y-auto flex-1">
             <PlayerCard
               displayName={displayName}
               avatar={selectedAvatar}
@@ -127,7 +127,7 @@ const AvatarSelector = ({
             />
           </div>
         ) : (
-          <div className="p-4 overflow-y-auto flex-1" style={{ maxHeight: "calc(100vh - 120px)" }}>
+          <div className="p-4 overflow-y-auto flex-1">
             <div className="grid grid-cols-4 gap-4 p-1">
               {/* No avatar option */}
               <button
