@@ -1,5 +1,4 @@
-import { TrendingUp } from "lucide-react";
-import NoAvatarPlaceholder from "@/components/NoAvatarPlaceholder";
+import { User, TrendingUp } from "lucide-react";
 import { AvatarOption } from "@/data/avatars";
 import muscleIcon from "@/assets/muscle-icon.svg";
 
@@ -74,7 +73,9 @@ const PlayerCard = ({
                 className="w-3/4 h-3/4 object-contain drop-shadow-lg" /> :
 
 
-              <NoAvatarPlaceholder className="w-20 h-20" />
+              <div className="w-24 h-24 rounded-full bg-gray-800/20 flex items-center justify-center">
+                  <User className="w-12 h-12 text-gray-500" />
+                </div>
               }
               {/* Decorative sparkles */}
               <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-60 animate-pulse" />

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { LogOut, Pencil, Check, X, Download, Users } from "lucide-react";
-import NoAvatarPlaceholder from "@/components/NoAvatarPlaceholder";
+import { User, LogOut, Pencil, Check, X, Download, Users } from "lucide-react";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
@@ -176,7 +175,7 @@ const ProfilePage = () => {
               {selectedAvatar ? (
                 <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
               ) : (
-                <NoAvatarPlaceholder className="w-16 h-16" />
+                <User className="w-12 h-12 text-muted-foreground" />
               )}
             </div>
           </div>
