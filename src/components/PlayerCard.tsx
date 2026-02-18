@@ -1,4 +1,4 @@
-import { User, TrendingUp } from "lucide-react";
+import { Smile, TrendingUp } from "lucide-react";
 import { AvatarOption } from "@/data/avatars";
 import muscleIcon from "@/assets/muscle-icon.svg";
 
@@ -74,7 +74,7 @@ const PlayerCard = ({
 
 
               <div className="w-24 h-24 rounded-full bg-gray-800/20 flex items-center justify-center">
-                  <User className="w-12 h-12 text-gray-500" />
+                  <Smile className="w-12 h-12 text-gray-500" />
                 </div>
               }
               {/* Decorative sparkles */}
