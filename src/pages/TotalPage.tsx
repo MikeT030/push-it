@@ -103,17 +103,17 @@ const TotalPage = () => {
     icon: TrendingUp,
     color: "text-primary"
   }, {
-    label: "Remaining",
-    value: `${stats.daysRemaining}`,
-    unit: "days",
-    icon: Calendar,
-    color: "text-[#0ABAB5]"
-  }, {
     label: "Streak",
     value: `${stats.streak}`,
     unit: "days",
     icon: Flame,
     color: "text-[#C029DE]"
+  }, {
+    label: "Remaining",
+    value: `${stats.daysRemaining}`,
+    unit: "days",
+    icon: Calendar,
+    color: "text-[#0ABAB5]"
   }], [stats, getEntryForDate]);
 
   if (!isLoaded) {
