@@ -23,7 +23,7 @@ const PlayerCard = ({
   weeklyAverage,
   yearProgress,
   daysWithEntries,
-  onAvatarClick,
+  onAvatarClick
 }: PlayerCardProps) => {
   // Determine "level" based on total push-ups
   const getLevel = () => {
@@ -64,19 +64,19 @@ const PlayerCard = ({
           <div className="mx-3 mb-2">
             <div
               className={`rounded-lg border-[3px] border-gray-300 overflow-hidden bg-gradient-to-br from-sky-200 via-sky-100 to-blue-50 aspect-square flex items-center justify-center relative ${onAvatarClick ? "cursor-pointer" : ""}`}
-              onClick={onAvatarClick}
-            >
-              {avatar ? (
-                <img
-                  src={avatar.src}
-                  alt={avatar.name}
-                  className="w-3/4 h-3/4 object-contain drop-shadow-lg"
-                />
-              ) : (
-                <div className="w-24 h-24 rounded-full bg-gray-800/20 flex items-center justify-center">
+              onClick={onAvatarClick}>
+
+              {avatar ?
+              <img
+                src={avatar.src}
+                alt={avatar.name}
+                className="w-3/4 h-3/4 object-contain drop-shadow-lg" /> :
+
+
+              <div className="w-24 h-24 rounded-full bg-gray-800/20 flex items-center justify-center">
                   <User className="w-12 h-12 text-gray-500" />
                 </div>
-              )}
+              }
               {/* Decorative sparkles */}
               <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-60 animate-pulse" />
               <div className="absolute top-8 right-6 w-1.5 h-1.5 bg-white rounded-full opacity-40 animate-pulse" style={{ animationDelay: "0.5s" }} />
@@ -107,7 +107,11 @@ const PlayerCard = ({
                   <span className="text-lg font-black text-gray-800">{currentStreak}</span>
                 </div>
                 <p className="text-[10px] text-gray-500 leading-tight">
-                  Consecutive days with push-ups logged
+                  Consecutive days PU logged
+                
+                
+                
+                
                 </p>
               </div>
             </div>
@@ -124,7 +128,9 @@ const PlayerCard = ({
                   <span className="text-lg font-black text-gray-800">{weeklyAverage}</span>
                 </div>
                 <p className="text-[10px] text-gray-500 leading-tight">
-                  Average push-ups per day over the last 7 days
+                  Avg. PU/day in  last 7 days       
+
+                
                 </p>
               </div>
             </div>
@@ -139,12 +145,8 @@ const PlayerCard = ({
               <span>Progress: {Math.round(yearProgress)}%</span>
             </div>
             <div className="flex items-center gap-1">
-              {[...Array(Math.min(5, Math.ceil(yearProgress / 20)))].map((_, i) => (
-                <span key={i} className="text-[10px]">⭐</span>
-              ))}
-              {[...Array(Math.max(0, 5 - Math.ceil(yearProgress / 20)))].map((_, i) => (
-                <span key={i} className="text-[10px] opacity-25">⭐</span>
-              ))}
+              {[...Array(Math.min(5, Math.ceil(yearProgress / 20)))].map((_, i) => <span key={i} className="text-[10px]">⭐</span>)}
+              {[...Array(Math.max(0, 5 - Math.ceil(yearProgress / 20)))].map((_, i) => <span key={i} className="text-[10px] opacity-25">⭐</span>)}
             </div>
           </div>
 
@@ -155,8 +157,6 @@ const PlayerCard = ({
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    </div>);};
 
 export default PlayerCard;
