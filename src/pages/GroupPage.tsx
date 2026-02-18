@@ -109,20 +109,18 @@ const GroupPage = () => {
   const [allEntries, setAllEntries] = useState<any[]>([]);
   useEffect(() => {
     const fetchGroupProgress = async () => {
-      const {
-        data,
-        error
-      } = await supabase.from("user_progress").select("*").order("total_pushups", {
-        ascending: false
-      });
-      if (!error && data) {
-        // Fetch avatar URLs from profiles
-        const userIds = data.map((u: any) => u.user_id).filter(Boolean);
-        const { data: profiles } = await supabase.from("profiles").select("id, avatar_url").in("id", userIds);
-        const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
+      const [
+        { data, error },
+        { data: profiles },
+        { data: entries },
+      ] = await Promise.all([
+        supabase.from("user_progress").select("*").order("total_pushups", { ascending: false }),
+        supabase.from("profiles").select("id, avatar_url"),
+        supabase.from("push_up_entries").select("date, user_id, count"),
+      ]);
 
-        // Fetch entries to calculate streaks
-        const { data: entries } = await supabase.from("push_up_entries").select("date, user_id, count");
+      if (!error && data) {
+        const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
         const streakMap = new Map<string, number>();
         if (entries) {
           // Group dates by user
