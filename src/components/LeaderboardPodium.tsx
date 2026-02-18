@@ -136,7 +136,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                 <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
                   {avatar ?
                 <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
-                <img src={defaultAvatarList} alt="Default avatar" className="w-3/4 h-3/4 object-contain opacity-40" />
+                <img src={defaultAvatarList} alt="Default avatar" className="w-3/4 h-3/4 object-contain" />
                 }
                 </div>
 
