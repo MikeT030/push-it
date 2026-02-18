@@ -216,7 +216,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Backups Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{
         animationDelay: "0.05s"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
@@ -235,7 +235,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Info Card */}
-        <div className="bg-card rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{
         animationDelay: "0.1s"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
