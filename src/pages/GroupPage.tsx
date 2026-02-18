@@ -346,7 +346,7 @@ const GroupPage = () => {
 
               {/* Group Stats Cards - Horizontal Scrollable Strip */}
               <div data-horizontal-scroll className="flex gap-3 overflow-x-auto mt-6 mb-6 -mx-2 px-2 scrollbar-hide animate-slide-up" style={{ scrollbarWidth: "none", msOverflowStyle: "none", animationDelay: "0.1s" }}>
-                <div className="flex-shrink-0 bg-card rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
                     <Flame className="w-5 h-5 text-[#C029DE]" />
                     <p className="text-sm text-muted-foreground font-medium">Total</p>
@@ -357,7 +357,7 @@ const GroupPage = () => {
                   </p>
                 </div>
 
-                <div className="flex-shrink-0 bg-card rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
                     <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
                     <p className="text-sm text-muted-foreground font-medium">Avg. yr Prog.</p>
@@ -368,7 +368,7 @@ const GroupPage = () => {
                   </p>
                 </div>
 
-                <div className="flex-shrink-0 bg-card rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
                     <MultiColorTargetIcon size={20} />
                     <p className="text-sm text-muted-foreground font-medium">On track</p>
