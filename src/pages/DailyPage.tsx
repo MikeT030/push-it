@@ -11,8 +11,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import WeeklyOverview from "@/components/WeeklyOverview";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
 const DailyPage = () => {
   const navigate = useNavigate();
+  const { avatar } = useUserAvatar();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
@@ -138,8 +140,12 @@ const DailyPage = () => {
             <Plus className="w-4 h-4" />
             Add push-ups
           </Button>
-          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center hover:bg-white/10 transition-colors">
-            <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
+          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
+            {avatar ? (
+              <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
+            ) : (
+              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
+            )}
           </button>
         </div>
 
