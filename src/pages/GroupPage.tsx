@@ -18,6 +18,7 @@ import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
 type LeaderboardView = "podium" | "list";
@@ -103,6 +104,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
 
 const GroupPage = () => {
   const navigate = useNavigate();
+  const { avatar } = useUserAvatar();
   const [users, setUsers] = useState<UserProgress[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leaderboard");
@@ -280,8 +282,12 @@ const GroupPage = () => {
       <div className="max-w-lg mx-auto px-6 py-8">
         {/* Profile Button */}
         <div className="flex justify-end items-center mb-4">
-          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center hover:bg-white/10 transition-colors">
-            <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
+          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
+            {avatar ? (
+              <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
+            ) : (
+              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
+            )}
           </button>
         </div>
 
