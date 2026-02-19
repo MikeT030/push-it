@@ -7,8 +7,8 @@ import { getAvatarById } from "@/data/avatars";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
+  DialogContent } from
+"@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 
 interface UserProgress {
@@ -30,8 +30,8 @@ interface LeaderboardPodiumProps {
 const rankColors = [
 "bg-gradient-to-b from-yellow-400 to-yellow-600",
 "bg-gradient-to-b from-gray-300 to-gray-500",
-"bg-gradient-to-b from-amber-600 to-amber-800"
-];
+"bg-gradient-to-b from-amber-600 to-amber-800"];
+
 
 const rankBadgeColors = [
 "bg-yellow-500 text-black",
@@ -39,13 +39,13 @@ const rankBadgeColors = [
 "bg-amber-700 text-white"];
 
 
-const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress; rank: number; onClick: () => void}) => {
+const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;onClick: () => void;}) => {
   const avatar = getAvatarById(user.avatar_url ?? null);
   const sizes = [
   "w-20 h-20",
   "w-16 h-16",
-  "w-14 h-14"
-  ];
+  "w-14 h-14"];
+
 
   return (
     <div className="flex flex-col items-center gap-1.5 relative cursor-pointer" onClick={onClick}>
@@ -66,10 +66,10 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress; rank: number
       <p className="text-xs font-medium text-foreground truncate max-w-[80px] text-center">
         {user.display_name || `Member`}
       </p>
-      <p className="text-[10px] font-medium text-foreground">
+      <p className="font-medium text-foreground text-sm">
         🔥 <span className="font-bold">{user.streak ?? 0}d</span> streak
       </p>
-      <p className="text-[10px] font-medium text-foreground flex items-center gap-0.5 justify-center">
+      <p className="font-medium text-foreground flex items-center gap-0.5 justify-center text-sm">
         <TrendingUp className="w-3 h-3 text-primary" /> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU
       </p>
 
@@ -100,7 +100,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
             {top3.length >= 3 && <PodiumAvatar user={top3[2]} rank={2} onClick={() => setSelectedUser(top3[2])} />}
           </div>
 
-          <div className="flex items-end justify-center gap-1 mx-auto max-w-[280px]">
+          <div className="flex items-end justify-center gap-1 mx-auto max-w-[280px] pt-[8px]">
             {top3.length >= 2 &&
           <div className={`flex-1 ${podiumHeights[0]} rounded-t-lg bg-gradient-to-b from-[#3B404F] to-[#2A2E3A] flex items-center justify-center`}>
                 <span className="text-2xl font-black text-muted-foreground/40">2</span>
@@ -159,26 +159,26 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
       {/* Player Card Dialog */}
       <Dialog open={!!selectedUser} onOpenChange={(open) => !open && setSelectedUser(null)}>
         <DialogContent className="max-w-sm p-6 bg-transparent border-none shadow-none" hideCloseButton>
-          {selectedUser && (
-            <PlayerCard
-              displayName={selectedUser.display_name || "Unknown"}
-              avatar={getAvatarById(selectedUser.avatar_url ?? null)}
-              totalPushUps={selectedUser.total_pushups}
-              yearlyGoal={selectedUser.yearly_goal}
-              currentStreak={selectedUser.streak ?? 0}
-              weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
-              yearProgress={selectedUser.progress_percent}
-              daysWithEntries={selectedUser.days_logged}
-              onAvatarClick={
-                authUser?.id === selectedUser.user_id
-                  ? () => {
-                      setSelectedUser(null);
-                      navigate("/profile?openAvatar=true");
-                    }
-                  : undefined
-              }
-            />
-          )}
+          {selectedUser &&
+          <PlayerCard
+            displayName={selectedUser.display_name || "Unknown"}
+            avatar={getAvatarById(selectedUser.avatar_url ?? null)}
+            totalPushUps={selectedUser.total_pushups}
+            yearlyGoal={selectedUser.yearly_goal}
+            currentStreak={selectedUser.streak ?? 0}
+            weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
+            yearProgress={selectedUser.progress_percent}
+            daysWithEntries={selectedUser.days_logged}
+            onAvatarClick={
+            authUser?.id === selectedUser.user_id ?
+            () => {
+              setSelectedUser(null);
+              navigate("/profile?openAvatar=true");
+            } :
+            undefined
+            } />
+
+          }
         </DialogContent>
       </Dialog>
     </div>);
