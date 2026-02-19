@@ -129,7 +129,7 @@ const TotalPage = () => {
       <div className="relative max-w-lg mx-auto px-6 py-8">
         {/* Profile Button */}
         <div className="flex justify-end items-center mb-4">
-          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center hover:bg-white/10 transition-colors overflow-hidden">
+          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
             {avatar ? (
               <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
             ) : (
