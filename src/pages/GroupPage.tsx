@@ -64,7 +64,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               </p>
               <p className="text-xs text-primary-foreground">🔥 <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
               <p className="text-xs text-foreground flex items-center gap-0.5">
-                <TrendingUp className="w-3 h-3 text-primary" /> {Math.round(user.avg_pushups ?? 0)} Avg. PU
+                <TrendingUp className="w-3 h-3 text-primary" /> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU
               </p>
             </div>
             <div className="flex items-center gap-1 bg-muted/50 rounded-full px-2.5 py-1">
