@@ -62,7 +62,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               <p className="text-sm font-medium text-foreground truncate">
                 {user.display_name || `Member ${index + 1}`}
               </p>
-              <p className="text-xs text-[#C029DE]">🔥 {user.streak ?? 0}d streak</p>
+              <p className="text-xs text-primary-foreground">🔥 {user.streak ?? 0}d streak</p>
               <p className="text-xs text-foreground flex items-center gap-0.5">
                 <TrendingUp className="w-3 h-3 text-primary" /> {Math.round(user.avg_pushups ?? 0)} Avg. PU
               </p>
@@ -114,14 +114,14 @@ const GroupPage = () => {
   useEffect(() => {
     const fetchGroupProgress = async () => {
       const [
-        { data, error },
-        { data: profiles },
-        { data: entries },
-      ] = await Promise.all([
-        supabase.from("user_progress").select("*").order("total_pushups", { ascending: false }),
-        supabase.from("profiles").select("id, avatar_url"),
-        supabase.from("push_up_entries").select("date, user_id, count"),
-      ]);
+      { data, error },
+      { data: profiles },
+      { data: entries }] =
+      await Promise.all([
+      supabase.from("user_progress").select("*").order("total_pushups", { ascending: false }),
+      supabase.from("profiles").select("id, avatar_url"),
+      supabase.from("push_up_entries").select("date, user_id, count")]
+      );
 
       if (!error && data) {
         const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
@@ -283,11 +283,11 @@ const GroupPage = () => {
         {/* Profile Button */}
         <div className="flex justify-end items-center mb-4">
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
-            {avatar ? (
-              <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
-            ) : (
-              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
-            )}
+            {avatar ?
+          <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" /> :
+
+          <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
+          }
           </button>
         </div>
 
