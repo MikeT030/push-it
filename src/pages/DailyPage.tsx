@@ -160,7 +160,7 @@ const DailyPage = () => {
         {/* Quick Log Card */}
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="flex flex-col items-center pb-[12px]">
-            <div className="flex flex-col items-center">
+            <div className="flex-col flex items-center justify-start">
               <p className="text-sm text-muted-foreground font-medium mb-1">
                 Quick Log
               </p>
