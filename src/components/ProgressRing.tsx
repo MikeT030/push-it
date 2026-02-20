@@ -23,38 +23,38 @@ const ProgressRing = ({
   enableAnimation = true,
   enableGlow = false,
   enableSunReflection = false,
-  enableOuterGlow = false,
+  enableOuterGlow = false
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
   const { setIsGameActive } = useGame();
-  
+
   useEffect(() => {
     setIsGameActive(showGame);
   }, [showGame, setIsGameActive]);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  
+
   // Cap base progress at 100%, calculate overflow
   const baseProgress = Math.min(progress, 100);
   const overflowProgress = progress > 100 ? Math.min(progress - 100, 100) : 0;
-  
-  const baseOffset = circumference - (baseProgress / 100) * circumference;
-  const overflowOffset = circumference - (overflowProgress / 100) * circumference;
+
+  const baseOffset = circumference - baseProgress / 100 * circumference;
+  const overflowOffset = circumference - overflowProgress / 100 * circumference;
 
   return (
     <>
-      <div 
-        className={`relative ${enableGame ? 'cursor-pointer' : ''} ${className}`} 
-        style={{ 
-          width: size, 
+      <div
+        className={`relative ${enableGame ? 'cursor-pointer' : ''} ${className}`}
+        style={{
+          width: size,
           height: size,
           ...(enableOuterGlow && {
             borderRadius: '50%',
-            boxShadow: '0 0 0 2px #BA25D8, 0 4px 20px rgba(186, 37, 216, 0.4)',
-          }),
+            boxShadow: '0 0 0 2px #BA25D8, 0 4px 20px rgba(186, 37, 216, 0.4)'
+          })
         }}
-        onClick={() => enableGame && setShowGame(true)}
-      >
+        onClick={() => enableGame && setShowGame(true)}>
+
         <svg className="transform -rotate-90" width={size} height={size}>
           {/* Background ring */}
           <circle
@@ -63,8 +63,8 @@ const ProgressRing = ({
             r={radius}
             fill="none"
             stroke="#3B404F"
-            strokeWidth={strokeWidth}
-          />
+            strokeWidth={strokeWidth} />
+
           {/* Base progress ring (green/primary) */}
           <circle
             cx={size / 2}
@@ -78,42 +78,42 @@ const ProgressRing = ({
             strokeDashoffset={baseOffset}
             className="transition-all duration-700 ease-out"
             style={{
-              filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))",
-            }}
-          />
+              filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))"
+            }} />
+
           {/* Overflow ring - only visible when > 100% */}
-          {overflowProgress > 0 && (
-            <circle
-              cx={size / 2}
-              cy={size / 2}
-              r={radius}
-              fill="none"
-              stroke={progress >= 200 ? '#C029DE' : '#7036FF'}
-              strokeWidth={strokeWidth}
-              strokeLinecap="round"
-              strokeDasharray={circumference}
-              strokeDashoffset={overflowOffset}
-              className="transition-all duration-700 ease-out"
-              style={{
-                filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'rgba(112, 54, 255, 0.5)'})`,
-              }}
-            />
-          )}
+          {overflowProgress > 0 &&
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke={progress >= 200 ? '#C029DE' : '#7036FF'}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={overflowOffset}
+            className="transition-all duration-700 ease-out"
+            style={{
+              filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'rgba(112, 54, 255, 0.5)'})`
+            }} />
+
+          }
         </svg>
-        <div 
+        <div
           className={`absolute inset-0 flex items-center justify-center rounded-full overflow-hidden ${enableSunReflection ? 'sun-reflection' : ''}`}
           style={enableGlow ? {
-            filter: 'drop-shadow(0 0 12px #BA25D8) drop-shadow(0 0 24px rgba(186, 37, 216, 0.4))',
-          } : undefined}
-        >
+            filter: 'drop-shadow(0 0 12px #BA25D8) drop-shadow(0 0 24px rgba(186, 37, 216, 0.4))'
+          } : undefined}>
+
           <div className="flex flex-col items-center">
-            <span 
+            <span
               className="text-2xl font-bold"
-              style={{ color: '#ffffff' }}
-            >
+              style={{ color: '#ffffff' }}>
+
               {Math.round(progress)}%
             </span>
-            <span className="text-[10px] font-medium text-muted-foreground">
+            <span className="text-[10px] font-medium text-primary">
               Push
             </span>
           </div>
@@ -121,8 +121,8 @@ const ProgressRing = ({
       </div>
       
       <BrickBreakerGame isOpen={showGame} onClose={() => setShowGame(false)} />
-    </>
-  );
+    </>);
+
 };
 
 export default ProgressRing;
