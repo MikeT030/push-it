@@ -13,8 +13,11 @@ import { useGame } from "@/contexts/GameContext";
 import WeeklyOverview from "@/components/WeeklyOverview";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { Switch } from "@/components/ui/switch";
+import BrickBreakerGame from "@/components/BrickBreakerGame";
+import controllerIcon from "@/assets/controller.svg";
 const DailyPage = () => {
   const [useNewLayout, setUseNewLayout] = useState(true);
+  const [showGame, setShowGame] = useState(false);
   const navigate = useNavigate();
   const { avatar } = useUserAvatar();
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -163,7 +166,7 @@ const DailyPage = () => {
 
 
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
-          <div className="flex justify-center mb-4">
+          <div className="flex items-center justify-center mb-4">
             <div className="flex rounded-full border border-[#3B404F] overflow-hidden">
               <button
               onClick={() => setUseNewLayout(false)}
@@ -172,7 +175,6 @@ const DailyPage = () => {
               "bg-[#0ABAB5]/10 text-[#0ABAB5]" :
               "text-muted-foreground"}`
               }>
-
                 Old
               </button>
               <button
@@ -182,10 +184,16 @@ const DailyPage = () => {
               "bg-[#0ABAB5]/10 text-[#0ABAB5]" :
               "text-muted-foreground"}`
               }>
-
                 New
               </button>
             </div>
+            <button
+              onClick={() => setShowGame(true)}
+              className="ml-3 p-1.5 rounded-full hover:bg-muted/50 transition-colors"
+              aria-label="Open mini game"
+            >
+              <img src={controllerIcon} alt="Game" className="w-6 h-6" />
+            </button>
           </div>
 
           {useNewLayout ?
@@ -325,6 +333,7 @@ const DailyPage = () => {
           <WeeklyOverview />
         </div>
       </div>
+      <BrickBreakerGame isOpen={showGame} onClose={() => setShowGame(false)} />
     </div>;
 };
 export default DailyPage;
