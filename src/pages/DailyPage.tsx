@@ -163,7 +163,7 @@ const DailyPage = () => {
             <div className="flex items-start">
               <div className="flex flex-col items-start">
                 <p className="text-sm text-muted-foreground font-medium mb-1">
-                  Quick Log
+                  Today
                 </p>
                 <p className="text-5xl font-black text-foreground">
                   {currentCount}
