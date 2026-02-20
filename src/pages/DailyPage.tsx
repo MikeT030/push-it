@@ -42,7 +42,7 @@ const DailyPage = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
     const firstDayOfWeek = (monthStart.getDay() + 6) % 7; // Monday = 0
-    
+
     // Get days from previous month to fill the first week
     const prevMonthEnd = endOfMonth(subMonths(currentMonth, 1));
     const prevDays: Date[] = [];
@@ -51,12 +51,12 @@ const DailyPage = () => {
       d.setDate(prevMonthEnd.getDate() - i);
       prevDays.push(d);
     }
-    
+
     const currentDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
-    
+
     // Fill remaining days from next month to complete the grid
     const totalSoFar = prevDays.length + currentDays.length;
-    const remaining = totalSoFar % 7 === 0 ? 0 : 7 - (totalSoFar % 7);
+    const remaining = totalSoFar % 7 === 0 ? 0 : 7 - totalSoFar % 7;
     const nextMonthStart = startOfMonth(addMonths(currentMonth, 1));
     const nextDays: Date[] = [];
     for (let i = 0; i < remaining; i++) {
@@ -64,7 +64,7 @@ const DailyPage = () => {
       d.setDate(nextMonthStart.getDate() + i);
       nextDays.push(d);
     }
-    
+
     return [...prevDays, ...currentDays, ...nextDays];
   }, [currentMonth]);
   const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
@@ -141,11 +141,11 @@ const DailyPage = () => {
             Add push-ups
           </Button>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
-            {avatar ? (
-              <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
-            ) : (
-              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
-            )}
+            {avatar ?
+          <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" /> :
+
+          <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
+          }
           </button>
         </div>
 
@@ -171,21 +171,21 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
             </div>
-            <div className="flex items-center gap-4 mt-4">
-              {isEditable && (
-                <button
-                  onClick={() => adjustCount(-10)}
-                  disabled={currentCount < 10}
-                  className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                >
+            <div className="gap-4 mt-4 flex items-end justify-start">
+              {isEditable &&
+            <button
+              onClick={() => adjustCount(-10)}
+              disabled={currentCount < 10}
+              className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center">
+
                   <Minus className="w-4 h-4" />
                 </button>
-              )}
+            }
               <button
-                onClick={() => isEditable && adjustCount(10)}
-                disabled={!isEditable}
-                className="disabled:opacity-50"
-              >
+              onClick={() => isEditable && adjustCount(10)}
+              disabled={!isEditable}
+              className="disabled:opacity-50">
+
                 <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
               </button>
             </div>
@@ -198,29 +198,29 @@ const DailyPage = () => {
               <p className="text-sm text-muted-foreground font-medium mb-1">
                 Today
               </p>
-              {isEditable ? <input type="number" inputMode="numeric" value={inputValue} onChange={e => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" /> : <p className="text-5xl font-black text-foreground">
+              {isEditable ? <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" /> : <p className="text-5xl font-black text-foreground">
                   {currentCount}
                 </p>}
               <p className="text-sm text-muted-foreground mt-1">
                 of {dailyTarget} target
               </p>
-              {isEditable && (
-                <div className="flex items-center gap-4 mt-3">
+              {isEditable &&
+            <div className="flex items-center gap-4 mt-3">
                   <button
-                    onClick={() => adjustCount(-10)}
-                    disabled={currentCount < 10}
-                    className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
+                onClick={() => adjustCount(-10)}
+                disabled={currentCount < 10}
+                className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+
                     <Minus className="w-4 h-4" />
                   </button>
                   <button
-                    onClick={() => adjustCount(10)}
-                    className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors"
-                  >
+                onClick={() => adjustCount(10)}
+                className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors">
+
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-              )}
+            }
             </div>
             <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
           </div>
@@ -265,7 +265,7 @@ const DailyPage = () => {
 
           {/* Calendar Grid */}
           <div className="grid grid-cols-7 gap-1">
-            {calendarDays.map(day => {
+            {calendarDays.map((day) => {
             const isCurrentMonth = isSameMonth(day, currentMonth);
             const dayCount = getEntryForDate(day);
             const dayProgress = getDailyProgress(day);
