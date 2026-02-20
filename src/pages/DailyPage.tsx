@@ -205,14 +205,28 @@ const DailyPage = () => {
 
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
           <div className="flex justify-center mb-4">
-            <button
-              onClick={() => setUseNewLayout(!useNewLayout)}
-              className={`py-2 px-5 rounded-full text-sm font-medium transition-all border ${
-                "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
-              }`}
-            >
-              {useNewLayout ? "New" : "Old"}
-            </button>
+            <div className="flex rounded-full border border-[#3B404F] overflow-hidden">
+              <button
+                onClick={() => setUseNewLayout(false)}
+                className={`py-1.5 px-4 text-sm font-medium transition-all ${
+                  !useNewLayout
+                    ? "bg-[#0ABAB5]/10 text-[#0ABAB5]"
+                    : "text-muted-foreground"
+                }`}
+              >
+                Old
+              </button>
+              <button
+                onClick={() => setUseNewLayout(true)}
+                className={`py-1.5 px-4 text-sm font-medium transition-all ${
+                  useNewLayout
+                    ? "bg-[#0ABAB5]/10 text-[#0ABAB5]"
+                    : "text-muted-foreground"
+                }`}
+              >
+                New
+              </button>
+            </div>
           </div>
 
           {useNewLayout ? (
