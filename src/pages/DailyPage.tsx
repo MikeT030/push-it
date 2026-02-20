@@ -204,6 +204,41 @@ const DailyPage = () => {
           </Button>
         </div>
 
+        {/* Quick Log Card */}
+        <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+          <div className="flex items-center justify-between pb-[12px]">
+            <div className="flex flex-col items-start">
+              <p className="text-sm text-muted-foreground font-medium mb-1">
+                Quick Log
+              </p>
+              <p className="text-5xl font-black text-foreground">
+                {currentCount}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                of {dailyTarget} target
+              </p>
+              {isEditable && (
+                <div className="flex items-center gap-4 mt-3">
+                  <button
+                    onClick={() => adjustCount(-10)}
+                    disabled={currentCount < 10}
+                    className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => isEditable && adjustCount(10)}
+              disabled={!isEditable}
+              className="disabled:opacity-50"
+            >
+              <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
+            </button>
+          </div>
+        </div>
+
         {/* Calendar Card */}
         <div className={`card-glass rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
         animationDelay: "0.1s"
