@@ -251,7 +251,7 @@ const DailyPage = () => {
                     </div>
               }
                 </div>
-                <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
+                <ProgressRing progress={progress} size={138} strokeWidth={14} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
               </div>
               {isEditable}
               {!isEditable && <p className="mt-6 text-center text-muted-foreground text-sm">Future dates cannot be edited</p>}
