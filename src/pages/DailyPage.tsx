@@ -166,71 +166,71 @@ const DailyPage = () => {
           <div className="flex justify-center mb-4">
             <div className="flex rounded-full border border-[#3B404F] overflow-hidden">
               <button
-                onClick={() => setUseNewLayout(false)}
-                className={`py-1.5 px-4 text-sm font-medium transition-all ${
-                  !useNewLayout
-                    ? "bg-[#0ABAB5]/10 text-[#0ABAB5]"
-                    : "text-muted-foreground"
-                }`}
-              >
+              onClick={() => setUseNewLayout(false)}
+              className={`py-1.5 px-4 text-sm font-medium transition-all ${
+              !useNewLayout ?
+              "bg-[#0ABAB5]/10 text-[#0ABAB5]" :
+              "text-muted-foreground"}`
+              }>
+
                 Old
               </button>
               <button
-                onClick={() => setUseNewLayout(true)}
-                className={`py-1.5 px-4 text-sm font-medium transition-all ${
-                  useNewLayout
-                    ? "bg-[#0ABAB5]/10 text-[#0ABAB5]"
-                    : "text-muted-foreground"
-                }`}
-              >
+              onClick={() => setUseNewLayout(true)}
+              className={`py-1.5 px-4 text-sm font-medium transition-all ${
+              useNewLayout ?
+              "bg-[#0ABAB5]/10 text-[#0ABAB5]" :
+              "text-muted-foreground"}`
+              }>
+
                 New
               </button>
             </div>
           </div>
 
-          {useNewLayout ? (
-            <>
+          {useNewLayout ?
+        <>
               <div className="pb-[12px]">
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col items-start">
                     <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
-                    {isEditable ? (
-                      <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                    ) : (
-                      <p className="text-5xl font-black text-foreground">{currentCount}</p>
-                    )}
+                    {isEditable ?
+                <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" /> :
+
+                <p className="text-5xl font-black text-foreground">{currentCount}</p>
+                }
                     <p className="text-sm text-muted-foreground mt-1">of {dailyTarget} target</p>
                   </div>
                   <div className="flex flex-col items-end">
                     <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
-                    <p className="text-5xl font-black text-foreground">{yesterdayCount}</p>
+                    <p className="text-5xl font-black text-[#a7a8aa]">{yesterdayCount}</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-center relative mt-[20px]">
-                  {isEditable && (
-                    <button onClick={() => adjustCount(-10)} disabled={currentCount < 10} className="absolute left-0 bottom-0 w-11 h-11 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center">
+                  {isEditable &&
+              <button onClick={() => adjustCount(-10)} disabled={currentCount < 10} className="absolute left-0 bottom-0 w-11 h-11 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center">
                       <Minus className="w-5 h-5" />
                     </button>
-                  )}
+              }
                   <button onClick={() => isEditable && adjustCount(10)} disabled={!isEditable} className="disabled:opacity-50">
                     <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
                   </button>
                 </div>
               </div>
-            </>
-          ) : (
-            <>
+            </> :
+
+        <>
               <div className="flex items-center justify-between pb-[12px]">
                 <div className="flex flex-col items-start">
                   <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
-                  {isEditable ? (
-                    <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                  ) : (
-                    <p className="text-5xl font-black text-foreground">{currentCount}</p>
-                  )}
+                  {isEditable ?
+              <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" /> :
+
+              <p className="text-5xl font-black text-foreground">{currentCount}</p>
+              }
                   <p className="text-sm text-muted-foreground mt-1">of {dailyTarget} target</p>
-                  {isEditable && (
-                    <div className="flex items-center gap-4 mt-3">
+                  {isEditable &&
+              <div className="flex items-center gap-4 mt-3">
                       <button onClick={() => adjustCount(-10)} disabled={currentCount < 10} className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                         <Minus className="w-4 h-4" />
                       </button>
@@ -238,14 +238,14 @@ const DailyPage = () => {
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
-                  )}
+              }
                 </div>
                 <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
               </div>
               {isEditable}
               {!isEditable && <p className="mt-6 text-center text-muted-foreground text-sm">Future dates cannot be edited</p>}
             </>
-          )}
+        }
 
           <Button variant="outline" onClick={handleShare} className="w-full h-12 mt-6 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
             <ShareIcon className="mr-2" size={16} />
