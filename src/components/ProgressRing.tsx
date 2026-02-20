@@ -26,6 +26,7 @@ const ProgressRing = ({
   enableOuterGlow = false
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
+  const [isPulsing, setIsPulsing] = useState(false);
   const { setIsGameActive } = useGame();
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const ProgressRing = ({
   return (
     <>
       <div
-        className={`relative ${enableGame ? 'cursor-pointer' : ''} ${className}`}
+        className={`relative ${enableGame ? 'cursor-pointer' : ''} ${isPulsing ? 'animate-click-pulse' : ''} ${className}`}
         style={{
           width: size,
           height: size,
@@ -53,7 +54,11 @@ const ProgressRing = ({
             boxShadow: '0 0 0 2px #BA25D8, 0 4px 20px rgba(186, 37, 216, 0.4)'
           })
         }}
-        onClick={() => enableGame && setShowGame(true)}>
+        onClick={() => {
+          setIsPulsing(true);
+          setTimeout(() => setIsPulsing(false), 500);
+          if (enableGame) setShowGame(true);
+        }}>
 
         <svg className="transform -rotate-90" width={size} height={size}>
           {/* Background ring */}
