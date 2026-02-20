@@ -190,7 +190,7 @@ const DailyPage = () => {
 
           {useNewLayout ?
         <>
-              <div className="pb-[12px]">
+              <div className="pb-[12px] mb-[20px]">
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col items-start">
                     <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
