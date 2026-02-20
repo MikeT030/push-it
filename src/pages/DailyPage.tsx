@@ -204,20 +204,15 @@ const DailyPage = () => {
         </div>
 
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
-          <div className="flex gap-1 justify-center mb-4">
-            {([false, true] as const).map((isNew) => (
-              <button
-                key={isNew ? "new" : "old"}
-                onClick={() => setUseNewLayout(isNew)}
-                className={`py-2 px-5 rounded-full text-sm font-medium transition-all border ${
-                  useNewLayout === isNew
-                    ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
-                    : "text-muted-foreground border-[#3B404F]"
-                }`}
-              >
-                {isNew ? "New" : "Old"}
-              </button>
-            ))}
+          <div className="flex justify-center mb-4">
+            <button
+              onClick={() => setUseNewLayout(!useNewLayout)}
+              className={`py-2 px-5 rounded-full text-sm font-medium transition-all border ${
+                "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
+              }`}
+            >
+              {useNewLayout ? "New" : "Old"}
+            </button>
           </div>
 
           {useNewLayout ? (
