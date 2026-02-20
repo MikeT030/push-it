@@ -165,7 +165,7 @@ const DailyPage = () => {
 
 
 
-        <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+        <div className={`rounded-2xl p-6 mb-6 animate-slide-up ${useNewLayout ? '' : 'card-glass'}`} style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center justify-between mb-4">
             <div className="flex-1" />
             <div className="flex rounded-full border border-[#3B404F] overflow-hidden">
