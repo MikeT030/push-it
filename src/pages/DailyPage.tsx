@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
+import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import ShareIcon from "@/components/ShareIcon";
@@ -33,6 +33,7 @@ const DailyPage = () => {
     getCurrentStreak
   } = usePushUpData();
   const currentCount = isLoaded ? getEntryForDate(selectedDate) : 0;
+  const yesterdayCount = isLoaded ? getEntryForDate(subDays(selectedDate, 1)) : 0;
   const progress = isLoaded ? getDailyProgress(selectedDate) : 0;
   const isEditable = canEditDate(selectedDate);
   useEffect(() => {
@@ -160,7 +161,7 @@ const DailyPage = () => {
         {/* Quick Log Card */}
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up">
           <div className="pb-[12px]">
-            <div className="flex items-start">
+            <div className="flex items-start justify-between">
               <div className="flex flex-col items-start">
                 <p className="text-sm text-muted-foreground font-medium mb-1">
                   Today
@@ -170,6 +171,14 @@ const DailyPage = () => {
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
                   of {dailyTarget} target
+                </p>
+              </div>
+              <div className="flex flex-col items-end">
+                <p className="text-sm text-muted-foreground font-medium mb-1">
+                  Yesterday
+                </p>
+                <p className="text-5xl font-black text-foreground">
+                  {yesterdayCount}
                 </p>
               </div>
             </div>
