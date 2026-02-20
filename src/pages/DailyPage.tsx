@@ -14,7 +14,7 @@ import WeeklyOverview from "@/components/WeeklyOverview";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { Switch } from "@/components/ui/switch";
 const DailyPage = () => {
-  const [useNewLayout, setUseNewLayout] = useState(false);
+  const [useNewLayout, setUseNewLayout] = useState(true);
   const navigate = useNavigate();
   const { avatar } = useUserAvatar();
   const [selectedDate, setSelectedDate] = useState(new Date());
