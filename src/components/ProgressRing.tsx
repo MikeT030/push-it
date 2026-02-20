@@ -106,12 +106,17 @@ const ProgressRing = ({
             filter: 'drop-shadow(0 0 12px #BA25D8) drop-shadow(0 0 24px rgba(186, 37, 216, 0.4))',
           } : undefined}
         >
-          <span 
-            className="text-2xl font-bold"
-            style={{ color: '#ffffff' }}
-          >
-            {Math.round(progress)}%
-          </span>
+          <div className="flex flex-col items-center">
+            <span 
+              className="text-2xl font-bold"
+              style={{ color: '#ffffff' }}
+            >
+              {Math.round(progress)}%
+            </span>
+            <span className="text-[10px] font-medium text-muted-foreground">
+              Push
+            </span>
+          </div>
         </div>
       </div>
       
