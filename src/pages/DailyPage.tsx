@@ -204,7 +204,8 @@ const DailyPage = () => {
         </div>
 
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
-          <div className="flex justify-center mb-4">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <span className="text-xs font-medium text-muted-foreground">{useNewLayout ? "New" : "Old"}</span>
             <Switch checked={useNewLayout} onCheckedChange={setUseNewLayout} />
           </div>
 
