@@ -224,7 +224,7 @@ const DailyPage = () => {
                     </button>
               }
                   <button onClick={() => isEditable && adjustCount(10)} disabled={!isEditable} className="disabled:opacity-50">
-                    <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
+                    <ProgressRing progress={progress} size={138} strokeWidth={14} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
                   </button>
                 </div>
               </div>
@@ -251,7 +251,7 @@ const DailyPage = () => {
                     </div>
               }
                 </div>
-                <ProgressRing progress={progress} size={138} strokeWidth={14} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
+                <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={true} enableAnimation={false} enableOuterGlow={true} />
               </div>
               {isEditable}
               {!isEditable && <p className="mt-6 text-center text-muted-foreground text-sm">Future dates cannot be edited</p>}
