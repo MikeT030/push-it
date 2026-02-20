@@ -166,7 +166,8 @@ const DailyPage = () => {
 
 
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
-          <div className="flex items-center justify-center mb-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex-1" />
             <div className="flex rounded-full border border-[#3B404F] overflow-hidden">
               <button
               onClick={() => setUseNewLayout(false)}
@@ -187,13 +188,15 @@ const DailyPage = () => {
                 New
               </button>
             </div>
-            <button
-              onClick={() => setShowGame(true)}
-              className="ml-3 p-1.5 rounded-full hover:bg-muted/50 transition-colors"
-              aria-label="Open mini game"
-            >
-              <img src={controllerIcon} alt="Game" className="w-6 h-6" />
-            </button>
+            <div className="flex-1 flex justify-end">
+              <button
+                onClick={() => setShowGame(true)}
+                className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
+                aria-label="Open mini game"
+              >
+                <img src={controllerIcon} alt="Game" className="w-6 h-6" />
+              </button>
+            </div>
           </div>
 
           {useNewLayout ?
