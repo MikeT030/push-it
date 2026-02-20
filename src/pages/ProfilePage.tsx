@@ -9,8 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import AvatarSelector from "@/components/AvatarSelector";
-import { AvatarOption } from "@/data/avatars";
+import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
 const ProfilePage = () => {
   const {
     yearlyGoal,
@@ -24,18 +23,16 @@ const ProfilePage = () => {
   const [displayName, setDisplayName] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
-  const [isAvatarSelectorOpen, setIsAvatarSelectorOpen] = useState(false);
-  const [defaultAvatarTab, setDefaultAvatarTab] = useState<"card" | "avatar">("card");
+  const { openAvatarSelector } = useAvatarSelector();
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (searchParams.get("openAvatar") === "true") {
-      setDefaultAvatarTab("avatar");
-      setIsAvatarSelectorOpen(true);
+      openAvatarSelector("avatar");
       searchParams.delete("openAvatar");
       setSearchParams(searchParams, { replace: true });
     }
-  }, [searchParams, setSearchParams]);
+  }, [searchParams, setSearchParams, openAvatarSelector]);
   useEffect(() => {
     if (!user) return;
     const fetchProfile = async () => {
@@ -76,20 +73,7 @@ const ProfilePage = () => {
     setIsEditing(false);
     toast.success("Nickname saved!");
   };
-  const handleAvatarSelect = async (avatar: AvatarOption) => {
-    if (!user) return;
-    const {
-      error
-    } = await supabase.from("profiles").update({
-      avatar_url: avatar.id || null
-    }).eq("id", user.id);
-    if (error) {
-      toast.error("Failed to save avatar");
-      return;
-    }
-    setAvatarId(avatar.id || null);
-    toast.success(avatar.id ? "Avatar updated!" : "Avatar removed!");
-  };
+  
   const handleBackup = async () => {
     if (!user) return;
     const {
@@ -171,7 +155,7 @@ const ProfilePage = () => {
           <div
             className="relative w-24 h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl shadow-primary/20 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
             style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}
-            onClick={() => setIsAvatarSelectorOpen(true)}
+            onClick={() => openAvatarSelector()}
           >
               {selectedAvatar ? (
                 <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
@@ -268,9 +252,7 @@ const ProfilePage = () => {
           Push-it v1.0.0
         </p>
       </div>
-
-      {/* Avatar Selector Dialog */}
-      <AvatarSelector open={isAvatarSelectorOpen} onOpenChange={setIsAvatarSelectorOpen} selectedAvatarId={avatarId} onSelect={handleAvatarSelect} defaultTab={defaultAvatarTab} />
     </div>;
+
 };
 export default ProfilePage;

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { GameProvider } from "@/contexts/GameContext";
+import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
 import SplashScreen from "./components/SplashScreen";
 
@@ -120,9 +121,11 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
-            <GameProvider>
-              <AppContent />
-            </GameProvider>
+            <AvatarSelectorProvider>
+              <GameProvider>
+                <AppContent />
+              </GameProvider>
+            </AvatarSelectorProvider>
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
