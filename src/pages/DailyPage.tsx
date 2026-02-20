@@ -206,8 +206,8 @@ const DailyPage = () => {
 
         {/* Quick Log Card */}
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
-          <div className="flex items-center justify-between pb-[12px]">
-            <div className="flex flex-col items-start">
+          <div className="flex flex-col items-center pb-[12px]">
+            <div className="flex flex-col items-center">
               <p className="text-sm text-muted-foreground font-medium mb-1">
                 Quick Log
               </p>
@@ -232,7 +232,7 @@ const DailyPage = () => {
             <button
               onClick={() => isEditable && adjustCount(10)}
               disabled={!isEditable}
-              className="disabled:opacity-50"
+              className="disabled:opacity-50 mt-4"
             >
               <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
             </button>
