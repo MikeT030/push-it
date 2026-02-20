@@ -220,7 +220,7 @@ const DailyPage = () => {
             </> :
 
         <>
-              <div className="flex items-center justify-between pb-[12px] mb-[80px]">
+              <div className="flex items-center justify-between pb-[12px]">
                 <div className="flex flex-col items-start">
                   <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
                   {isEditable ?
