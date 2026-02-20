@@ -159,8 +159,8 @@ const DailyPage = () => {
 
         {/* Quick Log Card */}
         <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up">
-          <div className="flex flex-col items-center pb-[12px]">
-            <div className="flex-col flex items-center justify-start">
+          <div className="flex items-end justify-center gap-6 pb-[12px]">
+            <div className="flex flex-col items-center justify-end mb-2">
               <p className="text-sm text-muted-foreground font-medium mb-1">
                 Quick Log
               </p>
@@ -171,21 +171,19 @@ const DailyPage = () => {
                 of {dailyTarget} target
               </p>
             </div>
-            <div className="gap-4 mt-4 flex items-end justify-start">
+            <div className="flex items-end gap-4">
               {isEditable &&
-            <button
-              onClick={() => adjustCount(-10)}
-              disabled={currentCount < 10}
-              className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center">
-
+                <button
+                  onClick={() => adjustCount(-10)}
+                  disabled={currentCount < 10}
+                  className="w-9 h-9 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center mb-1">
                   <Minus className="w-4 h-4" />
                 </button>
-            }
+              }
               <button
-              onClick={() => isEditable && adjustCount(10)}
-              disabled={!isEditable}
-              className="disabled:opacity-50">
-
+                onClick={() => isEditable && adjustCount(10)}
+                disabled={!isEditable}
+                className="disabled:opacity-50">
                 <ProgressRing progress={progress} size={120} strokeWidth={12} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
               </button>
             </div>
