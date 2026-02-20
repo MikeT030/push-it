@@ -114,7 +114,7 @@ const ProgressRing = ({
               {Math.round(progress)}%
             </span>
             <span className="text-[10px] font-medium text-primary">
-              Push
+              Push it! 
             </span>
           </div>
         </div>
