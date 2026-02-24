@@ -39,10 +39,10 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   }, [allEntries, year]);
 
   const W = 360;
-  const H = 160;
+  const H = 180;
   const padX = 0;
   const padTop = 10;
-  const padBot = 0;
+  const padBot = 18;
   const totalWeeks = 52;
   const maxY = groupGoal;
 
@@ -54,7 +54,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
     : "";
 
   const areaPath = linePath
-    ? `${linePath} L${toX(chartData[chartData.length - 1].week)},${H} L${toX(0)},${H} Z`
+    ? `${linePath} L${toX(chartData[chartData.length - 1].week)},${H - padBot} L${toX(0)},${H - padBot} Z`
     : "";
 
   const gradientId = useMemo(() => `group-line-grad-${Math.random().toString(36).slice(2)}`, []);
@@ -81,7 +81,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
 
       {/* Line Chart SVG */}
       <div className="mt-4">
-        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full h-[140px] block">
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[160px] block" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#0ABAB5" stopOpacity="0.35" />
@@ -92,16 +92,29 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {areaPath && <path d={areaPath} fill={`url(#${gradientId})`} />}
           {linePath && <path d={linePath} fill="none" stroke="#0ABAB5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
 
-          {/* Ideal pace line (linear from 0 to groupGoal over 52 weeks) */}
+          {/* Ideal pace line */}
           <line
             x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
             stroke="#9CA3AF" strokeWidth="1" strokeDasharray="6 4" opacity="0.2"
           />
 
+          {/* Goal line */}
           <line
             x1={padX} y1={toY(groupGoal)} x2={W} y2={toY(groupGoal)}
             stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4"
           />
+
+          {/* X-axis labels (Weeks) */}
+          <text x={toX(0)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">W1</text>
+          <text x={toX(13)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="middle" opacity="0.6">W13</text>
+          <text x={toX(26)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="middle" opacity="0.6">W26</text>
+          <text x={toX(39)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="middle" opacity="0.6">W39</text>
+          <text x={toX(52)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="end" opacity="0.6">W52</text>
+
+          {/* Y-axis labels (Push-ups) */}
+          <text x={4} y={toY(0) + 4} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">0</text>
+          <text x={4} y={toY(groupGoal / 2) + 3} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">{(groupGoal / 2 / 1000).toFixed(0)}k</text>
+          <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
         </svg>
       </div>
     </div>
