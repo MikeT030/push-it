@@ -188,18 +188,26 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <p className="text-xl font-bold text-[#0ABAB5]">{progressPercent.toFixed(1)}%</p>
         </div>
         <button
-          className={`text-center cursor-pointer select-none rounded-xl px-4 py-2 border transition-all active:scale-95 ${showIdealPace ? 'border-border/50 bg-card shadow-[0_2px_0_0_hsl(var(--border)/0.5)] hover:bg-accent/30' : 'border-border/20 bg-card/40 shadow-none'}`}
+          className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
+            showIdealPace
+              ? 'bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]'
+              : 'text-muted-foreground border-[#3B404F]'
+          }`}
           onClick={() => setShowIdealPace(v => !v)}
         >
-          <p className={`text-xs ${showIdealPace ? 'text-muted-foreground' : 'text-muted-foreground/40 line-through'}`}>Avg. PU (day)</p>
-          <p className={`text-xl font-bold ${showIdealPace ? 'text-foreground' : 'text-foreground/30'}`}>{avgPuPerDay.toLocaleString("de-DE")}</p>
+          <p className="text-[10px] leading-tight">{showIdealPace ? 'Avg. PU (day)' : <s>Avg. PU (day)</s>}</p>
+          <p className="text-base font-bold leading-snug">{avgPuPerDay.toLocaleString("de-DE")}</p>
         </button>
         <button
-          className={`text-right cursor-pointer select-none rounded-xl px-4 py-2 border transition-all active:scale-95 ${showProjection ? 'border-border/50 bg-card shadow-[0_2px_0_0_hsl(var(--border)/0.5)] hover:bg-accent/30' : 'border-border/20 bg-card/40 shadow-none'}`}
+          className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
+            showProjection
+              ? 'bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]'
+              : 'text-muted-foreground border-[#3B404F]'
+          }`}
           onClick={() => setShowProjection(v => !v)}
         >
-          <p className={`text-xs ${showProjection ? 'text-muted-foreground' : 'text-muted-foreground/40 line-through'}`}>Proj. PU (EOY)</p>
-          <p className={`text-xl font-bold ${showProjection ? 'text-foreground' : 'text-foreground/30'}`}>{projectedEOY.toLocaleString("de-DE")}</p>
+          <p className="text-[10px] leading-tight">{showProjection ? 'Proj. PU (EOY)' : <s>Proj. PU (EOY)</s>}</p>
+          <p className="text-base font-bold leading-snug">{projectedEOY.toLocaleString("de-DE")}</p>
         </button>
       </div>
     </div>);
