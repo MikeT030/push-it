@@ -195,8 +195,8 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           }
           onClick={() => setShowIdealPace((v) => !v)}>
 
-          <p className="text-[10px] leading-tight">Avg. PU (day)</p>
-          <p className="text-base font-bold leading-snug">{avgPuPerDay.toLocaleString("de-DE")}</p>
+          <p className="text-[10px] leading-tight">Exp. PU (EOY)</p>
+          <p className="text-base font-bold leading-snug">{groupGoal.toLocaleString("de-DE")}</p>
         </button>
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
