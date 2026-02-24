@@ -184,8 +184,8 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
       {/* Stats below graph */}
       <div className="flex justify-between items-center mt-2 pt-3 border-t border-border/30">
         <div>
-          <p className="text-xs text-muted-foreground">Group progress</p>
-          <p className="text-xl font-bold text-[#c02bde]">{progressPercent.toFixed(1)}%</p>
+          <p className="text-xs text-muted-foreground">Exp. PU (EOY)</p>
+          <p className="text-xl font-bold text-foreground">{(180000).toLocaleString("de-DE")}</p>
         </div>
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
