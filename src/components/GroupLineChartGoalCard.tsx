@@ -195,7 +195,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           }`}
           onClick={() => setShowIdealPace(v => !v)}
         >
-          <p className="text-[10px] leading-tight">{showIdealPace ? 'Avg. PU (day)' : <s>Avg. PU (day)</s>}</p>
+          <p className="text-[10px] leading-tight">Avg. PU (day)</p>
           <p className="text-base font-bold leading-snug">{avgPuPerDay.toLocaleString("de-DE")}</p>
         </button>
         <button
@@ -206,7 +206,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           }`}
           onClick={() => setShowProjection(v => !v)}
         >
-          <p className="text-[10px] leading-tight">{showProjection ? 'Proj. PU (EOY)' : <s>Proj. PU (EOY)</s>}</p>
+          <p className="text-[10px] leading-tight">Proj. PU (EOY)</p>
           <p className="text-base font-bold leading-snug">{projectedEOY.toLocaleString("de-DE")}</p>
         </button>
       </div>
