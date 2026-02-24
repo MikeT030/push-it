@@ -237,12 +237,14 @@ const GroupPage = () => {
     const daysElapsed = differenceInDays(today, yearStart) + 1;
     const expectedProgress = daysElapsed / 365 * 100;
     const onTrackCount = users.filter((u) => u.progress_percent >= expectedProgress).length;
+    const avgPuPerDay = daysElapsed > 0 ? Math.round(totalPushups / daysElapsed) : 0;
     return {
       totalMembers,
       totalPushups,
       avgProgress,
       onTrackCount,
-      expectedProgress
+      expectedProgress,
+      avgPuPerDay
     };
   }, [users]);
 
@@ -359,6 +361,17 @@ const GroupPage = () => {
                   </div>
                   <p className="text-[1.625rem] font-black text-foreground">
                     {stats.totalPushups.toLocaleString()}
+                    <span className="text-base font-medium text-muted-foreground ml-1">PU</span>
+                  </p>
+                </div>
+
+                <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <TrendingUp className="w-5 h-5 text-[#F97316]" />
+                    <p className="text-sm text-muted-foreground font-medium">Avg. PU per day</p>
+                  </div>
+                  <p className="text-[1.625rem] font-black text-foreground">
+                    {stats.avgPuPerDay.toLocaleString()}
                     <span className="text-base font-medium text-muted-foreground ml-1">PU</span>
                   </p>
                 </div>
