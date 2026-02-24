@@ -130,13 +130,13 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[160px] block" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#0ABAB5" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#0ABAB5" stopOpacity="0.03" />
+              <stop offset="0%" stopColor="#C029DE" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#C029DE" stopOpacity="0.03" />
             </linearGradient>
           </defs>
 
           {areaPath && <path d={areaPath} fill={`url(#${gradientId})`} />}
-          {linePath && <path d={linePath} fill="none" stroke="#0ABAB5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
+          {linePath && <path d={linePath} fill="none" stroke="#C029DE" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
 
           {/* Projected pace line */}
           {showProjection && chartData.length > 0 &&
