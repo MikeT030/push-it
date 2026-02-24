@@ -15,7 +15,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   const [displayCount, setDisplayCount] = useState(0);
   const hasAnimated = useRef(false);
   const [showIdealPace, setShowIdealPace] = useState(true);
-  const [showProjection, setShowProjection] = useState(true);
+  const [showProjection, setShowProjection] = useState(false);
 
   const animateCount = useCallback((target: number) => {
     const duration = 1200;
