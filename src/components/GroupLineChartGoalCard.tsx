@@ -109,16 +109,16 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
 
 
           {/* X-axis labels (Weeks) */}
-          <text x={toX(0)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">W1</text>
-          <text x={toX(13)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="middle" opacity="0.6">W13</text>
-          <text x={toX(26)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="middle" opacity="0.6">W26</text>
-          <text x={toX(39)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="middle" opacity="0.6">W39</text>
-          <text x={toX(52)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="end" opacity="0.6">W52</text>
+          <text x={toX(0)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">W1</text>
+          <text x={toX(13)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W13</text>
+          <text x={toX(26)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W26</text>
+          <text x={toX(39)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W39</text>
+          <text x={toX(52)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="end" opacity="0.6">W52</text>
 
           {/* Y-axis labels (Push-ups) */}
-          <text x={4} y={toY(0) + 4} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">0</text>
-          <text x={4} y={toY(groupGoal / 2) + 3} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">{(groupGoal / 2 / 1000).toFixed(0)}k</text>
-          <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
+          <text x={4} y={toY(0) + 4} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">0</text>
+          <text x={4} y={toY(groupGoal / 2) + 3} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 2 / 1000).toFixed(0)}k</text>
+          <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
         </svg>
       </div>
 
