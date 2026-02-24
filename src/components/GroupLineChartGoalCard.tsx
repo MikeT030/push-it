@@ -75,7 +75,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
             Group Goal {year}
           </h2>
           <p className="text-4xl font-black text-foreground">
-            {totalPushUps.toLocaleString("de-DE")}
+            {totalPushUps.toLocaleString("de-DE")} PU
           </p>
           <p className="text-sm text-muted-foreground mt-1">
             of {groupGoal.toLocaleString("de-DE")} PU
