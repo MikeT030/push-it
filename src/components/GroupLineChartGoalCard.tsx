@@ -14,6 +14,8 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   const cardRef = useRef<HTMLDivElement>(null);
   const [displayCount, setDisplayCount] = useState(0);
   const hasAnimated = useRef(false);
+  const [showIdealPace, setShowIdealPace] = useState(true);
+  const [showProjection, setShowProjection] = useState(true);
 
   const animateCount = useCallback((target: number) => {
     const duration = 1200;
@@ -137,7 +139,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {linePath && <path d={linePath} fill="none" stroke="#0ABAB5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
 
           {/* Projected pace line */}
-          {chartData.length > 0 && (
+          {showProjection && chartData.length > 0 && (
             <line
               x1={toX(chartData[chartData.length - 1].week)}
               y1={toY(chartData[chartData.length - 1].total)}
@@ -147,9 +149,11 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           )}
 
           {/* Ideal pace line */}
-          <line
-            x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
-            stroke="#9CA3AF" strokeWidth="1" strokeDasharray="6 4" opacity="0.2" />
+          {showIdealPace && (
+            <line
+              x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
+              stroke="#9CA3AF" strokeWidth="1" strokeDasharray="6 4" opacity="0.2" />
+          )}
 
           {/* Goal line */}
           <line
@@ -157,9 +161,11 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
             stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
 
           {/* Projected EOY line */}
-          <line
-            x1={padX} y1={toY(projectedEOY)} x2={W} y2={toY(projectedEOY)}
-            stroke="#F59E0B" strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
+          {showProjection && (
+            <line
+              x1={padX} y1={toY(projectedEOY)} x2={W} y2={toY(projectedEOY)}
+              stroke="#F59E0B" strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
+          )}
 
           {/* X-axis labels (Weeks) */}
           <text x={toX(0)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">W1</text>
@@ -171,7 +177,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {/* Y-axis labels (Push-ups) */}
           <text x={4} y={toY(0) + 4} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">0</text>
           <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
-          <text x={4} y={toY(projectedEOY) + 10} fill="#F59E0B" fontSize="11" textAnchor="start" opacity="0.6">{(projectedEOY / 1000).toFixed(0)}k</text>
+          {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#F59E0B" fontSize="11" textAnchor="start" opacity="0.6">{(projectedEOY / 1000).toFixed(0)}k</text>}
         </svg>
       </div>
 
@@ -181,13 +187,13 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <p className="text-xs text-muted-foreground">Group progress</p>
           <p className="text-xl font-bold text-[#0ABAB5]">{progressPercent.toFixed(1)}%</p>
         </div>
-        <div className="text-center">
-          <p className="text-xs text-muted-foreground">Avg. PU (day)</p>
-          <p className="text-xl font-bold text-foreground">{avgPuPerDay.toLocaleString("de-DE")}</p>
+        <div className="text-center cursor-pointer select-none" onClick={() => setShowIdealPace(v => !v)}>
+          <p className={`text-xs ${showIdealPace ? 'text-muted-foreground' : 'text-muted-foreground/40 line-through'}`}>Avg. PU (day)</p>
+          <p className={`text-xl font-bold ${showIdealPace ? 'text-foreground' : 'text-foreground/30'}`}>{avgPuPerDay.toLocaleString("de-DE")}</p>
         </div>
-        <div className="text-right">
-          <p className="text-xs text-muted-foreground">Proj. PU (EOY)</p>
-          <p className="text-xl font-bold text-foreground">{projectedEOY.toLocaleString("de-DE")}</p>
+        <div className="text-right cursor-pointer select-none" onClick={() => setShowProjection(v => !v)}>
+          <p className={`text-xs ${showProjection ? 'text-muted-foreground' : 'text-muted-foreground/40 line-through'}`}>Proj. PU (EOY)</p>
+          <p className={`text-xl font-bold ${showProjection ? 'text-foreground' : 'text-foreground/30'}`}>{projectedEOY.toLocaleString("de-DE")}</p>
         </div>
       </div>
     </div>);
