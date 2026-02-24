@@ -5,7 +5,7 @@ interface GroupLineChartGoalCardProps {
   totalPushUps: number;
   groupGoal: number;
   progressPercent: number;
-  allEntries: { date: string; count: number; user_id: string }[];
+  allEntries: {date: string;count: number;user_id: string;}[];
   year: number;
   memberCount: number;
 }
@@ -22,7 +22,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
     });
 
     let cumulative = 0;
-    const points: { week: number; total: number }[] = [];
+    const points: {week: number;total: number;}[] = [];
 
     weeks.forEach((weekStart, i) => {
       const weekEnd = min([endOfWeek(weekStart, { weekStartsOn: 1 }), today]);
@@ -53,16 +53,16 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   const totalWeeks = 52;
   const maxY = groupGoal;
 
-  const toX = (week: number) => padX + (week / totalWeeks) * (W - padX * 2);
+  const toX = (week: number) => padX + week / totalWeeks * (W - padX * 2);
   const toY = (val: number) => padTop + (1 - val / maxY) * (H - padTop - padBot);
 
-  const linePath = chartData.length > 0
-    ? chartData.map((p, i) => `${i === 0 ? "M" : "L"}${toX(p.week)},${toY(p.total)}`).join(" ")
-    : "";
+  const linePath = chartData.length > 0 ?
+  chartData.map((p, i) => `${i === 0 ? "M" : "L"}${toX(p.week)},${toY(p.total)}`).join(" ") :
+  "";
 
-  const areaPath = linePath
-    ? `${linePath} L${toX(chartData[chartData.length - 1].week)},${H - padBot} L${toX(0)},${H - padBot} Z`
-    : "";
+  const areaPath = linePath ?
+  `${linePath} L${toX(chartData[chartData.length - 1].week)},${H - padBot} L${toX(0)},${H - padBot} Z` :
+  "";
 
   const gradientId = useMemo(() => `group-line-grad-${Math.random().toString(36).slice(2)}`, []);
 
@@ -99,14 +99,14 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {/* Ideal pace line */}
           <line
             x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
-            stroke="#9CA3AF" strokeWidth="1" strokeDasharray="6 4" opacity="0.2"
-          />
+            stroke="#9CA3AF" strokeWidth="1" strokeDasharray="6 4" opacity="0.2" />
+
 
           {/* Goal line */}
           <line
             x1={padX} y1={toY(groupGoal)} x2={W} y2={toY(groupGoal)}
-            stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4"
-          />
+            stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
+
 
           {/* X-axis labels (Weeks) */}
           <text x={toX(0)} y={H - 2} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">W1</text>
@@ -129,12 +129,12 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <p className="text-xl font-bold text-[#0ABAB5]">{progressPercent.toFixed(1)}%</p>
         </div>
         <div className="text-right">
-          <p className="text-xs text-muted-foreground">Avg. PU per day</p>
+          <p className="text-xs text-muted-foreground">Avg. PU (day)</p>
           <p className="text-xl font-bold text-foreground">{avgPuPerDay.toLocaleString("de-DE")}</p>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default GroupLineChartGoalCard;
