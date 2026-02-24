@@ -152,7 +152,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {showIdealPace &&
           <line
             x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
-            stroke="#9CA3AF" strokeWidth="1" strokeDasharray="6 4" opacity="0.2" />
+            stroke="#0ABAB5" strokeWidth="1" strokeDasharray="6 4" opacity="0.4" />
           }
 
           {/* Goal line */}
