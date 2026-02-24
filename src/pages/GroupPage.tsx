@@ -460,7 +460,8 @@ const GroupPage = () => {
               groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
               progressPercent={stats.avgProgress}
               allEntries={allEntries}
-              year={new Date().getFullYear()} />
+              year={new Date().getFullYear()}
+              memberCount={users.length} />
 
 
               {/* Call to Action */}
