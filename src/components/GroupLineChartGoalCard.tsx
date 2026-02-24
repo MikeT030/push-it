@@ -187,14 +187,20 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <p className="text-xs text-muted-foreground">Group progress</p>
           <p className="text-xl font-bold text-[#0ABAB5]">{progressPercent.toFixed(1)}%</p>
         </div>
-        <div className="text-center cursor-pointer select-none" onClick={() => setShowIdealPace(v => !v)}>
+        <button
+          className={`text-center cursor-pointer select-none rounded-xl px-4 py-2 border transition-all active:scale-95 ${showIdealPace ? 'border-border/50 bg-card shadow-[0_2px_0_0_hsl(var(--border)/0.5)] hover:bg-accent/30' : 'border-border/20 bg-card/40 shadow-none'}`}
+          onClick={() => setShowIdealPace(v => !v)}
+        >
           <p className={`text-xs ${showIdealPace ? 'text-muted-foreground' : 'text-muted-foreground/40 line-through'}`}>Avg. PU (day)</p>
           <p className={`text-xl font-bold ${showIdealPace ? 'text-foreground' : 'text-foreground/30'}`}>{avgPuPerDay.toLocaleString("de-DE")}</p>
-        </div>
-        <div className="text-right cursor-pointer select-none" onClick={() => setShowProjection(v => !v)}>
+        </button>
+        <button
+          className={`text-right cursor-pointer select-none rounded-xl px-4 py-2 border transition-all active:scale-95 ${showProjection ? 'border-border/50 bg-card shadow-[0_2px_0_0_hsl(var(--border)/0.5)] hover:bg-accent/30' : 'border-border/20 bg-card/40 shadow-none'}`}
+          onClick={() => setShowProjection(v => !v)}
+        >
           <p className={`text-xs ${showProjection ? 'text-muted-foreground' : 'text-muted-foreground/40 line-through'}`}>Proj. PU (EOY)</p>
           <p className={`text-xl font-bold ${showProjection ? 'text-foreground' : 'text-foreground/30'}`}>{projectedEOY.toLocaleString("de-DE")}</p>
-        </div>
+        </button>
       </div>
     </div>);
 
