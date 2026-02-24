@@ -77,6 +77,14 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
     return daysElapsed > 0 ? Math.round(totalPushUps / daysElapsed) : 0;
   }, [totalPushUps]);
 
+  const projectedEOY = useMemo(() => {
+    const today = new Date();
+    const yearStart = startOfYear(today);
+    const daysElapsed = differenceInDays(today, yearStart) + 1;
+    if (daysElapsed <= 0) return 0;
+    return Math.round((totalPushUps / daysElapsed) * 365);
+  }, [totalPushUps]);
+
   const W = 360;
   const H = 180;
   const padX = 0;
@@ -160,9 +168,13 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <p className="text-xs text-muted-foreground">Group progress</p>
           <p className="text-xl font-bold text-[#0ABAB5]">{progressPercent.toFixed(1)}%</p>
         </div>
-        <div className="text-right">
+        <div className="text-center">
           <p className="text-xs text-muted-foreground">Avg. PU (day)</p>
           <p className="text-xl font-bold text-foreground">{avgPuPerDay.toLocaleString("de-DE")}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-xs text-muted-foreground">Proj. PU (EOY)</p>
+          <p className="text-xl font-bold text-foreground">{projectedEOY.toLocaleString("de-DE")}</p>
         </div>
       </div>
     </div>);
