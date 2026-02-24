@@ -95,7 +95,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {/* Ideal pace line (linear from 0 to groupGoal over 52 weeks) */}
           <line
             x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
-            stroke="#9CA3AF" strokeWidth="1.5" opacity="0.4"
+            stroke="#9CA3AF" strokeWidth="1" strokeDasharray="6 4" opacity="0.2"
           />
 
           <line
