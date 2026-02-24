@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { startOfYear, eachWeekOfInterval, endOfWeek, min, format, differenceInDays } from "date-fns";
 
 interface GroupLineChartGoalCardProps {
@@ -11,6 +11,38 @@ interface GroupLineChartGoalCardProps {
 }
 
 const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year, memberCount }: GroupLineChartGoalCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [displayCount, setDisplayCount] = useState(0);
+  const hasAnimated = useRef(false);
+
+  const animateCount = useCallback((target: number) => {
+    const duration = 1200;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayCount(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, []);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          animateCount(totalPushUps);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [totalPushUps, animateCount]);
   const chartData = useMemo(() => {
     const today = new Date();
     const yearStart = startOfYear(today);
@@ -67,7 +99,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   const gradientId = useMemo(() => `group-line-grad-${Math.random().toString(36).slice(2)}`, []);
 
   return (
-    <div className="card-glass rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
+    <div ref={cardRef} className="card-glass rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
       {/* Header */}
       <div className="relative z-10 flex items-start justify-between">
         <div>
@@ -75,7 +107,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
             Group Goal {year}
           </h2>
           <p className="text-4xl font-black text-foreground">
-            {totalPushUps.toLocaleString("de-DE")} PU
+            {displayCount.toLocaleString("de-DE")} PU
           </p>
           <p className="text-sm text-muted-foreground mt-1">
             of {groupGoal.toLocaleString("de-DE")} PU
