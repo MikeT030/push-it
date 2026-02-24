@@ -145,7 +145,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
               y1={toY(chartData[chartData.length - 1].total)}
               x2={toX(totalWeeks)}
               y2={toY(projectedEOY)}
-              stroke="#F59E0B" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.5" />
+              stroke="#C029DE" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.6" />
           )}
 
           {/* Ideal pace line */}
@@ -164,7 +164,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {showProjection && (
             <line
               x1={padX} y1={toY(projectedEOY)} x2={W} y2={toY(projectedEOY)}
-              stroke="#F59E0B" strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
+              stroke="#C029DE" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
           )}
 
           {/* X-axis labels (Weeks) */}
@@ -177,7 +177,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {/* Y-axis labels (Push-ups) */}
           <text x={4} y={toY(0) + 4} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">0</text>
           <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
-          {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#F59E0B" fontSize="11" textAnchor="start" opacity="0.6">{(projectedEOY / 1000).toFixed(0)}k</text>}
+          {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#C029DE" fontSize="11" textAnchor="start" opacity="0.7">{(projectedEOY / 1000).toFixed(0)}k</text>}
         </svg>
       </div>
 
@@ -201,7 +201,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
             showProjection
-              ? 'bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]'
+              ? 'bg-[#C029DE]/10 border-[#C029DE] text-[#C029DE]'
               : 'text-muted-foreground border-[#3B404F]'
           }`}
           onClick={() => setShowProjection(v => !v)}
