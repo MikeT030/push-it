@@ -92,6 +92,12 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {areaPath && <path d={areaPath} fill={`url(#${gradientId})`} />}
           {linePath && <path d={linePath} fill="none" stroke="#0ABAB5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
 
+          {/* Ideal pace line (linear from 0 to groupGoal over 52 weeks) */}
+          <line
+            x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
+            stroke="#9CA3AF" strokeWidth="1.5" opacity="0.4"
+          />
+
           <line
             x1={padX} y1={toY(groupGoal)} x2={W} y2={toY(groupGoal)}
             stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4"
