@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { startOfYear, eachWeekOfInterval, endOfWeek, min, format } from "date-fns";
+import { startOfYear, eachWeekOfInterval, endOfWeek, min, format, differenceInDays } from "date-fns";
 
 interface GroupLineChartGoalCardProps {
   totalPushUps: number;
@@ -7,15 +7,15 @@ interface GroupLineChartGoalCardProps {
   progressPercent: number;
   allEntries: { date: string; count: number; user_id: string }[];
   year: number;
+  memberCount: number;
 }
 
-const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year }: GroupLineChartGoalCardProps) => {
+const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year, memberCount }: GroupLineChartGoalCardProps) => {
   const chartData = useMemo(() => {
     const today = new Date();
     const yearStart = startOfYear(today);
     const weeks = eachWeekOfInterval({ start: yearStart, end: today }, { weekStartsOn: 1 });
 
-    // Build a date->total map from all entries
     const dateMap = new Map<string, number>();
     allEntries.forEach((e) => {
       dateMap.set(e.date, (dateMap.get(e.date) || 0) + e.count);
@@ -37,6 +37,13 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
 
     return points;
   }, [allEntries, year]);
+
+  const avgPuPerDay = useMemo(() => {
+    const today = new Date();
+    const yearStart = startOfYear(today);
+    const daysElapsed = differenceInDays(today, yearStart) + 1;
+    return daysElapsed > 0 ? Math.round(totalPushUps / daysElapsed) : 0;
+  }, [totalPushUps]);
 
   const W = 360;
   const H = 180;
@@ -73,9 +80,6 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <p className="text-sm text-muted-foreground mt-1">
             of {groupGoal.toLocaleString("de-DE")} PU
           </p>
-        </div>
-        <div className="text-right">
-          <span className="text-2xl font-bold text-[#0ABAB5]">{progressPercent.toFixed(1)}%</span>
         </div>
       </div>
 
@@ -116,6 +120,18 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <text x={4} y={toY(groupGoal / 2) + 3} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">{(groupGoal / 2 / 1000).toFixed(0)}k</text>
           <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="9" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
         </svg>
+      </div>
+
+      {/* Stats below graph */}
+      <div className="flex justify-between items-center mt-2 pt-3 border-t border-border/30">
+        <div>
+          <p className="text-xs text-muted-foreground">Group progress</p>
+          <p className="text-xl font-bold text-[#0ABAB5]">{progressPercent.toFixed(1)}%</p>
+        </div>
+        <div className="text-right">
+          <p className="text-xs text-muted-foreground">Avg. PU per day</p>
+          <p className="text-xl font-bold text-foreground">{avgPuPerDay.toLocaleString("de-DE")}</p>
+        </div>
       </div>
     </div>
   );
