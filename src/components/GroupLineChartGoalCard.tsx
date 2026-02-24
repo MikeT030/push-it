@@ -176,8 +176,8 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
 
           {/* Y-axis labels (Push-ups) */}
           <text x={4} y={toY(0) + 4} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">0</text>
-          <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
-          {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#C029DE" fontSize="11" textAnchor="start" opacity="0.7">{(projectedEOY / 1000).toFixed(0)}k</text>}
+          <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" fontWeight="bold" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
+          {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#C029DE" fontSize="11" fontWeight="bold" textAnchor="start" opacity="0.7">{(projectedEOY / 1000).toFixed(0)}k</text>}
         </svg>
       </div>
 
