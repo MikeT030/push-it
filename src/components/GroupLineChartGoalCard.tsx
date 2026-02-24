@@ -164,7 +164,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           {showProjection && (
             <line
               x1={padX} y1={toY(projectedEOY)} x2={W} y2={toY(projectedEOY)}
-              stroke="#C029DE" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
+              stroke="#C029DE" strokeWidth="1" strokeDasharray="4 4" opacity="0.6" />
           )}
 
           {/* X-axis labels (Weeks) */}
