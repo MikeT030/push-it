@@ -131,6 +131,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
         <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
         {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#C029DE" fontSize="11" textAnchor="start" opacity="0.7">{(projectedEOY / 1000).toFixed(0)}k</text>}
       </svg>
+      </div>
 
       <div className="flex justify-between items-center mt-2 pt-3 border-t border-border/30">
         <div>
