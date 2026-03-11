@@ -1,1 +1,0 @@
-ALTER TABLE public.profiles ADD COLUMN card_theme TEXT NOT NULL DEFAULT 'gold';

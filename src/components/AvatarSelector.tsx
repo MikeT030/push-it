@@ -7,7 +7,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import PlayerCard, { CARD_THEMES, CardTheme } from "@/components/PlayerCard";
+import PlayerCard from "@/components/PlayerCard";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,19 +44,17 @@ const AvatarSelector = ({
 
   const [displayName, setDisplayName] = useState("");
   const [takenAvatarIds, setTakenAvatarIds] = useState<Set<string>>(new Set());
-  const [cardTheme, setCardTheme] = useState<CardTheme>("gold");
 
   useEffect(() => {
     if (!user || !open) return;
     // Fetch display name and all taken avatars in parallel
     supabase
       .from("profiles")
-      .select("display_name, card_theme")
+      .select("display_name")
       .eq("id", user.id)
       .maybeSingle()
       .then(({ data }) => {
         if (data?.display_name) setDisplayName(data.display_name);
-        if (data?.card_theme) setCardTheme(data.card_theme as CardTheme);
       });
 
     supabase
@@ -132,33 +130,7 @@ const AvatarSelector = ({
               yearProgress={getYearProgress()}
               daysWithEntries={getDaysWithEntries().length}
               onAvatarClick={() => setActiveTab("avatar")}
-              cardTheme={cardTheme}
             />
-
-            {/* Card Theme Selector */}
-            <div className="flex items-center justify-center gap-4 mt-5">
-              {(Object.keys(CARD_THEMES) as CardTheme[]).map((themeKey) => (
-                <button
-                  key={themeKey}
-                  onClick={async () => {
-                    setCardTheme(themeKey);
-                    if (user) {
-                      await supabase
-                        .from("profiles")
-                        .update({ card_theme: themeKey } as any)
-                        .eq("id", user.id);
-                    }
-                  }}
-                  className={cn(
-                    "w-8 h-8 rounded-full transition-all duration-200 border-2",
-                    cardTheme === themeKey
-                      ? "border-white scale-110 ring-2 ring-white/30"
-                      : "border-transparent opacity-70 hover:opacity-100 hover:scale-105"
-                  )}
-                  style={{ backgroundColor: CARD_THEMES[themeKey].dotColor }}
-                />
-              ))}
-            </div>
           </div>
         ) : (
           <div className="p-4 overflow-y-auto h-[75vh]">

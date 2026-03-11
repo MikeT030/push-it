@@ -16,7 +16,7 @@ import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import PlayerCard, { CardTheme } from "@/components/PlayerCard";
+import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 
@@ -32,7 +32,6 @@ interface UserProgress {
   avatar_url?: string | null;
   streak?: number;
   avg_pushups?: number;
-  card_theme?: string;
 }
 const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
   const [selectedUser, setSelectedUser] = useState<UserProgress | null>(null);
@@ -87,7 +86,6 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
             weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
             yearProgress={selectedUser.progress_percent}
             daysWithEntries={selectedUser.days_logged}
-            cardTheme={(selectedUser.card_theme as CardTheme) || "gold"}
             onAvatarClick={
             authUser?.id === selectedUser.user_id ?
             () => {
@@ -121,13 +119,12 @@ const GroupPage = () => {
       { data: entries }] =
       await Promise.all([
       supabase.from("user_progress").select("*").order("total_pushups", { ascending: false }),
-      supabase.from("profiles").select("id, avatar_url, card_theme"),
+      supabase.from("profiles").select("id, avatar_url"),
       supabase.from("push_up_entries").select("date, user_id, count")]
       );
 
       if (!error && data) {
         const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
-        const themeMap = new Map(profiles?.map((p: any) => [p.id, p.card_theme]) || []);
         const streakMap = new Map<string, number>();
         if (entries) {
           // Group dates by user
@@ -181,8 +178,7 @@ const GroupPage = () => {
           ...u,
           avatar_url: avatarMap.get(u.user_id) || null,
           streak: streakMap.get(u.user_id) || 0,
-          avg_pushups: avgMap.get(u.user_id) || 0,
-          card_theme: themeMap.get(u.user_id) || "gold"
+          avg_pushups: avgMap.get(u.user_id) || 0
         })));
       }
       setIsLoading(false);
