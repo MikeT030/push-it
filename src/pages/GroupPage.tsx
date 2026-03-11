@@ -181,7 +181,8 @@ const GroupPage = () => {
           ...u,
           avatar_url: avatarMap.get(u.user_id) || null,
           streak: streakMap.get(u.user_id) || 0,
-          avg_pushups: avgMap.get(u.user_id) || 0
+          avg_pushups: avgMap.get(u.user_id) || 0,
+          card_theme: themeMap.get(u.user_id) || "gold"
         })));
       }
       setIsLoading(false);
