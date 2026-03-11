@@ -8,6 +8,7 @@ interface GroupLineChartGoalCardProps {
   allEntries: {date: string;count: number;user_id: string;}[];
   year: number;
   memberCount: number;
+  embedded?: boolean;
 }
 
 const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year, memberCount }: GroupLineChartGoalCardProps) => {
