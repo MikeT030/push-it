@@ -127,6 +127,7 @@ const GroupPage = () => {
 
       if (!error && data) {
         const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
+        const themeMap = new Map(profiles?.map((p: any) => [p.id, p.card_theme]) || []);
         const streakMap = new Map<string, number>();
         if (entries) {
           // Group dates by user
