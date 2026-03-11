@@ -159,23 +159,32 @@ const WeeklyOverview = () => {
       {/* Bar Chart */}
       <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET} />
 
-        <CollapsibleContent className="space-y-2">
-          {weeklyData.days.map((day) => <div key={format(day.date, "yyyy-MM-dd")} className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : day.isToday ? "bg-primary/10 border border-primary/20" : "bg-muted/30"}`}>
-              <div className="flex items-center gap-3">
-                <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
-                  {format(day.date, "EEE")}
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {format(day.date, "MMM d")}
-                </span>
-                {day.isToday && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
-                    Today
-                  </span>}
+        <CollapsibleContent className="space-y-4">
+          <div>
+            {weeklyData.days.map((day, index) => (
+              <div key={format(day.date, "yyyy-MM-dd")}>
+                <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : day.isToday ? "border border-primary/20" : ""}`}>
+                  <div className="flex items-center gap-3">
+                    <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
+                      {format(day.date, "EEE")}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {format(day.date, "MMM d")}
+                    </span>
+                    {day.isToday && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                        Today
+                      </span>}
+                  </div>
+                  <span className={`font-bold ${day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"}`}>
+                    {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count : "—"}
+                  </span>
+                </div>
+                {index < weeklyData.days.length - 1 && (
+                  <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
+                )}
               </div>
-              <span className={`font-bold ${day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"}`}>
-                {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count : "—"}
-              </span>
-            </div>)}
+            ))}
+          </div>
         </CollapsibleContent>
       </div>
     </Collapsible>;
