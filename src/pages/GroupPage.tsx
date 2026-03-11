@@ -121,7 +121,7 @@ const GroupPage = () => {
       { data: entries }] =
       await Promise.all([
       supabase.from("user_progress").select("*").order("total_pushups", { ascending: false }),
-      supabase.from("profiles").select("id, avatar_url"),
+      supabase.from("profiles").select("id, avatar_url, card_theme"),
       supabase.from("push_up_entries").select("date, user_id, count")]
       );
 
