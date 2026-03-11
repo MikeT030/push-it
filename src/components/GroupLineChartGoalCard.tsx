@@ -110,6 +110,13 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
             <stop offset="0%" stopColor="#C029DE" stopOpacity="0.35" />
             <stop offset="100%" stopColor="#C029DE" stopOpacity="0.03" />
           </linearGradient>
+          <filter id={`${gradientId}-glow-teal`}>
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
         {areaPath && <path d={areaPath} fill={`url(#${gradientId})`} />}
         {linePath && <path d={linePath} fill="none" stroke="#C029DE" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
@@ -117,7 +124,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
           <line x1={toX(chartData[chartData.length - 1].week)} y1={toY(chartData[chartData.length - 1].total)} x2={toX(totalWeeks)} y2={toY(projectedEOY)} stroke="#C029DE" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.6" />
         }
         {showIdealPace &&
-          <line x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)} stroke="#0ABAB5" strokeWidth="2" strokeDasharray="6 4" opacity="0.4" />
+          <line x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)} stroke="#0ABAB5" strokeWidth="2" strokeDasharray="6 4" opacity="0.5" filter={`url(#${gradientId}-glow-teal)`} />
         }
         <line x1={padX} y1={toY(groupGoal)} x2={W} y2={toY(groupGoal)} stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
         {showProjection &&
