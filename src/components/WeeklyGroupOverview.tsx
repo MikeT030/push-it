@@ -258,8 +258,7 @@ const WeeklyGroupOverview = () => {
               day.isToday ?
               "border border-primary/20" :
               ""}`
-              }
-              style={{ backgroundColor: day.isBeforeYearStart || day.isToday ? undefined : "#4F566A" }}>
+              }>
 
                 <div className="flex items-center gap-3">
                   <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
