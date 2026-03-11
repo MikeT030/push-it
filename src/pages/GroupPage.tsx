@@ -32,6 +32,7 @@ interface UserProgress {
   avatar_url?: string | null;
   streak?: number;
   avg_pushups?: number;
+  card_theme?: string;
 }
 const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
   const [selectedUser, setSelectedUser] = useState<UserProgress | null>(null);

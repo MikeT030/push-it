@@ -21,6 +21,7 @@ interface UserProgress {
   avatar_url?: string | null;
   streak?: number;
   avg_pushups?: number;
+  card_theme?: string;
 }
 
 interface LeaderboardPodiumProps {
