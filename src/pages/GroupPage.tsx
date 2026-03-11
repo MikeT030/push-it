@@ -435,7 +435,7 @@ const GroupPage = () => {
 
                 <div className="h-px mb-4 bg-[#3b404f]" />
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between cursor-pointer active:scale-[0.98] transition-transform" onClick={() => setShowGroupChart(v => !v)}>
                   <div>
                     <p className="text-2xl font-black line-through text-white">
                       {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
