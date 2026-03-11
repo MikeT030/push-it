@@ -111,7 +111,7 @@ const GroupPage = () => {
   const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("alltime");
   const [leaderboardView, setLeaderboardView] = useState<LeaderboardView>("podium");
   const [allEntries, setAllEntries] = useState<any[]>([]);
-  const [showGroupChart, setShowGroupChart] = useState(false);
+  const [showGroupChart, setShowGroupChart] = useState(true);
   useEffect(() => {
     const fetchGroupProgress = async () => {
       const [
