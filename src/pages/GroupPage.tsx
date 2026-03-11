@@ -462,7 +462,9 @@ const GroupPage = () => {
                   className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative"
                   onClick={() => setShowGroupChart(v => !v)}
                 >
-                  <div className="h-full bg-[#0ABAB5] absolute left-0 top-0 rounded-full transition-all duration-700" style={{
+                  <div className={`h-full bg-[#0ABAB5] absolute left-0 top-0 transition-all duration-700 ${
+                    stats.expectedProgress > stats.avgProgress ? 'rounded-full' : 'rounded-l-full'
+                  }`} style={{
                     width: `${Math.min(stats.expectedProgress, 100)}%`
                   }} />
                   {stats.avgProgress > stats.expectedProgress && (
