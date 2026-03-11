@@ -16,7 +16,6 @@ import { Switch } from "@/components/ui/switch";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import controllerIcon from "@/assets/controller.svg";
 const DailyPage = () => {
-  const [useNewLayout, setUseNewLayout] = useState(true);
   const [showGame, setShowGame] = useState(false);
   const navigate = useNavigate();
   const { avatar } = useUserAvatar();
