@@ -110,21 +110,24 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   const gradientId = useMemo(() => `group-line-grad-${Math.random().toString(36).slice(2)}`, []);
 
   return (
-    <div ref={cardRef} className="card-glass rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
-      {/* Header */}
-      <div className="relative z-10 flex items-start justify-between">
-        <div>
-          <h2 className="text-lg font-bold text-foreground mb-1">
-            Group Goal {year}
-          </h2>
-          <p className="text-4xl font-black text-foreground">
-            {displayCount.toLocaleString("de-DE")} PU
-          </p>
-          <p className="text-sm text-muted-foreground mt-1">
-            of {groupGoal.toLocaleString("de-DE")} PU
-          </p>
+  const content = (
+    <>
+      {/* Header - only show when not embedded */}
+      {!embedded && (
+        <div className="relative z-10 flex items-start justify-between">
+          <div>
+            <h2 className="text-lg font-bold text-foreground mb-1">
+              Group Goal {year}
+            </h2>
+            <p className="text-4xl font-black text-foreground">
+              {displayCount.toLocaleString("de-DE")} PU
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              of {groupGoal.toLocaleString("de-DE")} PU
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Line Chart SVG */}
       <div className="mt-4">
