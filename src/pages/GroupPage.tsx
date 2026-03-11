@@ -459,12 +459,23 @@ const GroupPage = () => {
 
                 {/* Progress bar - clickable to toggle chart */}
                 <div 
-                  className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform"
+                  className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative"
                   onClick={() => setShowGroupChart(v => !v)}
                 >
-                  <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
-                  width: `${stats.avgProgress}%`
-                }} />
+                  <div className="h-full bg-[#0ABAB5] absolute left-0 top-0 rounded-full transition-all duration-700" style={{
+                    width: `${Math.min(stats.expectedProgress, 100)}%`
+                  }} />
+                  {stats.avgProgress > stats.expectedProgress && (
+                    <div className="h-full bg-[#BA25D8] absolute top-0 rounded-r-full transition-all duration-700" style={{
+                      left: `${Math.min(stats.expectedProgress, 100)}%`,
+                      width: `${Math.min(stats.avgProgress - stats.expectedProgress, 100 - stats.expectedProgress)}%`
+                    }} />
+                  )}
+                  {stats.avgProgress < stats.expectedProgress && (
+                    <div className="h-full bg-[#BA25D8] absolute left-0 top-0 rounded-full transition-all duration-700" style={{
+                      width: `${Math.min(stats.avgProgress, 100)}%`
+                    }} />
+                  )}
                 </div>
                 <p className="text-sm text-muted-foreground mt-2 text-center">
                   {Math.round(stats.avgProgress)}% average progress
