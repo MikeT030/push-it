@@ -11,7 +11,7 @@ interface GroupLineChartGoalCardProps {
   embedded?: boolean;
 }
 
-const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year, memberCount }: GroupLineChartGoalCardProps) => {
+const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year, memberCount, embedded }: GroupLineChartGoalCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [displayCount, setDisplayCount] = useState(0);
   const hasAnimated = useRef(false);
