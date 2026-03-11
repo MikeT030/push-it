@@ -132,7 +132,33 @@ const AvatarSelector = ({
               yearProgress={getYearProgress()}
               daysWithEntries={getDaysWithEntries().length}
               onAvatarClick={() => setActiveTab("avatar")}
+              cardTheme={cardTheme}
             />
+
+            {/* Card Theme Selector */}
+            <div className="flex items-center justify-center gap-4 mt-5">
+              {(Object.keys(CARD_THEMES) as CardTheme[]).map((themeKey) => (
+                <button
+                  key={themeKey}
+                  onClick={async () => {
+                    setCardTheme(themeKey);
+                    if (user) {
+                      await supabase
+                        .from("profiles")
+                        .update({ card_theme: themeKey } as any)
+                        .eq("id", user.id);
+                    }
+                  }}
+                  className={cn(
+                    "w-8 h-8 rounded-full transition-all duration-200 border-2",
+                    cardTheme === themeKey
+                      ? "border-white scale-110 ring-2 ring-white/30"
+                      : "border-transparent opacity-70 hover:opacity-100 hover:scale-105"
+                  )}
+                  style={{ backgroundColor: CARD_THEMES[themeKey].dotColor }}
+                />
+              ))}
+            </div>
           </div>
         ) : (
           <div className="p-4 overflow-y-auto h-[75vh]">
