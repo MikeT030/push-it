@@ -256,7 +256,7 @@ const WeeklyGroupOverview = () => {
                     day.isBeforeYearStart
                       ? "opacity-40"
                       : day.isToday
-                        ? "border border-primary/20"
+                        ? ""
                         : ""
                   }`}
                 >
