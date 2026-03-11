@@ -43,7 +43,7 @@ const AvatarSelector = ({
   } = usePushUpData();
 
   const [displayName, setDisplayName] = useState("");
-  const [takenAvatarIds, setTakenAvatarIds] = useState<Set<string>>(new Set());
+  const [cardTheme, setCardTheme] = useState<CardTheme>("gold");
 
   useEffect(() => {
     if (!user || !open) return;
