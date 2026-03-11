@@ -103,7 +103,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
 
   const chartContent = (
     <>
-      <div className="rounded-xl p-[2px]" style={{ background: 'rgba(154, 170, 216, 0.12)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(154, 170, 216, 0.15)' }}>
+      <div className="rounded-xl p-[2px]" style={{ background: 'rgba(154, 170, 216, 0.06)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(154, 170, 216, 0.08)' }}>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[160px] block" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
