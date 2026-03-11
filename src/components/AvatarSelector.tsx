@@ -7,7 +7,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import PlayerCard from "@/components/PlayerCard";
+import PlayerCard, { CARD_THEMES, CardTheme } from "@/components/PlayerCard";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
