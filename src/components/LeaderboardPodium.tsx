@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogContent } from
 "@/components/ui/dialog";
-import PlayerCard from "@/components/PlayerCard";
+import PlayerCard, { CardTheme } from "@/components/PlayerCard";
 
 interface UserProgress {
   user_id: string;
@@ -21,6 +21,7 @@ interface UserProgress {
   avatar_url?: string | null;
   streak?: number;
   avg_pushups?: number;
+  card_theme?: string;
 }
 
 interface LeaderboardPodiumProps {
@@ -169,6 +170,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
             weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
             yearProgress={selectedUser.progress_percent}
             daysWithEntries={selectedUser.days_logged}
+            cardTheme={(selectedUser.card_theme as CardTheme) || "gold"}
             onAvatarClick={
             authUser?.id === selectedUser.user_id ?
             () => {
