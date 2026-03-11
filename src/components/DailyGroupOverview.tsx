@@ -248,19 +248,22 @@ const DailyGroupOverview = () => {
 
           {/* Member Contributions List */}
           {memberContributions.length > 0 ?
-          <div className="space-y-2">
+          <div>
               {memberContributions.map((member, index) =>
-            <div
-              key={member.user_id}
-              className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
-
+            <div key={member.user_id}>
+              <div
+                className="flex items-center justify-between py-2 px-3 rounded-lg">
                   <span className="text-sm text-foreground">
                     {member.display_name || "Member"}
                   </span>
                   <span className="font-bold text-foreground">
                     {member.count.toLocaleString()}
                   </span>
-                </div>
+              </div>
+              {index < memberContributions.length - 1 && (
+                <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
+              )}
+            </div>
             )}
             </div> :
 
