@@ -87,6 +87,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
             weeklyAverage={Math.round(selectedUser.avg_pushups ?? 0)}
             yearProgress={selectedUser.progress_percent}
             daysWithEntries={selectedUser.days_logged}
+            cardTheme={(selectedUser.card_theme as CardTheme) || "gold"}
             onAvatarClick={
             authUser?.id === selectedUser.user_id ?
             () => {
