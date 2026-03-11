@@ -50,11 +50,12 @@ const AvatarSelector = ({
     // Fetch display name and all taken avatars in parallel
     supabase
       .from("profiles")
-      .select("display_name")
+      .select("display_name, card_theme")
       .eq("id", user.id)
       .maybeSingle()
       .then(({ data }) => {
         if (data?.display_name) setDisplayName(data.display_name);
+        if (data?.card_theme) setCardTheme(data.card_theme as CardTheme);
       });
 
     supabase
