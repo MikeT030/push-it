@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogContent } from
 "@/components/ui/dialog";
-import PlayerCard from "@/components/PlayerCard";
+import PlayerCard, { CardTheme } from "@/components/PlayerCard";
 
 interface UserProgress {
   user_id: string;
