@@ -456,8 +456,11 @@ const GroupPage = () => {
                   </div>
                 </div>
 
-                {/* Progress bar */}
-                <div className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f]">
+                {/* Progress bar - clickable to toggle chart */}
+                <div 
+                  className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform"
+                  onClick={() => setShowGroupChart(v => !v)}
+                >
                   <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
                   width: `${stats.avgProgress}%`
                 }} />
@@ -465,16 +468,20 @@ const GroupPage = () => {
                 <p className="text-sm text-muted-foreground mt-2 text-center">
                   {Math.round(stats.avgProgress)}% average progress
                 </p>
-              </div>
 
-              {/* Group Line Chart Goal Card */}
-              <GroupLineChartGoalCard
-              totalPushUps={stats.totalPushups}
-              groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
-              progressPercent={stats.avgProgress}
-              allEntries={allEntries}
-              year={new Date().getFullYear()}
-              memberCount={users.length} />
+                {/* Expandable chart section */}
+                {showGroupChart && (
+                  <GroupLineChartGoalCard
+                    totalPushUps={stats.totalPushups}
+                    groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
+                    progressPercent={stats.avgProgress}
+                    allEntries={allEntries}
+                    year={new Date().getFullYear()}
+                    memberCount={users.length}
+                    embedded
+                  />
+                )}
+              </div>
 
 
               {/* Call to Action */}
