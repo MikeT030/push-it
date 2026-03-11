@@ -8,9 +8,10 @@ interface GroupLineChartGoalCardProps {
   allEntries: {date: string;count: number;user_id: string;}[];
   year: number;
   memberCount: number;
+  embedded?: boolean;
 }
 
-const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year, memberCount }: GroupLineChartGoalCardProps) => {
+const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allEntries, year, memberCount, embedded }: GroupLineChartGoalCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [displayCount, setDisplayCount] = useState(0);
   const hasAnimated = useRef(false);
@@ -45,6 +46,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
     observer.observe(el);
     return () => observer.disconnect();
   }, [totalPushUps, animateCount]);
+
   const chartData = useMemo(() => {
     const today = new Date();
     const yearStart = startOfYear(today);
@@ -72,13 +74,6 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
     return points;
   }, [allEntries, year]);
 
-  const avgPuPerDay = useMemo(() => {
-    const today = new Date();
-    const yearStart = startOfYear(today);
-    const daysElapsed = differenceInDays(today, yearStart) + 1;
-    return daysElapsed > 0 ? Math.round(totalPushUps / daysElapsed) : 0;
-  }, [totalPushUps]);
-
   const projectedEOY = useMemo(() => {
     const today = new Date();
     const yearStart = startOfYear(today);
@@ -99,89 +94,43 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   const toY = (val: number) => padTop + (1 - val / maxY) * (H - padTop - padBot);
 
   const linePath = chartData.length > 0 ?
-  chartData.map((p, i) => `${i === 0 ? "M" : "L"}${toX(p.week)},${toY(p.total)}`).join(" ") :
-  "";
+    chartData.map((p, i) => `${i === 0 ? "M" : "L"}${toX(p.week)},${toY(p.total)}`).join(" ") : "";
 
   const areaPath = linePath ?
-  `${linePath} L${toX(chartData[chartData.length - 1].week)},${H - padBot} L${toX(0)},${H - padBot} Z` :
-  "";
+    `${linePath} L${toX(chartData[chartData.length - 1].week)},${H - padBot} L${toX(0)},${H - padBot} Z` : "";
 
   const gradientId = useMemo(() => `group-line-grad-${Math.random().toString(36).slice(2)}`, []);
 
-  return (
-    <div ref={cardRef} className="card-glass rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
-      {/* Header */}
-      <div className="relative z-10 flex items-start justify-between">
-        <div>
-          <h2 className="text-lg font-bold text-foreground mb-1">
-            Group Goal {year}
-          </h2>
-          <p className="text-4xl font-black text-foreground">
-            {displayCount.toLocaleString("de-DE")} PU
-          </p>
-          <p className="text-sm text-muted-foreground mt-1">
-            of {groupGoal.toLocaleString("de-DE")} PU
-          </p>
-        </div>
-      </div>
+  const chartContent = (
+    <>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[160px] block" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#C029DE" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#C029DE" stopOpacity="0.03" />
+          </linearGradient>
+        </defs>
+        {areaPath && <path d={areaPath} fill={`url(#${gradientId})`} />}
+        {linePath && <path d={linePath} fill="none" stroke="#C029DE" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
+        {showProjection && chartData.length > 0 &&
+          <line x1={toX(chartData[chartData.length - 1].week)} y1={toY(chartData[chartData.length - 1].total)} x2={toX(totalWeeks)} y2={toY(projectedEOY)} stroke="#C029DE" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.6" />
+        }
+        {showIdealPace &&
+          <line x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)} stroke="#0ABAB5" strokeWidth="1" strokeDasharray="6 4" opacity="0.4" />
+        }
+        <line x1={padX} y1={toY(groupGoal)} x2={W} y2={toY(groupGoal)} stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
+        {showProjection &&
+          <line x1={padX} y1={toY(projectedEOY)} x2={W} y2={toY(projectedEOY)} stroke="#C029DE" strokeWidth="1" strokeDasharray="4 4" opacity="0.7" />
+        }
+        <text x={toX(0)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">W1</text>
+        <text x={toX(13)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W13</text>
+        <text x={toX(26)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W26</text>
+        <text x={toX(39)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W39</text>
+        <text x={toX(52)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="end" opacity="0.6">W52</text>
+        <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
+        {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#C029DE" fontSize="11" textAnchor="start" opacity="0.7">{(projectedEOY / 1000).toFixed(0)}k</text>}
+      </svg>
 
-      {/* Line Chart SVG */}
-      <div className="mt-4">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[160px] block" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#C029DE" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#C029DE" stopOpacity="0.03" />
-            </linearGradient>
-          </defs>
-
-          {areaPath && <path d={areaPath} fill={`url(#${gradientId})`} />}
-          {linePath && <path d={linePath} fill="none" stroke="#C029DE" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
-
-          {/* Projected pace line */}
-          {showProjection && chartData.length > 0 &&
-          <line
-            x1={toX(chartData[chartData.length - 1].week)}
-            y1={toY(chartData[chartData.length - 1].total)}
-            x2={toX(totalWeeks)}
-            y2={toY(projectedEOY)}
-            stroke="#C029DE" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.6" />
-          }
-
-          {/* Ideal pace line */}
-          {showIdealPace &&
-          <line
-            x1={toX(0)} y1={toY(0)} x2={toX(totalWeeks)} y2={toY(groupGoal)}
-            stroke="#0ABAB5" strokeWidth="1" strokeDasharray="6 4" opacity="0.4" />
-          }
-
-          {/* Goal line */}
-          <line
-            x1={padX} y1={toY(groupGoal)} x2={W} y2={toY(groupGoal)}
-            stroke="#0ABAB5" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
-
-          {/* Projected EOY line */}
-          {showProjection &&
-          <line
-            x1={padX} y1={toY(projectedEOY)} x2={W} y2={toY(projectedEOY)}
-            stroke="#C029DE" strokeWidth="1" strokeDasharray="4 4" opacity="0.7" />
-          }
-
-          {/* X-axis labels (Weeks) */}
-          <text x={toX(0)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">W1</text>
-          <text x={toX(13)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W13</text>
-          <text x={toX(26)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W26</text>
-          <text x={toX(39)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="middle" opacity="0.6">W39</text>
-          <text x={toX(52)} y={H - 2} fill="#9CA3AF" fontSize="11" textAnchor="end" opacity="0.6">W52</text>
-
-          {/* Y-axis labels (Push-ups) */}
-          
-          <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
-          {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#C029DE" fontSize="11" textAnchor="start" opacity="0.7">{(projectedEOY / 1000).toFixed(0)}k</text>}
-        </svg>
-      </div>
-
-      {/* Stats below graph */}
       <div className="flex justify-between items-center mt-2 pt-3 border-t border-border/30">
         <div>
           <p className="text-xs text-muted-foreground">Group progress</p>
@@ -189,29 +138,45 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
         </div>
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
-          showIdealPace ?
-          'bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]' :
-          'text-muted-foreground border-[#3B404F]'}`
-          }
+            showIdealPace ? 'bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]' : 'text-muted-foreground border-[#3B404F]'}`}
           onClick={() => setShowIdealPace((v) => !v)}>
-
           <p className="text-[10px] leading-tight">Exp. PU (EOY)</p>
           <p className="text-base font-bold leading-snug">{groupGoal.toLocaleString("de-DE")}</p>
         </button>
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
-          showProjection ?
-          'bg-[#C029DE]/10 border-[#C029DE] text-[#C029DE]' :
-          'text-muted-foreground border-[#3B404F]'}`
-          }
+            showProjection ? 'bg-[#C029DE]/10 border-[#C029DE] text-[#C029DE]' : 'text-muted-foreground border-[#3B404F]'}`}
           onClick={() => setShowProjection((v) => !v)}>
-
           <p className="text-[10px] leading-tight">Proj. PU (EOY)</p>
           <p className="text-base font-bold leading-snug">{projectedEOY.toLocaleString("de-DE")}</p>
         </button>
       </div>
-    </div>);
+    </>
+  );
 
+  if (embedded) {
+    return (
+      <div ref={cardRef} className="mt-4 animate-fade-in">
+        <div className="h-px bg-border/30 mb-2" />
+        {chartContent}
+      </div>
+    );
+  }
+
+  return (
+    <div ref={cardRef} className="card-glass rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
+      <div className="relative z-10 flex items-start justify-between">
+        <div>
+          <h2 className="text-lg font-bold text-foreground mb-1">Group Goal {year}</h2>
+          <p className="text-4xl font-black text-foreground">{displayCount.toLocaleString("de-DE")} PU</p>
+          <p className="text-sm text-muted-foreground mt-1">of {groupGoal.toLocaleString("de-DE")} PU</p>
+        </div>
+      </div>
+      <div className="mt-4">
+        {chartContent}
+      </div>
+    </div>
+  );
 };
 
 export default GroupLineChartGoalCard;
