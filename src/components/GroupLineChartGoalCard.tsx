@@ -103,7 +103,8 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
 
   const chartContent = (
     <>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[160px] block rounded-xl" preserveAspectRatio="xMidYMid meet" style={{ background: 'rgba(154, 170, 216, 0.12)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(154, 170, 216, 0.15)' }}>
+      <div className="rounded-xl p-[2px]" style={{ background: 'rgba(154, 170, 216, 0.12)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(154, 170, 216, 0.15)' }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[160px] block" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#C029DE" stopOpacity="0.35" />
@@ -130,6 +131,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
         <text x={4} y={toY(groupGoal) + 10} fill="#9CA3AF" fontSize="11" textAnchor="start" opacity="0.6">{(groupGoal / 1000).toFixed(0)}k</text>
         {showProjection && <text x={4} y={toY(projectedEOY) + 10} fill="#C029DE" fontSize="11" textAnchor="start" opacity="0.7">{(projectedEOY / 1000).toFixed(0)}k</text>}
       </svg>
+      </div>
 
       <div className="flex justify-between items-center mt-2 pt-3 border-t border-border/30">
         <div>
