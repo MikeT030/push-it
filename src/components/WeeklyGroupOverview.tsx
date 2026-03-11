@@ -256,8 +256,8 @@ const WeeklyGroupOverview = () => {
               day.isBeforeYearStart ?
               "opacity-40" :
               day.isToday ?
-              "bg-primary/10 border border-primary/20" :
-              "bg-muted/30"}`
+              "border border-primary/20" :
+              ""}`
               }>
 
                 <div className="flex items-center gap-3">
