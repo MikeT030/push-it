@@ -171,7 +171,7 @@ const DailyPage = () => {
             <div className="flex-1" />
             <div className="flex-1 flex justify-end">
               <button
-                onClick={() => setShowGame(true)}
+                onClick={() => setActiveGame("select")}
                 className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
                 aria-label="Open mini game"
               >
