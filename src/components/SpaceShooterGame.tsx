@@ -97,11 +97,11 @@ const loadShipImg = () => {
 loadShipImg();
 
 const SPACE_BG_PATHS = [
-  "/images/space-bg.png",
-  "/images/space-bg-2.png",
-  "/images/space-bg-3.png",
-  "/images/space-bg-4.png",
-  "/images/space-bg-5.png",
+  "/images/space-bg.jpg",
+  "/images/space-bg-2.jpg",
+  "/images/space-bg-3.jpg",
+  "/images/space-bg-4.jpg",
+  "/images/space-bg-5.jpg",
 ];
 const spaceBgImgs: HTMLImageElement[] = [];
 const loadSpaceBgs = () => {
