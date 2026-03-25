@@ -56,21 +56,8 @@ interface Wingman {
 
 const COLORS = ["#ff6b6b", "#feca57", "#48dbfb", "#ff9ff3", "#54a0ff", "#5f27cd", "#01a3a4", "#f368e0"];
 
-const ENEMY_WORDS = [
-  "Product-Market Fit", "MVP", "Value Proposition", "Jobs to be Done", "Pivot",
-  "Success Metrics", "KPIs", "Information Architecture", "User Flow", "Edge Case",
-  "Design Debt", "Design System", "Atomic Design", "Fidelity", "Affordance",
-  "Heuristics", "Responsive Design", "Accessibility", "Micro-interactions",
-  "White Space", "Visual Hierarchy", "Cognitive Load", "Mental Model", "Friction",
-  "A/B Testing", "Dark Patterns", "Empathy Map", "Usability Testing", "Persona",
-  "Gamification", "Onboarding", "ROI", "B2B", "B2C", "SaaS", "CAC", "LTV",
-  "Burn Rate", "Churn Rate", "TAM", "Stakeholder Management",
-  "Go-to-Market Strategy", "North Star Metric", "Value Stream Mapping",
-  "MoSCoW Method", "OKRs", "Scalability",
-  "AI", "Vibe Coding", "Agents", "Agentic", "10x", "Fast", "Faster",
-  "Workflows", "AI Infrastructure",
-];
-const randomWord = () => ENEMY_WORDS[Math.floor(Math.random() * ENEMY_WORDS.length)];
+const ENEMY_WORDS: string[] = [];
+const randomWord = () => "";
 
 // ─── Drawing helpers ─────────────────────────────────────────────────────────
 
