@@ -17,7 +17,7 @@ import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
 import controllerIcon from "@/assets/controller.svg";
 const DailyPage = () => {
-  const [showGame, setShowGame] = useState(false);
+  
   const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
   const navigate = useNavigate();
   const { avatar } = useUserAvatar();
