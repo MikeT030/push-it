@@ -184,7 +184,7 @@ const drawShip = (ctx: CanvasRenderingContext2D, x: number, y: number, glowTimer
   ctx.restore();
 
   ctx.save();
-  if (shipImg && shipImg.complete) {
+  if (shipImg && shipImg.complete && shipImg.naturalWidth > 0) {
     const drawSize = SHIP_SIZE * 1.1;
     ctx.drawImage(shipImg, x - drawSize / 2, y - drawSize / 2, drawSize, drawSize);
   } else {
