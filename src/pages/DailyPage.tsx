@@ -273,7 +273,7 @@ const DailyPage = () => {
 
         {/* Calendar Card */}
         {isCalendarOpen && (
-        <div className={`card-glass rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
+        <div className={`card-glass rounded-2xl rounded-t-none border-t-0 p-5 pt-2 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
         animationDelay: "0.1s"
       }}>
           {/* Month Navigation */}
