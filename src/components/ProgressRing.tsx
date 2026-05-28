@@ -114,17 +114,33 @@ const ProgressRing = ({
           } : undefined}>
 
           <div className="flex flex-col items-center">
-            <span
-              className="text-2xl font-bold"
-              style={{ color: '#ffffff' }}>
+            {!topBadge && (
+              <>
+                <span
+                  className="text-2xl font-bold"
+                  style={{ color: '#ffffff' }}>
 
-              {Math.round(progress)}%
-            </span>
-            <span className="text-[10px] font-medium text-primary">
-              Push it
-            </span>
+                  {Math.round(progress)}%
+                </span>
+                <span className="text-[10px] font-medium text-primary">
+                  Push it
+                </span>
+              </>
+            )}
           </div>
         </div>
+
+        {topBadge !== undefined && topBadge !== null && (
+          <div
+            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full px-2.5 py-0.5 text-xs font-bold text-white whitespace-nowrap"
+            style={{
+              top: 0,
+              backgroundColor: '#0F1922',
+              border: `1px solid ${progress >= 200 ? '#C029DE' : progress > 100 ? '#7036FF' : '#0ABAB5'}`
+            }}>
+            {topBadge}
+          </div>
+        )}
       </div>
       
       <BrickBreakerGame isOpen={showGame} onClose={() => setShowGame(false)} />
