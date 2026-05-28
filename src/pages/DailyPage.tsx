@@ -221,6 +221,10 @@ const DailyPage = () => {
           className="w-full card-glass rounded-2xl p-3 py-8 mb-3 animate-slide-up transition-opacity hover:opacity-90"
           aria-label="Toggle calendar"
         >
+          <div className="flex items-center justify-between mb-3 px-1">
+            <span className="text-sm font-medium text-muted-foreground">Calendar</span>
+            <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${isCalendarOpen ? "rotate-180" : ""}`} />
+          </div>
           <div className="grid grid-cols-3 gap-2">
             {[-1, 0, 1].map((offset) => {
               const day = addDays(new Date(), offset);
