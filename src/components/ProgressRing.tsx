@@ -114,11 +114,9 @@ const ProgressRing = ({
           } : undefined}>
 
           <div className="flex flex-col items-center">
-            {!topBadge &&
-              <span className="text-[10px] font-medium text-primary">
-                Push it
-              </span>
-            }
+            <span className="text-[10px] font-medium text-primary">
+              Push it
+            </span>
           </div>
         </div>
 
