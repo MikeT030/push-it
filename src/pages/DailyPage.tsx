@@ -181,8 +181,8 @@ const DailyPage = () => {
           </div>
 
           <div className="pb-[12px] mb-[20px]">
-            <div className="flex items-start justify-between">
-              <div className="flex flex-col items-start">
+            <div className="flex items-start justify-center gap-8">
+              <div className="flex flex-col items-end text-right">
                 <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
                 <div className="flex items-baseline gap-2">
                   {isEditable ?
@@ -193,7 +193,7 @@ const DailyPage = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">of {dailyTarget} target</p>
               </div>
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-start text-left">
                 <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
                 <p className="text-3xl font-black text-[#a7a8aa]">{yesterdayCount}</p>
               </div>
