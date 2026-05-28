@@ -176,8 +176,19 @@ const TotalPage = () => {
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
 
           <div className="h-px mb-4 bg-[#3b404f]" />
-          
+
+          {/* Progress bar */}
+          <div className="mb-2 h-3 rounded-full overflow-hidden bg-[#3b404f]">
+            <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
+              width: `${yearProgress}%`
+            }} />
+          </div>
+          <p className="text-sm text-muted-foreground mb-4 text-center">
+            Day {stats.daysElapsed} of 365
+          </p>
+
           <div className="flex items-center gap-6">
+
 
             
             <div className="flex-1 flex items-start gap-8">
