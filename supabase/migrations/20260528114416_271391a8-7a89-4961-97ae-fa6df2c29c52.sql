@@ -1,0 +1,1 @@
+ALTER VIEW public.user_progress SET (security_invoker = true);
