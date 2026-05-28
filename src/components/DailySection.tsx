@@ -22,7 +22,8 @@ const DailySection = () => {
     canEditDate,
     dailyTarget,
     isLoaded,
-    getCurrentStreak
+    getCurrentStreak,
+    getTotalPushUps
   } = usePushUpData();
 
   const currentCount = isLoaded ? getEntryForDate(selectedDate) : 0;
