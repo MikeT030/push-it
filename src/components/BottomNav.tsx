@@ -1,4 +1,4 @@
-import { Target, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGame } from "@/contexts/GameContext";
 
