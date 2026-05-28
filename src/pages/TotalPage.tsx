@@ -146,30 +146,6 @@ const TotalPage = () => {
           </p>
         </header>
 
-        {/* Stats Strip - Horizontally Scrollable */}
-        <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-          {statCards.map((stat, index) => {
-            const Icon = stat.icon;
-            const isClickable = stat.label === "Today";
-            return <div key={stat.label} className={`flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up ${isClickable ? "cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all border-light-reflection" : ""}`} style={{
-              minWidth: "140px",
-              animationDelay: `${0.1 + index * 0.05}s`
-            }} onClick={isClickable ? () => navigate("/daily") : undefined}>
-                <div className="flex items-center gap-2 mb-3">
-                  {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
-                  <p className="text-sm text-muted-foreground font-medium">
-                    {stat.label}
-                  </p>
-                </div>
-                <p className="text-[1.625rem] font-black text-foreground">
-                  {stat.value}
-                  <span className="text-base font-medium text-muted-foreground ml-1">
-                    {stat.unit}
-                  </span>
-                </p>
-              </div>;
-          })}
-        </div>
 
         {/* Main Progress Card */}
         <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up">
