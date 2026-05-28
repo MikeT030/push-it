@@ -206,13 +206,12 @@ const DailyPage = () => {
               <button onClick={() => isEditable && adjustCount(10)} disabled={!isEditable} className="disabled:opacity-50">
                 <ProgressRing progress={progress} size={138} strokeWidth={14} enableGame={false} enableAnimation={false} enableOuterGlow={true} topBadge={currentCount} />
               </button>
+              <button onClick={handleShare} aria-label="Share progress" className="absolute left-1/2 translate-x-[calc(69px+1rem+22px+30px-44px)] w-11 h-11 rounded-full border border-[#0ABAB5] bg-[#0ABAB5]/10 text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white transition-colors flex items-center justify-center">
+                <ShareIcon size={16} />
+              </button>
             </div>
           </div>
 
-          <Button variant="outline" onClick={handleShare} className="w-full h-12 mt-6 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
-            <ShareIcon className="mr-2" size={16} />
-            Share Progress
-          </Button>
         </div>
 
         {/* Calendar Card */}
