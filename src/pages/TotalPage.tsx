@@ -218,7 +218,7 @@ const TotalPage = () => {
 
         {/* Stats Strip - Horizontally Scrollable */}
         <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-          {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining").map((stat, index) => {
+          {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining" && s.label !== "Average" && s.label !== "Streak").map((stat, index) => {
             const Icon = stat.icon;
             return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{
               minWidth: "140px",
