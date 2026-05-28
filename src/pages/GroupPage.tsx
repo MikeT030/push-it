@@ -296,7 +296,7 @@ const GroupPage = () => {
 
         {/* Header */}
         <header className="mb-6 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">Group</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">We Push</h1>
           <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mt-1">
             {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
           </p>
@@ -420,7 +420,7 @@ const GroupPage = () => {
               animationDelay: "0.15s"
             }}>
                 <h2 className="text-lg font-bold text-foreground mb-4">
-                  Group Goal {new Date().getFullYear()}
+                  We Push Goal {new Date().getFullYear()}
                 </h2>
 
                 <div className="h-px mb-4 bg-[#3b404f]" />

@@ -184,7 +184,7 @@ const WeeklyGroupOverview = () => {
       <div className="card-glass rounded-2xl p-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
         <CollapsibleTrigger asChild>
           <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
-            <h2 className="text-lg font-bold text-foreground">Weekly Group</h2>
+            <h2 className="text-lg font-bold text-foreground">Weekly We Push</h2>
             {isOpen ?
             <ChevronDown className="w-5 h-5 text-muted-foreground" /> :
 
@@ -232,7 +232,7 @@ const WeeklyGroupOverview = () => {
         <div className="flex items-center justify-between p-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setIsOpen((prev) => !prev)}>
           <div>
             <p className="text-2xl font-black text-foreground">{weeklyData.total.toLocaleString()}</p>
-            <p className="text-sm text-muted-foreground">group push-ups</p>
+            <p className="text-sm text-muted-foreground">we push push-ups</p>
           </div>
           <div className="text-right">
             <p className="text-2xl font-bold text-white">
