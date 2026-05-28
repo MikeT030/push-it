@@ -178,7 +178,7 @@ const TotalPage = () => {
           <div className="h-px mb-4 bg-[#3b404f]" />
           
           <div className="flex items-center gap-6">
-            <ProgressRing progress={yearProgress} size={140} strokeWidth={14} enableAnimation={false} />
+
             
             <div className="flex-1">
               <div className="mb-4">
