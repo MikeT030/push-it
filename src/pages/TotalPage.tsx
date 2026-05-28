@@ -160,6 +160,36 @@ const TotalPage = () => {
           <DailySection />
         </div>
 
+        {/* Weekly Overview & Goal Cards Grid */}
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          {/* Weekly Overview Card */}
+          <WeeklyOverview />
+        </div>
+
+        {/* Stats Strip - Horizontally Scrollable */}
+        <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining" && s.label !== "Average" && s.label !== "Streak").map((stat, index) => {
+            const Icon = stat.icon;
+            return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{
+              minWidth: "140px",
+              animationDelay: `${0.1 + index * 0.05}s`
+            }}>
+                <div className="flex items-center gap-2 mb-3">
+                  {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
+                  <p className="text-sm text-muted-foreground font-medium">
+                    {stat.label}
+                  </p>
+                </div>
+                <p className="text-[1.625rem] font-black text-foreground">
+                  {stat.value}
+                  <span className="text-base font-medium text-muted-foreground ml-1">
+                    {stat.unit}
+                  </span>
+                </p>
+              </div>;
+          })}
+        </div>
+
         {/* Main Progress Card */}
         <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up">
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
@@ -177,9 +207,6 @@ const TotalPage = () => {
           </p>
 
           <div className="flex items-center gap-6">
-
-
-            
             <div className="flex-1 flex items-start gap-8">
               <div>
                 <p className="text-sm text-muted-foreground">Completed</p>
@@ -223,81 +250,7 @@ const TotalPage = () => {
           </div>
         </div>
 
-        {/* Stats Strip - Horizontally Scrollable */}
-        <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-          {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining" && s.label !== "Average" && s.label !== "Streak").map((stat, index) => {
-            const Icon = stat.icon;
-            return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{
-              minWidth: "140px",
-              animationDelay: `${0.1 + index * 0.05}s`
-            }}>
-                <div className="flex items-center gap-2 mb-3">
-                  {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
-                  <p className="text-sm text-muted-foreground font-medium">
-                    {stat.label}
-                  </p>
-                </div>
-                <p className="text-[1.625rem] font-black text-foreground">
-                  {stat.value}
-                  <span className="text-base font-medium text-muted-foreground ml-1">
-                    {stat.unit}
-                  </span>
-                </p>
-              </div>;
-          })}
-        </div>
 
-        {/* Weekly Overview & Goal Cards Grid */}
-        <div className="grid grid-cols-2 gap-4 mt-6">
-          {/* Weekly Overview Card */}
-          <WeeklyOverview />
-
-          {/* Goal Card - hidden */}
-          {false && (
-          <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up" style={{
-          animationDelay: "0.35s"
-        }}>
-          <h2 className="text-lg font-bold text-foreground mb-4">
-            You Push Goal {new Date().getFullYear()}
-          </h2>
-
-          <div className="h-px mb-4 bg-[#3b404f]" />
-          
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-2xl font-black line-through text-white">
-                {yearlyGoal.toLocaleString()}
-              </p>
-              <p className="text-4xl font-black text-gradient">
-                {remaining.toLocaleString()}
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">
-                push-ups remaining
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-2xl font-bold text-foreground">
-                {dailyTarget}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                per day target
-              </p>
-            </div>
-          </div>
-
-          {/* Progress bar */}
-          <div className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f]">
-            <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
-              width: `${yearProgress}%`
-            }} />
-          </div>
-          <p className="text-sm text-muted-foreground mt-2 text-center">
-            Day {stats.daysElapsed} of 365
-          </p>
-        </div>
-        )}
-
-        </div>
       </div>
     </div>;
 };
