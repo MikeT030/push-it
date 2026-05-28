@@ -148,6 +148,11 @@ const TotalPage = () => {
         </header>
 
 
+        {/* Daily Push-ups + Calendar */}
+        <div className="mt-6">
+          <DailySection />
+        </div>
+
         {/* Main Progress Card */}
         <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up">
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
