@@ -125,7 +125,13 @@ const TotalPage = () => {
 
   return <div className="min-h-screen bg-background pb-32 safe-top">
       {/* Animated Top Gradient */}
-      <div className="absolute top-0 left-0 right-0 h-64 opacity-80 blur-3xl pointer-events-none animated-aurora" />
+      <div
+        className="absolute top-0 left-0 right-0 h-80 opacity-80 blur-3xl pointer-events-none animated-aurora"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+        }}
+      />
 
       
       <div className="relative max-w-lg mx-auto px-6 py-8">
