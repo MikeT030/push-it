@@ -181,8 +181,8 @@ const DailyPage = () => {
           </div>
 
           <div className="pb-[12px] mb-[20px]">
-            <div className="flex items-start justify-center gap-8">
-              <div className="flex flex-col items-end text-right">
+            <div className="relative flex items-start justify-center">
+              <div className="flex flex-col items-center text-center">
                 <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
                 <div className="flex items-baseline gap-2">
                   <span className="text-lg font-bold text-primary">{Math.round(progress)}%</span>
@@ -193,7 +193,7 @@ const DailyPage = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">of {dailyTarget} target</p>
               </div>
-              <div className="flex flex-col items-start text-left">
+              <div className="absolute right-0 top-0 flex flex-col items-end text-right">
                 <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
                 <p className="font-black text-[#a7a8aa] text-4xl">{yesterdayCount}</p>
               </div>
