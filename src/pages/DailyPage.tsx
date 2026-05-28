@@ -184,10 +184,13 @@ const DailyPage = () => {
             <div className="flex items-start justify-between">
               <div className="flex flex-col items-start">
                 <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
-                {isEditable ?
-                  <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-32 focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" /> :
-                  <p className="text-5xl font-black text-foreground">{currentCount}</p>
-                }
+                <div className="flex items-baseline gap-2">
+                  {isEditable ?
+                    <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-[1.2ch] min-w-[1.2ch] focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={{ width: `${Math.max((inputValue || "0").length, 1)}ch` }} /> :
+                    <p className="text-5xl font-black text-foreground">{currentCount}</p>
+                  }
+                  <span className="text-lg font-bold text-primary">{Math.round(progress)}%</span>
+                </div>
                 <p className="text-sm text-muted-foreground mt-1">of {dailyTarget} target</p>
               </div>
               <div className="flex flex-col items-end">
