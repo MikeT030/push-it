@@ -318,6 +318,7 @@ const DailyPage = () => {
           })}
           </div>
         </div>
+        )}
 
         {/* Weekly Overview */}
         <div className={`mt-6 mb-6 transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
