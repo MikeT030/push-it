@@ -215,45 +215,51 @@ const DailyPage = () => {
 
         </div>
 
-        {/* Mini Calendar - 3 day strip */}
-        <button
-          onClick={() => setIsCalendarOpen((v) => !v)}
-          className="w-full card-glass rounded-2xl p-3 py-8 mb-3 animate-slide-up transition-opacity hover:opacity-90"
-          aria-label="Toggle calendar"
-        >
-          <div className="flex items-center justify-between mb-3 px-1">
+        {/* Mini Calendar - vertically scrollable day list */}
+        <div className="w-full card-glass rounded-2xl p-3 mb-3 animate-slide-up">
+          <button
+            onClick={() => setIsCalendarOpen((v) => !v)}
+            className="w-full flex items-center justify-between mb-3 px-1"
+            aria-label="Toggle calendar"
+          >
             <h2 className="text-lg font-bold text-foreground">Calendar</h2>
             {isCalendarOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
+          </button>
+          <div
+            className="overflow-y-auto snap-y snap-mandatory"
+            style={{ height: "calc(3 * 48px + 2 * 8px)" }}
+          >
+            <div className="flex flex-col gap-2">
+              {Array.from({ length: 365 }, (_, i) => {
+                const day = subDays(new Date(), i);
+                const isSelected = isSameDay(day, selectedDate);
+                const isTodayDate = isToday(day);
+                const dayProgress = getDailyProgress(day);
+                const dayCount = getEntryForDate(day);
+                const hasEntry = dayCount > 0;
+                let bg = "";
+                let text = "text-foreground";
+                if (hasEntry) {
+                  if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
+                  else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; text = "text-white"; }
+                  else { bg = "bg-primary/20"; text = "text-primary"; }
+                }
+                if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
+                return (
+                  <div
+                    key={i}
+                    onClick={() => setSelectedDate(day)}
+                    className={`flex items-center justify-between rounded-xl px-4 h-12 cursor-pointer transition-all snap-start ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
+                  >
+                    <span className="text-xs uppercase opacity-70">{format(day, "EEE")}</span>
+                    <span className="text-lg font-bold">{format(day, "d MMM")}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            {[-1, 0, 1].map((offset) => {
-              const day = addDays(new Date(), offset);
-              const isSelected = isSameDay(day, selectedDate);
-              const isTodayDate = isToday(day);
-              const dayProgress = getDailyProgress(day);
-              const dayCount = getEntryForDate(day);
-              const hasEntry = dayCount > 0;
-              let bg = "";
-              let text = "text-foreground";
-              if (hasEntry) {
-                if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
-                else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; text = "text-white"; }
-                else { bg = "bg-primary/20"; text = "text-primary"; }
-              }
-              if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
-              return (
-                <div
-                  key={offset}
-                  onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
-                  className={`flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
-                >
-                  <span className="text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
-                  <span className="text-lg font-bold">{format(day, "d")}</span>
-                </div>
-              );
-            })}
-          </div>
-        </button>
+        </div>
+
 
         {/* Calendar Card */}
         {isCalendarOpen && (
