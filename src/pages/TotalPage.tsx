@@ -148,7 +148,7 @@ const TotalPage = () => {
 
         {/* Header */}
         <header className="mb-2 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">You</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">You Push</h1>
           <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide mt-1">
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
