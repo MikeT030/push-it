@@ -14,9 +14,8 @@ const BottomNav = () => {
   const { isGameActive } = useGame();
 
   const tabs = [
-    { id: "total", label: "You", icon: Target, path: "/" },
-    { id: "group", label: "Group", icon: Users, path: "/group" },
-    { id: "daily", label: "Push", icon: MuscleIcon, path: "/daily" },
+    { id: "total", label: "You Push", icon: MuscleIcon, path: "/" },
+    { id: "group", label: "We Push", icon: Users, path: "/group" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
