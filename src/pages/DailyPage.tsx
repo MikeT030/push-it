@@ -230,7 +230,7 @@ const DailyPage = () => {
         {/* Mini Calendar - 3 day strip */}
         <button
           onClick={() => setIsCalendarOpen((v) => !v)}
-          className="w-full card-glass rounded-2xl p-3 py-8 mb-3 animate-slide-up transition-opacity hover:opacity-90"
+          className={`w-full card-glass rounded-2xl p-3 py-8 animate-slide-up transition-opacity hover:opacity-90 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-3"}`}
           aria-label="Toggle calendar"
         >
           <div className="flex items-center justify-between mb-3 px-1">
@@ -273,7 +273,7 @@ const DailyPage = () => {
 
         {/* Calendar Card */}
         {isCalendarOpen && (
-        <div className={`card-glass rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
+        <div className={`card-glass rounded-2xl rounded-t-none border-t-0 p-5 pt-2 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
         animationDelay: "0.1s"
       }}>
           {/* Month Navigation */}
