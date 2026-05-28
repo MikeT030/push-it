@@ -194,7 +194,7 @@ const DailyPage = () => {
               </div>
               <div className="absolute right-0 top-0 flex flex-col items-end text-right">
                 <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
-                <p className="font-black text-[#a7a8aa] text-4xl">{yesterdayCount}</p>
+                <p className="font-black text-[#a7a8aa] text-2xl">{yesterdayCount}</p>
               </div>
             </div>
             <div className="relative flex items-center justify-center mt-[20px]">
