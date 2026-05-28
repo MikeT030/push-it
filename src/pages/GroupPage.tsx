@@ -420,7 +420,7 @@ const GroupPage = () => {
               animationDelay: "0.15s"
             }}>
                 <h2 className="text-lg font-bold text-foreground mb-4">
-                  Group Goal {new Date().getFullYear()}
+                  We Push Goal {new Date().getFullYear()}
                 </h2>
 
                 <div className="h-px mb-4 bg-[#3b404f]" />
