@@ -245,7 +245,8 @@ const TotalPage = () => {
           {/* Weekly Overview Card */}
           <WeeklyOverview />
 
-          {/* Goal Card */}
+          {/* Goal Card - hidden */}
+          {false && (
           <div className="col-span-2 bg-card rounded-2xl p-6 animate-slide-up" style={{
           animationDelay: "0.35s"
         }}>
@@ -287,6 +288,7 @@ const TotalPage = () => {
             Day {stats.daysElapsed} of 365
           </p>
         </div>
+        )}
 
         </div>
       </div>
