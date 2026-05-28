@@ -13,7 +13,7 @@ const DailySection = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(true);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const { isGameActive } = useGame();
   const {
     getEntryForDate,
