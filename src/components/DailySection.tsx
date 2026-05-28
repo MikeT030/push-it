@@ -158,6 +158,35 @@ const DailySection = () => {
             </button>
           </div>
         </div>
+
+        {/* Key Figures: Average & Streak */}
+        {(() => {
+          const today = new Date();
+          const daysElapsed = differenceInDays(today, startOfYear(today)) + 1;
+          const total = getTotalPushUps();
+          const avg = daysElapsed > 0 ? Math.round(total / daysElapsed) : 0;
+          const streak = getCurrentStreak();
+          const items = [
+            { label: "Average", value: avg, unit: "/day", Icon: TrendingUp, color: "text-primary" },
+            { label: "Streak", value: streak, unit: "days", Icon: Flame, color: "text-[#C029DE]" },
+          ];
+          return (
+            <div className="flex gap-3 pt-4 mt-2 border-t border-[#3B404F]">
+              {items.map((s) => (
+                <div key={s.label} className="flex-1 flex items-center gap-2">
+                  <s.Icon className={`w-5 h-5 ${s.color}`} />
+                  <div>
+                    <p className="text-xs text-muted-foreground font-medium">{s.label}</p>
+                    <p className="text-xl font-black text-foreground">
+                      {s.value}
+                      <span className="text-sm font-medium text-muted-foreground ml-1">{s.unit}</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
       </div>
 
       {/* Mini Calendar */}
@@ -248,35 +277,6 @@ const DailySection = () => {
           </div>
         </div>
       )}
-
-      {/* Key Figures: Average & Streak */}
-      {(() => {
-        const today = new Date();
-        const daysElapsed = differenceInDays(today, startOfYear(today)) + 1;
-        const total = getTotalPushUps();
-        const avg = daysElapsed > 0 ? Math.round(total / daysElapsed) : 0;
-        const streak = getCurrentStreak();
-        const items = [
-          { label: "Average", value: avg, unit: "/day", Icon: TrendingUp, color: "text-primary" },
-          { label: "Streak", value: streak, unit: "days", Icon: Flame, color: "text-[#C029DE]" },
-        ];
-        return (
-          <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-            {items.map((s, i) => (
-              <div key={s.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{ minWidth: "140px", animationDelay: `${0.1 + i * 0.05}s` }}>
-                <div className="flex items-center gap-2 mb-3">
-                  <s.Icon className={`w-5 h-5 ${s.color}`} />
-                  <p className="text-sm text-muted-foreground font-medium">{s.label}</p>
-                </div>
-                <p className="text-[1.625rem] font-black text-foreground">
-                  {s.value}
-                  <span className="text-base font-medium text-muted-foreground ml-1">{s.unit}</span>
-                </p>
-              </div>
-            ))}
-          </div>
-        );
-      })()}
     </>
   );
 };
