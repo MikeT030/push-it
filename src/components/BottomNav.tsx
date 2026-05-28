@@ -22,8 +22,8 @@ const BottomNav = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 safe-bottom transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
-      <div className="nav-pill px-2 py-2 flex items-center gap-1 shadow-2xl shadow-background/50">
+    <nav className={`fixed bottom-0 left-0 right-0 z-40 transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
+      <div className="nav-bar px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] flex items-center justify-around gap-1">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = isActive(tab.path);
