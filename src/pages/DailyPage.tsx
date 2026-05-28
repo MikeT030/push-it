@@ -218,7 +218,7 @@ const DailyPage = () => {
         {/* Mini Calendar - 3 day strip */}
         <button
           onClick={() => setIsCalendarOpen((v) => !v)}
-          className="w-full card-glass rounded-2xl p-3 mb-3 animate-slide-up transition-opacity hover:opacity-90"
+          className="w-full card-glass rounded-2xl p-3 py-8 mb-3 animate-slide-up transition-opacity hover:opacity-90"
           aria-label="Toggle calendar"
         >
           <div className="grid grid-cols-3 gap-2">
