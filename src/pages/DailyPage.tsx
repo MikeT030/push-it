@@ -215,7 +215,44 @@ const DailyPage = () => {
 
         </div>
 
+        {/* Mini Calendar - 3 day strip */}
+        <button
+          onClick={() => setIsCalendarOpen((v) => !v)}
+          className="w-full card-glass rounded-2xl p-3 mb-3 animate-slide-up transition-opacity hover:opacity-90"
+          aria-label="Toggle calendar"
+        >
+          <div className="grid grid-cols-3 gap-2">
+            {[-1, 0, 1].map((offset) => {
+              const day = addDays(new Date(), offset);
+              const isSelected = isSameDay(day, selectedDate);
+              const isTodayDate = isToday(day);
+              const dayProgress = getDailyProgress(day);
+              const dayCount = getEntryForDate(day);
+              const hasEntry = dayCount > 0;
+              let bg = "";
+              let text = "text-foreground";
+              if (hasEntry) {
+                if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
+                else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; text = "text-white"; }
+                else { bg = "bg-primary/20"; text = "text-primary"; }
+              }
+              if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
+              return (
+                <div
+                  key={offset}
+                  onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
+                  className={`flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
+                >
+                  <span className="text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
+                  <span className="text-lg font-bold">{format(day, "d")}</span>
+                </div>
+              );
+            })}
+          </div>
+        </button>
+
         {/* Calendar Card */}
+        {isCalendarOpen && (
         <div className={`card-glass rounded-2xl p-5 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{
         animationDelay: "0.1s"
       }}>
