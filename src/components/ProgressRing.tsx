@@ -24,7 +24,8 @@ const ProgressRing = ({
   enableAnimation = true,
   enableGlow = false,
   enableSunReflection = false,
-  enableOuterGlow = false
+  enableOuterGlow = false,
+  topBadge
 }: ProgressRingProps) => {
   const [showGame, setShowGame] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
