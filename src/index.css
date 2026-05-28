@@ -153,6 +153,30 @@
   .animate-click-pulse {
     animation: clickPulse 0.5s ease-out;
   }
+
+  .animated-aurora {
+    background: linear-gradient(
+      120deg,
+      #f6c9c9,
+      #f2abf6,
+      #d291df,
+      #96cbdf,
+      #5527ea,
+      #d291df,
+      #f2abf6,
+      #f6c9c9
+    );
+    background-size: 400% 400%;
+    animation: auroraShift 24s ease-in-out infinite;
+  }
+}
+
+@keyframes auroraShift {
+  0%   { background-position: 0% 50%; }
+  25%  { background-position: 50% 100%; }
+  50%  { background-position: 100% 50%; }
+  75%  { background-position: 50% 0%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes clickPulse {
