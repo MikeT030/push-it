@@ -114,7 +114,7 @@ const ProgressRing = ({
           } : undefined}>
 
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-medium text-primary">
+            <span className="font-medium text-primary text-lg">
               Push it
             </span>
           </div>
