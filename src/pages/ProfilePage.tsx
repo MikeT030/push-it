@@ -79,7 +79,7 @@ const ProfilePage = () => {
     const {
       data,
       error
-    } = await supabase.from("push_up_entries").select("id, user_id, date, count, created_at, updated_at").order("date", {
+    } = await supabase.from("push_up_entries").select("id, user_id, date, count, created_at, updated_at").eq("user_id", user.id).order("date", {
       ascending: true
     });
     if (error) {
@@ -110,7 +110,7 @@ const ProfilePage = () => {
     const {
       data,
       error
-    } = await supabase.from("profiles").select("id, display_name, yearly_goal, created_at, updated_at").order("created_at", {
+    } = await supabase.from("profiles").select("id, display_name, yearly_goal, created_at, updated_at").eq("id", user.id).order("created_at", {
       ascending: true
     });
     if (error) {
@@ -118,7 +118,7 @@ const ProfilePage = () => {
       return;
     }
     if (!data || data.length === 0) {
-      toast.info("No users to export");
+      toast.info("No profile to export");
       return;
     }
     const headers = ["id", "display_name", "yearly_goal", "created_at", "updated_at"];
@@ -129,13 +129,14 @@ const ProfilePage = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `users_backup_${new Date().toISOString().split("T")[0]}.csv`;
+    link.download = `profile_backup_${new Date().toISOString().split("T")[0]}.csv`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    toast.success(`Exported ${data.length} users`);
+    toast.success(`Exported your profile`);
   };
+
   return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
         {/* Header */}
