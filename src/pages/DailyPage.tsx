@@ -25,6 +25,7 @@ const DailyPage = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(true);
   const {
     isGameActive
   } = useGame();
