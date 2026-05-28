@@ -11,6 +11,7 @@ import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
 import MountainGoalCard from "@/components/MountainGoalCard";
 import LineChartGoalCard from "@/components/LineChartGoalCard";
+import DailySection from "@/components/DailySection";
 
 const TotalPage = () => {
   const navigate = useNavigate();
@@ -146,6 +147,11 @@ const TotalPage = () => {
           </p>
         </header>
 
+
+        {/* Daily Push-ups + Calendar */}
+        <div className="mt-6">
+          <DailySection />
+        </div>
 
         {/* Main Progress Card */}
         <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up">
