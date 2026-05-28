@@ -12,6 +12,7 @@ interface ProgressRingProps {
   enableGlow?: boolean;
   enableSunReflection?: boolean;
   enableOuterGlow?: boolean;
+  topBadge?: React.ReactNode;
 }
 
 const ProgressRing = ({
