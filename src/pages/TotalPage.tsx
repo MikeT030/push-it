@@ -204,6 +204,30 @@ const TotalPage = () => {
           </div>
         </div>
 
+        {/* Stats Strip - Horizontally Scrollable */}
+        <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining").map((stat, index) => {
+            const Icon = stat.icon;
+            return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{
+              minWidth: "140px",
+              animationDelay: `${0.1 + index * 0.05}s`
+            }}>
+                <div className="flex items-center gap-2 mb-3">
+                  {stat.customIcon ? stat.customIcon : Icon && <Icon className={`w-5 h-5 ${stat.color}`} />}
+                  <p className="text-sm text-muted-foreground font-medium">
+                    {stat.label}
+                  </p>
+                </div>
+                <p className="text-[1.625rem] font-black text-foreground">
+                  {stat.value}
+                  <span className="text-base font-medium text-muted-foreground ml-1">
+                    {stat.unit}
+                  </span>
+                </p>
+              </div>;
+          })}
+        </div>
+
         {/* Weekly Overview & Goal Cards Grid */}
         <div className="grid grid-cols-2 gap-4 mt-6">
           {/* Weekly Overview Card */}
