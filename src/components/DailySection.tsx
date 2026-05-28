@@ -234,49 +234,57 @@ const DailySection = () => {
       </button>
 
       {/* Expanded Calendar */}
-      {isCalendarOpen && (
-        <div className={`card-glass rounded-2xl rounded-t-none border-t-0 p-5 pt-2 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center justify-between mb-4">
-            <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <h2 className="text-lg font-bold text-foreground">{format(currentMonth, "MMMM yyyy")}</h2>
-            <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+      <div
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+          isCalendarOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+        aria-hidden={!isCalendarOpen}
+      >
+        <div className="overflow-hidden min-h-0">
+          <div className={`card-glass rounded-2xl rounded-t-none border-t-0 p-5 pt-2 ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
+            <div className="flex items-center justify-between mb-4">
+              <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <h2 className="text-lg font-bold text-foreground">{format(currentMonth, "MMMM yyyy")}</h2>
+              <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
 
-          <div className="grid grid-cols-7 gap-1 mb-2">
-            {weekDays.map((day, i) => <div key={i} className="text-center text-xs font-medium text-muted-foreground py-2">{day}</div>)}
-          </div>
+            <div className="grid grid-cols-7 gap-1 mb-2">
+              {weekDays.map((day, i) => <div key={i} className="text-center text-xs font-medium text-muted-foreground py-2">{day}</div>)}
+            </div>
 
-          <div className="grid grid-cols-7 gap-1">
-            {calendarDays.map((day) => {
-              const isCurrentMonth = isSameMonth(day, currentMonth);
-              const dayCount = getEntryForDate(day);
-              const dayProgress = getDailyProgress(day);
-              const isSelected = isSameDay(day, selectedDate);
-              const isTodayDate = isToday(day);
-              const isFutureDate = isFuture(startOfDay(day));
-              const hasEntry = dayCount > 0;
+            <div className="grid grid-cols-7 gap-1">
+              {calendarDays.map((day) => {
+                const isCurrentMonth = isSameMonth(day, currentMonth);
+                const dayCount = getEntryForDate(day);
+                const dayProgress = getDailyProgress(day);
+                const isSelected = isSameDay(day, selectedDate);
+                const isTodayDate = isToday(day);
+                const isFutureDate = isFuture(startOfDay(day));
+                const hasEntry = dayCount > 0;
 
-              const getProgressColor = () => {
-                if (dayProgress >= 200) return { bg: "bg-[#C029DE]", text: "text-white", dot: "bg-[#C029DE]/60" };
-                if (dayProgress >= 100) return { bg: "bg-[#7036FF]", text: "text-white", dot: "bg-[#7036FF]/60" };
-                if (dayProgress > 0) return { bg: "bg-primary/20", text: "text-primary", dot: "bg-primary" };
-                return { bg: "", text: "text-foreground", dot: "" };
-              };
-              const colors = getProgressColor();
-              return (
-                <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-muted-foreground/30" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
-                  <span>{format(day, "d")}</span>
-                  {hasEntry && !isSelected && isCurrentMonth && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
-                </button>
-              );
-            })}
+                const getProgressColor = () => {
+                  if (dayProgress >= 200) return { bg: "bg-[#C029DE]", text: "text-white", dot: "bg-[#C029DE]/60" };
+                  if (dayProgress >= 100) return { bg: "bg-[#7036FF]", text: "text-white", dot: "bg-[#7036FF]/60" };
+                  if (dayProgress > 0) return { bg: "bg-primary/20", text: "text-primary", dot: "bg-primary" };
+                  return { bg: "", text: "text-foreground", dot: "" };
+                };
+                const colors = getProgressColor();
+                return (
+                  <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-muted-foreground/30" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+                    <span>{format(day, "d")}</span>
+                    {hasEntry && !isSelected && isCurrentMonth && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-      )}
+      </div>
+
     </>
   );
 };
