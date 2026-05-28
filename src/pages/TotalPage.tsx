@@ -258,7 +258,7 @@ const TotalPage = () => {
           animationDelay: "0.35s"
         }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
-            Personal Goal {new Date().getFullYear()}
+            You Push Goal {new Date().getFullYear()}
           </h2>
 
           <div className="h-px mb-4 bg-[#3b404f]" />
