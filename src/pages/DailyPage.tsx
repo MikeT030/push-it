@@ -197,9 +197,9 @@ const DailyPage = () => {
                 <p className="font-black text-[#a7a8aa] text-4xl">{yesterdayCount}</p>
               </div>
             </div>
-            <div className="flex items-center justify-center relative mt-[20px]">
+            <div className="flex items-center justify-center gap-4 mt-[20px]">
               {isEditable &&
-                <button onClick={() => adjustCount(-10)} disabled={currentCount < 10} className="absolute left-0 bottom-0 w-11 h-11 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center">
+                <button onClick={() => adjustCount(-10)} disabled={currentCount < 10} className="w-11 h-11 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center">
                   <Minus className="w-5 h-5" />
                 </button>
               }
