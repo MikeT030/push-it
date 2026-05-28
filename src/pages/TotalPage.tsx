@@ -124,8 +124,9 @@ const TotalPage = () => {
   }
 
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      {/* Top Gradient */}
-      <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-r from-[#00D4C8] via-[#E040FB] to-[#7B2FF2] opacity-80 blur-3xl pointer-events-none" />
+      {/* Animated Top Gradient */}
+      <div className="absolute top-0 left-0 right-0 h-64 opacity-80 blur-3xl pointer-events-none animated-aurora" />
+
       
       <div className="relative max-w-lg mx-auto px-6 py-8">
         {/* Profile Button */}
