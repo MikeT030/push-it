@@ -148,7 +148,7 @@ const TotalPage = () => {
 
         {/* Header */}
         <header className="mb-2 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">You</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">You Push</h1>
           <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide mt-1">
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
@@ -258,7 +258,7 @@ const TotalPage = () => {
           animationDelay: "0.35s"
         }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
-            Personal Goal {new Date().getFullYear()}
+            You Push Goal {new Date().getFullYear()}
           </h2>
 
           <div className="h-px mb-4 bg-[#3b404f]" />
