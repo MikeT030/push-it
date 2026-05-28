@@ -142,7 +142,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
 
       <div className="flex justify-between items-center mt-2 pt-3 border-t border-border/30">
         <div>
-          <p className="text-xs text-muted-foreground">Group progress</p>
+          <p className="text-xs text-muted-foreground">We Push progress</p>
           <p className="text-xl font-bold text-[#c02bde]">{progressPercent.toFixed(1)}%</p>
         </div>
         <button
@@ -176,7 +176,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
     <div ref={cardRef} className="card-glass rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
       <div className="relative z-10 flex items-start justify-between">
         <div>
-          <h2 className="text-lg font-bold text-foreground mb-1">Group Goal {year}</h2>
+          <h2 className="text-lg font-bold text-foreground mb-1">We Push Goal {year}</h2>
           <p className="text-4xl font-black text-foreground">{displayCount.toLocaleString("de-DE")} PU</p>
           <p className="text-sm text-muted-foreground mt-1">of {groupGoal.toLocaleString("de-DE")} PU</p>
         </div>
