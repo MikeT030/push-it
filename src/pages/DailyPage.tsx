@@ -166,19 +166,18 @@ const DailyPage = () => {
 
 
 
+        <div className="flex items-center justify-end mb-4">
+          <button
+            onClick={() => setActiveGame("select")}
+            className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
+            aria-label="Open mini game"
+          >
+            <img src={controllerIcon} alt="Game" className="w-6 h-6" />
+          </button>
+        </div>
+
         <div className="rounded-2xl p-6 mb-6 animate-slide-up border border-[#3B404F]" style={{ animationDelay: "0.05s" }}>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex-1" />
-            <div className="flex-1 flex justify-end">
-              <button
-                onClick={() => setActiveGame("select")}
-                className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
-                aria-label="Open mini game"
-              >
-                <img src={controllerIcon} alt="Game" className="w-6 h-6" />
-              </button>
-            </div>
-          </div>
+
 
           <div className="pb-[12px] mb-[20px]">
             <div className="relative flex items-start justify-center">
