@@ -225,9 +225,12 @@ const DailyPage = () => {
             <h2 className="text-lg font-bold text-foreground">Calendar</h2>
             {isCalendarOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            {[-1, 0, 1].map((offset) => {
-              const day = addDays(new Date(), offset);
+          <div
+            ref={miniScrollRef}
+            onClick={(e) => e.stopPropagation()}
+            className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+          >
+            {miniDays.map((day) => {
               const isSelected = isSameDay(day, selectedDate);
               const isTodayDate = isToday(day);
               const dayProgress = getDailyProgress(day);
@@ -243,9 +246,10 @@ const DailyPage = () => {
               if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
               return (
                 <div
-                  key={offset}
+                  key={day.toISOString()}
                   onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
-                  className={`flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
+                  style={{ flex: "0 0 calc((100% - 16px) / 3)" }}
+                  className={`snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
                 >
                   <span className="text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
                   <span className="text-lg font-bold">{format(day, "d")}</span>
