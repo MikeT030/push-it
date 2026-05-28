@@ -186,6 +186,12 @@ const TotalPage = () => {
                   {remaining.toLocaleString()}
                 </p>
               </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Goal</p>
+                <p className="text-xl font-bold text-foreground">
+                  {yearlyGoal.toLocaleString()}
+                </p>
+              </div>
             </div>
           </div>
 
