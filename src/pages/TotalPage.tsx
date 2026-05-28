@@ -183,7 +183,7 @@ const TotalPage = () => {
               width: `${yearProgress}%`
             }} />
           </div>
-          <p className="text-sm text-muted-foreground mb-4 text-center">
+          <p className="text-sm text-muted-foreground mb-4 text-left">
             Day {stats.daysElapsed} of 365
           </p>
 
@@ -194,7 +194,7 @@ const TotalPage = () => {
             <div className="flex-1 flex items-start gap-8">
               <div>
                 <p className="text-sm text-muted-foreground">Completed</p>
-                <p className="text-[1.625rem] font-black text-[#0ab8b2]">
+                <p className="font-black text-[#0ab8b2] text-xl">
                   {totalPushUps.toLocaleString()}
                 </p>
               </div>
