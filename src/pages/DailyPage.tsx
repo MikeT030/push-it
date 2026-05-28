@@ -202,7 +202,7 @@ const DailyPage = () => {
                 </button>
               }
               <button onClick={() => isEditable && adjustCount(10)} disabled={!isEditable} className="disabled:opacity-50">
-                <ProgressRing progress={progress} size={138} strokeWidth={14} enableGame={false} enableAnimation={false} enableOuterGlow={true} />
+                <ProgressRing progress={progress} size={138} strokeWidth={14} enableGame={false} enableAnimation={false} enableOuterGlow={true} topBadge={currentCount} />
               </button>
             </div>
           </div>
