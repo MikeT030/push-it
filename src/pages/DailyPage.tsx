@@ -43,6 +43,18 @@ const DailyPage = () => {
   const yesterdayCount = isLoaded ? getEntryForDate(subDays(selectedDate, 1)) : 0;
   const progress = isLoaded ? getDailyProgress(selectedDate) : 0;
   const isEditable = canEditDate(selectedDate);
+  const miniScrollRef = useRef<HTMLDivElement>(null);
+  const miniDays = useMemo(() => {
+    const today = new Date();
+    const days: Date[] = [];
+    for (let i = 364; i >= 0; i--) days.push(subDays(today, i));
+    return days;
+  }, []);
+  useEffect(() => {
+    if (miniScrollRef.current) {
+      miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
+    }
+  }, [isLoaded]);
   useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
   }, [selectedDate, currentCount]);
