@@ -180,8 +180,8 @@ const TotalPage = () => {
           <div className="flex items-center gap-6">
 
             
-            <div className="flex-1">
-              <div className="mb-4">
+            <div className="flex-1 flex items-start gap-8">
+              <div>
                 <p className="text-sm text-muted-foreground">Completed</p>
                 <p className="text-[1.625rem] font-black text-[#0ab8b2]">
                   {totalPushUps.toLocaleString()}
