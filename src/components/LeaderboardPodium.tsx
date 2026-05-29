@@ -32,6 +32,10 @@ const rankColors = [
 "bg-gradient-to-b from-gray-300 to-gray-500",
 "bg-gradient-to-b from-amber-600 to-amber-800"];
 
+const rankTextColors = [
+"text-yellow-400",
+"text-gray-300",
+"text-amber-600"];
 
 const rankBadgeColors = [
 "bg-yellow-500 text-black",
@@ -102,16 +106,16 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
 
           <div className="flex items-end justify-center gap-1 mx-auto max-w-[280px] pt-[8px]">
             {top3.length >= 2 &&
-          <div className={`flex-1 ${podiumHeights[0]} rounded-t-lg bg-gradient-to-b from-[#3B404F] to-[#2A2E3A] flex items-center justify-center`}>
-                <span className="text-2xl font-black text-muted-foreground/40">2</span>
+          <div className={`flex-1 ${podiumHeights[0]} rounded-t-lg bg-gradient-to-b from-gray-300 to-gray-600 flex items-center justify-center`}>
+                <span className="text-2xl font-black text-gray-900/50">2</span>
               </div>
           }
-            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-[#4A4F5E] to-[#2A2E3A] flex items-center justify-center`}>
-              <span className="text-3xl font-black text-muted-foreground/40">1</span>
+            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-yellow-300 to-yellow-600 flex items-center justify-center`}>
+              <span className="text-3xl font-black text-yellow-900/50">1</span>
             </div>
             {top3.length >= 3 &&
-          <div className={`flex-1 ${podiumHeights[2]} rounded-t-lg bg-gradient-to-b from-[#333843] to-[#2A2E3A] flex items-center justify-center`}>
-                <span className="text-xl font-black text-muted-foreground/40">3</span>
+          <div className={`flex-1 ${podiumHeights[2]} rounded-t-lg bg-gradient-to-b from-amber-500 to-amber-800 flex items-center justify-center`}>
+                <span className="text-xl font-black text-amber-950/50">3</span>
               </div>
           }
           </div>
