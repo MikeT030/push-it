@@ -18,7 +18,7 @@ interface ProgressRingProps {
 const ProgressRing = ({
   progress,
   size = 120,
-  strokeWidth = 12,
+  strokeWidth = 6,
   className = "",
   enableGame = false,
   enableAnimation = true,
@@ -30,6 +30,7 @@ const ProgressRing = ({
   const [showGame, setShowGame] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
   const { setIsGameActive } = useGame();
+  const uid = useId().replace(/:/g, '');
 
   useEffect(() => {
     setIsGameActive(showGame);
@@ -43,6 +44,10 @@ const ProgressRing = ({
 
   const baseOffset = circumference - baseProgress / 100 * circumference;
   const overflowOffset = circumference - overflowProgress / 100 * circumference;
+
+  const baseColor = 'hsl(var(--primary))';
+  const overflowColor = progress >= 200 ? '#C029DE' : '#7036FF';
+  const overflowColorSoft = progress >= 200 ? 'rgba(192, 41, 222, 0.9)' : 'rgba(112, 54, 255, 0.9)';
 
   return (
     <>
@@ -59,49 +64,139 @@ const ProgressRing = ({
         }}>
 
         <svg className="transform -rotate-90" width={size} height={size}>
-          {/* Background ring */}
+          <defs>
+            {/* Soft outer bloom */}
+            <filter id={`bloom-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation={strokeWidth * 0.9} result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            {/* Inner highlight along the stroke for a lit/glassy look */}
+            <linearGradient id={`sheen-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
+              <stop offset="50%" stopColor="rgba(255,255,255,0)" />
+              <stop offset="100%" stopColor="rgba(0,0,0,0.35)" />
+            </linearGradient>
+          </defs>
+
+          {/* Background ring - recessed channel */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="#1a1d24"
+            strokeWidth={strokeWidth}
+          />
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
             stroke="#3B404F"
-            strokeWidth={strokeWidth} />
+            strokeWidth={Math.max(1, strokeWidth - 2)}
+            opacity={0.6}
+          />
 
-          {/* Base progress ring (green/primary) */}
+          {/* Base progress - outer bloom layer */}
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="hsl(var(--primary))"
+            stroke={baseColor}
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={baseOffset}
             className="transition-all duration-700 ease-out"
             style={{
-              filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.5))"
-            }} />
-
-          {/* Overflow ring - only visible when > 100% */}
-          {overflowProgress > 0 &&
+              opacity: 0.55,
+              filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px hsl(var(--primary) / 0.9))`,
+            }}
+          />
+          {/* Base progress - bright core */}
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke={progress >= 200 ? '#C029DE' : '#7036FF'}
+            stroke={baseColor}
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circumference}
-            strokeDashoffset={overflowOffset}
+            strokeDashoffset={baseOffset}
             className="transition-all duration-700 ease-out"
             style={{
-              filter: `drop-shadow(0 0 8px ${progress >= 200 ? 'rgba(192, 41, 222, 0.5)' : 'rgba(112, 54, 255, 0.5)'})`
-            }} />
+              filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px hsl(var(--primary) / 0.8))`,
+            }}
+          />
+          {/* Base progress - lit sheen highlight */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke={`url(#sheen-${uid})`}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={baseOffset}
+            className="transition-all duration-700 ease-out pointer-events-none"
+            style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
+          />
 
-          }
+          {/* Overflow ring - only visible when > 100% */}
+          {overflowProgress > 0 && (
+            <>
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={overflowColor}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={overflowOffset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  opacity: 0.6,
+                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${overflowColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={overflowColor}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={overflowOffset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${overflowColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#sheen-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={overflowOffset}
+                className="transition-all duration-700 ease-out pointer-events-none"
+                style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
+              />
+            </>
+          )}
         </svg>
         <div
           className={`absolute inset-0 flex items-center justify-center rounded-full overflow-hidden ${enableSunReflection ? 'sun-reflection' : ''}`}
