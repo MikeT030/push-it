@@ -116,13 +116,13 @@ const ProgressRing = ({
               width: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               background:
-                'radial-gradient(circle at 50% 35%, rgba(40,52,68,0.55) 0%, rgba(20,28,40,0.60) 55%, rgba(10,16,24,0.65) 90%, rgba(8,12,20,0.70) 100%)',
+                'radial-gradient(circle at 50% 35%, rgba(90,108,128,0.55) 0%, rgba(60,76,96,0.55) 55%, rgba(40,54,72,0.60) 90%, rgba(32,44,60,0.65) 100%)',
               boxShadow: [
-                'inset 0 2px 4px rgba(255,255,255,0.12)',
-                'inset 0 -4px 12px rgba(0,0,0,0.45)',
-                'inset 0 0 0 1px rgba(255,255,255,0.08)',
-                '0 10px 24px rgba(0,0,0,0.45)',
-                '0 4px 10px rgba(0,0,0,0.30)',
+                'inset 0 2px 4px rgba(255,255,255,0.18)',
+                'inset 0 -4px 12px rgba(0,0,0,0.35)',
+                'inset 0 0 0 1px rgba(255,255,255,0.12)',
+                '0 10px 24px rgba(0,0,0,0.35)',
+                '0 4px 10px rgba(0,0,0,0.22)',
               ].join(', '),
             }}
           >
