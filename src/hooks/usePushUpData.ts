@@ -200,6 +200,11 @@ export const usePushUpData = () => {
     return Math.round(last7Total / 7);
   }, [getEntryForDate]);
 
+  const getMaxSingleDay = useCallback((): number => {
+    if (entries.length === 0) return 0;
+    return Math.max(...entries.map((e) => e.count));
+  }, [entries]);
+
   const setYearlyGoal = useCallback(async (newGoal: number) => {
     if (!user) return;
 
