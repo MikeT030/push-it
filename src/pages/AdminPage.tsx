@@ -90,6 +90,13 @@ const AdminPage = () => {
             Sandbox copy of the bottom nav. Edit it here before rolling changes
             out to all users.
           </p>
+          <Button
+            onClick={() => setDemoNavEnabled(!demoNavActive)}
+            variant={demoNavActive ? "destructive" : "default"}
+            className="mb-4 w-full"
+          >
+            {demoNavActive ? "Deactivate Demo Nav (use real)" : "Activate Demo Nav app-wide"}
+          </Button>
           <div className="py-4">
             <DemoBottomNav />
           </div>
