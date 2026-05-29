@@ -120,13 +120,13 @@ const ProgressRing = ({
               width: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               background:
-                'radial-gradient(circle at 50% 30%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 45%, rgba(15,25,34,0.12) 85%, rgba(8,12,22,0.18) 100%)',
+                'radial-gradient(circle at 50% 28%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.12) 80%, rgba(255,255,255,0.18) 100%)',
               boxShadow: [
-                'inset 0 1px 1px rgba(255,255,255,0.25)',
-                'inset 0 -3px 6px rgba(0,0,0,0.25)',
-                'inset 0 0 0 1px rgba(255,255,255,0.08)',
+                'inset 0 1px 1px rgba(255,255,255,0.7)',
+                'inset 0 -3px 8px rgba(255,255,255,0.18)',
+                'inset 0 0 0 1px rgba(255,255,255,0.35)',
                 '0 6px 18px rgba(0,0,0,0.35)',
-                '0 2px 6px rgba(0,0,0,0.25)',
+                '0 2px 6px rgba(0,0,0,0.2)',
               ].join(', '),
             }}
           >
