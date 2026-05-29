@@ -493,8 +493,9 @@ const GroupPage = () => {
               </div>
 
               {/* Motivational Banner */}
-              <div className="card-glass rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{
-              animationDelay: "0.25s"
+              <div className="rounded-2xl p-5 mb-6 shadow-none animate-slide-up" style={{
+              animationDelay: "0.25s",
+              background: "rgba(42,47,58,0.70)"
             }}>
                 <p className="text-sm text-foreground font-medium leading-relaxed">
                   💪 Every push-up counts! When we work together, we stay accountable and motivated. 
