@@ -10,6 +10,7 @@ import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
   const navigate = useNavigate();
+  const demoNavActive = useDemoNav();
 
   if (loading) {
     return (
