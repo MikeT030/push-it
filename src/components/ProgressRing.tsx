@@ -117,7 +117,7 @@ const ProgressRing = ({
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               transform: isPulsing ? 'translateY(1.5px) scale(0.96)' : undefined,
               background:
-                'radial-gradient(circle at 50% 35%, rgba(90,108,128,0.55) 0%, rgba(60,76,96,0.55) 55%, rgba(40,54,72,0.60) 90%, rgba(32,44,60,0.65) 100%)',
+                'radial-gradient(circle at 50% 60%, rgba(78,94,114,0.55) 0%, rgba(68,84,104,0.55) 60%, rgba(48,62,82,0.60) 92%, rgba(36,48,66,0.65) 100%)',
               boxShadow: isPulsing
                 ? [
                     'inset 0 4px 10px rgba(0,0,0,0.55)',
@@ -126,23 +126,24 @@ const ProgressRing = ({
                     '0 2px 6px rgba(0,0,0,0.25)',
                   ].join(', ')
                 : [
-                    'inset 0 2px 4px rgba(255,255,255,0.18)',
+                    'inset 0 1px 0 rgba(255,255,255,0.10)',
                     'inset 0 -4px 12px rgba(0,0,0,0.35)',
-                    'inset 0 0 0 1px rgba(255,255,255,0.12)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.10)',
                     '0 10px 24px rgba(0,0,0,0.35)',
                     '0 4px 10px rgba(0,0,0,0.22)',
                   ].join(', '),
             }}
           >
-            {/* Top specular highlight */}
+            {/* Flat top sheen - very subtle, no dome */}
             <div
-              className="pointer-events-none absolute inset-x-[14%] top-[8%] h-[36%] rounded-full"
+              className="pointer-events-none absolute inset-x-[10%] top-[6%] h-[6%] rounded-full opacity-60"
               style={{
                 background:
-                  'radial-gradient(ellipse at center, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.08) 55%, rgba(255,255,255,0) 85%)',
-                filter: 'blur(4px)',
+                  'linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)',
+                filter: 'blur(2px)',
               }}
             />
+
             {/* Bottom rim glow */}
             <div
               className="pointer-events-none absolute inset-x-[22%] bottom-[8%] h-[20%] rounded-full opacity-50"
