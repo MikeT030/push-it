@@ -151,23 +151,6 @@ const ProgressRing = ({
 
 
 
-            <span
-              className="relative font-bold text-lg tracking-wider select-none"
-              style={{
-                color: 'rgba(245, 248, 252, 0.78)',
-                textShadow: [
-                  // deep inner shadow (top-left) — light catches the upper inside wall
-                  '-1px -1px 0 rgba(0,0,0,0.85)',
-                  '0 -1px 2px rgba(0,0,0,0.7)',
-                  // bright bottom-right highlight — bevel edge catching light
-                  '1px 1px 0 rgba(255,255,255,0.18)',
-                  '1px 2px 1px rgba(10,186,181,0.35)',
-                  '0 2px 3px rgba(255,255,255,0.08)',
-                ].join(', '),
-              }}
-            >
-              Push it
-            </span>
           </div>
 
         </div>
