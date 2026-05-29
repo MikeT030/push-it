@@ -283,7 +283,7 @@ const DailySection = () => {
           const items = [
             { label: "Most logged", value: maxDay, unit: "PU/day", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Average", value: avg, unit: "/day", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
-            { label: "Streak", value: streak, unit: "day", Icon: Flame, color: "#C029DE", isCustomIcon: false },
+            { label: "Streak", value: streak, unit: "day", Icon: Flame, color: "#f97171", isCustomIcon: false },
           ];
           return (
             <div className="flex gap-3 pt-4 mt-2 border-t border-[#3B404F]">
