@@ -32,6 +32,10 @@ const rankColors = [
 "bg-gradient-to-b from-gray-300 to-gray-500",
 "bg-gradient-to-b from-amber-600 to-amber-800"];
 
+const rankTextColors = [
+"text-yellow-400",
+"text-gray-300",
+"text-amber-600"];
 
 const rankBadgeColors = [
 "bg-yellow-500 text-black",
