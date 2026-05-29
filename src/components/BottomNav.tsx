@@ -31,10 +31,10 @@ const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`flex-1 flex flex-col items-center justify-center gap-2 py-[15px] pb-[15px] rounded-2xl transition-all duration-300 backdrop-blur-xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.35),0_8px_24px_rgba(0,0,0,0.45)] active:translate-y-[1px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_2px_rgba(0,0,0,0.3),0_4px_12px_rgba(0,0,0,0.4)] ${
+              className={`flex-1 flex flex-col items-center justify-center gap-2 py-[15px] pb-[15px] rounded-2xl transition-all duration-300 border ${
                 active
-                  ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-gradient-to-b from-white/10 to-white/[0.02]"
-                  : "text-foreground border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] hover:from-white/10"
+                  ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-gradient-to-b from-white/10 to-white/[0.02] backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.35),0_8px_24px_rgba(0,0,0,0.45)] active:translate-y-[1px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_2px_rgba(0,0,0,0.3),0_4px_12px_rgba(0,0,0,0.4)]"
+                  : "text-foreground border-transparent bg-transparent"
               }`}
             >
               <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
