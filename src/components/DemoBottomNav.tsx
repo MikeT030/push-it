@@ -36,7 +36,7 @@ const DemoBottomNav = () => {
                   : "text-foreground border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] hover:from-white/10"
               }`}
             >
-              <Icon className="w-8 h-8" strokeWidth={active ? 2.5 : 2} />
+              <Icon className="w-[30px] h-[30px]" strokeWidth={active ? 2.5 : 2} />
               <span className="text-base font-semibold">{tab.label}</span>
             </button>
           );
