@@ -49,6 +49,7 @@ const AppContent = () => {
   const location = useLocation();
   const { user } = useAuth();
   const showNav = user && ["/", "/daily", "/total", "/profile", "/group"].includes(location.pathname);
+  const demoNav = useDemoNav();
 
   const PageFallback = (
     <div className="min-h-screen bg-background flex items-center justify-center">
