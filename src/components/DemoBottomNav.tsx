@@ -21,7 +21,7 @@ const DemoBottomNav = () => {
 
   return (
     <div className="relative w-full">
-      <div className="nav-bar rounded-full px-4 py-3 flex items-center justify-around gap-1">
+      <div className="nav-bar rounded-3xl p-3 flex items-stretch justify-between gap-3">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = activeId === tab.id;
@@ -30,14 +30,14 @@ const DemoBottomNav = () => {
             <button
               key={tab.id}
               onClick={() => setActiveId(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-300 ${
+              className={`flex-1 flex flex-col items-center justify-center gap-2 py-6 rounded-2xl transition-all duration-300 backdrop-blur-xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.35),0_8px_24px_rgba(0,0,0,0.45)] active:translate-y-[1px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_2px_rgba(0,0,0,0.3),0_4px_12px_rgba(0,0,0,0.4)] ${
                 active
-                  ? "text-[#0ABAB5] border border-[#0ABAB5]/70"
-                  : "text-foreground border border-transparent hover:text-foreground"
+                  ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-gradient-to-b from-white/10 to-white/[0.02]"
+                  : "text-foreground border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] hover:from-white/10"
               }`}
             >
-              <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
-              <span className="text-sm font-semibold">{tab.label}</span>
+              <Icon className="w-8 h-8" strokeWidth={active ? 2.5 : 2} />
+              <span className="text-base font-semibold">{tab.label}</span>
             </button>
           );
         })}
