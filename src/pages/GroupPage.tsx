@@ -372,7 +372,7 @@ const GroupPage = () => {
 
                 <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
-                    <TrendingUp className="w-5 h-5 text-[#7036FF]" />
+                    <span className="text-xl font-bold text-[#7036FF]">Ø</span>
                     <p className="text-sm text-muted-foreground font-medium">Avg. PU (day)</p>
                   </div>
                   <p className="text-[1.625rem] font-black text-foreground">
@@ -383,7 +383,7 @@ const GroupPage = () => {
 
                 <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
-                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
+                    <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
                     <p className="text-sm text-muted-foreground font-medium">Avg. Prog. (yr)</p>
                   </div>
                   <p className="text-[1.625rem] font-black text-foreground">
