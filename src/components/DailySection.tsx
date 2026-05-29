@@ -31,6 +31,7 @@ const DailySection = () => {
   const progress = isLoaded ? getDailyProgress(selectedDate) : 0;
   const isEditable = canEditDate(selectedDate);
   const miniScrollRef = useRef<HTMLDivElement>(null);
+  const [visibleMonth, setVisibleMonth] = useState<Date>(new Date());
 
   const miniDays = useMemo(() => {
     const today = new Date();
