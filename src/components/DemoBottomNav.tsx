@@ -37,7 +37,7 @@ const DemoBottomNav = () => {
               }`}
             >
               <Icon className="w-10 h-10" strokeWidth={active ? 2.5 : 2} />
-              <span className="text-base font-semibold">{tab.label}</span>
+              <span className="font-semibold text-sm">{tab.label}</span>
             </button>
           );
         })}
