@@ -142,6 +142,25 @@ const ProgressRing = ({
                 filter: 'blur(3px)',
               }}
             />
+
+            {/* Engraved "Push it" label - looks manufactured into the surface */}
+            <span
+              className="pointer-events-none select-none uppercase"
+              style={{
+                fontFamily: '"Helvetica Neue", Inter, system-ui, sans-serif',
+                fontSize: `${Math.max(10, size * 0.11)}px`,
+                fontWeight: 700,
+                letterSpacing: '0.18em',
+                color: 'rgba(0,0,0,0.55)',
+                textShadow: [
+                  '0 1px 0 rgba(255,255,255,0.06)',
+                  '0 -1px 0 rgba(0,0,0,0.55)',
+                ].join(', '),
+                mixBlendMode: 'multiply',
+              }}
+            >
+              Push it
+            </span>
           </div>
 
         </div>
