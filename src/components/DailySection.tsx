@@ -345,8 +345,8 @@ const DailySection = () => {
                 style={{
                   flex: "0 0 calc((100% - 16px) / 3)",
                   background: tinted
-                    ? `rgba(${r},${g},${b},0.92)`
-                    : `rgba(${r},${g},${b},0.45)`,
+                    ? `rgba(${r},${g},${b},0.70)`
+                    : `rgba(${r},${g},${b},0.70)`,
                   boxShadow: [
                     'inset 0 0 0 1px rgba(255,255,255,0.06)',
                     '0 1px 2px rgba(0,0,0,0.25)',
