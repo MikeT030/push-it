@@ -180,34 +180,45 @@ const DailyGroupOverview = () => {
         <div
           ref={scrollRef}
           data-horizontal-scroll
-          className="flex gap-2 overflow-x-auto mb-4 scrollbar-hide -mx-2 px-2"
+          className="flex gap-2 overflow-x-auto mb-4 scrollbar-hide -mx-2 px-2 pb-[2px] pt-[2px]"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {dayOptions.map((day, index) => (
-            <button
-              key={format(day.date, "yyyy-MM-dd")}
-              ref={(el) => {
-                if (el) dayRefs.current.set(index, el);
-              }}
-              onClick={() => {
-                if (index === selectedDayIndex) {
-                  setIsOpen((prev) => !prev);
-                } else {
-                  setSelectedDayIndex(index);
-                  scrollToCenter(index);
-                  setIsOpen(true);
-                }
-              }}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
-                index === selectedDayIndex
-                  ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]"
-                  : "text-muted-foreground border-[#3B404F]"
-              }`}
-            >
-              {format(day.date, "EEE, MMM d")}
-              {day.isToday && " · Today"}
-            </button>
-          ))}
+          {dayOptions.map((day, index) => {
+            const isSelected = index === selectedDayIndex;
+            const [r, g, b] = isSelected ? [10, 186, 181] : [42, 47, 58];
+            return (
+              <button
+                key={format(day.date, "yyyy-MM-dd")}
+                ref={(el) => {
+                  if (el) dayRefs.current.set(index, el);
+                }}
+                onClick={() => {
+                  if (index === selectedDayIndex) {
+                    setIsOpen((prev) => !prev);
+                  } else {
+                    setSelectedDayIndex(index);
+                    scrollToCenter(index);
+                    setIsOpen(true);
+                  }
+                }}
+                style={{
+                  background: `rgba(${r},${g},${b},0.70)`,
+                  boxShadow: [
+                    'inset 0 2px 4px rgba(0,0,0,0.3)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.05)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                    '0 1px 2px rgba(0,0,0,0.25)',
+                  ].join(', '),
+                }}
+                className={`relative overflow-hidden flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
+                  isSelected ? "text-white" : "text-muted-foreground"
+                }`}
+              >
+                {format(day.date, "EEE, MMM d")}
+                {day.isToday && " · Today"}
+              </button>
+            );
+          })}
         </div>
 
         {/* Daily Summary */}
