@@ -22,7 +22,7 @@ const BottomNav = () => {
 
   return (
     <nav className={`fixed bottom-0 left-0 right-0 z-40 transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
-      <div className="nav-bar p-3 flex items-stretch justify-between gap-3 pb-[18px]">
+      <div className="nav-bar p-3 flex items-stretch justify-center gap-3 pb-[18px]">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = isActive(tab.path);
@@ -31,7 +31,7 @@ const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`relative overflow-hidden flex-1 flex flex-col items-center justify-center gap-1.5 py-[11px] pb-[11px] rounded-2xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
+              className={`relative overflow-hidden w-[140px] flex flex-col items-center justify-center gap-1.5 py-[11px] pb-[11px] rounded-2xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
                 active ? "text-[#0ABAB5]" : "text-foreground"
               }`}
               style={{
