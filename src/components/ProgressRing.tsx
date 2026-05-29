@@ -240,7 +240,7 @@ const ProgressRing = ({
               }}
             />
 
-            {/* "Push it" label - primary color at 60% opacity */}
+            {/* "Push it" label - light gray */}
             <span
               className="pointer-events-none select-none uppercase"
               style={{
@@ -248,7 +248,7 @@ const ProgressRing = ({
                 fontSize: `${Math.max(10, size * 0.11)}px`,
                 fontWeight: 900,
                 letterSpacing: '0.18em',
-                color: 'hsl(var(--primary) / 0.6)',
+                color: 'hsl(0 0% 85%)',
               }}
             >
               Push it
