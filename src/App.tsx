@@ -10,15 +10,37 @@ import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
 import SplashScreen from "./components/SplashScreen";
 
-const DailyPage = lazy(() => import("./pages/DailyPage"));
-const TotalPage = lazy(() => import("./pages/TotalPage"));
-const GroupPage = lazy(() => import("./pages/GroupPage"));
-const ProfilePage = lazy(() => import("./pages/ProfilePage"));
-const AuthPage = lazy(() => import("./pages/AuthPage"));
-const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
-const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
-const AdminPage = lazy(() => import("./pages/AdminPage"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+// Reload once if a lazy chunk fails to load (stale hash after redeploy)
+const lazyWithRetry = <T,>(factory: () => Promise<{ default: T }>) =>
+  lazy(async () => {
+    try {
+      return await factory();
+    } catch (err: any) {
+      const msg = String(err?.message || "");
+      if (
+        msg.includes("Importing a module script failed") ||
+        msg.includes("Failed to fetch dynamically imported module") ||
+        msg.includes("error loading dynamically imported module")
+      ) {
+        if (!sessionStorage.getItem("chunkReloaded")) {
+          sessionStorage.setItem("chunkReloaded", "1");
+          window.location.reload();
+          return new Promise(() => {}) as any;
+        }
+      }
+      throw err;
+    }
+  });
+
+const DailyPage = lazyWithRetry(() => import("./pages/DailyPage"));
+const TotalPage = lazyWithRetry(() => import("./pages/TotalPage"));
+const GroupPage = lazyWithRetry(() => import("./pages/GroupPage"));
+const ProfilePage = lazyWithRetry(() => import("./pages/ProfilePage"));
+const AuthPage = lazyWithRetry(() => import("./pages/AuthPage"));
+const ForgotPasswordPage = lazyWithRetry(() => import("./pages/ForgotPasswordPage"));
+const ResetPasswordPage = lazyWithRetry(() => import("./pages/ResetPasswordPage"));
+const AdminPage = lazyWithRetry(() => import("./pages/AdminPage"));
+const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
