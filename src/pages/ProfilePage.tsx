@@ -219,8 +219,9 @@ const ProfilePage = () => {
         )}
 
         {/* Backups Card */}
-        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{
-        animationDelay: "0.05s"
+        <div className="rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.05s",
+        background: "rgba(42,47,58,0.70)"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             Backups
