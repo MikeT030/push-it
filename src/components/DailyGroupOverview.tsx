@@ -209,7 +209,7 @@ const DailyGroupOverview = () => {
                     '0 1px 2px rgba(0,0,0,0.25)',
                   ].join(', '),
                 }}
-                className={`relative overflow-hidden flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
+                className={`relative overflow-hidden flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
                   isSelected ? "text-primary" : "text-muted-foreground"
                 }`}
               >
