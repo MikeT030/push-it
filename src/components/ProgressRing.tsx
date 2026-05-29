@@ -212,7 +212,7 @@ const ProgressRing = ({
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               transform: isPulsing ? 'translateY(1.5px) scale(0.97)' : undefined,
               background:
-                'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.45) 0%, rgba(31,36,46,0.35) 60%, rgba(22,26,34,0.25) 100%)',
+                'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
               backdropFilter: 'blur(6px) saturate(1.2)',
               WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
               boxShadow: isPulsing
