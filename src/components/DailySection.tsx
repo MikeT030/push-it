@@ -339,11 +339,9 @@ const DailySection = () => {
               <div
                 key={day.toISOString()}
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
-                style={isSelected ? { flex: "0 0 calc((100% - 16px) / 3)" } : {
+                style={{
                   flex: "0 0 calc((100% - 16px) / 3)",
-                  background: tinted
-                    ? `rgba(${r},${g},${b},0.53)`
-                    : `rgba(${r},${g},${b},0.53)`,
+                  background: `rgba(${r},${g},${b},${tinted ? 0.53 : 0.70})`,
                   boxShadow: [
                     'inset 0 2px 4px rgba(0,0,0,0.3)',
                     'inset 0 -1px 2px rgba(255,255,255,0.05)',

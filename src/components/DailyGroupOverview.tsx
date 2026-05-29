@@ -200,7 +200,7 @@ const DailyGroupOverview = () => {
                     setIsOpen(true);
                   }
                 }}
-                style={isSelected ? undefined : {
+                style={{
                   background: `rgba(42,47,58,0.70)`,
                   boxShadow: [
                     'inset 0 2px 4px rgba(0,0,0,0.3)',
@@ -210,7 +210,7 @@ const DailyGroupOverview = () => {
                   ].join(', '),
                 }}
                 className={`relative overflow-hidden flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
-                  isSelected ? "text-primary bg-transparent" : "text-muted-foreground"
+                  isSelected ? "text-primary" : "text-muted-foreground"
                 }`}
               >
                 {format(day.date, "EEE, MMM d")}
