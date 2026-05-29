@@ -160,7 +160,7 @@ const DailySection = () => {
     const streak = getCurrentStreak();
     const progressPercent = Math.round(progress);
     const dateStr = format(selectedDate, "MMMM d, yyyy");
-    const shareText = `💪 I did ${currentCount} push-ups on ${dateStr}!\n📊 ${progressPercent}% of daily target (${dailyTarget})\n🔥 ${streak} day streak\n\n#PushIt`;
+    const shareText = `💪 I did ${currentCount} push-ups on ${dateStr}!\n📊 ${progressPercent}% of daily target (${dailyTarget})\n🔥 ${streak}d streak\n\n#PushIt`;
     if (navigator.share) {
       try {
         await navigator.share({ title: "My Push-ups", text: shareText });
@@ -283,7 +283,7 @@ const DailySection = () => {
           const items = [
             { label: "Most on a day", value: maxDay, unit: "PU", Icon: MuscleIcon, color: "text-primary", isCustomIcon: true },
             { label: "Average", value: avg, unit: "/day", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
-            { label: "Streak", value: streak, unit: "days", Icon: Flame, color: "text-[#C029DE]", isCustomIcon: false },
+            { label: "Streak", value: streak, unit: "d", Icon: Flame, color: "#C029DE", isCustomIcon: false },
           ];
           return (
             <div className="flex gap-3 pt-4 mt-2 border-t border-[#3B404F]">
