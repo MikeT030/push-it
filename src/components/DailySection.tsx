@@ -93,7 +93,10 @@ const DailySection = () => {
         if (d < bestDist) { bestDist = d; bestIdx = i; }
       }
       const day = miniDays[bestIdx];
-      if (day) setVisibleMonth((prev) => isSameMonth(prev, day) ? prev : day);
+      if (day) {
+        setVisibleMonth((prev) => isSameMonth(prev, day) ? prev : day);
+        setCurrentMonth((prev) => isSameMonth(prev, day) ? prev : day);
+      }
     };
     updateVisibleMonth();
     el.addEventListener("scroll", updateVisibleMonth, { passive: true });
