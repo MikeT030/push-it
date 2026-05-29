@@ -62,7 +62,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               <p className="text-sm font-medium text-foreground truncate">
                 {user.display_name || `Member ${index + 1}`}
               </p>
-              <p className="text-xs text-primary-foreground">🔥 <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
+              <p className="text-xs text-primary-foreground">🔥 <span className="font-bold">{user.streak ?? 0} day</span> streak</p>
               <p className="text-xs text-foreground flex items-center gap-0.5">
                 <TrendingUp className="w-3 h-3 text-primary" /> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU
               </p>
