@@ -28,17 +28,17 @@ interface LeaderboardPodiumProps {
 }
 
 const rankColors = [
-"bg-gradient-to-b from-yellow-400 to-yellow-600",
+"bg-gradient-to-b from-yellow-500 to-yellow-700",
 "bg-gradient-to-b from-gray-300 to-gray-500",
 "bg-gradient-to-b from-amber-600 to-amber-800"];
 
 const rankTextColors = [
-"text-yellow-400",
+"text-yellow-500",
 "text-gray-300",
 "text-amber-600"];
 
 const rankBadgeColors = [
-"bg-yellow-500 text-black",
+"bg-yellow-600 text-black",
 "bg-gray-400 text-black",
 "bg-amber-700 text-white"];
 
