@@ -151,7 +151,7 @@ const ProgressRing = ({
             <span
               className="relative font-bold text-lg tracking-wider select-none"
               style={{
-                color: 'rgba(8, 14, 22, 0.85)',
+                color: 'transparent',
                 textShadow: [
                   // deep inner shadow (top-left) — light catches the upper inside wall
                   '-1px -1px 0 rgba(0,0,0,0.85)',
