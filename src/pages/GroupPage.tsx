@@ -420,8 +420,9 @@ const GroupPage = () => {
               </div>
 
               {/* Goal Card */}
-              <div className="card-glass rounded-2xl p-6 mb-6 animate-slide-up" style={{
-              animationDelay: "0.15s"
+              <div className="rounded-2xl p-6 mb-6 animate-slide-up" style={{
+              animationDelay: "0.15s",
+              background: "rgba(42,47,58,0.70)"
             }}>
                 <h2 className="text-lg font-bold text-foreground mb-4">
                   We Push Goal {new Date().getFullYear()}
