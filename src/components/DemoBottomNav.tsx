@@ -21,7 +21,7 @@ const DemoBottomNav = () => {
 
   return (
     <div className="relative w-full">
-      <div className="nav-bar px-3 py-[2px] flex items-stretch justify-between gap-3">
+      <div className="nav-bar p-3 flex items-stretch justify-between gap-3">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = activeId === tab.id;
