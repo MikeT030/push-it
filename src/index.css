@@ -428,13 +428,13 @@
   height: 22%;
   border-radius: 9999px;
   background: radial-gradient(circle, rgba(178,238,230,0.95) 0%, rgba(178,238,230,0.55) 35%, rgba(178,238,230,0) 70%);
-  animation: firefly-orbit-lg 7s linear infinite, firefly-pulse 2.4s ease-in-out infinite;
+  animation: firefly-orbit-lg 16s linear infinite, firefly-pulse 2.4s ease-in-out infinite;
   will-change: transform, opacity, filter;
 }
 .firefly-wrap::after {
   width: 14%;
   height: 14%;
-  animation: firefly-orbit-sm 4.5s linear infinite reverse, firefly-pulse 1.7s ease-in-out infinite;
+  animation: firefly-orbit-sm 11s linear infinite reverse, firefly-pulse 1.7s ease-in-out infinite;
   opacity: 0.7;
 }
 
