@@ -110,8 +110,8 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                 <span className="text-2xl font-black text-gray-900/50">2</span>
               </div>
           }
-            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-yellow-300 to-yellow-600 flex items-center justify-center`}>
-              <span className="text-3xl font-black text-yellow-900/50">1</span>
+            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-yellow-400 to-yellow-700 flex items-center justify-center`}>
+              <span className="text-3xl font-black text-yellow-950/50">1</span>
             </div>
             {top3.length >= 3 &&
           <div className={`flex-1 ${podiumHeights[2]} rounded-t-lg bg-gradient-to-b from-amber-500 to-amber-800 flex items-center justify-center`}>
