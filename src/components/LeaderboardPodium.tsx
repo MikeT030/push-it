@@ -59,7 +59,7 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
       </div>
       
       {/* Avatar */}
-      <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-400" : rank === 1 ? "border-gray-400" : "border-amber-700"} flex items-center justify-center`} style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
+      <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-500" : rank === 1 ? "border-gray-400" : "border-amber-700"} flex items-center justify-center`} style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
         {avatar ?
         <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
         <img src={defaultAvatar} alt="Default avatar" className="w-3/4 h-3/4 object-contain" />
