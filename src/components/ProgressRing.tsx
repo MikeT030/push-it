@@ -144,6 +144,10 @@ const ProgressRing = ({
                 filter: 'blur(5px)',
               }}
             />
+            {/* Mint hue shimmer (#b2eee6) */}
+            <div className="mint-shimmer" />
+
+
 
             <span
               className="relative font-bold text-lg tracking-wider select-none"
