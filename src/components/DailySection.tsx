@@ -288,7 +288,7 @@ const DailySection = () => {
           return (
             <div className="flex gap-3 pt-4 mt-2 border-t border-[#3B404F]">
               {items.map((s) => (
-                <div key={s.label} className="flex-1 flex items-center gap-2">
+                <div key={s.label} className="flex-1 flex items-start gap-2">
                   {s.label === "Average" ? (
                     <span className={`text-xl font-bold ${s.color}`}>Ø</span>
                   ) : s.isCustomIcon ? (
