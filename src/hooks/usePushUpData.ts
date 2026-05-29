@@ -231,6 +231,7 @@ export const usePushUpData = () => {
     getCurrentStreak,
     getDaysBehindSchedule,
     getWeeklyAverage,
+    getMaxSingleDay,
     setYearlyGoal,
   };
 };
