@@ -281,7 +281,7 @@ const DailySection = () => {
             </svg>
           );
           const items = [
-            { label: "Most logged", value: maxDay, unit: "PU/day", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
+            { label: "Most logged", value: maxDay, unit: "PU/day", Icon: MuscleIcon, color: "text-[#f97171]", isCustomIcon: true },
             { label: "Average", value: avg, unit: "/day", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: "Streak", value: streak, unit: "day", Icon: Flame, color: "#C029DE", isCustomIcon: false },
           ];
