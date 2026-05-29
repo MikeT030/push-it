@@ -85,14 +85,24 @@
     @apply border-border;
   }
 
+  html, body {
+    min-height: 100vh;
+  }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply text-foreground font-sans antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(180deg, #06438F 0%, #021329 40%);
+    background-attachment: fixed;
   }
 
   html {
     @apply scroll-smooth;
   }
+}
+
+.min-h-screen.bg-background {
+  background-color: transparent;
 }
 
 @layer utilities {
