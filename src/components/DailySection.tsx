@@ -330,20 +330,16 @@ const DailySection = () => {
               else if (dayProgress >= 100) { baseRgb = [112, 54, 255]; textColor = "text-white"; }
               else { baseRgb = [10, 186, 181]; textColor = "text-white"; }
             }
-            if (isSelected) { baseRgb = [10, 186, 181]; textColor = "text-white"; }
+            if (isSelected) { baseRgb = null; textColor = "text-primary"; }
 
             const tinted = baseRgb !== null;
             const [r, g, b] = baseRgb ?? [42, 47, 58];
-            const darker = (n: number, amt: number) => Math.max(n - amt, 0);
-            const o1 = tinted ? 0.95 : 0.55;
-            const o2 = tinted ? 0.85 : 0.45;
-            const o3 = tinted ? 0.75 : 0.35;
 
             return (
               <div
                 key={day.toISOString()}
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
-                style={{
+                style={isSelected ? { flex: "0 0 calc((100% - 16px) / 3)" } : {
                   flex: "0 0 calc((100% - 16px) / 3)",
                   background: tinted
                     ? `rgba(${r},${g},${b},0.53)`
