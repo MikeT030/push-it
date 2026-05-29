@@ -134,9 +134,9 @@ const TotalPage = () => {
       />
 
       
-      <div className="relative max-w-lg mx-auto px-6 py-8">
+      <div className="relative max-w-lg mx-auto px-6 py-8 space-y-6">
         {/* Profile Button + Header */}
-        <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
+        <div className="flex justify-between items-center animate-fade-in">
           <h1 className="text-4xl font-black text-foreground tracking-tight">You Push</h1>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
             {avatar ? (
@@ -148,7 +148,7 @@ const TotalPage = () => {
         </div>
 
         {/* Date */}
-        <header className="mb-2 animate-fade-in">
+        <header className="animate-fade-in">
           <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide">
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
@@ -156,18 +156,18 @@ const TotalPage = () => {
 
 
         {/* Daily Push-ups + Calendar */}
-        <div className="mt-6">
+        <div>
           <DailySection />
         </div>
 
         {/* Weekly Overview & Goal Cards Grid */}
-        <div className="grid grid-cols-2 gap-4 mt-6">
+        <div className="grid grid-cols-2 gap-4">
           {/* Weekly Overview Card */}
           <WeeklyOverview />
         </div>
 
         {/* Stats Strip - Horizontally Scrollable */}
-        <div className="flex gap-3 overflow-x-auto mt-6 -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+        <div className="flex gap-3 overflow-x-auto -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
           {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining" && s.label !== "Average" && s.label !== "Streak").map((stat, index) => {
             const Icon = stat.icon;
             return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{
@@ -191,7 +191,8 @@ const TotalPage = () => {
         </div>
 
         {/* Main Progress Card */}
-        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up">
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
+
           <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
 
           <div className="h-px mb-4 bg-[#3b404f]" />
