@@ -111,19 +111,27 @@ const ProgressRing = ({
 
           {/* Physical glass button face */}
           <div
-            className="relative flex items-center justify-center rounded-full backdrop-blur-xl transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.985]"
+            className="relative flex items-center justify-center rounded-full backdrop-blur-xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.97]"
             style={{
               width: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
+              transform: isPulsing ? 'translateY(1.5px) scale(0.96)' : undefined,
               background:
                 'radial-gradient(circle at 50% 35%, rgba(90,108,128,0.55) 0%, rgba(60,76,96,0.55) 55%, rgba(40,54,72,0.60) 90%, rgba(32,44,60,0.65) 100%)',
-              boxShadow: [
-                'inset 0 2px 4px rgba(255,255,255,0.18)',
-                'inset 0 -4px 12px rgba(0,0,0,0.35)',
-                'inset 0 0 0 1px rgba(255,255,255,0.12)',
-                '0 10px 24px rgba(0,0,0,0.35)',
-                '0 4px 10px rgba(0,0,0,0.22)',
-              ].join(', '),
+              boxShadow: isPulsing
+                ? [
+                    'inset 0 4px 10px rgba(0,0,0,0.55)',
+                    'inset 0 -2px 4px rgba(255,255,255,0.06)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.08)',
+                    '0 2px 6px rgba(0,0,0,0.25)',
+                  ].join(', ')
+                : [
+                    'inset 0 2px 4px rgba(255,255,255,0.18)',
+                    'inset 0 -4px 12px rgba(0,0,0,0.35)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.12)',
+                    '0 10px 24px rgba(0,0,0,0.35)',
+                    '0 4px 10px rgba(0,0,0,0.22)',
+                  ].join(', '),
             }}
           >
             {/* Top specular highlight */}
