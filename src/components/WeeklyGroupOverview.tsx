@@ -204,7 +204,6 @@ const WeeklyGroupOverview = () => {
         >
           {weekOptions.map((week, index) => {
             const isSelected = index === selectedWeekIndex;
-            const [r, g, b] = isSelected ? [10, 186, 181] : [42, 47, 58];
             return (
               <button
                 key={week.weekNumber}
@@ -220,8 +219,8 @@ const WeeklyGroupOverview = () => {
                     setIsOpen(true);
                   }
                 }}
-                style={{
-                  background: `rgba(${r},${g},${b},0.70)`,
+                style={isSelected ? undefined : {
+                  background: `rgba(42,47,58,0.70)`,
                   boxShadow: [
                     'inset 0 2px 4px rgba(0,0,0,0.3)',
                     'inset 0 -1px 2px rgba(255,255,255,0.05)',
@@ -230,7 +229,7 @@ const WeeklyGroupOverview = () => {
                   ].join(', '),
                 }}
                 className={`relative overflow-hidden flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
-                  isSelected ? "text-white" : "text-muted-foreground"
+                  isSelected ? "text-primary bg-transparent" : "text-muted-foreground"
                 }`}
               >
                 {`Wk ${week.weekNumber} · ${format(week.startDate, "MMM d")}`}
