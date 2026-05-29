@@ -109,57 +109,39 @@ const ProgressRing = ({
             filter: 'drop-shadow(0 0 12px #BA25D8) drop-shadow(0 0 24px rgba(186, 37, 216, 0.4))'
           } : undefined}>
 
-          {/* Physical glass button face */}
+          {/* Physical haptic button face - flat matte dark */}
           <div
-            className="relative flex items-center justify-center rounded-full backdrop-blur-xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.97]"
+            className="relative flex items-center justify-center rounded-full transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98]"
             style={{
               width: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
-              transform: isPulsing ? 'translateY(1.5px) scale(0.96)' : undefined,
+              transform: isPulsing ? 'translateY(1.5px) scale(0.97)' : undefined,
               background:
-                'radial-gradient(circle at 50% 60%, rgba(78,94,114,0.55) 0%, rgba(68,84,104,0.55) 60%, rgba(48,62,82,0.60) 92%, rgba(36,48,66,0.65) 100%)',
+                'radial-gradient(circle at 50% 55%, #2a2f3a 0%, #1f242e 60%, #161a22 100%)',
               boxShadow: isPulsing
                 ? [
-                    'inset 0 4px 10px rgba(0,0,0,0.55)',
-                    'inset 0 -2px 4px rgba(255,255,255,0.06)',
-                    'inset 0 0 0 1px rgba(255,255,255,0.08)',
-                    '0 2px 6px rgba(0,0,0,0.25)',
+                    'inset 0 3px 8px rgba(0,0,0,0.7)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.04)',
+                    'inset 0 0 0 1px rgba(0,0,0,0.6)',
                   ].join(', ')
                 : [
-                    'inset 0 1px 0 rgba(255,255,255,0.10)',
-                    'inset 0 -4px 12px rgba(0,0,0,0.35)',
-                    'inset 0 0 0 1px rgba(255,255,255,0.10)',
-                    '0 10px 24px rgba(0,0,0,0.35)',
-                    '0 4px 10px rgba(0,0,0,0.22)',
+                    'inset 0 2px 4px rgba(0,0,0,0.8)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.05)',
+                    'inset 0 0 0 1px rgba(0,0,0,0.5)',
+                    '0 2px 6px rgba(0,0,0,0.45)',
+                    '0 6px 14px rgba(0,0,0,0.35)',
                   ].join(', '),
             }}
           >
-            {/* Flat top sheen - very subtle, no dome */}
+            {/* Very subtle top sheen - matte, not glossy */}
             <div
-              className="pointer-events-none absolute inset-x-[10%] top-[6%] h-[6%] rounded-full opacity-60"
+              className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
               style={{
                 background:
-                  'linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)',
-                filter: 'blur(2px)',
+                  'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                filter: 'blur(3px)',
               }}
             />
-
-            {/* Bottom rim glow */}
-            <div
-              className="pointer-events-none absolute inset-x-[22%] bottom-[8%] h-[20%] rounded-full opacity-50"
-              style={{
-                background:
-                  'radial-gradient(ellipse at center, rgba(10,186,181,0.22) 0%, rgba(10,186,181,0) 75%)',
-                filter: 'blur(5px)',
-              }}
-            />
-            {/* Mint hue shimmer (#b2eee6) */}
-            <div className="mint-shimmer" />
-            {/* Captured swirling light (#b2eee6) */}
-            <div className="firefly-wrap" />
-
-
-
           </div>
 
         </div>
