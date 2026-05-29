@@ -108,7 +108,6 @@ const AdminPage = () => {
           <DemoBottomNav />
         </div>
       )}
-      </div>
     </div>
   );
 };
