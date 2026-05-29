@@ -51,10 +51,6 @@ const ProgressRing = ({
         style={{
           width: size,
           height: size,
-          ...(enableOuterGlow && {
-            borderRadius: '50%',
-            boxShadow: '0 0 0 2px #BA25D8, 0 4px 20px rgba(186, 37, 216, 0.4)'
-          })
         }}
         onClick={() => {
           setIsPulsing(true);
