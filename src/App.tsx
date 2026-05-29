@@ -8,6 +8,8 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
+import DemoBottomNav from "./components/DemoBottomNav";
+import { useDemoNav } from "./hooks/useDemoNav";
 import SplashScreen from "./components/SplashScreen";
 
 const DailyPage = lazy(() => import("./pages/DailyPage"));
@@ -47,6 +49,7 @@ const AppContent = () => {
   const location = useLocation();
   const { user } = useAuth();
   const showNav = user && ["/", "/daily", "/total", "/profile", "/group"].includes(location.pathname);
+  const demoNav = useDemoNav();
 
   const PageFallback = (
     <div className="min-h-screen bg-background flex items-center justify-center">
@@ -103,7 +106,15 @@ const AppContent = () => {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {showNav && <BottomNav />}
+      {showNav && (
+        demoNav ? (
+          <div className="fixed bottom-0 left-0 right-0 px-4 pb-[max(env(safe-area-inset-bottom),1rem)] z-50">
+            <DemoBottomNav />
+          </div>
+        ) : (
+          <BottomNav />
+        )
+      )}
     </Suspense>
   );
 };
