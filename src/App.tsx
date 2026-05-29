@@ -8,6 +8,8 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
+import DemoBottomNav from "./components/DemoBottomNav";
+import { useDemoNav } from "./hooks/useDemoNav";
 import SplashScreen from "./components/SplashScreen";
 
 const DailyPage = lazy(() => import("./pages/DailyPage"));
