@@ -114,7 +114,7 @@ const WeeklyOverview = () => {
         <div
           ref={scrollRef}
           data-horizontal-scroll
-          className="flex gap-2 overflow-x-auto mb-4 scrollbar-hide -mx-2 px-2"
+          className="flex gap-2 overflow-x-auto mb-4 scrollbar-hide -mx-2 px-2 pb-[2px] pt-[2px]"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {weekOptions.map((week, index) => {
