@@ -50,7 +50,7 @@ const AdminPage = () => {
           </div>
         </header>
 
-        <div className="card-glass rounded-2xl p-6 animate-slide-up">
+        <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-6 animate-slide-up">
           <div className="flex items-center gap-3 mb-4">
             <Shield className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-bold text-foreground">Welcome, admin</h2>
