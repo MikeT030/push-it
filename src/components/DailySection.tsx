@@ -204,8 +204,33 @@ const DailySection = () => {
           </div>
           <div className="relative flex items-center justify-center mt-[20px]">
             {isEditable &&
-              <button onClick={() => adjustCount(-10)} disabled={currentCount < 10} className="absolute left-1/2 -translate-x-[calc(69px+1rem+22px+30px)] w-11 h-11 rounded-full border border-muted-foreground/30 bg-transparent text-foreground hover:bg-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center">
-                <Minus className="w-5 h-5" />
+              <button
+                onClick={() => adjustCount(-10)}
+                disabled={currentCount < 10}
+                aria-label="Decrease by 10"
+                className="absolute left-1/2 -translate-x-[calc(69px+1rem+22px+30px)] w-11 h-11 rounded-full flex items-center justify-center text-foreground transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed overflow-hidden"
+                style={{
+                  background:
+                    'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                  backdropFilter: 'blur(6px) saturate(1.2)',
+                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                  boxShadow: [
+                    'inset 0 2px 4px rgba(0,0,0,0.55)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                    '0 2px 6px rgba(0,0,0,0.3)',
+                    '0 6px 14px rgba(0,0,0,0.25)',
+                  ].join(', '),
+                }}
+              >
+                <span
+                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                    filter: 'blur(3px)',
+                  }}
+                />
+                <Minus className="w-5 h-5 relative" />
               </button>
             }
             <button onClick={() => isEditable && adjustCount(10)} disabled={!isEditable} className="disabled:opacity-50">
