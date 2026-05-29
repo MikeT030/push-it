@@ -2,6 +2,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeft, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import PlayerCard from "@/components/PlayerCard";
+import { getAvatarById } from "@/data/avatars";
 
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
@@ -18,6 +20,8 @@ const AdminPage = () => {
   if (!isAdmin) {
     return <Navigate to="/profile" replace />;
   }
+
+  const demoAvatar = getAvatarById("kangaroo");
 
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
@@ -49,6 +53,29 @@ const AdminPage = () => {
           <p className="text-muted-foreground text-sm">
             This is the admin area. Admin tools and controls will live here.
           </p>
+        </div>
+
+        {/* Demo Player Card */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+          <h2 className="text-lg font-bold text-foreground mb-2">
+            Demo Player Card
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Sandbox copy of the Player Card. Edit it here before rolling changes
+            out to all users.
+          </p>
+          <div className="py-4">
+            <PlayerCard
+              displayName="MichiPU"
+              avatar={demoAvatar}
+              totalPushUps={17352}
+              yearlyGoal={30000}
+              currentStreak={148}
+              weeklyAverage={117}
+              yearProgress={58}
+              daysWithEntries={148}
+            />
+          </div>
         </div>
       </div>
     </div>
