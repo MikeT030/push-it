@@ -31,6 +31,7 @@ const DailySection = () => {
   const progress = isLoaded ? getDailyProgress(selectedDate) : 0;
   const isEditable = canEditDate(selectedDate);
   const miniScrollRef = useRef<HTMLDivElement>(null);
+  const [visibleMonth, setVisibleMonth] = useState<Date>(new Date());
 
   const miniDays = useMemo(() => {
     const today = new Date();
@@ -44,6 +45,29 @@ const DailySection = () => {
       miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
     }
   }, [isLoaded]);
+
+  useEffect(() => {
+    const el = miniScrollRef.current;
+    if (!el) return;
+    const updateVisibleMonth = () => {
+      const children = Array.from(el.children) as HTMLElement[];
+      if (children.length === 0) return;
+      const centerX = el.scrollLeft + el.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < children.length; i++) {
+        const c = children[i];
+        const mid = c.offsetLeft + c.offsetWidth / 2;
+        const d = Math.abs(mid - centerX);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      }
+      const day = miniDays[bestIdx];
+      if (day) setVisibleMonth((prev) => isSameMonth(prev, day) ? prev : day);
+    };
+    updateVisibleMonth();
+    el.addEventListener("scroll", updateVisibleMonth, { passive: true });
+    return () => el.removeEventListener("scroll", updateVisibleMonth);
+  }, [miniDays, isLoaded]);
 
   useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
@@ -200,7 +224,7 @@ const DailySection = () => {
           {isCalendarOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
         </div>
         <p className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 px-1">
-          {format(selectedDate, "MMMM yyyy")}
+          {format(visibleMonth, "MMMM yyyy")}
         </p>
         <div
           ref={miniScrollRef}
