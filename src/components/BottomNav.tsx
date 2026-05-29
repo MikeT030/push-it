@@ -31,7 +31,7 @@ const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`relative overflow-hidden flex-1 flex flex-col items-center justify-center gap-1.5 py-[11px] pb-[11px] rounded-2xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
+              className={`relative overflow-hidden w-[140px] flex flex-col items-center justify-center gap-1.5 py-[11px] pb-[11px] rounded-2xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
                 active ? "text-[#0ABAB5]" : "text-foreground"
               }`}
               style={{
