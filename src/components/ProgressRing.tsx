@@ -244,7 +244,7 @@ const ProgressRing = ({
             <span
               className="pointer-events-none select-none uppercase"
               style={{
-                fontFamily: '"Helvetica Neue", Inter, system-ui, sans-serif',
+                fontFamily: '"Poppins", "Helvetica Neue", Inter, system-ui, sans-serif',
                 fontSize: `${Math.max(10, size * 0.11)}px`,
                 fontWeight: 900,
                 letterSpacing: '0.18em',
