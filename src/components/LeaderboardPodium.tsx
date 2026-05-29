@@ -106,15 +106,15 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
 
           <div className="flex items-end justify-center gap-1 mx-auto max-w-[280px] pt-[8px]">
             {top3.length >= 2 &&
-          <div className={`flex-1 ${podiumHeights[0]} rounded-t-lg bg-gradient-to-b from-gray-300 to-gray-600 flex items-center justify-center`}>
+          <div className={`flex-1 ${podiumHeights[0]} rounded-t-lg bg-gradient-to-b from-gray-300 to-gray-600 flex items-center justify-center opacity-80`}>
                 <span className="text-2xl font-black text-gray-900/50">2</span>
               </div>
           }
-            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-yellow-400 to-yellow-700 flex items-center justify-center`}>
+            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-yellow-400 to-yellow-700 flex items-center justify-center opacity-80`}>
               <span className="text-3xl font-black text-yellow-950/50">1</span>
             </div>
             {top3.length >= 3 &&
-          <div className={`flex-1 ${podiumHeights[2]} rounded-t-lg bg-gradient-to-b from-amber-500 to-amber-800 flex items-center justify-center`}>
+          <div className={`flex-1 ${podiumHeights[2]} rounded-t-lg bg-gradient-to-b from-amber-500 to-amber-800 flex items-center justify-center opacity-80`}>
                 <span className="text-xl font-black text-amber-950/50">3</span>
               </div>
           }
