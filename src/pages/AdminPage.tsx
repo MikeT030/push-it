@@ -82,6 +82,18 @@ const AdminPage = () => {
           </div>
         </div>
 
+        {/* Demo Daily Section */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.075s" }}>
+          <h2 className="text-lg font-bold text-foreground mb-2">
+            Demo Daily Section
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Sandbox copy of the Daily Section. Edit it here before rolling
+            changes out to all users.
+          </p>
+          <DailySection />
+        </div>
+
         {/* Demo Bottom Navigation */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
           <h2 className="text-lg font-bold text-foreground mb-2">
