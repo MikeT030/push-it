@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import BrickBreakerGame from "./BrickBreakerGame";
 import { useGame } from "@/contexts/GameContext";
 
