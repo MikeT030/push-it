@@ -344,26 +344,16 @@ const DailySection = () => {
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
                 style={{
                   flex: "0 0 calc((100% - 16px) / 3)",
-                  background: `radial-gradient(circle at 50% 35%, rgba(${r},${g},${b},${o1}) 0%, rgba(${darker(r,30)},${darker(g,30)},${darker(b,30)},${o2}) 60%, rgba(${darker(r,55)},${darker(g,55)},${darker(b,55)},${o3}) 100%)`,
-                  backdropFilter: 'blur(6px) saturate(1.2)',
-                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                  background: tinted
+                    ? `rgba(${r},${g},${b},0.92)`
+                    : `rgba(${r},${g},${b},0.45)`,
                   boxShadow: [
-                    'inset 0 2px 4px rgba(0,0,0,0.45)',
-                    'inset 0 -1px 2px rgba(255,255,255,0.10)',
-                    'inset 0 0 0 1px rgba(255,255,255,0.08)',
-                    '0 2px 6px rgba(0,0,0,0.3)',
-                    '0 6px 14px rgba(0,0,0,0.25)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                    '0 1px 2px rgba(0,0,0,0.25)',
                   ].join(', '),
                 }}
                 className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
               >
-                <span
-                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[18%] rounded-full opacity-40"
-                  style={{
-                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 100%)',
-                    filter: 'blur(3px)',
-                  }}
-                />
                 <span className="relative text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
                 <span className="relative text-lg font-bold">{format(day, "d")}</span>
               </div>
