@@ -199,6 +199,9 @@ const DailySection = () => {
           <h2 className="text-lg font-bold text-foreground">Calendar</h2>
           {isCalendarOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
         </div>
+        <p className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 px-1">
+          {format(selectedDate, "MMMM yyyy")}
+        </p>
         <div
           ref={miniScrollRef}
           onClick={(e) => e.stopPropagation()}
