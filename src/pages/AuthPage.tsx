@@ -79,7 +79,7 @@ const AuthPage = () => {
         <div className="text-center mb-8">
           <h1 className="text-5xl font-black text-gradient">Push-it</h1>
           <p className="text-muted-foreground mt-2">
-            {isLogin ? "Welcome back!" : "Start your journey"}
+            {isLogin ? "Welcome back!" : "30K Push Ups - 1 Year"}
           </p>
         </div>
 
