@@ -28,17 +28,17 @@ interface LeaderboardPodiumProps {
 }
 
 const rankColors = [
-"bg-gradient-to-b from-yellow-400 to-yellow-600",
+"bg-gradient-to-b from-yellow-500 to-yellow-700",
 "bg-gradient-to-b from-gray-300 to-gray-500",
 "bg-gradient-to-b from-amber-600 to-amber-800"];
 
 const rankTextColors = [
-"text-yellow-400",
+"text-yellow-500",
 "text-gray-300",
 "text-amber-600"];
 
 const rankBadgeColors = [
-"bg-yellow-500 text-black",
+"bg-yellow-600 text-black",
 "bg-gray-400 text-black",
 "bg-amber-700 text-white"];
 
@@ -59,7 +59,7 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
       </div>
       
       {/* Avatar */}
-      <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-400" : rank === 1 ? "border-gray-400" : "border-amber-700"} flex items-center justify-center`} style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
+      <div className={`${sizes[rank]} rounded-full overflow-hidden border-2 ${rank === 0 ? "border-yellow-500" : rank === 1 ? "border-gray-400" : "border-amber-700"} flex items-center justify-center`} style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}>
         {avatar ?
         <img src={avatar.src} alt={user.display_name || "User"} className="w-full h-full object-cover" /> :
         <img src={defaultAvatar} alt="Default avatar" className="w-3/4 h-3/4 object-contain" />
@@ -110,8 +110,8 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                 <span className="text-2xl font-black text-gray-900/50">2</span>
               </div>
           }
-            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-yellow-300 to-yellow-600 flex items-center justify-center`}>
-              <span className="text-3xl font-black text-yellow-900/50">1</span>
+            <div className={`flex-1 ${podiumHeights[1]} rounded-t-lg bg-gradient-to-b from-yellow-400 to-yellow-700 flex items-center justify-center`}>
+              <span className="text-3xl font-black text-yellow-950/50">1</span>
             </div>
             {top3.length >= 3 &&
           <div className={`flex-1 ${podiumHeights[2]} rounded-t-lg bg-gradient-to-b from-amber-500 to-amber-800 flex items-center justify-center`}>
