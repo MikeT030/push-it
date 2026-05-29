@@ -23,7 +23,8 @@ const DailySection = () => {
     dailyTarget,
     isLoaded,
     getCurrentStreak,
-    getTotalPushUps
+    getTotalPushUps,
+    getMaxSingleDay
   } = usePushUpData();
 
   const currentCount = isLoaded ? getEntryForDate(selectedDate) : 0;
