@@ -120,34 +120,35 @@ const ProgressRing = ({
               width: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               background:
-                'radial-gradient(circle at 50% 28%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.12) 80%, rgba(255,255,255,0.18) 100%)',
+                'radial-gradient(circle at 50% 35%, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.18) 55%, rgba(255,255,255,0.10) 90%, rgba(255,255,255,0.14) 100%)',
               boxShadow: [
-                'inset 0 1px 1px rgba(255,255,255,0.7)',
-                'inset 0 -3px 8px rgba(255,255,255,0.18)',
-                'inset 0 0 0 1px rgba(255,255,255,0.35)',
-                '0 6px 18px rgba(0,0,0,0.35)',
-                '0 2px 6px rgba(0,0,0,0.2)',
+                'inset 0 2px 4px rgba(255,255,255,0.35)',
+                'inset 0 -4px 12px rgba(255,255,255,0.10)',
+                'inset 0 0 0 1px rgba(255,255,255,0.18)',
+                '0 10px 24px rgba(0,0,0,0.22)',
+                '0 4px 10px rgba(0,0,0,0.12)',
               ].join(', '),
             }}
           >
             {/* Top specular highlight */}
             <div
-              className="pointer-events-none absolute inset-x-[10%] top-[5%] h-[38%] rounded-full"
+              className="pointer-events-none absolute inset-x-[14%] top-[8%] h-[36%] rounded-full"
               style={{
                 background:
-                  'radial-gradient(ellipse at center, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.12) 45%, rgba(255,255,255,0) 78%)',
-                filter: 'blur(1px)',
+                  'radial-gradient(ellipse at center, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.08) 55%, rgba(255,255,255,0) 85%)',
+                filter: 'blur(4px)',
               }}
             />
             {/* Bottom rim glow */}
             <div
-              className="pointer-events-none absolute inset-x-[18%] bottom-[6%] h-[18%] rounded-full opacity-70"
+              className="pointer-events-none absolute inset-x-[22%] bottom-[8%] h-[20%] rounded-full opacity-50"
               style={{
                 background:
-                  'radial-gradient(ellipse at center, rgba(10,186,181,0.28) 0%, rgba(10,186,181,0) 70%)',
-                filter: 'blur(2px)',
+                  'radial-gradient(ellipse at center, rgba(10,186,181,0.22) 0%, rgba(10,186,181,0) 75%)',
+                filter: 'blur(5px)',
               }}
             />
+
             <span
               className="relative font-bold text-lg tracking-wider select-none"
               style={{
