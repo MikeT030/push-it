@@ -3,6 +3,7 @@ import { ArrowLeft, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import PlayerCard from "@/components/PlayerCard";
+import DemoBottomNav from "@/components/DemoBottomNav";
 import { getAvatarById } from "@/data/avatars";
 
 const AdminPage = () => {
@@ -75,6 +76,20 @@ const AdminPage = () => {
               yearProgress={58}
               daysWithEntries={148}
             />
+          </div>
+        </div>
+
+        {/* Demo Bottom Navigation */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+          <h2 className="text-lg font-bold text-foreground mb-2">
+            Demo Bottom Navigation
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Sandbox copy of the bottom nav. Edit it here before rolling changes
+            out to all users.
+          </p>
+          <div className="py-4">
+            <DemoBottomNav />
           </div>
         </div>
       </div>
