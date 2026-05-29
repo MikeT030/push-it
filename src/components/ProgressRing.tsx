@@ -204,7 +204,7 @@ const ProgressRing = ({
             filter: 'drop-shadow(0 0 12px #BA25D8) drop-shadow(0 0 24px rgba(186, 37, 216, 0.4))'
           } : undefined}>
 
-          {/* Physical haptic button face - flat matte dark */}
+          {/* Physical haptic button face - translucent glass */}
           <div
             className="relative flex items-center justify-center rounded-full transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98]"
             style={{
@@ -212,19 +212,21 @@ const ProgressRing = ({
               height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
               transform: isPulsing ? 'translateY(1.5px) scale(0.97)' : undefined,
               background:
-                'radial-gradient(circle at 50% 55%, #2a2f3a 0%, #1f242e 60%, #161a22 100%)',
+                'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.45) 0%, rgba(31,36,46,0.35) 60%, rgba(22,26,34,0.25) 100%)',
+              backdropFilter: 'blur(6px) saturate(1.2)',
+              WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
               boxShadow: isPulsing
                 ? [
-                    'inset 0 3px 8px rgba(0,0,0,0.7)',
-                    'inset 0 -1px 2px rgba(255,255,255,0.04)',
-                    'inset 0 0 0 1px rgba(0,0,0,0.6)',
+                    'inset 0 3px 8px rgba(0,0,0,0.5)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.06)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.08)',
                   ].join(', ')
                 : [
-                    'inset 0 2px 4px rgba(0,0,0,0.8)',
-                    'inset 0 -1px 2px rgba(255,255,255,0.05)',
-                    'inset 0 0 0 1px rgba(0,0,0,0.5)',
-                    '0 2px 6px rgba(0,0,0,0.45)',
-                    '0 6px 14px rgba(0,0,0,0.35)',
+                    'inset 0 2px 4px rgba(0,0,0,0.55)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                    '0 2px 6px rgba(0,0,0,0.3)',
+                    '0 6px 14px rgba(0,0,0,0.25)',
                   ].join(', '),
             }}
           >
