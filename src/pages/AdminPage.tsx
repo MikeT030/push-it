@@ -95,13 +95,19 @@ const AdminPage = () => {
             variant={demoNavActive ? "destructive" : "default"}
             className="mb-4 w-full"
           >
-            {demoNavActive ? "Deactivate Demo Nav (use real)" : "Activate Demo Nav app-wide"}
+            {demoNavActive ? "Deactivate Demo Nav" : "Activate Demo Nav"}
           </Button>
           <div className="py-4">
             <DemoBottomNav />
           </div>
         </div>
       </div>
+
+      {demoNavActive && (
+        <div className="fixed bottom-0 left-0 right-0 px-4 pb-[max(env(safe-area-inset-bottom),1rem)] z-50">
+          <DemoBottomNav />
+        </div>
+      )}
     </div>
   );
 };
