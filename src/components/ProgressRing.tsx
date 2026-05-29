@@ -148,7 +148,18 @@ const ProgressRing = ({
                 filter: 'blur(2px)',
               }}
             />
-            <span className="relative font-medium text-primary text-lg drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]">
+            <span
+              className="relative font-semibold text-lg tracking-wide"
+              style={{
+                color: 'rgba(10, 186, 181, 0.55)',
+                textShadow: [
+                  '0 -1px 1px rgba(0,0,0,0.85)',
+                  '0 1px 0 rgba(255,255,255,0.18)',
+                  'inset 0 1px 1px rgba(0,0,0,0.6)',
+                ].join(', '),
+                filter: 'drop-shadow(0 1px 0 rgba(255,255,255,0.08))',
+              }}
+            >
               Push it
             </span>
           </div>
