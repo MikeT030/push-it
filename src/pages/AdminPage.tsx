@@ -5,6 +5,7 @@ import { useIsAdmin } from "@/hooks/useIsAdmin";
 import PlayerCard from "@/components/PlayerCard";
 import DemoBottomNav from "@/components/DemoBottomNav";
 import { getAvatarById } from "@/data/avatars";
+import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
