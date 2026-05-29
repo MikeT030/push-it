@@ -135,8 +135,9 @@ const TotalPage = () => {
 
       
       <div className="relative max-w-lg mx-auto px-6 py-8">
-        {/* Profile Button */}
-        <div className="flex justify-end items-center mb-4">
+        {/* Profile Button + Header */}
+        <div className="flex justify-between items-center mb-4 animate-fade-in">
+          <h1 className="text-4xl font-black text-foreground tracking-tight">You Push</h1>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
             {avatar ? (
               <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
@@ -146,10 +147,9 @@ const TotalPage = () => {
           </button>
         </div>
 
-        {/* Header */}
+        {/* Date */}
         <header className="mb-2 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">You Push</h1>
-          <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide mt-1">
+          <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide">
             {format(new Date(), "EEEE, d. MMMM")}
           </p>
         </header>
