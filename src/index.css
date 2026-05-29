@@ -392,8 +392,11 @@
 
 /* Captured swirling firefly light inside glass button */
 @keyframes firefly-orbit {
-  0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(28%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(28%) rotate(-360deg); }
+  0%   { transform: translate(-50%, -50%) rotate(0deg)   translateX(0%)  rotate(0deg); }
+  25%  { transform: translate(-50%, -50%) rotate(90deg)  translateX(34%) rotate(-90deg); }
+  50%  { transform: translate(-50%, -50%) rotate(180deg) translateX(0%)  rotate(-180deg); }
+  75%  { transform: translate(-50%, -50%) rotate(270deg) translateX(34%) rotate(-270deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(0%)  rotate(-360deg); }
 }
 @keyframes firefly-pulse {
   0%, 100% { opacity: 0.55; filter: blur(4px); }
