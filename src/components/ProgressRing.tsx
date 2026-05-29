@@ -113,12 +113,47 @@ const ProgressRing = ({
             filter: 'drop-shadow(0 0 12px #BA25D8) drop-shadow(0 0 24px rgba(186, 37, 216, 0.4))'
           } : undefined}>
 
-          <div className="flex flex-col items-center">
-            <span className="font-medium text-primary text-lg">
+          {/* Physical button face */}
+          <div
+            className="relative flex items-center justify-center rounded-full transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.985]"
+            style={{
+              width: `calc(100% - ${strokeWidth * 2 + 4}px)`,
+              height: `calc(100% - ${strokeWidth * 2 + 4}px)`,
+              background:
+                'radial-gradient(circle at 50% 30%, #2a3142 0%, #1a2030 45%, #0d1220 85%, #080c16 100%)',
+              boxShadow: [
+                'inset 0 2px 2px rgba(255,255,255,0.18)',
+                'inset 0 -3px 6px rgba(0,0,0,0.55)',
+                'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                '0 6px 14px rgba(0,0,0,0.55)',
+                '0 2px 4px rgba(0,0,0,0.4)',
+              ].join(', '),
+            }}
+          >
+            {/* Top specular highlight */}
+            <div
+              className="pointer-events-none absolute inset-x-[12%] top-[6%] h-[34%] rounded-full"
+              style={{
+                background:
+                  'radial-gradient(ellipse at center, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0) 75%)',
+                filter: 'blur(1px)',
+              }}
+            />
+            {/* Bottom rim glow */}
+            <div
+              className="pointer-events-none absolute inset-x-[18%] bottom-[6%] h-[18%] rounded-full opacity-60"
+              style={{
+                background:
+                  'radial-gradient(ellipse at center, rgba(10,186,181,0.25) 0%, rgba(10,186,181,0) 70%)',
+                filter: 'blur(2px)',
+              }}
+            />
+            <span className="relative font-medium text-primary text-lg drop-shadow-[0_1px_0_rgba(0,0,0,0.6)]">
               Push it
             </span>
           </div>
         </div>
+
 
       </div>
       
