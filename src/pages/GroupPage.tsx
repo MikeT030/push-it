@@ -189,7 +189,9 @@ const GroupPage = () => {
 
   // Compute period-filtered leaderboard users
   const filteredUsers = useMemo(() => {
-    if (leaderboardPeriod === "alltime") return users;
+    if (leaderboardPeriod === "alltime") {
+      return users.filter((u) => u.total_pushups > 0);
+    }
 
     const now = new Date();
     let periodStart: Date;
@@ -227,8 +229,10 @@ const GroupPage = () => {
         avg_pushups: pt ? pt.total / pt.days.size : 0
       };
     }).
+    filter((u) => u.total_pushups > 0).
     sort((a, b) => b.total_pushups - a.total_pushups);
   }, [users, allEntries, leaderboardPeriod]);
+
   const stats = useMemo(() => {
     const totalMembers = users.length;
     const totalPushups = users.reduce((sum, u) => sum + u.total_pushups, 0);
