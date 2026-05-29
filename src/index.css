@@ -92,7 +92,7 @@
   body {
     @apply text-foreground font-sans antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #0C2544 0%, #101214 100%);
+    background: radial-gradient(ellipse at top left, #0C2544 0%, #101214 70%);
     background-attachment: fixed;
   }
 
