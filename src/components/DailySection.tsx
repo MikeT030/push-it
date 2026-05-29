@@ -230,7 +230,7 @@ const DailySection = () => {
                     filter: 'blur(3px)',
                   }}
                 />
-                <Minus className="w-5 h-5 relative" />
+                <Minus className="lucide lucide-minus w-5 h-5 relative text-slate-100" />
               </button>
             }
             <button onClick={() => isEditable && adjustCount(10)} disabled={!isEditable} className="disabled:opacity-50">
