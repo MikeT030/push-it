@@ -287,8 +287,9 @@ const GroupPage = () => {
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
-        {/* Profile Button */}
-        <div className="flex justify-end items-center mb-4">
+        {/* Profile Button + Header */}
+        <div className="flex justify-between items-center mb-4 animate-fade-in">
+          <h1 className="text-4xl font-black text-foreground tracking-tight">We Push</h1>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
             {avatar ?
           <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" /> :
@@ -298,10 +299,9 @@ const GroupPage = () => {
           </button>
         </div>
 
-        {/* Header */}
+        {/* Subheader */}
         <header className="mb-6 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-[20px] py-0">We Push</h1>
-          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mt-1">
+          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">
             {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
           </p>
         </header>
