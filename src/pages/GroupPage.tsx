@@ -234,14 +234,15 @@ const GroupPage = () => {
   }, [users, allEntries, leaderboardPeriod]);
 
   const stats = useMemo(() => {
-    const totalMembers = users.length;
-    const totalPushups = users.reduce((sum, u) => sum + u.total_pushups, 0);
-    const avgProgress = totalMembers > 0 ? users.reduce((sum, u) => sum + u.progress_percent, 0) / totalMembers : 0;
+    const activeUsers = users.filter((u) => u.total_pushups >= 82);
+    const totalMembers = activeUsers.length;
+    const totalPushups = activeUsers.reduce((sum, u) => sum + u.total_pushups, 0);
+    const avgProgress = totalMembers > 0 ? activeUsers.reduce((sum, u) => sum + u.progress_percent, 0) / totalMembers : 0;
     const today = new Date();
     const yearStart = startOfYear(today);
     const daysElapsed = differenceInDays(today, yearStart) + 1;
     const expectedProgress = daysElapsed / 365 * 100;
-    const onTrackCount = users.filter((u) => u.progress_percent >= expectedProgress).length;
+    const onTrackCount = activeUsers.filter((u) => u.progress_percent >= expectedProgress).length;
     const avgPuPerDay = daysElapsed > 0 ? Math.round(totalPushups / daysElapsed) : 0;
     return {
       totalMembers,
