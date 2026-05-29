@@ -40,11 +40,42 @@ const DailySection = () => {
     return days;
   }, []);
 
+  const scrollMiniToDate = (date: Date) => {
+    const el = miniScrollRef.current;
+    if (!el) return;
+    const idx = miniDays.findIndex((d) => isSameDay(d, date));
+    if (idx < 0) return;
+    const child = el.children[idx] as HTMLElement | undefined;
+    if (!child) return;
+    // Place selected day as the rightmost of the 3 visible
+    el.scrollLeft = child.offsetLeft + child.offsetWidth - el.clientWidth;
+  };
+
   useEffect(() => {
     if (miniScrollRef.current) {
       miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
     }
   }, [isLoaded]);
+
+  // Sync mini strip with selected date when calendar is open
+  useEffect(() => {
+    if (!isLoaded) return;
+    if (isCalendarOpen) scrollMiniToDate(selectedDate);
+  }, [selectedDate, isCalendarOpen, isLoaded]);
+
+  // When calendar closes, reset to today + last 2
+  useEffect(() => {
+    if (!isLoaded) return;
+    if (!isCalendarOpen) {
+      setSelectedDate(new Date());
+      requestAnimationFrame(() => {
+        if (miniScrollRef.current) {
+          miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
+        }
+      });
+    }
+  }, [isCalendarOpen, isLoaded]);
+
 
   useEffect(() => {
     const el = miniScrollRef.current;
