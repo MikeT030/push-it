@@ -47,14 +47,14 @@ const ProgressRing = ({
   return (
     <>
       <div
-        className={`relative ${enableGame ? 'cursor-pointer' : ''} ${isPulsing ? 'animate-click-pulse' : ''} ${className}`}
+        className={`relative ${enableGame ? 'cursor-pointer' : ''} ${className}`}
         style={{
           width: size,
           height: size,
         }}
         onClick={() => {
           setIsPulsing(true);
-          setTimeout(() => setIsPulsing(false), 500);
+          setTimeout(() => setIsPulsing(false), 180);
           if (enableGame) setShowGame(true);
         }}>
 
