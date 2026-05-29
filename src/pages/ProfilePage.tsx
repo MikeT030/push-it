@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { User, LogOut, Pencil, Check, X, Download, Users } from "lucide-react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { User, LogOut, Pencil, Check, X, Download, Users, Shield } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.svg";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,6 +26,8 @@ const ProfilePage = () => {
   const [editValue, setEditValue] = useState("");
   const { openAvatarSelector } = useAvatarSelector();
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { isAdmin } = useIsAdmin();
 
   useEffect(() => {
     if (searchParams.get("openAvatar") === "true") {
@@ -199,6 +202,21 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
+
+        {/* Admin Card */}
+        {isAdmin && (
+          <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
+            <h2 className="text-lg font-bold text-foreground mb-4">Admin</h2>
+            <Button
+              variant="outline"
+              onClick={() => navigate("/admin")}
+              className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+            >
+              <Shield className="w-4 h-4 mr-2" />
+              Admin area
+            </Button>
+          </div>
+        )}
 
         {/* Backups Card */}
         <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{
