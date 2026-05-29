@@ -47,6 +47,29 @@ const DailySection = () => {
   }, [isLoaded]);
 
   useEffect(() => {
+    const el = miniScrollRef.current;
+    if (!el) return;
+    const updateVisibleMonth = () => {
+      const children = Array.from(el.children) as HTMLElement[];
+      if (children.length === 0) return;
+      const centerX = el.scrollLeft + el.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < children.length; i++) {
+        const c = children[i];
+        const mid = c.offsetLeft + c.offsetWidth / 2;
+        const d = Math.abs(mid - centerX);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      }
+      const day = miniDays[bestIdx];
+      if (day) setVisibleMonth((prev) => isSameMonth(prev, day) ? prev : day);
+    };
+    updateVisibleMonth();
+    el.addEventListener("scroll", updateVisibleMonth, { passive: true });
+    return () => el.removeEventListener("scroll", updateVisibleMonth);
+  }, [miniDays, isLoaded]);
+
+  useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
   }, [selectedDate, currentCount]);
 
