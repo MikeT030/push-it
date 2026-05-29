@@ -95,6 +95,18 @@ const AdminPage = () => {
           <DailySection />
         </div>
 
+        {/* Demo Calendar Section */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.09s" }}>
+          <h2 className="text-lg font-bold text-foreground mb-2">
+            Demo Calendar
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Sandbox copy of the Calendar. Edit it here before rolling changes
+            out to all users.
+          </p>
+          <CalendarSection />
+        </div>
+
         {/* Demo Bottom Navigation */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
           <h2 className="text-lg font-bold text-foreground mb-2">
