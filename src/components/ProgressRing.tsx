@@ -146,6 +146,8 @@ const ProgressRing = ({
             />
             {/* Mint hue shimmer (#b2eee6) */}
             <div className="mint-shimmer" />
+            {/* Captured swirling light (#b2eee6) */}
+            <div className="firefly-wrap" />
 
 
 
