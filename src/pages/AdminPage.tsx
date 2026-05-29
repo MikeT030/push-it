@@ -5,6 +5,7 @@ import { useIsAdmin } from "@/hooks/useIsAdmin";
 import PlayerCard from "@/components/PlayerCard";
 import DemoBottomNav from "@/components/DemoBottomNav";
 import DailySection from "@/components/DailySection";
+import CalendarSection from "@/components/CalendarSection";
 import { getAvatarById } from "@/data/avatars";
 import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 
