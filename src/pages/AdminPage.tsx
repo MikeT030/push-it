@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import PlayerCard from "@/components/PlayerCard";
 import DemoBottomNav from "@/components/DemoBottomNav";
+import DailySection from "@/components/DailySection";
 import { getAvatarById } from "@/data/avatars";
 import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 
