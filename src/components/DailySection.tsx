@@ -239,7 +239,7 @@ const DailySection = () => {
             <button
               onClick={handleShare}
               aria-label="Share progress"
-              className="absolute left-1/2 translate-x-[calc(69px+1rem+22px+30px-44px)] w-11 h-11 rounded-full flex items-center justify-center text-foreground transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden"
+              className="absolute left-1/2 translate-x-[calc(69px+1rem+22px+30px-44px)] w-11 h-11 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden"
               style={{
                 background:
                   'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
