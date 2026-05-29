@@ -103,15 +103,7 @@ const AppContent = () => {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {showNav && (
-        demoNav ? (
-          <div className="fixed bottom-0 left-0 right-0 px-4 pb-[max(env(safe-area-inset-bottom),1rem)] z-50">
-            <DemoBottomNav />
-          </div>
-        ) : (
-          <BottomNav />
-        )
-      )}
+      {showNav && <BottomNav />}
     </Suspense>
   );
 };
