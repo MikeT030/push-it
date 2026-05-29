@@ -153,7 +153,7 @@ const ProfilePage = () => {
         </header>
 
         {/* Profile Card */}
-        <div className="card-glass rounded-2xl p-6 animate-slide-up">
+        <div className="rounded-2xl p-6 animate-slide-up" style={{ background: "rgba(42,47,58,0.70)" }}>
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
           <div
@@ -205,7 +205,7 @@ const ProfilePage = () => {
 
         {/* Admin Card */}
         {isAdmin && (
-          <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
+          <div className="rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.03s", background: "rgba(42,47,58,0.70)" }}>
             <h2 className="text-lg font-bold text-foreground mb-4">Admin</h2>
             <Button
               variant="outline"
@@ -219,8 +219,9 @@ const ProfilePage = () => {
         )}
 
         {/* Backups Card */}
-        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{
-        animationDelay: "0.05s"
+        <div className="rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.05s",
+        background: "rgba(42,47,58,0.70)"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             Backups
@@ -238,8 +239,9 @@ const ProfilePage = () => {
         </div>
 
         {/* Info Card */}
-        <div className="card-glass rounded-2xl p-6 mt-6 animate-slide-up" style={{
-        animationDelay: "0.1s"
+        <div className="rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        animationDelay: "0.1s",
+        background: "rgba(42,47,58,0.70)"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-4">
             About Push-it
