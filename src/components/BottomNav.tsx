@@ -31,14 +31,32 @@ const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`flex-1 flex flex-col items-center justify-center gap-2 py-[15px] pb-[15px] rounded-2xl transition-all duration-300 backdrop-blur-xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.35),0_8px_24px_rgba(0,0,0,0.45)] active:translate-y-[1px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_2px_rgba(0,0,0,0.3),0_4px_12px_rgba(0,0,0,0.4)] ${
-                active
-                  ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-gradient-to-b from-white/10 to-white/[0.02]"
-                  : "text-foreground border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] hover:from-white/10"
+              className={`relative overflow-hidden flex-1 flex flex-col items-center justify-center gap-2 py-[15px] pb-[15px] rounded-2xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
+                active ? "text-[#0ABAB5]" : "text-foreground"
               }`}
+              style={{
+                background:
+                  'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                backdropFilter: 'blur(6px) saturate(1.2)',
+                WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                boxShadow: [
+                  'inset 0 2px 4px rgba(0,0,0,0.55)',
+                  'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                  'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                  '0 2px 6px rgba(0,0,0,0.3)',
+                  '0 6px 14px rgba(0,0,0,0.25)',
+                ].join(', '),
+              }}
             >
-              <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
-              <span className="font-semibold text-sm">{tab.label}</span>
+              <span
+                className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+                style={{
+                  background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                  filter: 'blur(3px)',
+                }}
+              />
+              <Icon className="w-5 h-5 relative" strokeWidth={active ? 2.5 : 2} />
+              <span className="font-semibold text-sm relative">{tab.label}</span>
             </button>
           );
         })}
