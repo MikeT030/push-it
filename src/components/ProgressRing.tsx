@@ -18,7 +18,7 @@ interface ProgressRingProps {
 const ProgressRing = ({
   progress,
   size = 120,
-  strokeWidth = 6,
+  strokeWidth = 3,
   className = "",
   enableGame = false,
   enableAnimation = true,
