@@ -97,9 +97,8 @@ const WeeklyOverview = () => {
       </div>;
   }
   return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="col-span-2">
-      <div className="rounded-2xl p-6 animate-slide-up" style={{
-      animationDelay: "0.25s",
-      background: "rgba(42,47,58,0.70)"
+      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up" style={{
+      animationDelay: "0.25s"
     }}>
         <CollapsibleTrigger asChild>
           <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
