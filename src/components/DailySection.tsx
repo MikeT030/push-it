@@ -320,23 +320,52 @@ const DailySection = () => {
             const dayProgress = getDailyProgress(day);
             const dayCount = getEntryForDate(day);
             const hasEntry = dayCount > 0;
-            let bg = "";
-            let text = "text-foreground";
+
+            // Determine the base tint for this day (matches prior calendar colors)
+            let baseRgb: [number, number, number] | null = null;
+            let textColor = "text-foreground";
             if (hasEntry) {
-              if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
-              else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; text = "text-white"; }
-              else { bg = "bg-primary/20"; text = "text-primary"; }
+              if (dayProgress >= 200) { baseRgb = [192, 41, 222]; textColor = "text-white"; }
+              else if (dayProgress >= 100) { baseRgb = [112, 54, 255]; textColor = "text-white"; }
+              else { baseRgb = [10, 186, 181]; textColor = "text-white"; }
             }
-            if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
+            if (isSelected) { baseRgb = [10, 186, 181]; textColor = "text-white"; }
+
+            const tinted = baseRgb !== null;
+            const [r, g, b] = baseRgb ?? [42, 47, 58];
+            const darker = (n: number, amt: number) => Math.max(n - amt, 0);
+            const o1 = tinted ? 0.95 : 0.55;
+            const o2 = tinted ? 0.85 : 0.45;
+            const o3 = tinted ? 0.75 : 0.35;
+
             return (
               <div
                 key={day.toISOString()}
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
-                style={{ flex: "0 0 calc((100% - 16px) / 3)" }}
-                className={`snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white px-0" : ""}`}
+                style={{
+                  flex: "0 0 calc((100% - 16px) / 3)",
+                  background: `radial-gradient(circle at 50% 35%, rgba(${r},${g},${b},${o1}) 0%, rgba(${darker(r,30)},${darker(g,30)},${darker(b,30)},${o2}) 60%, rgba(${darker(r,55)},${darker(g,55)},${darker(b,55)},${o3}) 100%)`,
+                  backdropFilter: 'blur(6px) saturate(1.2)',
+                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                  boxShadow: [
+                    'inset 0 2px 4px rgba(0,0,0,0.45)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.10)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.08)',
+                    '0 2px 6px rgba(0,0,0,0.3)',
+                    '0 6px 14px rgba(0,0,0,0.25)',
+                  ].join(', '),
+                }}
+                className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}
               >
-                <span className="text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
-                <span className="text-lg font-bold">{format(day, "d")}</span>
+                <span
+                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[18%] rounded-full opacity-40"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 100%)',
+                    filter: 'blur(3px)',
+                  }}
+                />
+                <span className="relative text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
+                <span className="relative text-lg font-bold">{format(day, "d")}</span>
               </div>
             );
           })}
