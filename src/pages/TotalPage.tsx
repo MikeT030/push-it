@@ -230,24 +230,27 @@ const TotalPage = () => {
             </div>
           </div>
 
-          {/* Pace indicator */}
-          <div className="mt-4 p-3 rounded-xl">
-            <p className={`text-sm font-medium text-left ${stats.paceStatus === "ahead" ? "text-primary" : "text-[#C029DE]"}`}>
-              {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
-              {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus === "ahead" ? "above" : "below"} target
-            </p>
-          </div>
+          {/* Inset cut-out group: pace + projected completion */}
+          <div className="mt-4 rounded-xl bg-black/30 shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2">
+            {/* Pace indicator */}
+            <div>
+              <p className={`text-sm font-medium text-left ${stats.paceStatus === "ahead" ? "text-primary" : "text-[#C029DE]"}`}>
+                {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
+                {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus === "ahead" ? "above" : "below"} target
+              </p>
+            </div>
 
-          {/* Projected completion date */}
-          <div className="mt-3 p-3 rounded-xl">
-            <p className="text-sm text-muted-foreground text-left">
-              {stats.allTimeAvg > 0 ? <>
-                  🎯 Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
-                  <span className="font-semibold text-foreground">
-                    {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
-                  </span>
-                </> : "Start logging push-ups to see your projected completion date"}
-            </p>
+            {/* Projected completion date */}
+            <div>
+              <p className="text-sm text-muted-foreground text-left">
+                {stats.allTimeAvg > 0 ? <>
+                    🎯 Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
+                    <span className="font-semibold text-foreground">
+                      {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
+                    </span>
+                  </> : "Start logging push-ups to see your projected completion date"}
+              </p>
+            </div>
           </div>
         </div>
 
