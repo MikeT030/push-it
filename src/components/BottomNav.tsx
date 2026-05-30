@@ -31,30 +31,12 @@ const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`relative overflow-hidden w-[140px] flex flex-col items-center justify-center gap-1.5 py-[11px] pb-[11px] rounded-2xl transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${
-                active ? "text-[#0ABAB5]" : "text-foreground"
+              className={`relative w-[140px] flex flex-col items-center justify-center gap-1.5 py-[11px] rounded-2xl transition-all duration-150 ease-out active:scale-[0.98] ${
+                active
+                  ? "border-2 border-[#0ABAB5] text-[#0ABAB5]"
+                  : "text-white"
               }`}
-              style={{
-                background:
-                  'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
-                backdropFilter: 'blur(6px) saturate(1.2)',
-                WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
-                boxShadow: [
-                  'inset 0 2px 4px rgba(0,0,0,0.55)',
-                  'inset 0 -1px 2px rgba(255,255,255,0.07)',
-                  'inset 0 0 0 1px rgba(255,255,255,0.06)',
-                  '0 2px 6px rgba(0,0,0,0.3)',
-                  '0 6px 14px rgba(0,0,0,0.25)',
-                ].join(', '),
-              }}
             >
-              <span
-                className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
-                style={{
-                  background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
-                  filter: 'blur(3px)',
-                }}
-              />
               <Icon className="w-4 h-4 relative" strokeWidth={active ? 2.5 : 2} />
               <span className="font-semibold text-xs relative">{tab.label}</span>
             </button>
