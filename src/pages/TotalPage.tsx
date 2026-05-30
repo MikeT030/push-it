@@ -231,7 +231,7 @@ const TotalPage = () => {
           </div>
 
           {/* Inset cut-out group: pace + projected completion */}
-          <div className="mt-4 rounded-xl bg-black/30 shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2">
+          <div className="mt-4 rounded-xl bg-black/30 shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2 pt-[20px] pb-[20px]">
             {/* Pace indicator */}
             <div>
               <p className={`text-sm font-medium text-left ${stats.paceStatus === "ahead" ? "text-primary" : "text-[#C029DE]"}`}>
