@@ -84,7 +84,7 @@ const AuthPage = () => {
         </div>
 
         {/* Auth Card */}
-        <div className="card-glass rounded-2xl p-6">
+        <div className="bg-card/40 rounded-2xl p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-sm font-medium text-muted-foreground">
