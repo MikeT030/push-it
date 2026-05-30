@@ -187,9 +187,6 @@ const DailySection = () => {
       <div className="bg-card/40 rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
-            <div className="absolute left-0 top-0">
-              <p className="text-sm text-muted-foreground font-medium">Target {dailyTarget}/d</p>
-            </div>
             <div className="flex flex-col items-center text-center">
               <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
               <div className="flex items-baseline gap-2">
