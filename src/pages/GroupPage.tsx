@@ -39,7 +39,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
   const navigate = useNavigate();
 
   return (
-    <div className="rounded-2xl overflow-hidden animate-slide-up">
+    <div className="bg-card/40 rounded-2xl overflow-hidden animate-slide-up">
       {users.map((user, index) => {
         const avatar = getAvatarById(user.avatar_url ?? null);
         return (
