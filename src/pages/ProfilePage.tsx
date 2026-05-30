@@ -176,7 +176,7 @@ const ProfilePage = () => {
                 Nickname
               </label>
               {isEditing ? <div className="flex gap-2 mt-1.5">
-                  <Input value={editValue} onChange={e => setEditValue(e.target.value)} maxLength={30} placeholder="Enter your nickname" className="h-12 bg-transparent border-0 border-b border-[#EEEEEE]" autoFocus />
+                  <Input value={editValue} onChange={e => setEditValue(e.target.value)} maxLength={30} placeholder="Enter your nickname" className="h-12 bg-transparent border-0 border-b border-[#EEEEEE] mb-[12px]" autoFocus />
                   <Button size="icon" onClick={saveNickname} className="h-12 w-12 shrink-0">
                     <Check className="w-4 h-4" />
                   </Button>

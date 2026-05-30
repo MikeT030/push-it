@@ -83,7 +83,7 @@ const ResetPasswordPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="mt-1.5 h-12 bg-secondary border-0 text-foreground placeholder:text-muted-foreground"
+                  className="mt-1.5 h-12 bg-transparent border-0 border-b border-[#EEEEEE] text-foreground placeholder:text-muted-foreground mb-[12px]"
                   required
                 />
               </div>
@@ -97,7 +97,7 @@ const ResetPasswordPage = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="mt-1.5 h-12 bg-secondary border-0 text-foreground placeholder:text-muted-foreground"
+                  className="mt-1.5 h-12 bg-transparent border-0 border-b border-[#EEEEEE] text-foreground placeholder:text-muted-foreground mb-[12px]"
                   required
                 />
               </div>
