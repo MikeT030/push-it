@@ -19,7 +19,12 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-background transition-all duration-500 ${
+      style={{
+        backgroundColor: "#101214",
+        backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.14 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"), radial-gradient(ellipse at top left, #0C2544 0%, #101214 90%)`,
+        backgroundAttachment: "fixed"
+      }}
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-all duration-500 ${
         isExiting ? "opacity-0 scale-110" : "opacity-100 scale-100"
       }`}
     >
