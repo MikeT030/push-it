@@ -331,13 +331,13 @@ const GroupPage = () => {
               <div className="flex justify-center mb-3">
                 <button
                 onClick={() => setLeaderboardView(leaderboardView === "podium" ? "list" : "podium")}
-                className="p-2.5 rounded-xl bg-muted/40 hover:bg-muted/60 transition-colors"
+                className="p-2.5 rounded-xl border border-[#D9D9D9] bg-transparent transition-colors"
                 aria-label="Toggle view">
 
                   {leaderboardView === "podium" ?
-                <List className="w-5 h-5 text-muted-foreground" /> :
+                <List className="w-5 h-5 text-[#D9D9D9]" /> :
 
-                <Trophy className="w-5 h-5 text-muted-foreground" />
+                <Trophy className="w-5 h-5 text-[#D9D9D9]" />
                 }
                 </button>
               </div>
