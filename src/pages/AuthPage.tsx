@@ -109,7 +109,7 @@ const AuthPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="mt-1.5 h-12 bg-transparent border-0 border-b border-input text-foreground placeholder:text-muted-foreground"
+                className="mt-1.5 h-12 bg-transparent border-0 border-b border-[#EEEEEE] text-foreground placeholder:text-muted-foreground"
                 required
               />
             </div>
