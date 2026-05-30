@@ -223,11 +223,11 @@ const DailyGroupOverview = () => {
         {/* Daily Summary */}
         <div className="flex items-center justify-between p-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setIsOpen((prev) => !prev)}>
           <div>
-            <p className="text-2xl font-black text-foreground">{dayTotal.toLocaleString()}</p>
+            <p className="font-black text-foreground text-xl">{dayTotal.toLocaleString()}</p>
             <p className="text-sm text-muted-foreground">we push push-ups</p>
           </div>
           <div className="text-right">
-          <p className="text-2xl font-bold text-white">
+          <p className="font-bold text-white text-xl">
             {percentage}%
           </p>
             <p className="text-sm text-muted-foreground">of {dailyTarget.toLocaleString()} target</p>

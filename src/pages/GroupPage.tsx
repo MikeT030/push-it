@@ -438,7 +438,7 @@ const GroupPage = () => {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-foreground">
+                    <p className="font-bold text-foreground text-xl">
                       {users.filter((u) => u.total_pushups >= 82).length}
                     </p>
                     <p className="text-sm text-muted-foreground">

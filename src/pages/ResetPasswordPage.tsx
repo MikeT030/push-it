@@ -63,7 +63,7 @@ const ResetPasswordPage = () => {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 safe-top">
       <div className="w-full max-w-sm animate-fade-in">
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-black text-gradient">Push-it</h1>
+          <h1 className="font-black text-gradient text-2xl">Push-it</h1>
           <p className="text-muted-foreground mt-2">Set a new password</p>
         </div>
 
