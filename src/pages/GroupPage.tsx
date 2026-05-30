@@ -335,9 +335,9 @@ const GroupPage = () => {
                 aria-label="Toggle view">
 
                   {leaderboardView === "podium" ?
-                <List className="w-5 h-5 text-[#D9D9D9]" /> :
+                <List className="w-4 h-4 text-[#D9D9D9]" /> :
 
-                <Trophy className="w-5 h-5 text-[#D9D9D9]" />
+                <Trophy className="w-4 h-4 text-[#D9D9D9]" />
                 }
                 </button>
               </div>
