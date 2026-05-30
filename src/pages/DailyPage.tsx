@@ -155,7 +155,7 @@ const DailyPage = () => {
       <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
       <div className="px-6 pt-8">
         {/* Add Push-ups Button & Profile */}
-        <div className="flex justify-between items-center mb-4 animate-fade-in">
+        <div className="flex justify-between items-center mb-4 animate-fade-in pb-0">
           <Button disabled variant="outline" className="rounded-full px-5 py-2 border-2 border-transparent text-transparent bg-transparent pointer-events-none opacity-0">
             <Plus className="w-4 h-4" />
             Add push-ups
