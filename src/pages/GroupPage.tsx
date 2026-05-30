@@ -427,10 +427,10 @@ const GroupPage = () => {
                 
                 <div className="flex items-center justify-between cursor-pointer active:scale-[0.98] transition-transform" onClick={() => setShowGroupChart(v => !v)}>
                   <div>
-                    <p className="text-2xl font-black line-through text-white">
+                    <p className="font-black line-through text-white text-lg">
                       {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
                     </p>
-                    <p className="text-4xl font-black text-gradient">
+                    <p className="font-black text-gradient text-2xl">
                       {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal - u.total_pushups, 0).toLocaleString()}
                     </p>
                     <p className="text-sm text-muted-foreground mt-1">
