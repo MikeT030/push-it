@@ -1,7 +1,10 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import { ArrowLeft, Shield } from "lucide-react";
+import { ArrowLeft, Shield, Download, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import PlayerCard from "@/components/PlayerCard";
 import DemoBottomNav from "@/components/DemoBottomNav";
 import DailySection from "@/components/DailySection";
@@ -11,8 +14,73 @@ import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const demoNavActive = useDemoNav();
+
+  const handleBackup = async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from("push_up_entries")
+      .select("id, user_id, date, count, created_at, updated_at")
+      .eq("user_id", user.id)
+      .order("date", { ascending: true });
+    if (error) {
+      toast.error("Failed to export data");
+      return;
+    }
+    if (!data || data.length === 0) {
+      toast.info("No push-up entries to export");
+      return;
+    }
+    const headers = ["id", "user_id", "date", "count", "created_at", "updated_at"];
+    const csvContent = [
+      headers.join(","),
+      ...data.map((row) => headers.map((h) => `"${row[h as keyof typeof row] ?? ""}"`).join(",")),
+    ].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `pushups_backup_${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success(`Exported ${data.length} entries`);
+  };
+
+  const handleUsersBackup = async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, display_name, yearly_goal, created_at, updated_at")
+      .eq("id", user.id)
+      .order("created_at", { ascending: true });
+    if (error) {
+      toast.error("Failed to export users data");
+      return;
+    }
+    if (!data || data.length === 0) {
+      toast.info("No profile to export");
+      return;
+    }
+    const headers = ["id", "display_name", "yearly_goal", "created_at", "updated_at"];
+    const csvContent = [
+      headers.join(","),
+      ...data.map((row) => headers.map((h) => `"${row[h as keyof typeof row] ?? ""}"`).join(",")),
+    ].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `profile_backup_${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success(`Exported your profile`);
+  };
 
   if (loading) {
     return (
@@ -58,6 +126,21 @@ const AdminPage = () => {
           <p className="text-muted-foreground text-sm">
             This is the admin area. Admin tools and controls will live here.
           </p>
+        </div>
+
+        {/* Backups Card */}
+        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
+          <h2 className="text-lg font-bold text-foreground mb-4">Backups</h2>
+          <div className="flex flex-col gap-3">
+            <Button variant="outline" onClick={handleBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
+              <Download className="w-4 h-4 mr-2" />
+              Push Ups Backup
+            </Button>
+            <Button variant="outline" onClick={handleUsersBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
+              <Users className="w-4 h-4 mr-2" />
+              Users Backup
+            </Button>
+          </div>
         </div>
 
         {/* Demo Player Card */}

@@ -218,25 +218,6 @@ const ProfilePage = () => {
           </div>
         )}
 
-        {/* Backups Card */}
-        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up" style={{
-        animationDelay: "0.05s"
-      }}>
-          <h2 className="text-lg font-bold text-foreground mb-4">
-            Backups
-          </h2>
-          <div className="flex flex-col gap-3">
-            <Button variant="outline" onClick={handleBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
-              <Download className="w-4 h-4 mr-2" />
-              Push Ups Backup
-            </Button>
-            <Button variant="outline" onClick={handleUsersBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
-              <Users className="w-4 h-4 mr-2" />
-              Users Backup
-            </Button>
-          </div>
-        </div>
-
         {/* Info Card */}
         <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up" style={{
         animationDelay: "0.1s"
