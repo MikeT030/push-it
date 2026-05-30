@@ -241,11 +241,11 @@ const WeeklyGroupOverview = () => {
         {/* Weekly Summary */}
         <div className="flex items-center justify-between p-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setIsOpen((prev) => !prev)}>
           <div>
-            <p className="text-2xl font-black text-foreground">{weeklyData.total.toLocaleString()}</p>
+            <p className="font-black text-foreground text-xl">{weeklyData.total.toLocaleString()}</p>
             <p className="text-sm text-muted-foreground">we push push-ups</p>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-bold text-white">
+            <p className="font-bold text-white text-xl">
               {weeklyData.percentage}%
             </p>
             <p className="text-sm text-muted-foreground">of {weeklyData.weeklyTarget.toLocaleString()} target</p>
