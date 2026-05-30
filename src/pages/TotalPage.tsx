@@ -231,16 +231,16 @@ const TotalPage = () => {
           </div>
 
           {/* Pace indicator */}
-          <div className={`mt-4 p-3 rounded-xl ${stats.paceStatus === "ahead" ? "bg-primary/10" : "bg-[#C029DE]/10"}`}>
-            <p className={`text-sm font-medium text-center ${stats.paceStatus === "ahead" ? "text-primary" : "text-[#C029DE]"}`}>
+          <div className="mt-4 p-3 rounded-xl">
+            <p className={`text-sm font-medium text-left ${stats.paceStatus === "ahead" ? "text-primary" : "text-[#C029DE]"}`}>
               {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
               {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus === "ahead" ? "above" : "below"} target
             </p>
           </div>
 
           {/* Projected completion date */}
-          <div className="mt-3 p-3 rounded-xl bg-muted/50">
-            <p className="text-sm text-muted-foreground text-center">
+          <div className="mt-3 p-3 rounded-xl">
+            <p className="text-sm text-muted-foreground text-left">
               {stats.allTimeAvg > 0 ? <>
                   🎯 Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
                   <span className="font-semibold text-foreground">
