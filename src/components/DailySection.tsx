@@ -191,13 +191,13 @@ const DailySection = () => {
               <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
               {isEditable ?
                 <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-[1.2ch] min-w-[1.2ch] focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={{ width: `${Math.max((inputValue || "0").length, 1)}ch` }} /> :
-                <p className="text-5xl font-black text-foreground">{currentCount}</p>
+                <p className="font-black text-foreground text-xl">{currentCount}</p>
               }
               <span className={`font-bold text-primary mt-1 text-base ${currentCount === 0 ? "invisible" : ""}`}>{currentCount > 0 ? `${Math.round(progress)}%` : "0%"}</span>
             </div>
             <div className="absolute right-0 top-0 flex flex-col items-end text-right">
               <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
-              <p className="font-black text-[#a7a8aa] text-2xl">{yesterdayCount}</p>
+              <p className="font-black text-[#a7a8aa] text-xl">{yesterdayCount}</p>
             </div>
           </div>
           <div className="relative flex items-center justify-center mt-[20px]">
