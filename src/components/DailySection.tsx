@@ -193,7 +193,7 @@ const DailySection = () => {
                 <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-[1.2ch] min-w-[1.2ch] focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={{ width: `${Math.max((inputValue || "0").length, 1)}ch` }} /> :
                 <p className="text-5xl font-black text-foreground">{currentCount}</p>
               }
-              {currentCount > 0 && <span className="text-lg font-bold text-primary mt-1">{Math.round(progress)}%</span>}
+              {currentCount > 0 && <span className="font-bold text-primary mt-1 text-base">{Math.round(progress)}%</span>}
             </div>
             <div className="absolute right-0 top-0 flex flex-col items-end text-right">
               <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
