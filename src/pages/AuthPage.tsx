@@ -116,8 +116,9 @@ const AuthPage = () => {
 
             <Button
               type="submit"
+              variant="outline"
               disabled={isSubmitting}
-              className="w-full h-12 text-base font-semibold"
+              className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
             >
               {isSubmitting
                 ? "Please wait..."
