@@ -302,7 +302,7 @@ const GroupPage = () => {
 
         {/* Subheader */}
         <header className="mb-6 animate-fade-in">
-          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">
+          <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide pb-[10px]">
             {stats.totalMembers} {stats.totalMembers === 1 ? "member" : "members"} pushing together
           </p>
         </header>
