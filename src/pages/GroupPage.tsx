@@ -45,7 +45,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
         return (
           <div
             key={user.user_id}
-            className={`flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-colors ${index < users.length - 1 ? "border-b border-[#3A404F]" : ""}`}
+            className={`flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-colors`}
             onClick={() => setSelectedUser(user)}>
 
             <span className="text-sm font-bold text-muted-foreground w-5 text-center">
