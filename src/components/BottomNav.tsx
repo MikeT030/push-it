@@ -22,7 +22,7 @@ const BottomNav = () => {
 
   return (
     <nav className={`fixed bottom-0 left-0 right-0 z-40 transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
-      <div className="nav-bar p-3 flex items-stretch justify-center gap-7 pb-[18px]">
+      <div className="nav-bar p-3 flex items-stretch justify-center gap-7 pb-[26px]">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = isActive(tab.path);
