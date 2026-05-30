@@ -234,9 +234,12 @@ const TotalPage = () => {
           <div className="mt-4 rounded-xl bg-black/30 shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2 pt-[20px] pb-[20px]">
             {/* Pace indicator */}
             <div>
-              <p className={`text-sm font-medium text-left ${stats.paceStatus === "ahead" ? "text-primary" : "text-[#C029DE]"}`}>
+              <p className="text-sm font-medium text-left text-muted-foreground">
                 {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
-                {stats.paceDiff.toLocaleString()} push-ups {stats.paceStatus === "ahead" ? "above" : "below"} target
+                <span className={stats.paceStatus === "ahead" ? "text-primary font-semibold" : "text-[#C029DE] font-semibold"}>
+                  {stats.paceDiff.toLocaleString()}
+                </span>{" "}
+                push-ups {stats.paceStatus === "ahead" ? "above" : "below"} target
               </p>
             </div>
 
