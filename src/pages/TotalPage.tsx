@@ -240,6 +240,13 @@ const TotalPage = () => {
               </p>
             </div>
 
+            {/* Stamped separator */}
+            <div className="flex items-center gap-1 opacity-40">
+              <span className="h-px flex-1 border-t border-dashed border-white/30" />
+              <span className="text-[10px] text-white/30 tracking-widest">✦</span>
+              <span className="h-px flex-1 border-t border-dashed border-white/30" />
+            </div>
+
             {/* Projected completion date */}
             <div>
               <p className="text-sm text-muted-foreground text-left">
