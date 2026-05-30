@@ -124,7 +124,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
 
       {/* Remaining users list */}
       {rest.length > 0 &&
-      <div className="bg-card rounded-2xl overflow-hidden">
+      <div className="rounded-2xl overflow-hidden">
           {rest.map((user, index) => {
           const avatar = getAvatarById(user.avatar_url ?? null);
           return (
