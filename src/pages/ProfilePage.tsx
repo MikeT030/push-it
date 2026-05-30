@@ -183,7 +183,7 @@ const ProfilePage = () => {
                   <Button size="icon" variant="outline" onClick={cancelEditing} className="h-12 w-12 shrink-0">
                     <X className="w-4 h-4" />
                   </Button>
-                </div> : <div className="h-12 bg-white/[0.14] rounded-xl px-4 flex items-center justify-between mt-1.5 cursor-pointer hover:bg-white/20 transition-colors" onClick={startEditing}>
+                </div> : <div className="h-12 bg-transparent border-0 border-b border-[#EEEEEE] px-3 flex items-center justify-between mt-1.5 mb-[20px] cursor-pointer transition-colors" onClick={startEditing}>
                   <span className="text-foreground font-medium">
                     {displayName || "Set a nickname"}
                   </span>
@@ -196,7 +196,7 @@ const ProfilePage = () => {
               <label className="text-sm font-medium text-muted-foreground">
                 Email
               </label>
-              <div className="h-12 bg-white/[0.14] rounded-xl px-4 flex items-center mt-1.5">
+              <div className="h-12 bg-transparent border-0 border-b border-[#EEEEEE] px-3 flex items-center mt-1.5 mb-[20px]">
                 <span className="text-foreground font-medium">{user?.email}</span>
               </div>
             </div>
