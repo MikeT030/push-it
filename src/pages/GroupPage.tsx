@@ -523,26 +523,18 @@ const GroupPage = () => {
                   />
                 )}
               </div>
-            </TabsContent>
+            </div>
 
-            {/* Stats Tab */}
-            <TabsContent value="stats" className="mt-0">
-
-
-
-
-
-              {/* Call to Action */}
-              <div className="mt-8 text-center animate-fade-in" style={{
+            {/* Call to Action */}
+            <div className="mt-8 text-center animate-fade-in" style={{
               animationDelay: "0.4s"
             }}>
-                <p className="text-sm text-muted-foreground">
-                  Keep pushing! Your progress motivates the entire group. 🔥
-                </p>
-              </div>
-            </TabsContent>
+              <p className="text-sm text-muted-foreground">
+                Keep pushing! Your progress motivates the entire group. 🔥
+              </p>
+            </div>
           </div>
-        </Tabs>
+        </div>
       </div>
     </div>;
 };
