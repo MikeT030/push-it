@@ -454,10 +454,14 @@ const DailySection = () => {
             <h2 className="text-xl font-bold text-foreground text-center">Choose a Game</h2>
             <button
               onClick={() => setActiveGame("brickbreaker")}
-              className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
+              className="relative w-full p-4 rounded-xl border border-border overflow-hidden bg-cover bg-center hover:opacity-90 transition-opacity text-left min-h-[120px]"
+              style={{ backgroundImage: `url(${brickBreakerBg})` }}
             >
-              <p className="font-semibold text-foreground">🧱 Brick Breaker</p>
-              <p className="text-sm text-muted-foreground">Classic brick-breaking action</p>
+              <div className="absolute inset-0 bg-black/50" />
+              <div className="relative">
+                <p className="font-semibold text-foreground">🧱 Brick Breaker</p>
+                <p className="text-sm text-muted-foreground">Classic brick-breaking action</p>
+              </div>
             </button>
             <button
               onClick={() => setActiveGame("spaceshooter")}
