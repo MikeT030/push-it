@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X } from "lucide-react";
-import controllerIcon from "@/assets/controller.svg";
+import { ReactComponent as ControllerIcon } from "@/assets/controller-2.svg";
 import ShareIcon from "@/components/ShareIcon";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
