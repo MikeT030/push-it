@@ -10,6 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
+import brickBreakerBg from "@/assets/brick-breaker-bg.png";
 
 
 const DailySection = () => {
