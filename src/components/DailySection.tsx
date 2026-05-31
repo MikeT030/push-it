@@ -281,8 +281,8 @@ const DailySection = () => {
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
-            { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#7036FF]", isCustomIcon: false },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#f97171]", isCustomIcon: false },
+            { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#7036FF]", isCustomIcon: false },
           ];
           return (
             <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
