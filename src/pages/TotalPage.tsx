@@ -263,7 +263,7 @@ const TotalPage = () => {
                   </p>
                 </div>
               </div>
-            </CollapsibleContent>
+            
           </div>
         
 
