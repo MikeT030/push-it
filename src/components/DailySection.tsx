@@ -444,7 +444,7 @@ const DailySection = () => {
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
           <button
             onClick={(e) => { e.stopPropagation(); setActiveGame(null); }}
-            className="fixed top-4 right-4 z-[51] p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
+            className="fixed top-[56px] right-4 z-[51] p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
             aria-label="Close"
           >
             <X size={20} />
