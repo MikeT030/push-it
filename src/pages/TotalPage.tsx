@@ -193,7 +193,7 @@ const TotalPage = () => {
         </div>
 
         {/* Main Progress Card */}
-        <Collapsible open={isYearlyOpen} onOpenChange={setIsYearlyOpen} className="-mt-2">
+        <Collapsible open={isYearlyOpen} onOpenChange={setIsYearlyOpen} className="-mt-4">
           <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
             <CollapsibleTrigger asChild>
               <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
