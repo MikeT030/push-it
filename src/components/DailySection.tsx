@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X } from "lucide-react";
-import controllerIcon from "@/assets/controller.svg";
+import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
@@ -195,7 +195,7 @@ const DailySection = () => {
           className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
           aria-label="Open mini game"
         >
-          <img src={controllerIcon} className="w-8 h-8 text-muted-foreground" alt="Mini game" />
+          <ControllerIcon className="w-8 h-8 text-muted-foreground" aria-label="Mini game" />
         </button>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
