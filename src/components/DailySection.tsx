@@ -443,13 +443,6 @@ const DailySection = () => {
       {activeGame === "select" && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 relative" onClick={() => setActiveGame(null)}>
           <div className="rounded-2xl p-6 max-w-sm w-full space-y-4" style={{ backgroundColor: 'rgba(14, 26, 41, 0)' }} onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => setActiveGame(null)}
-              className="absolute top-3 right-3 p-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
-              aria-label="Close"
-            >
-              <X size={20} />
-            </button>
             <h2 className="text-xl font-bold text-foreground text-center">Choose a Game</h2>
             <button
               onClick={() => setActiveGame("brickbreaker")}
