@@ -25,6 +25,7 @@ const TotalPage = () => {
     isLoaded
   } = usePushUpData();
   const { avatar } = useUserAvatar();
+  const [isYearlyOpen, setIsYearlyOpen] = useState(false);
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
   const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
