@@ -1352,7 +1352,7 @@ const MiniGame = ({ onBack }: MiniGameProps) => {
   return (
     <div style={{ position: "fixed", inset: 0, background: "#0a0a0f", display: "flex", flexDirection: "column" }}>
       {/* HUD bar */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 16px", background: "rgba(0,0,0,0.5)", zIndex: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 16px", paddingTop: "calc(env(safe-area-inset-top, 0px) + 44px)", background: "rgba(0,0,0,0.5)", zIndex: 10 }}>
         {onBack && (
           <button
             onClick={onBack}
