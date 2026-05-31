@@ -352,49 +352,51 @@ const GroupPage = () => {
             <LeaderboardListView users={filteredUsers} />
             }
 
-              {/* Personal Stats Row */}
-              {pushUpLoaded && (() => {
-                const today = new Date();
-                const daysElapsed = differenceInDays(today, startOfYear(today)) + 1;
-                const total = getTotalPushUps();
-                const avg = daysElapsed > 0 ? Math.round(total / daysElapsed) : 0;
-                const streak = getCurrentStreak();
-                const maxDay = getMaxSingleDay();
-                const MuscleIcon = ({ className }: { className?: string }) => (
-                  <svg className={className} viewBox="0 0 96 86" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M26.836 85.328C26.532 85.328 26.228 85.248 25.94 85.108C18.14 81.2 0 67.188 0 21.232C0 9.084 10.524 0 19.928 0C21.468 0 22.956 0.24 24.36 0.704C30.212 2.652 32.824 10.072 31.896 15.824C30.856 22.232 25.792 25.576 19.168 23.876C19.052 29.4 23.364 35.144 27.556 40.732C29.604 43.468 31.592 46.116 33 48.704C35.328 41.688 39.276 35.228 55.96 34.78C56.808 25.208 63.828 16.124 76.5 16.124C83.056 16.124 88.884 19.192 92.488 24.524C96.604 30.608 97.112 38.728 93.88 46.808C90.796 52.988 85.26 56.3 81.436 57.16C80.084 64.956 70.776 79.068 61.612 82.112C56.648 83.768 50.176 83.768 43.908 83.768C37.964 83.768 31.816 83.768 27.468 85.212C27.264 85.296 27.052 85.328 26.836 85.328ZM19.932 4.012C12.564 4.012 4.004 11.536 4.004 21.244C4.004 63.576 19.576 77.124 27.036 81.18C31.88 79.772 37.988 79.772 43.912 79.772C49.856 79.772 56 79.764 60.348 78.328C68.764 75.524 77.604 60.648 77.604 55.392C77.604 54.292 78.5 53.392 79.604 53.392C81.808 53.392 87.368 50.916 90.232 45.18C92.9 38.504 92.54 31.74 89.172 26.772C86.32 22.548 81.704 20.14 76.496 20.14C65.076 20.14 59.872 28.748 59.872 36.756C59.872 37.856 58.972 38.756 57.872 38.756C40.08 38.756 38.244 44.96 35.92 52.828C35.608 53.884 35.292 54.944 34.932 56.024C34.62 56.944 33.672 57.524 32.716 57.36C31.748 57.204 31.036 56.368 31.036 55.392C31.036 52.072 27.784 47.736 24.344 43.144C19.292 36.396 13.568 28.772 15.572 20.748C15.716 20.18 16.084 19.716 16.6 19.452C17.112 19.196 17.716 19.156 18.252 19.372C19.852 20.012 21.312 20.336 22.576 20.336C26.508 20.336 27.628 17.104 27.94 15.184C28.6 11.112 26.772 5.732 23.088 4.5C22.104 4.184 21.044 4.012 19.932 4.012Z" fill="currentColor"/>
-                  </svg>
-                );
-                const items = [
-                  { label: "Most", value: maxDay, unit: "PU", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
-                  { label: "Average", value: avg, unit: "/d", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
-                  { label: "Streak", value: streak, unit: "d", Icon: Flame, color: "text-[#f97171]", isCustomIcon: false },
-                ];
-                return (
-                  <div className="bg-card/40 rounded-2xl p-6 animate-slide-up mt-4" style={{ animationDelay: "0.05s" }}>
-                    <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2">
-                      {items.map((s) => (
-                        <div key={s.label} className="flex-1 flex items-start gap-2">
-                          {s.label === "Average" ? (
-                            <span className={`text-xl font-bold ${s.color}`}>Ø</span>
-                          ) : s.isCustomIcon ? (
-                            <s.Icon className={`w-5 h-5 ${s.color}`} />
-                          ) : (
-                            <s.Icon className={`w-5 h-5 ${s.color}`} />
-                          )}
-                          <div>
-                            <p className="text-xs text-muted-foreground font-medium">{s.label}</p>
-                            <p className="text-xl font-black text-foreground">
-                              {s.value}
-                              <span className="text-sm font-medium text-muted-foreground ml-1">{s.unit}</span>
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+              {/* Group Stats Row */}
+              <div className="bg-card/40 rounded-2xl p-6 animate-slide-up mt-4" style={{ animationDelay: "0.05s" }}>
+                <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2">
+                  <div className="flex-1 flex items-start gap-2">
+                    <Flame className="w-5 h-5 text-[#C029DE]" />
+                    <div>
+                      <p className="text-xs text-muted-foreground font-medium">Total</p>
+                      <p className="text-xl font-black text-foreground">
+                        {stats.totalPushups.toLocaleString()}
+                        <span className="text-sm font-medium text-muted-foreground ml-1">PU</span>
+                      </p>
                     </div>
                   </div>
-                );
-              })()}
+                  <div className="flex-1 flex items-start gap-2">
+                    <span className="text-xl font-bold text-[#7036FF]">Ø</span>
+                    <div>
+                      <p className="text-xs text-muted-foreground font-medium">Avg. today</p>
+                      <p className="text-xl font-black text-foreground">
+                        {stats.avgPuPerDay.toLocaleString()}
+                        <span className="text-sm font-medium text-muted-foreground ml-1">PU</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex-1 flex items-start gap-2">
+                    <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
+                    <div>
+                      <p className="text-xs text-muted-foreground font-medium">Avg. progress</p>
+                      <p className="text-xl font-black text-foreground">
+                        {Math.round(stats.avgProgress)}
+                        <span className="text-sm font-medium text-muted-foreground ml-1">%</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex-1 flex items-start gap-2">
+                    <MultiColorTargetIcon size={20} />
+                    <div>
+                      <p className="text-xs text-muted-foreground font-medium">On track</p>
+                      <p className="text-xl font-black text-foreground">
+                        {stats.onTrackCount}
+                        <span className="text-sm font-medium text-muted-foreground ml-1">/ {stats.totalMembers}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               {/* Group Stats Cards - Horizontal Scrollable Strip */}
               <div data-horizontal-scroll className="flex gap-3 overflow-x-auto mt-6 mb-6 -mx-2 px-2 scrollbar-hide animate-slide-up" style={{ scrollbarWidth: "none", msOverflowStyle: "none", animationDelay: "0.1s" }}>
