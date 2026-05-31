@@ -301,16 +301,13 @@ const GroupPage = () => {
         </div>
 
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full mb-6">
-            <TabsTrigger value="leaderboard" className="flex-1">Leaderboard</TabsTrigger>
-            <TabsTrigger value="stats" className="flex-1">Stats</TabsTrigger>
-          </TabsList>
+        {/* Section Label */}
+        <h2 className="text-lg font-bold text-foreground mb-6">Leaderboard & Stats</h2>
 
+        <div>
           <div>
-            {/* Leaderboard Tab */}
-            <TabsContent value="leaderboard" className="mt-0">
+            <div className="mt-0">
+
               {/* Period Toggle */}
               <div className="flex gap-1 rounded-full p-1 mb-5 px-[4px]">
                 {(["alltime", "weekly", "monthly"] as LeaderboardPeriod[]).map((period) =>
@@ -526,26 +523,18 @@ const GroupPage = () => {
                   />
                 )}
               </div>
-            </TabsContent>
+            </div>
 
-            {/* Stats Tab */}
-            <TabsContent value="stats" className="mt-0">
-
-
-
-
-
-              {/* Call to Action */}
-              <div className="mt-8 text-center animate-fade-in" style={{
+            {/* Call to Action */}
+            <div className="mt-8 text-center animate-fade-in" style={{
               animationDelay: "0.4s"
             }}>
-                <p className="text-sm text-muted-foreground">
-                  Keep pushing! Your progress motivates the entire group. 🔥
-                </p>
-              </div>
-            </TabsContent>
+              <p className="text-sm text-muted-foreground">
+                Keep pushing! Your progress motivates the entire group. 🔥
+              </p>
+            </div>
           </div>
-        </Tabs>
+        </div>
       </div>
     </div>;
 };
