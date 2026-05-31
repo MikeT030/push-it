@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Flame } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
 import { useNavigate } from "react-router-dom";
@@ -70,8 +70,8 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
       <p className="text-xs font-medium text-foreground truncate max-w-[80px] text-center">
         {user.display_name || `Member`}
       </p>
-      <p className="font-medium text-foreground text-xs">
-        🔥 <span className="font-bold">{user.streak ?? 0}d</span> streak
+      <p className="font-medium text-foreground text-xs flex items-center gap-0.5 justify-center">
+        <Flame className="w-3 h-3 text-[#f97171]" /> <span className="font-bold">{user.streak ?? 0}d</span> streak
       </p>
       <p className="font-medium text-foreground flex items-center gap-0.5 justify-center text-xs">
         <TrendingUp className="w-3 h-3 text-primary" /> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU
@@ -148,7 +148,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                   <p className="text-sm font-medium text-foreground truncate">
                     {user.display_name || `Member ${index + 4}`}
                   </p>
-                  <p className="text-xs text-foreground">🔥 <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
+                  <p className="text-xs text-foreground flex items-center gap-0.5"><Flame className="w-3 h-3 text-[#f97171]" /> <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
                   <p className="text-xs text-foreground flex items-center gap-0.5"><TrendingUp className="w-3 h-3 text-primary" /> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU</p>
                 </div>
 
