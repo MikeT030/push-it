@@ -184,7 +184,7 @@ const DailySection = () => {
       <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Today Card */}
-      <div className="bg-card/40 rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+      <div className="bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
             <div className="flex flex-col items-center text-center">
