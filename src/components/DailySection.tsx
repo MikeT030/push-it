@@ -278,15 +278,15 @@ const DailySection = () => {
             </svg>
           );
           const items = [
-            { label: "Most", value: maxDay, unit: "PU", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
-            { label: "Average", value: avg, unit: "/d", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
-            { label: "Streak", value: streak, unit: "d", Icon: Flame, color: "text-[#f97171]", isCustomIcon: false },
+            { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
+            { label: "Avg. /d", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
+            { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#f97171]", isCustomIcon: false },
           ];
           return (
             <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2">
               {items.map((s) => (
                 <div key={s.label} className="flex-1 flex items-start gap-2">
-                  {s.label === "Average" ? (
+                  {s.label === "Avg. /d" ? (
                     <span className={`text-xl font-bold ${s.color}`}>Ø</span>
                   ) : s.isCustomIcon ? (
                     <s.Icon className={`w-5 h-5 ${s.color}`} />

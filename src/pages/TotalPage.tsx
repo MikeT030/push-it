@@ -93,26 +93,26 @@ const TotalPage = () => {
   const statCards = useMemo(() => [{
     label: "Today",
     value: `${getEntryForDate(new Date())}`,
-    unit: "PU",
+    unit: "​",
     icon: null,
     customIcon: <MultiColorTargetIcon size={20} />,
     color: ""
   }, {
-    label: "Average",
+    label: "Avg. /d",
     value: `${Math.round(stats.allTimeAvg || 0)}`,
-    unit: "/day",
+    unit: "​",
     icon: TrendingUp,
     color: "text-primary"
   }, {
     label: "Streak",
     value: `${stats.streak}`,
-    unit: "days",
+    unit: "​",
     icon: Flame,
     color: "text-[#C029DE]"
   }, {
     label: "Remaining",
     value: `${stats.daysRemaining}`,
-    unit: "days",
+    unit: "​",
     icon: Calendar,
     color: "text-[#0ABAB5]"
   }], [stats, getEntryForDate]);
@@ -168,7 +168,7 @@ const TotalPage = () => {
 
         {/* Stats Strip - Horizontally Scrollable */}
         <div className="flex gap-3 overflow-x-auto -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-          {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining" && s.label !== "Average" && s.label !== "Streak").map((stat, index) => {
+          {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining" && s.label !== "Avg. /d" && s.label !== "Streak").map((stat, index) => {
             const Icon = stat.icon;
             return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{
               minWidth: "140px",

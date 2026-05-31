@@ -403,22 +403,22 @@ const GroupPage = () => {
                 <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
                     <Flame className="w-5 h-5 text-[#C029DE]" />
-                    <p className="text-sm text-muted-foreground font-medium">Total</p>
+                    <p className="text-sm text-muted-foreground font-medium">Most PU</p>
                   </div>
                   <p className="text-[1.625rem] font-black text-foreground">
                     {stats.totalPushups.toLocaleString()}
-                    <span className="text-base font-medium text-muted-foreground ml-1">PU</span>
+                    <span className="text-base font-medium text-muted-foreground ml-1">​</span>
                   </p>
                 </div>
 
                 <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xl font-bold text-[#7036FF]">Ø</span>
-                    <p className="text-sm text-muted-foreground font-medium">Avg. PU (day)</p>
+                    <p className="text-sm text-muted-foreground font-medium">Avg. /d</p>
                   </div>
                   <p className="text-[1.625rem] font-black text-foreground">
                     {stats.avgPuPerDay.toLocaleString()}
-                    <span className="text-base font-medium text-muted-foreground ml-1">PU</span>
+                    <span className="text-base font-medium text-muted-foreground ml-1">​</span>
                   </p>
                 </div>
 
