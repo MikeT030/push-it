@@ -7,6 +7,9 @@ import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
+import BrickBreakerGame from "@/components/BrickBreakerGame";
+import SpaceShooterGame from "@/components/SpaceShooterGame";
+import controllerIcon from "@/assets/controller.svg";
 
 const DailySection = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
