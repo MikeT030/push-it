@@ -477,7 +477,7 @@ const GroupPage = () => {
                       {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal - u.total_pushups, 0).toLocaleString()}
                     </p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      push-ups remaining
+                      Push-Ups remaining
                     </p>
                   </div>
                   <div className="text-right">
