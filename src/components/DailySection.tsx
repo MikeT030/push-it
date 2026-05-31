@@ -435,7 +435,7 @@ const DailySection = () => {
         </div>
       </div>
 
-      </div>
+
 
       <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
 
