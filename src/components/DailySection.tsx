@@ -7,6 +7,9 @@ import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
+import BrickBreakerGame from "@/components/BrickBreakerGame";
+import SpaceShooterGame from "@/components/SpaceShooterGame";
+import controllerIcon from "@/assets/controller.svg";
 
 const DailySection = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -14,6 +17,7 @@ const DailySection = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
   const { isGameActive } = useGame();
   const {
     getEntryForDate,
@@ -184,7 +188,14 @@ const DailySection = () => {
       <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Today Card */}
-      <div className="bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up pb-[10px]" style={{ animationDelay: "0.05s" }}>
+      <div className="relative bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up pb-[10px]" style={{ animationDelay: "0.05s" }}>
+        <button
+          onClick={() => setActiveGame("select")}
+          className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
+          aria-label="Open mini game"
+        >
+          <img src={controllerIcon} alt="Game" className="w-6 h-6" />
+        </button>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
             <div className="flex flex-col items-center text-center">
@@ -424,6 +435,37 @@ const DailySection = () => {
         </div>
       </div>
 
+
+
+      <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
+
+      {activeGame === "select" && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
+          <div className="bg-card border border-border rounded-2xl p-6 max-w-sm w-full space-y-4" onClick={(e) => e.stopPropagation()}>
+            <h2 className="text-xl font-bold text-foreground text-center">Choose a Game</h2>
+            <button
+              onClick={() => setActiveGame("brickbreaker")}
+              className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
+            >
+              <p className="font-semibold text-foreground">🧱 Brick Breaker</p>
+              <p className="text-sm text-muted-foreground">Classic brick-breaking action</p>
+            </button>
+            <button
+              onClick={() => setActiveGame("spaceshooter")}
+              className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
+            >
+              <p className="font-semibold text-foreground">🚀 Space Shooter</p>
+              <p className="text-sm text-muted-foreground">Blast buzzwords in space</p>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {activeGame === "spaceshooter" && (
+        <div className="fixed inset-0 z-50">
+          <SpaceShooterGame onBack={() => setActiveGame(null)} />
+        </div>
+      )}
     </>
   );
 };
