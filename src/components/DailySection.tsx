@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X } from "lucide-react";
 import ShareIcon from "@/components/ShareIcon";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
@@ -441,7 +441,14 @@ const DailySection = () => {
 
       {activeGame === "select" && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
-          <div className="rounded-2xl p-6 max-w-sm w-full space-y-4" style={{ backgroundColor: 'rgba(14, 26, 41, 0.2)' }} onClick={(e) => e.stopPropagation()}>
+          <div className="rounded-2xl p-6 max-w-sm w-full space-y-4 relative" style={{ backgroundColor: 'rgba(14, 26, 41, 0.2)' }} onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setActiveGame(null)}
+              className="absolute top-3 right-3 p-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
             <h2 className="text-xl font-bold text-foreground text-center">Choose a Game</h2>
             <button
               onClick={() => setActiveGame("brickbreaker")}
