@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar } from "lucide-react";
+import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
