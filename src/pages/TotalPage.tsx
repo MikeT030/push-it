@@ -93,26 +93,26 @@ const TotalPage = () => {
   const statCards = useMemo(() => [{
     label: "Today",
     value: `${getEntryForDate(new Date())}`,
-    unit: "PU",
+    unit: "​",
     icon: null,
     customIcon: <MultiColorTargetIcon size={20} />,
     color: ""
   }, {
-    label: "Average",
+    label: "Avg. /d",
     value: `${Math.round(stats.allTimeAvg || 0)}`,
-    unit: "/day",
+    unit: "​",
     icon: TrendingUp,
     color: "text-primary"
   }, {
     label: "Streak",
     value: `${stats.streak}`,
-    unit: "days",
+    unit: "​",
     icon: Flame,
     color: "text-[#C029DE]"
   }, {
     label: "Remaining",
     value: `${stats.daysRemaining}`,
-    unit: "days",
+    unit: "​",
     icon: Calendar,
     color: "text-[#0ABAB5]"
   }], [stats, getEntryForDate]);
