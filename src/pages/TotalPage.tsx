@@ -214,7 +214,7 @@ const TotalPage = () => {
               Day {stats.daysElapsed} of 365
             </p>
 
-            <CollapsibleContent className="space-y-4">
+            
               <div className="flex items-center gap-6">
                 <div className="flex-1 flex items-start gap-8">
                   <div>
