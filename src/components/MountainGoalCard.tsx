@@ -67,7 +67,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
           {(displayCount ?? startValue).toLocaleString("de-DE")}
         </p>
         <p className="text-sm text-muted-foreground mt-1">
-          PU remaining
+          Push-Ups remaining
         </p>
       </div>
 
