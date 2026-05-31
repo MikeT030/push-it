@@ -301,16 +301,13 @@ const GroupPage = () => {
         </div>
 
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full mb-6">
-            <TabsTrigger value="leaderboard" className="flex-1">Leaderboard</TabsTrigger>
-            <TabsTrigger value="stats" className="flex-1">Stats</TabsTrigger>
-          </TabsList>
+        {/* Section Label */}
+        <h2 className="text-lg font-bold text-foreground mb-6">Leaderboard & Stats</h2>
 
+        <div>
           <div>
-            {/* Leaderboard Tab */}
-            <TabsContent value="leaderboard" className="mt-0">
+            <div className="mt-0">
+
               {/* Period Toggle */}
               <div className="flex gap-1 rounded-full p-1 mb-5 px-[4px]">
                 {(["alltime", "weekly", "monthly"] as LeaderboardPeriod[]).map((period) =>
