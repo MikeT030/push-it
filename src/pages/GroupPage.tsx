@@ -366,7 +366,7 @@ const GroupPage = () => {
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
-                    <span className="text-xl font-bold text-[#7036FF]">Ø</span>
+                    <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Avg. PU/day</p>
                       <p className="text-xl font-black text-foreground">
@@ -376,7 +376,7 @@ const GroupPage = () => {
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
-                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
+                    <TrendingUp className="w-5 h-5 text-[#7036FF]" />
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Avg. prog.</p>
                       <p className="text-xl font-black text-foreground">
