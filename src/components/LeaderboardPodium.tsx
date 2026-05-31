@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Flame } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
 import { useNavigate } from "react-router-dom";
