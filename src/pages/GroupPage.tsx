@@ -524,7 +524,7 @@ const GroupPage = () => {
                 {showGroupChart && (
                   <GroupLineChartGoalCard
                     totalPushUps={stats.totalPushups}
-                    groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
+                    groupGoal={users.length * 82 * 365}
                     progressPercent={stats.avgProgress}
                     allEntries={allEntries}
                     year={new Date().getFullYear()}
