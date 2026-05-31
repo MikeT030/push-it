@@ -195,7 +195,7 @@ const DailySection = () => {
           className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
           aria-label="Open mini game"
         >
-          <Gamepad2 className="w-8 h-8 text-muted-foreground" />
+          <img src={controllerIcon} className="w-8 h-8 text-muted-foreground" alt="Mini game" />
         </button>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
