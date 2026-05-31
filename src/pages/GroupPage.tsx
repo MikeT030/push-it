@@ -444,12 +444,9 @@ const GroupPage = () => {
                   </p>
                 </div>
               </div>
-            </TabsContent>
 
-            {/* Stats Tab */}
-            <TabsContent value="stats" className="mt-0">
               {/* Daily Group Overview */}
-              <div className="mb-6 animate-slide-up">
+              <div className="mb-6 mt-6 animate-slide-up">
                 <DailyGroupOverview />
               </div>
 
@@ -529,6 +526,12 @@ const GroupPage = () => {
                   />
                 )}
               </div>
+            </TabsContent>
+
+            {/* Stats Tab */}
+            <TabsContent value="stats" className="mt-0">
+
+
 
 
 
