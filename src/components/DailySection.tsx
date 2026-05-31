@@ -184,7 +184,7 @@ const DailySection = () => {
       <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Today Card */}
-      <div className="bg-card/40 rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+      <div className="bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
             <div className="flex flex-col items-center text-center">
@@ -310,7 +310,7 @@ const DailySection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full bg-card/40 rounded-2xl p-3 py-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-0"}`}
+        className={`w-full bg-card/40 rounded-2xl rounded-t-none p-3 py-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-0"}`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between mb-3 px-1">
