@@ -233,6 +233,16 @@ const GroupPage = () => {
     sort((a, b) => b.total_pushups - a.total_pushups);
   }, [users, allEntries, leaderboardPeriod]);
 
+  // Count users active in the last 30 days (logged > 0 push-ups)
+  const activeUserCount = useMemo(() => {
+    const cutoff = format(subDays(new Date(), 30), "yyyy-MM-dd");
+    const activeIds = new Set<string>();
+    allEntries.forEach((e: any) => {
+      if (e.date >= cutoff && e.count > 0) activeIds.add(e.user_id);
+    });
+    return activeIds.size;
+  }, [allEntries]);
+
   const stats = useMemo(() => {
     const activeUsers = users.filter((u) => u.total_pushups >= 82);
     const totalMembers = activeUsers.length;
@@ -524,11 +534,11 @@ const GroupPage = () => {
                 {showGroupChart && (
                   <GroupLineChartGoalCard
                     totalPushUps={stats.totalPushups}
-                    groupGoal={users.length * 82 * 365}
+                    groupGoal={activeUserCount * 82 * 365}
                     progressPercent={stats.avgProgress}
                     allEntries={allEntries}
                     year={new Date().getFullYear()}
-                    memberCount={users.length}
+                    memberCount={activeUserCount}
                     embedded
                   />
                 )}
