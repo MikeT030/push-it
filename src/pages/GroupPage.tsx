@@ -39,7 +39,7 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
   const navigate = useNavigate();
 
   return (
-    <div className="rounded-2xl overflow-hidden animate-slide-up">
+    <div className="rounded-t-2xl overflow-hidden animate-slide-up">
       {users.map((user, index) => {
         const avatar = getAvatarById(user.avatar_url ?? null);
         return (
@@ -353,7 +353,7 @@ const GroupPage = () => {
             }
 
               {/* Group Stats Row - attached to leaderboard */}
-              <div className="bg-card/40 rounded-2xl px-4 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+              <div className="bg-card/40 rounded-b-2xl px-4 mt-[20px] animate-slide-up" style={{ animationDelay: "0.05s" }}>
                 <div className="flex gap-6 overflow-x-auto py-4" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <Flame className="w-5 h-5 text-[#C029DE]" />
