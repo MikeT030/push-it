@@ -534,11 +534,11 @@ const GroupPage = () => {
                 {showGroupChart && (
                   <GroupLineChartGoalCard
                     totalPushUps={stats.totalPushups}
-                    groupGoal={users.length * 82 * 365}
+                    groupGoal={activeUserCount * 82 * 365}
                     progressPercent={stats.avgProgress}
                     allEntries={allEntries}
                     year={new Date().getFullYear()}
-                    memberCount={users.length}
+                    memberCount={activeUserCount}
                     embedded
                   />
                 )}
