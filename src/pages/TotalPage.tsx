@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
 import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
@@ -25,7 +25,7 @@ const TotalPage = () => {
     isLoaded
   } = usePushUpData();
   const { avatar } = useUserAvatar();
-  const [isYearlyOpen, setIsYearlyOpen] = useState(true);
+  
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
   const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
@@ -193,14 +193,10 @@ const TotalPage = () => {
         </div>
 
         {/* Main Progress Card */}
-        <Collapsible open={isYearlyOpen} onOpenChange={setIsYearlyOpen} className="-mt-4">
           <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
-            <CollapsibleTrigger asChild>
-              <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
-                <h2 className="text-lg font-bold text-foreground">Yearly</h2>
-                {isYearlyOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
-              </button>
-            </CollapsibleTrigger>
+            <div className="flex items-center mb-4">
+              <h2 className="text-lg font-bold text-foreground">Yearly</h2>
+            </div>
 
             <div className="h-px mb-4 bg-[#3b404f]" />
 
@@ -214,7 +210,7 @@ const TotalPage = () => {
               Day {stats.daysElapsed} of 365
             </p>
 
-            <CollapsibleContent className="space-y-4">
+            
               <div className="flex items-center gap-6">
                 <div className="flex-1 flex items-start gap-8">
                   <div>
@@ -263,9 +259,9 @@ const TotalPage = () => {
                   </p>
                 </div>
               </div>
-            </CollapsibleContent>
+            
           </div>
-        </Collapsible>
+        
 
 
       </div>
