@@ -302,7 +302,7 @@ const GroupPage = () => {
 
 
         {/* Section Label */}
-        <h2 className="text-lg font-bold text-foreground mb-6">Leaderboard & Stats</h2>
+        <h2 className="font-bold text-foreground mb-6 text-xl">Leaderboard & Stats</h2>
 
         <div>
           <div>
