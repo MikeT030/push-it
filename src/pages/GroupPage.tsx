@@ -353,8 +353,8 @@ const GroupPage = () => {
             }
 
               {/* Group Stats Row - attached to leaderboard */}
-              <div className="animate-slide-up" style={{ animationDelay: "0.05s" }}>
-                <div className="flex gap-6 overflow-x-auto pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 -mx-2 px-2 border-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+              <div className="bg-card/40 rounded-2xl px-4 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+                <div className="flex gap-6 overflow-x-auto py-4" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <Flame className="w-5 h-5 text-[#C029DE]" />
                     <div>
