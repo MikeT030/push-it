@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X, Gamepad2 } from "lucide-react";
 import ShareIcon from "@/components/ShareIcon";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
@@ -9,7 +9,7 @@ import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
-import controllerIcon from "@/assets/controller.svg";
+
 
 const DailySection = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
