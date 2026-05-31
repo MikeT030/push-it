@@ -193,14 +193,10 @@ const TotalPage = () => {
         </div>
 
         {/* Main Progress Card */}
-        <Collapsible open={isYearlyOpen} onOpenChange={setIsYearlyOpen} className="-mt-4">
           <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
-            <CollapsibleTrigger asChild>
-              <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
-                <h2 className="text-lg font-bold text-foreground">Yearly</h2>
-                {isYearlyOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
-              </button>
-            </CollapsibleTrigger>
+            <div className="flex items-center mb-4">
+              <h2 className="text-lg font-bold text-foreground">Yearly</h2>
+            </div>
 
             <div className="h-px mb-4 bg-[#3b404f]" />
 
