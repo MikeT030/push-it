@@ -456,9 +456,19 @@ const GroupPage = () => {
 
               {/* Goal Card */}
               <div className="bg-card/40 rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
-                <h2 className="text-lg font-bold text-foreground mb-4">
-                  We Push Goal {new Date().getFullYear()}
-                </h2>
+                <div
+                  className="flex items-center justify-between cursor-pointer mb-4"
+                  onClick={() => setShowGroupChart(v => !v)}
+                >
+                  <h2 className="text-lg font-bold text-foreground">
+                    We Push Goal {new Date().getFullYear()}
+                  </h2>
+                  {showGroupChart ? (
+                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                  )}
+                </div>
 
                 <div className="h-px mb-4 bg-[#3b404f]" />
                 
