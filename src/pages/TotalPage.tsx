@@ -193,71 +193,79 @@ const TotalPage = () => {
         </div>
 
         {/* Main Progress Card */}
-        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
+        <Collapsible open={isYearlyOpen} onOpenChange={setIsYearlyOpen}>
+          <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
+            <CollapsibleTrigger asChild>
+              <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
+                <h2 className="text-lg font-bold text-foreground">Yearly</h2>
+                {isYearlyOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
+              </button>
+            </CollapsibleTrigger>
 
-          <h2 className="text-lg font-bold text-foreground mb-4">Yearly</h2>
+            <div className="h-px mb-4 bg-[#3b404f]" />
 
-          <div className="h-px mb-4 bg-[#3b404f]" />
-
-          {/* Progress bar */}
-          <div className="mb-2 h-3 rounded-full overflow-hidden bg-[#3b404f]">
-            <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
-              width: `${yearProgress}%`
-            }} />
-          </div>
-          <p className="text-sm text-muted-foreground mb-4 text-left">
-            Day {stats.daysElapsed} of 365
-          </p>
-
-          <div className="flex items-center gap-6">
-            <div className="flex-1 flex items-start gap-8">
-              <div>
-                <p className="text-sm text-muted-foreground">Completed</p>
-                <p className="font-black text-[#0ab8b2] text-xl">
-                  {totalPushUps.toLocaleString()}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Remaining</p>
-                <p className="text-xl font-bold text-foreground">
-                  {remaining.toLocaleString()}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Goal</p>
-                <p className="text-xl font-bold text-foreground">
-                  {yearlyGoal.toLocaleString()}
-                </p>
-              </div>
+            {/* Progress bar */}
+            <div className="mb-2 h-3 rounded-full overflow-hidden bg-[#3b404f]">
+              <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
+                width: `${yearProgress}%`
+              }} />
             </div>
-          </div>
+            <p className="text-sm text-muted-foreground mb-4 text-left">
+              Day {stats.daysElapsed} of 365
+            </p>
 
-          {/* Inset cut-out group: pace + projected completion */}
-          <div className="mt-4 rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2 pt-[20px] pb-[20px]">
-            {/* Pace indicator */}
-            <div>
-              <p className="text-sm font-medium text-left text-muted-foreground">
-                {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
-                <span className={stats.paceStatus === "ahead" ? "text-primary font-semibold" : "text-[#C029DE] font-semibold"}>
-                  {stats.paceDiff.toLocaleString()}
-                </span>{" "}
-                push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target 82/d
-              </p>
-            </div>
+            <CollapsibleContent className="space-y-4">
+              <div className="flex items-center gap-6">
+                <div className="flex-1 flex items-start gap-8">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Completed</p>
+                    <p className="font-black text-[#0ab8b2] text-xl">
+                      {totalPushUps.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Remaining</p>
+                    <p className="text-xl font-bold text-foreground">
+                      {remaining.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Goal</p>
+                    <p className="text-xl font-bold text-foreground">
+                      {yearlyGoal.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-            {/* Projected completion date */}
-            <div>
-              <p className="text-sm text-muted-foreground text-left">
-                {stats.allTimeAvg > 0 ? <>
-                    🎯 Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
-                    <span className="font-semibold text-foreground">
-                      {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
-                    </span>
-                  </> : "Start logging push-ups to see your projected completion date"}
-              </p>
-            </div>
+              {/* Inset cut-out group: pace + projected completion */}
+              <div className="mt-4 rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2 pt-[20px] pb-[20px]">
+                {/* Pace indicator */}
+                <div>
+                  <p className="text-sm font-medium text-left text-muted-foreground">
+                    {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
+                    <span className={stats.paceStatus === "ahead" ? "text-primary font-semibold" : "text-[#C029DE] font-semibold"}>
+                      {stats.paceDiff.toLocaleString()}
+                    </span>{" "}
+                    push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target 82/d
+                  </p>
+                </div>
+
+                {/* Projected completion date */}
+                <div>
+                  <p className="text-sm text-muted-foreground text-left">
+                    {stats.allTimeAvg > 0 ? <>
+                        🎯 Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
+                        <span className="font-semibold text-foreground">
+                          {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
+                        </span>
+                      </> : "Start logging push-ups to see your projected completion date"}
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
           </div>
-        </div>
+        </Collapsible>
 
 
       </div>
