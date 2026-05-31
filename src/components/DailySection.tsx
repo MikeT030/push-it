@@ -283,7 +283,7 @@ const DailySection = () => {
             { label: "Streak", value: streak, unit: "d", Icon: Flame, color: "text-[#f97171]", isCustomIcon: false },
           ];
           return (
-            <div className="flex gap-3 pt-4 mt-2 border-t border-[#3B404F]">
+            <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2">
               {items.map((s) => (
                 <div key={s.label} className="flex-1 flex items-start gap-2">
                   {s.label === "Average" ? (
