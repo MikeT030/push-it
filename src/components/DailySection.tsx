@@ -441,10 +441,10 @@ const DailySection = () => {
       <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
 
       {activeGame === "select" && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 relative" onClick={() => setActiveGame(null)}>
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
           <button
             onClick={(e) => { e.stopPropagation(); setActiveGame(null); }}
-            className="absolute top-4 right-4 p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
+            className="fixed top-4 right-4 z-[51] p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
             aria-label="Close"
           >
             <X size={20} />
