@@ -206,7 +206,7 @@ const TotalPage = () => {
                 width: `${yearProgress}%`
               }} />
             </div>
-            <p className="text-sm text-muted-foreground mb-4 text-left">
+            <p className="text-sm text-muted-foreground mb-4 text-center">
               Day {stats.daysElapsed} of 365
             </p>
 
