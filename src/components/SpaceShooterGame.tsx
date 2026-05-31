@@ -1352,7 +1352,7 @@ const MiniGame = ({ onBack }: MiniGameProps) => {
   return (
     <div style={{ position: "fixed", inset: 0, background: "#0a0a0f", display: "flex", flexDirection: "column" }}>
       {/* HUD bar */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 16px", paddingTop: "calc(env(safe-area-inset-top, 0px) + 44px)", background: "rgba(0,0,0,0.5)", zIndex: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 56px 8px 16px", paddingTop: "calc(env(safe-area-inset-top, 0px) + 24px)", background: "rgba(0,0,0,0.5)", zIndex: 10 }}>
         {onBack && (
           <button
             onClick={onBack}
@@ -1361,7 +1361,7 @@ const MiniGame = ({ onBack }: MiniGameProps) => {
             ← Back
           </button>
         )}
-        <div style={{ display: "flex", alignItems: "center", gap: "24px", fontSize: "16px", fontFamily: "sans-serif", marginLeft: onBack ? 0 : "auto" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px", fontSize: "16px", fontFamily: "sans-serif", marginLeft: onBack ? 0 : "auto" }}>
           <span style={{ color: "rgba(255,255,255,0.8)" }}>Score: <span style={{ color: "#ff4d6d", fontWeight: "bold" }}>{score}</span></span>
           {plasmaBombs > 0 && (
             <span style={{ color: "#d94dff", fontWeight: "bold" }}>💣 {plasmaBombs}</span>
