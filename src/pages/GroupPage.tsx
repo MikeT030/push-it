@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
+import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, differenceInDays } from "date-fns";
 import { Users, Trophy, Flame, TrendingUp, Info, List } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
@@ -11,7 +11,6 @@ import DailyGroupOverview from "@/components/DailyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { differenceInDays, startOfYear } from "date-fns";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
@@ -19,6 +18,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
+import { usePushUpData } from "@/hooks/usePushUpData";
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
 type LeaderboardView = "podium" | "list";
