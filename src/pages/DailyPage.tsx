@@ -171,7 +171,7 @@ const DailyPage = () => {
 
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">Push-Ups</h1>
+          <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">You Push</h1>
           <p className="text-lg text-muted-foreground mt-1">
             {format(selectedDate, "EEEE, dd.MM.yyyy")}
           </p>
