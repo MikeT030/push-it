@@ -449,7 +449,7 @@ const DailySection = () => {
           >
             <X size={20} />
           </button>
-          <div className="rounded-2xl p-6 max-w-sm w-full space-y-4" style={{ backgroundColor: 'rgba(14, 26, 41, 0)' }} onClick={(e) => e.stopPropagation()}>
+          <div className="rounded-2xl p-6 max-w-sm w-full space-y-4 -mt-[46px]" style={{ backgroundColor: 'rgba(14, 26, 41, 0)' }} onClick={(e) => e.stopPropagation()}>
             <h2 className="text-xl font-bold text-foreground text-center">Choose a Game</h2>
             <button
               onClick={() => setActiveGame("brickbreaker")}
