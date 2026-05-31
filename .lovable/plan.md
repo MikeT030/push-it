@@ -1,16 +1,10 @@
-## Plan
+## Goal
+On the Group page leaderboard, hide any user whose push-up total in the current view is 0.
 
-Replace the current mini-game controller icon (`src/assets/controller.svg`) on the Today card with the newly uploaded PNG, rendered in white.
+## Change
+File: `src/pages/GroupPage.tsx` — inside the `filteredUsers` useMemo (lines 191–231):
 
-### Steps
+- **All-time tab:** return `users.filter(u => u.total_pushups > 0)` instead of the full list.
+- **Weekly / Monthly tabs:** after the existing `.map(...)` that recomputes per-period totals, add `.filter(u => u.total_pushups > 0)` before the `.sort(...)`.
 
-1. Copy the uploaded image to `src/assets/game-controller.png`.
-2. In `src/components/DailySection.tsx`:
-   - Replace the import on line 12:
-     `import controllerIcon from "@/assets/game-controller.png";`
-   - On line 197, add a white filter so the PNG renders white:
-     `<img src={controllerIcon} alt="Game" className="w-6 h-6 brightness-0 invert" />`
-
-### Notes
-
-The uploaded PNG is dark on transparent background. Using Tailwind's `brightness-0 invert` turns any non-transparent pixels pure white while preserving transparency — no need to recolor the asset itself.
+No other components, queries, or styles change. The podium (top 3) and the list below it both read from `filteredUsers`, so both update automatically. The empty-state at line 346 already handles the case where the filtered list is empty.

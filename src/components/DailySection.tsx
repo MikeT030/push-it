@@ -9,7 +9,7 @@ import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
-import controllerIcon from "@/assets/game-controller.png";
+import controllerIcon from "@/assets/controller.svg";
 
 const DailySection = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -194,7 +194,7 @@ const DailySection = () => {
           className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
           aria-label="Open mini game"
         >
-          <img src={controllerIcon} alt="Game" className="w-6 h-6 brightness-0 invert" />
+          <img src={controllerIcon} alt="Game" className="w-6 h-6" />
         </button>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
