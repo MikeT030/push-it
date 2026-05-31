@@ -530,23 +530,6 @@ const GroupPage = () => {
             {/* Stats Tab */}
             <TabsContent value="stats" className="mt-0">
 
-                <p className="text-sm text-muted-foreground mt-2 text-center">
-                  {Math.round(stats.avgProgress)}% average progress
-                </p>
-
-                {/* Expandable chart section */}
-                {showGroupChart && (
-                  <GroupLineChartGoalCard
-                    totalPushUps={stats.totalPushups}
-                    groupGoal={users.reduce((sum, u) => sum + u.yearly_goal, 0)}
-                    progressPercent={stats.avgProgress}
-                    allEntries={allEntries}
-                    year={new Date().getFullYear()}
-                    memberCount={users.length}
-                    embedded
-                  />
-                )}
-              </div>
 
 
 
