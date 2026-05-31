@@ -279,7 +279,7 @@ const DailySection = () => {
           );
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
-            { label: "Avg. /d", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
+            { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#f97171]", isCustomIcon: false },
           ];
           return (
