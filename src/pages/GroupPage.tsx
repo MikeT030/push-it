@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, differenceInDays } from "date-fns";
-import { Users, Trophy, Flame, TrendingUp, Info, List } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Info, List, ChevronDown, ChevronRight } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
@@ -456,9 +456,19 @@ const GroupPage = () => {
 
               {/* Goal Card */}
               <div className="bg-card/40 rounded-2xl p-6 mb-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
-                <h2 className="text-lg font-bold text-foreground mb-4">
-                  We Push Goal {new Date().getFullYear()}
-                </h2>
+                <div
+                  className="flex items-center justify-between cursor-pointer mb-4"
+                  onClick={() => setShowGroupChart(v => !v)}
+                >
+                  <h2 className="text-lg font-bold text-foreground">
+                    We Push Goal {new Date().getFullYear()}
+                  </h2>
+                  {showGroupChart ? (
+                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                  )}
+                </div>
 
                 <div className="h-px mb-4 bg-[#3b404f]" />
                 
