@@ -112,12 +112,6 @@ const GroupPage = () => {
   const [leaderboardView, setLeaderboardView] = useState<LeaderboardView>("podium");
   const [allEntries, setAllEntries] = useState<any[]>([]);
   const [showGroupChart, setShowGroupChart] = useState(true);
-  const {
-    getTotalPushUps,
-    getCurrentStreak,
-    getMaxSingleDay,
-    isLoaded: pushUpLoaded,
-  } = usePushUpData();
   useEffect(() => {
     const fetchGroupProgress = async () => {
       const [
