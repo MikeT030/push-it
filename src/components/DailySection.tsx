@@ -463,7 +463,7 @@ const DailySection = () => {
               className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
             >
               <p className="font-semibold text-foreground">🚀 Space Shooter</p>
-              <p className="text-sm text-muted-foreground">Blast buzzwords in space</p>
+              <p className="text-sm text-muted-foreground">Blast falling objects in space</p>
             </button>
           </div>
         </div>
