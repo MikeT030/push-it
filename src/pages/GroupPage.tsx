@@ -376,7 +376,7 @@ const GroupPage = () => {
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
-                    <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
+                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Avg. prog.</p>
                       <p className="text-xl font-black text-foreground">
