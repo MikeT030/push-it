@@ -308,7 +308,7 @@ const GroupPage = () => {
             <TabsTrigger value="stats" className="flex-1">Stats</TabsTrigger>
           </TabsList>
 
-          <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} className="touch-pan-y">
+          <div>
             {/* Leaderboard Tab */}
             <TabsContent value="leaderboard" className="mt-0">
               {/* Period Toggle */}
