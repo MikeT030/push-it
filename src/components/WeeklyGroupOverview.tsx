@@ -242,7 +242,7 @@ const WeeklyGroupOverview = () => {
         <div className="flex items-center justify-between p-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setIsOpen((prev) => !prev)}>
           <div>
             <p className="font-black text-foreground text-xl">{weeklyData.total.toLocaleString()}</p>
-            <p className="text-sm text-muted-foreground">we push push-ups</p>
+            <p className="text-sm text-muted-foreground">Push-Ups</p>
           </div>
           <div className="text-right">
             <p className="font-bold text-white text-xl">
