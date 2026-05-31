@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, differenceInDays } from "date-fns";
-import { Users, Trophy, Flame, TrendingUp, Info, List } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Info, List, ChevronDown, ChevronRight } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
