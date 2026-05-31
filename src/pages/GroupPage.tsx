@@ -354,8 +354,8 @@ const GroupPage = () => {
 
               {/* Group Stats Row */}
               <div className="bg-card/40 rounded-2xl p-6 animate-slide-up mt-4" style={{ animationDelay: "0.05s" }}>
-                <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2">
-                  <div className="flex-1 flex items-start gap-2">
+                <div className="flex gap-6 overflow-x-auto pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 -mx-2 px-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                  <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <Flame className="w-5 h-5 text-[#C029DE]" />
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Total</p>
@@ -365,7 +365,7 @@ const GroupPage = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex-1 flex items-start gap-2">
+                  <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <span className="text-xl font-bold text-[#7036FF]">Ø</span>
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Avg. today</p>
@@ -375,7 +375,7 @@ const GroupPage = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex-1 flex items-start gap-2">
+                  <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Avg. progress</p>
@@ -385,7 +385,7 @@ const GroupPage = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex-1 flex items-start gap-2">
+                  <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <MultiColorTargetIcon size={20} />
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">On track</p>
