@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
-import { usePushUpData } from "@/hooks/usePushUpData";
+
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
 type LeaderboardView = "podium" | "list";
