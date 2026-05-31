@@ -354,31 +354,31 @@ const GroupPage = () => {
 
               {/* Group Stats Row */}
               <div className="bg-card/40 rounded-2xl p-6 animate-slide-up mt-4" style={{ animationDelay: "0.05s" }}>
-                <div className="flex gap-6 overflow-x-auto pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 -mx-2 px-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                <div className="flex gap-6 overflow-x-auto pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 -mx-2 px-2 border-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <Flame className="w-5 h-5 text-[#C029DE]" />
                     <div>
-                      <p className="text-xs text-muted-foreground font-medium">Total</p>
+                      <p className="text-xs text-muted-foreground font-medium">Total PU</p>
                       <p className="text-xl font-black text-foreground">
                         {stats.totalPushups.toLocaleString()}
-                        <span className="text-sm font-medium text-muted-foreground ml-1">PU</span>
+                        <span className="text-sm font-medium text-muted-foreground ml-1">​</span>
                       </p>
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <span className="text-xl font-bold text-[#7036FF]">Ø</span>
                     <div>
-                      <p className="text-xs text-muted-foreground font-medium">Avg. today</p>
+                      <p className="text-xs text-muted-foreground font-medium">Avg. PU/day</p>
                       <p className="text-xl font-black text-foreground">
                         {stats.avgPuPerDay.toLocaleString()}
-                        <span className="text-sm font-medium text-muted-foreground ml-1">PU</span>
+                        <span className="text-sm font-medium text-muted-foreground ml-1">​</span>
                       </p>
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                     <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
                     <div>
-                      <p className="text-xs text-muted-foreground font-medium">Avg. progress</p>
+                      <p className="text-xs text-muted-foreground font-medium">Avg. prog.</p>
                       <p className="text-xl font-black text-foreground">
                         {Math.round(stats.avgProgress)}
                         <span className="text-sm font-medium text-muted-foreground ml-1">%</span>
