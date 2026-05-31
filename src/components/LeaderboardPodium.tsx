@@ -54,7 +54,7 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
   return (
     <div className="flex flex-col items-center gap-1.5 relative cursor-pointer" onClick={onClick}>
       {/* Rank badge */}
-      <div className={`absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold z-10 ${rankBadgeColors[rank]}`}>
+      <div className={`hidden absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold z-10 ${rankBadgeColors[rank]}`}>
         {rank + 1}
       </div>
       
