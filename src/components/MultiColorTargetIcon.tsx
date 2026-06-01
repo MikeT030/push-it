@@ -8,20 +8,15 @@ const MultiColorTargetIcon = ({ className = "", size = 20 }: MultiColorTargetIco
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 80 80"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* Outer circle - #0ABAB5 */}
-      <circle cx="12" cy="12" r="10" stroke="#0ABAB5" fill="none" />
-      {/* Middle circle - #C029DE */}
-      <circle cx="12" cy="12" r="6" stroke="#C029DE" fill="none" />
-      {/* Inner circle - #7036FF */}
-      <circle cx="12" cy="12" r="2" stroke="#7036FF" fill="none" />
+      <circle cx="40" cy="40" r="37" stroke="#0ABAB5" strokeWidth="6" />
+      <circle cx="40" cy="40" r="27" stroke="#4300FF" strokeWidth="6" />
+      <circle cx="40" cy="40" r="17" stroke="#C029DE" strokeWidth="6" />
+      <circle cx="40" cy="40" r="7" stroke="#FF2C2C" strokeWidth="6" />
     </svg>
   );
 };
