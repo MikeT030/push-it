@@ -297,12 +297,12 @@ const DailySection = () => {
           const projectedDate = allTimeAvg > 0
             ? new Date(Date.now() + (remaining / allTimeAvg) * 24 * 60 * 60 * 1000)
             : null;
-          const projectedMonth = projectedDate ? format(projectedDate, "MMM") : "—";
+          const projectedMonth = projectedDate ? format(projectedDate, "MMM d") : "—";
           const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
-            { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: projectedDate ? `${projectedDays}d` : "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
+            { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
