@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
+import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 import ShareIcon from "@/components/ShareIcon";
 import { useNavigate } from "react-router-dom";
 import { usePushUpData } from "@/hooks/usePushUpData";
@@ -171,7 +172,10 @@ const DailyPage = () => {
 
         {/* Header */}
         <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">You Push</h1>
+          <div className="flex items-center gap-3">
+            <img src={smallCircleIcon} alt="" className="w-7 h-7" />
+            <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">You Push</h1>
+          </div>
           <p className="text-lg text-muted-foreground mt-1">
             {format(selectedDate, "EEEE, dd.MM.yyyy")}
           </p>
