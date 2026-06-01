@@ -145,11 +145,10 @@ const App = () => {
     setShowSplash(false);
   };
 
-  if (showSplash) {
-    return <SplashScreen onComplete={handleSplashComplete} />;
-  }
-
   return (
+    <>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
