@@ -73,6 +73,9 @@ export const usePushUpData = () => {
   const setEntryForDate = useCallback(async (date: Date, count: number) => {
     if (!user) return;
 
+    // Defence-in-depth: clamp to match server CHECK constraint (0-9999)
+    count = Math.max(0, Math.min(9999, Math.floor(Number(count) || 0)));
+
     const dateStr = format(date, "yyyy-MM-dd");
 
     // Optimistic update
@@ -208,11 +211,14 @@ export const usePushUpData = () => {
   const setYearlyGoal = useCallback(async (newGoal: number) => {
     if (!user) return;
 
-    setProfile(prev => prev ? { ...prev, yearly_goal: newGoal } : { yearly_goal: newGoal });
+    // Defence-in-depth: server enforces yearly_goal > 0
+    const safeGoal = Math.max(1, Math.floor(Number(newGoal) || DEFAULT_YEARLY_GOAL));
+
+    setProfile(prev => prev ? { ...prev, yearly_goal: safeGoal } : { yearly_goal: safeGoal });
 
     await supabase
       .from("profiles")
-      .update({ yearly_goal: newGoal })
+      .update({ yearly_goal: safeGoal })
       .eq("id", user.id);
   }, [user]);
 
