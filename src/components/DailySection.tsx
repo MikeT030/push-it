@@ -351,7 +351,8 @@ const DailySection = () => {
             let baseRgb: [number, number, number] | null = null;
             let textColor = "text-foreground";
             if (hasEntry) {
-              if (dayProgress >= 200) { baseRgb = [192, 41, 222]; textColor = "text-white"; }
+              if (dayProgress >= 300) { baseRgb = [255, 44, 44]; textColor = "text-white"; }
+              else if (dayProgress >= 200) { baseRgb = [192, 41, 222]; textColor = "text-white"; }
               else if (dayProgress >= 100) { baseRgb = [112, 54, 255]; textColor = "text-white"; }
               else { baseRgb = [10, 186, 181]; textColor = "text-white"; }
             }
