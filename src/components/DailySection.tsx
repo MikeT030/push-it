@@ -302,9 +302,9 @@ const DailySection = () => {
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
+            { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: projectedDate ? `${projectedDays}d` : "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
-            { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: projectedDate ? `${projectedDays}d` : "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
           ];
           return (
             <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
