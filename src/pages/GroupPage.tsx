@@ -4,6 +4,7 @@ import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, star
 import { Users, Trophy, Flame, TrendingUp, Info, List, ChevronDown, ChevronRight } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
+import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import { getAvatarById } from "@/data/avatars";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
@@ -300,7 +301,10 @@ const GroupPage = () => {
       <div className="max-w-lg mx-auto px-6 py-8">
         {/* Profile Button + Header */}
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">We Push</h1>
+          <div className="flex items-center gap-3">
+            <img src={smallCircleIcon} alt="" className="w-9 h-9" />
+            <h1 className="text-4xl font-black text-foreground tracking-tight">We Push</h1>
+          </div>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
             {avatar ?
           <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" /> :
