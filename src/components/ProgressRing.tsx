@@ -156,23 +156,23 @@ const ProgressRing = ({
             style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
           />
 
-          {/* Overflow ring - only visible when > 100% */}
-          {overflowProgress > 0 && (
+          {/* Tier 2 ring - 101-200% */}
+          {tier2Progress > 0 && (
             <>
               <circle
                 cx={size / 2}
                 cy={size / 2}
                 r={radius}
                 fill="none"
-                stroke={overflowColor}
+                stroke={tier2Color}
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
-                strokeDashoffset={overflowOffset}
+                strokeDashoffset={tier2Offset}
                 className="transition-all duration-700 ease-out"
                 style={{
                   opacity: 0.6,
-                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${overflowColorSoft})`,
+                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${tier2ColorSoft})`,
                 }}
               />
               <circle
@@ -180,14 +180,14 @@ const ProgressRing = ({
                 cy={size / 2}
                 r={radius}
                 fill="none"
-                stroke={overflowColor}
+                stroke={tier2Color}
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
-                strokeDashoffset={overflowOffset}
+                strokeDashoffset={tier2Offset}
                 className="transition-all duration-700 ease-out"
                 style={{
-                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${overflowColorSoft})`,
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${tier2ColorSoft})`,
                 }}
               />
               <circle
@@ -199,7 +199,107 @@ const ProgressRing = ({
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
-                strokeDashoffset={overflowOffset}
+                strokeDashoffset={tier2Offset}
+                className="transition-all duration-700 ease-out pointer-events-none"
+                style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
+              />
+            </>
+          )}
+
+          {/* Tier 3 ring - 201-300% */}
+          {tier3Progress > 0 && (
+            <>
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier3Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier3Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  opacity: 0.6,
+                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${tier3ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier3Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier3Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${tier3ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#sheen-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier3Offset}
+                className="transition-all duration-700 ease-out pointer-events-none"
+                style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
+              />
+            </>
+          )}
+
+          {/* Tier 4 ring - >=301% */}
+          {tier4Progress > 0 && (
+            <>
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier4Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier4Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  opacity: 0.6,
+                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${tier4ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier4Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier4Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${tier4ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#sheen-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier4Offset}
                 className="transition-all duration-700 ease-out pointer-events-none"
                 style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
               />
