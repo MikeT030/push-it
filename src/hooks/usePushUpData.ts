@@ -73,6 +73,9 @@ export const usePushUpData = () => {
   const setEntryForDate = useCallback(async (date: Date, count: number) => {
     if (!user) return;
 
+    // Defence-in-depth: clamp to match server CHECK constraint (0-9999)
+    count = Math.max(0, Math.min(9999, Math.floor(Number(count) || 0)));
+
     const dateStr = format(date, "yyyy-MM-dd");
 
     // Optimistic update
