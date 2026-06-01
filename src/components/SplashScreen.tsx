@@ -11,7 +11,7 @@ const RINGS = [
   { r: 13, color: "#FF2C2C", delay: 0.9 },
 ];
 
-const DURATION = 1.2; // seconds per ring
+const DURATION = 1.6; // seconds per ring
 const TOTAL = DURATION + RINGS[RINGS.length - 1].delay; // last ring finishes
 
 const MORPH_MS = 900;
@@ -24,7 +24,11 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   useEffect(() => {
     const totalMs = TOTAL * 1000;
     const t1 = setTimeout(() => setIsMorphing(true), totalMs);
-    const t2 = setTimeout(() => setIsFadingOut(true), totalMs + MORPH_MS);
+    // Reveal auth content once the image has reached its final position
+    const t2 = setTimeout(() => {
+      sessionStorage.setItem("splashShown", "true");
+      setIsFadingOut(true);
+    }, totalMs + MORPH_MS);
     const t3 = setTimeout(onComplete, totalMs + MORPH_MS + FADE_MS);
     return () => {
       clearTimeout(t1);
@@ -32,6 +36,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       clearTimeout(t3);
     };
   }, [onComplete]);
+
 
   return (
     <div
