@@ -79,7 +79,7 @@ const AuthPage = () => {
         {/* Logo / Header */}
         <div className="text-center mb-8 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
-          <h1 className="font-black text-white text-2xl">Push-it</h1>
+          <h1 className="font-black text-white text-2xl">Push It</h1>
           <p className="text-muted-foreground mt-2">
             {isLogin ? "Welcome back!" : "30K Push Ups – 1 Year"}
           </p>
