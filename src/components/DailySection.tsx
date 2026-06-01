@@ -351,7 +351,8 @@ const DailySection = () => {
             let baseRgb: [number, number, number] | null = null;
             let textColor = "text-foreground";
             if (hasEntry) {
-              if (dayProgress >= 200) { baseRgb = [192, 41, 222]; textColor = "text-white"; }
+              if (dayProgress >= 300) { baseRgb = [255, 44, 44]; textColor = "text-white"; }
+              else if (dayProgress >= 200) { baseRgb = [192, 41, 222]; textColor = "text-white"; }
               else if (dayProgress >= 100) { baseRgb = [112, 54, 255]; textColor = "text-white"; }
               else { baseRgb = [10, 186, 181]; textColor = "text-white"; }
             }
@@ -418,9 +419,10 @@ const DailySection = () => {
                 const hasEntry = dayCount > 0;
 
                 const getProgressColor = () => {
+                  if (dayProgress >= 300) return { bg: "bg-[#FF2C2C]", text: "text-white", dot: "bg-[#FF2C2C]/60" };
                   if (dayProgress >= 200) return { bg: "bg-[#C029DE]", text: "text-white", dot: "bg-[#C029DE]/60" };
                   if (dayProgress >= 100) return { bg: "bg-[#7036FF]", text: "text-white", dot: "bg-[#7036FF]/60" };
-                  if (dayProgress > 0) return { bg: "bg-primary/20", text: "text-primary", dot: "bg-primary" };
+                  if (dayProgress > 0) return { bg: "bg-[#0ABAB5]/20", text: "text-[#0ABAB5]", dot: "bg-[#0ABAB5]" };
                   return { bg: "", text: "text-foreground", dot: "" };
                 };
                 const colors = getProgressColor();
