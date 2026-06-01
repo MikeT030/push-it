@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import smallCircleIcon from "@/assets/small-circle-icon.svg";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,7 +77,8 @@ const AuthPage = () => {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 safe-top">
       <div className="w-full max-w-sm animate-fade-in">
         {/* Logo / Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 flex flex-col items-center">
+          <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
           <h1 className="font-black text-gradient text-2xl">Push-it</h1>
           <p className="text-muted-foreground mt-2">
             {isLogin ? "Welcome back!" : "30K Push Ups – 1 Year"}
