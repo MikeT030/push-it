@@ -38,16 +38,24 @@ const ProgressRing = ({
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
 
-  // Cap base progress at 100%, calculate overflow
+  // Cap each tier at 100%
   const baseProgress = Math.min(progress, 100);
-  const overflowProgress = progress > 100 ? Math.min(progress - 100, 100) : 0;
+  const tier2Progress = progress > 100 ? Math.min(progress - 100, 100) : 0;
+  const tier3Progress = progress > 200 ? Math.min(progress - 200, 100) : 0;
+  const tier4Progress = progress > 300 ? Math.min(progress - 300, 100) : 0;
 
   const baseOffset = circumference - baseProgress / 100 * circumference;
-  const overflowOffset = circumference - overflowProgress / 100 * circumference;
+  const tier2Offset = circumference - tier2Progress / 100 * circumference;
+  const tier3Offset = circumference - tier3Progress / 100 * circumference;
+  const tier4Offset = circumference - tier4Progress / 100 * circumference;
 
   const baseColor = 'hsl(var(--primary))';
-  const overflowColor = progress >= 200 ? '#C029DE' : '#7036FF';
-  const overflowColorSoft = progress >= 200 ? 'rgba(192, 41, 222, 0.9)' : 'rgba(112, 54, 255, 0.9)';
+  const tier2Color = '#7036FF';
+  const tier3Color = '#C029DE';
+  const tier4Color = '#FF2C2C';
+  const tier2ColorSoft = 'rgba(112, 54, 255, 0.9)';
+  const tier3ColorSoft = 'rgba(192, 41, 222, 0.9)';
+  const tier4ColorSoft = 'rgba(255, 44, 44, 0.9)';
 
   return (
     <>
@@ -148,23 +156,23 @@ const ProgressRing = ({
             style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
           />
 
-          {/* Overflow ring - only visible when > 100% */}
-          {overflowProgress > 0 && (
+          {/* Tier 2 ring - 101-200% */}
+          {tier2Progress > 0 && (
             <>
               <circle
                 cx={size / 2}
                 cy={size / 2}
                 r={radius}
                 fill="none"
-                stroke={overflowColor}
+                stroke={tier2Color}
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
-                strokeDashoffset={overflowOffset}
+                strokeDashoffset={tier2Offset}
                 className="transition-all duration-700 ease-out"
                 style={{
                   opacity: 0.6,
-                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${overflowColorSoft})`,
+                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${tier2ColorSoft})`,
                 }}
               />
               <circle
@@ -172,14 +180,14 @@ const ProgressRing = ({
                 cy={size / 2}
                 r={radius}
                 fill="none"
-                stroke={overflowColor}
+                stroke={tier2Color}
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
-                strokeDashoffset={overflowOffset}
+                strokeDashoffset={tier2Offset}
                 className="transition-all duration-700 ease-out"
                 style={{
-                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${overflowColorSoft})`,
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${tier2ColorSoft})`,
                 }}
               />
               <circle
@@ -191,7 +199,107 @@ const ProgressRing = ({
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
-                strokeDashoffset={overflowOffset}
+                strokeDashoffset={tier2Offset}
+                className="transition-all duration-700 ease-out pointer-events-none"
+                style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
+              />
+            </>
+          )}
+
+          {/* Tier 3 ring - 201-300% */}
+          {tier3Progress > 0 && (
+            <>
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier3Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier3Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  opacity: 0.6,
+                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${tier3ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier3Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier3Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${tier3ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#sheen-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier3Offset}
+                className="transition-all duration-700 ease-out pointer-events-none"
+                style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
+              />
+            </>
+          )}
+
+          {/* Tier 4 ring - >=301% */}
+          {tier4Progress > 0 && (
+            <>
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier4Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier4Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  opacity: 0.6,
+                  filter: `blur(${strokeWidth * 0.6}px) drop-shadow(0 0 ${strokeWidth * 1.4}px ${tier4ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={tier4Color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier4Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.6}px ${tier4ColorSoft})`,
+                }}
+              />
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#sheen-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier4Offset}
                 className="transition-all duration-700 ease-out pointer-events-none"
                 style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
               />
