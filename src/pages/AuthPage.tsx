@@ -16,8 +16,20 @@ const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showContent, setShowContent] = useState(() => sessionStorage.getItem("splashShown") === "true");
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (showContent) return;
+    const interval = setInterval(() => {
+      if (sessionStorage.getItem("splashShown") === "true") {
+        setShowContent(true);
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, [showContent]);
 
   useEffect(() => {
     if (user) {
