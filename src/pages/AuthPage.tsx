@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import smallCircleIcon from "@/assets/small-circle-icon.svg";
+import muscleIcon from "@/assets/muscle-icon.svg";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -157,8 +158,8 @@ const AuthPage = () => {
         </div>
 
         {/* Info */}
-        <p className="text-center text-muted-foreground/50 text-xs mt-8">
-          Track your way to 30,000 push-ups 💪
+        <p className="text-center text-muted-foreground/50 text-xs mt-8 flex items-center justify-center gap-1">
+          Track your way to 30,000 push-ups <img src={muscleIcon} alt="" className="w-4 h-4 inline" />
         </p>
       </div>
     </div>
