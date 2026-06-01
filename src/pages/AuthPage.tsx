@@ -100,7 +100,6 @@ const AuthPage = () => {
                 placeholder="you@example.com"
                 className="mt-1.5 h-12 bg-transparent border-0 border-b border-[#EEEEEE] text-foreground placeholder:text-muted-foreground mb-[20px]"
                 required
-                autoComplete={isLogin ? "username" : "email"}
               />
             </div>
 
@@ -115,7 +114,6 @@ const AuthPage = () => {
                 placeholder="••••••••"
                 className="mt-1.5 h-12 bg-transparent border-0 border-b border-[#EEEEEE] text-foreground placeholder:text-muted-foreground mb-[20px]"
                 required
-                autoComplete={isLogin ? "current-password" : "new-password"}
               />
             </div>
 
