@@ -143,9 +143,10 @@ const CalendarSection = () => {
             let bg = "";
             let text = "text-foreground";
             if (hasEntry) {
-              if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
+              if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; text = "text-white"; }
+              else if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
               else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; text = "text-white"; }
-              else { bg = "bg-primary/20"; text = "text-primary"; }
+              else { bg = "bg-[#0ABAB5]/20"; text = "text-[#0ABAB5]"; }
             }
             if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
             return (
