@@ -259,22 +259,39 @@ const DailyGroupOverview = () => {
           {/* Member Contributions List */}
           {memberContributions.length > 0 ?
           <div>
-              {memberContributions.map((member, index) =>
-            <div key={member.user_id}>
-              <div
-                className="flex items-center justify-between py-2 px-3 rounded-lg">
-                  <span className="text-sm text-foreground">
-                    {member.display_name || "Member"}
-                  </span>
-                  <span className="font-bold text-foreground">
-                    {member.count.toLocaleString()}
-                  </span>
-              </div>
-              {index < memberContributions.length - 1 && (
-                <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
-              )}
-            </div>
-            )}
+              {memberContributions.map((member, index) => {
+                const memberPct = Math.round((member.count / DAILY_TARGET) * 100);
+                const barColor =
+                  memberPct >= 201 ? "#C029DE" :
+                  memberPct >= 101 ? "#7036FF" :
+                  "#0ABAB5";
+                return (
+                <div key={member.user_id}>
+                  <div className="py-2 px-3 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-foreground">
+                        {member.display_name || "Member"}
+                      </span>
+                      <span className="font-bold text-foreground">
+                        {member.count.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="h-1.5 rounded-full overflow-hidden relative bg-[#3b404f]">
+                      <div
+                        className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
+                        style={{
+                          width: `${Math.min(memberPct, 100)}%`,
+                          backgroundColor: barColor,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  {index < memberContributions.length - 1 && (
+                    <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
+                  )}
+                </div>
+                );
+              })}
             </div> :
 
           <p className="text-sm text-muted-foreground text-center py-2">
