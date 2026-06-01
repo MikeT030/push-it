@@ -16,8 +16,20 @@ const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showContent, setShowContent] = useState(() => sessionStorage.getItem("splashShown") === "true");
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (showContent) return;
+    const interval = setInterval(() => {
+      if (sessionStorage.getItem("splashShown") === "true") {
+        setShowContent(true);
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, [showContent]);
 
   useEffect(() => {
     if (user) {
@@ -76,7 +88,7 @@ const AuthPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 safe-top">
-      <div className="w-full max-w-sm animate-fade-in">
+      <div className="w-full max-w-sm animate-fade-in" style={{ opacity: showContent ? 1 : 0, transition: "opacity 400ms ease-out" }}>
         {/* Logo / Header */}
         <div className="text-center mb-8 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
