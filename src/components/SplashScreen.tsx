@@ -6,12 +6,12 @@ interface SplashScreenProps {
 
 const RINGS = [
   { r: 73, color: "#0ABAB5", delay: 0 },
-  { r: 53, color: "#4300FF", delay: 0.8 },
-  { r: 33, color: "#C029DE", delay: 1.6 },
-  { r: 13, color: "#FF2C2C", delay: 2.4 },
+  { r: 53, color: "#4300FF", delay: 0.5 },
+  { r: 33, color: "#C029DE", delay: 1.0 },
+  { r: 13, color: "#FF2C2C", delay: 1.5 },
 ];
 
-const DURATION = 2.2; // seconds per ring
+const DURATION = 1.8; // seconds per ring
 const TOTAL = DURATION + RINGS[RINGS.length - 1].delay; // last ring finishes
 
 const MORPH_MS = 900;
