@@ -3,6 +3,7 @@ import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDa
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X } from "lucide-react";
 import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
+import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
