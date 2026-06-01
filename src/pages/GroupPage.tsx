@@ -302,7 +302,7 @@ const GroupPage = () => {
         {/* Profile Button + Header */}
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
           <div className="flex items-center gap-3">
-            <img src={smallCircleIcon} alt="" className="w-9 h-9" />
+            <img src={smallCircleIcon} alt="" className="w-7 h-7" />
             <h1 className="text-4xl font-black text-foreground tracking-tight">We Push</h1>
           </div>
           <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
