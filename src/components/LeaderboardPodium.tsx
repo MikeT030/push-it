@@ -67,7 +67,7 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
       </div>
 
       {/* Name + Streak */}
-      <p className="text-xs font-medium text-foreground truncate max-w-[80px] text-center">
+      <p className="text-xs text-foreground truncate max-w-[80px] text-center font-bold">
         {user.display_name || `Member`}
       </p>
       <p className="font-medium text-foreground text-xs flex items-center gap-0.5 justify-center">
