@@ -3,6 +3,7 @@ import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDa
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X } from "lucide-react";
 import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
+import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
@@ -26,6 +27,7 @@ const DailySection = () => {
     getDailyProgress,
     canEditDate,
     dailyTarget,
+    yearlyGoal,
     isLoaded,
     getCurrentStreak,
     getTotalPushUps,
@@ -290,11 +292,19 @@ const DailySection = () => {
             </svg>
           );
           const avgProgress = dailyTarget > 0 ? Math.round((avg / dailyTarget) * 100) : 0;
+          const remaining = Math.max(0, yearlyGoal - total);
+          const allTimeAvg = daysElapsed > 0 ? total / daysElapsed : 0;
+          const projectedDate = allTimeAvg > 0
+            ? new Date(Date.now() + (remaining / allTimeAvg) * 24 * 60 * 60 * 1000)
+            : null;
+          const projectedMonth = projectedDate ? format(projectedDate, "MMM") : "—";
+          const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
+            { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: projectedDate ? `${projectedDays}d` : "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
           ];
           return (
             <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
