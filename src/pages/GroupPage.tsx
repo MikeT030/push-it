@@ -4,7 +4,7 @@ import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, star
 import { Users, Trophy, Flame, TrendingUp, Info, List, ChevronDown, ChevronRight } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
-import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
+
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import { getAvatarById } from "@/data/avatars";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
