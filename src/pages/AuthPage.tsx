@@ -88,7 +88,8 @@ const AuthPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 safe-top">
-      <div className="w-full max-w-sm animate-fade-in" style={{ opacity: showContent ? 1 : 0, transition: "opacity 400ms ease-out" }}>
+      {showContent && (
+      <div className="w-full max-w-sm animate-fade-in">
         {/* Logo / Header */}
         <div className="text-center mb-8 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
