@@ -363,7 +363,7 @@ const GroupPage = () => {
               <div className="bg-card/40 rounded-b-2xl px-4 pt-[20px] animate-slide-up" style={{ animationDelay: "0.05s" }}>
                 <div className="flex gap-6 overflow-x-auto py-4 border-t border-[#575F78] pt-[24px] pb-[24px]" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
-                    <Flame className="w-5 h-5 text-[#C029DE]" />
+                    <Flame className="w-5 h-5 text-[#FF2C2C]" />
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Total PU</p>
                       <p className="text-xl font-black text-foreground">
@@ -409,7 +409,7 @@ const GroupPage = () => {
               <div data-horizontal-scroll className="hidden flex gap-3 overflow-x-auto mt-6 mb-6 -mx-2 px-2 scrollbar-hide animate-slide-up" style={{ scrollbarWidth: "none", msOverflowStyle: "none", animationDelay: "0.1s" }}>
                 <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
                   <div className="flex items-center gap-2 mb-3">
-                    <Flame className="w-5 h-5 text-[#C029DE]" />
+                    <Flame className="w-5 h-5 text-[#FF2C2C]" />
                     <p className="text-sm text-muted-foreground font-medium">Most PU</p>
                   </div>
                   <p className="text-[1.625rem] font-black text-foreground">
