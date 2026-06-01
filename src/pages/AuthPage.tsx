@@ -175,6 +175,7 @@ const AuthPage = () => {
           Track your way to 30,000 push-ups <img src={muscleIcon} alt="" className="w-4 h-4 inline" />
         </p>
       </div>
+      )}
     </div>
   );
 };
