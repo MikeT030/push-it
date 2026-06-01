@@ -27,6 +27,7 @@ const DailySection = () => {
     getDailyProgress,
     canEditDate,
     dailyTarget,
+    yearlyGoal,
     isLoaded,
     getCurrentStreak,
     getTotalPushUps,
