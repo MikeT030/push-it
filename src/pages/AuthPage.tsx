@@ -52,7 +52,7 @@ const AuthPage = () => {
             toast.error(error.message);
           }
         } else {
-          toast.success("Welcome back!");
+          toast.success("Welcome, push Buddy!");
           navigate("/");
         }
       } else {
@@ -81,7 +81,7 @@ const AuthPage = () => {
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
           <h1 className="font-black text-white text-2xl">Push It</h1>
           <p className="text-muted-foreground mt-2">
-            {isLogin ? "Welcome back!" : "30K Push Ups – 1 Year"}
+            {isLogin ? "Welcome, push Buddy!" : "30K Push Ups – 1 Year"}
           </p>
         </div>
 
