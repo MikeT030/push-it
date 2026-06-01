@@ -293,7 +293,7 @@ const DailySection = () => {
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
-            { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#f97171]", isCustomIcon: false },
+            { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#7036FF]", isCustomIcon: false },
           ];
           return (

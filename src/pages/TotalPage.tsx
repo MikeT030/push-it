@@ -110,7 +110,7 @@ const TotalPage = () => {
     value: `${stats.streak}`,
     unit: "​",
     icon: Flame,
-    color: "text-[#C029DE]"
+    color: "text-[#FF2C2C]"
   }, {
     label: "Remaining",
     value: `${stats.daysRemaining}`,
