@@ -59,7 +59,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         style={{
           transition: `transform ${MORPH_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
           transform: isMorphing
-            ? "translateY(-128px) scale(0.5)"
+            ? "translateY(-180px) scale(0.5)"
             : "translateY(0) scale(1)",
         }}
       >
