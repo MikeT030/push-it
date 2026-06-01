@@ -50,10 +50,10 @@ const ProgressRing = ({
   const tier4Offset = circumference - tier4Progress / 100 * circumference;
 
   const baseColor = 'hsl(var(--primary))';
-  const tier2Color = '#7036FF';
+  const tier2Color = '#4300FF';
   const tier3Color = '#C029DE';
   const tier4Color = '#FF2C2C';
-  const tier2ColorSoft = 'rgba(112, 54, 255, 0.9)';
+  const tier2ColorSoft = 'rgba(67, 0, 255, 0.9)';
   const tier3ColorSoft = 'rgba(192, 41, 222, 0.9)';
   const tier4ColorSoft = 'rgba(255, 44, 44, 0.9)';
 
