@@ -239,25 +239,54 @@ const DailyGroupOverview = () => {
           </div>
         </div>
 
-        {/* Progress bar with overflow */}
-        <div className="h-2 rounded-full overflow-hidden relative mb-4 bg-[#3b404f]">
-          <div
-            className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-500 absolute left-0 top-0"
-            style={{ width: `${Math.min(percentage, 100)}%` }} />
-
-          {percentage > 100 &&
-          <div
-            className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
-            style={{
-              width: `${Math.min(percentage, 200)}%`,
-              background:
-              percentage >= 200 ?
-              "linear-gradient(to right, #C029DE, #C029DE99)" :
-              "linear-gradient(to right, #7036FF, rgba(112, 54, 255, 0.6))"
-            }} />
-
-          }
-        </div>
+        {/* Progress bar with tier boundaries */}
+        {(() => {
+          const groupDenom = Math.max(percentage, 1);
+          const groupStops: { color: string; x: number }[] = [
+            { color: "#0ABAB5", x: 0 },
+            { color: "#0ABAB5", x: 100 },
+            { color: "#7036FF", x: 100 },
+            { color: "#7036FF", x: 200 },
+            { color: "#C029DE", x: 200 },
+            { color: "#C029DE", x: 300 },
+            { color: "#FF3366", x: 300 },
+            { color: "#FF3366", x: 400 },
+          ];
+          const groupGradient = `linear-gradient(to right, ${groupStops
+            .map((s) => `${s.color} ${(s.x / groupDenom) * 100}%`)
+            .join(", ")})`;
+          const groupBoundaries: { x: number; outer: string; inner: string }[] = [
+            { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
+            { x: 200, outer: "#7036FF", inner: "#C029DE" },
+            { x: 300, outer: "#C029DE", inner: "#FF3366" },
+          ].filter((b) => percentage > b.x);
+          return (
+            <div className="h-2 rounded-full relative mb-4 bg-transparent">
+              <div
+                className="h-full w-full rounded-full transition-all duration-500"
+                style={{ background: groupGradient }}
+              />
+              {groupBoundaries.map((b) => (
+                <div
+                  key={b.x}
+                  className="absolute top-1/2 rounded-full flex items-center justify-center"
+                  style={{
+                    left: `${(b.x / groupDenom) * 100}%`,
+                    width: 8,
+                    height: 8,
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: b.outer,
+                  }}
+                >
+                  <div
+                    className="rounded-full"
+                    style={{ width: 4, height: 4, backgroundColor: b.inner }}
+                  />
+                </div>
+              ))}
+            </div>
+          );
+        })()}
 
         <CollapsibleContent className="space-y-4">
 
