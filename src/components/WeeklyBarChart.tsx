@@ -35,15 +35,19 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     };
 
     let rafId: number | null = null;
+    let rafId2: number | null = null;
     const trigger = () => {
-      // Defer to next frame so bars first render at 0 before animating to target
-      rafId = requestAnimationFrame(() => setAnimate(true));
+      // Double rAF: ensures bars paint at height 0 before transitioning to target
+      rafId = requestAnimationFrame(() => {
+        rafId2 = requestAnimationFrame(() => setAnimate(true));
+      });
     };
 
     if (isFullyInView()) {
       trigger();
       return () => {
         if (rafId !== null) cancelAnimationFrame(rafId);
+        if (rafId2 !== null) cancelAnimationFrame(rafId2);
       };
     }
 
@@ -61,6 +65,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", onScroll);
       if (rafId !== null) cancelAnimationFrame(rafId);
+      if (rafId2 !== null) cancelAnimationFrame(rafId2);
     };
   }, [days]);
 
