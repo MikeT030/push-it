@@ -47,6 +47,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
       trigger();
       return () => {
         if (rafId !== null) cancelAnimationFrame(rafId);
+        if (rafId2 !== null) cancelAnimationFrame(rafId2);
       };
     }
 
