@@ -305,8 +305,8 @@ const DailyGroupOverview = () => {
                           className="absolute top-1/2 rounded-full"
                           style={{
                             left: `${(b.x / denom) * 100}%`,
-                            width: 8,
-                            height: 8,
+                            width: 6,
+                            height: 6,
                             transform: "translate(-50%, -50%)",
                             backgroundColor: b.color,
                           }}
