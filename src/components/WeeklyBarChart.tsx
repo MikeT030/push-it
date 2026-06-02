@@ -65,6 +65,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", onScroll);
       if (rafId !== null) cancelAnimationFrame(rafId);
+      if (rafId2 !== null) cancelAnimationFrame(rafId2);
     };
   }, [days]);
 
