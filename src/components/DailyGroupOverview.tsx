@@ -271,29 +271,56 @@ const DailyGroupOverview = () => {
               {memberContributions.map((member, index) => {
                 const personalTarget = Math.max(1, member.goal / 365);
                 const memberPct = (member.count / personalTarget) * 100;
-                const denom = Math.max(memberPct, 100);
-                const filledPct = (Math.min(memberPct, 100) / denom) * 100;
-                const overflowPct = memberPct > 100 ? ((memberPct - 100) / denom) * 100 : 0;
+                const denom = Math.max(memberPct, 1);
+                // Solid tier colors with hard transitions (no fade, no gap).
+                const rawStops: { color: string; x: number }[] = [
+                  { color: "#0ABAB5", x: 0 },
+                  { color: "#0ABAB5", x: 100 },
+                  { color: "#7036FF", x: 100 },
+                  { color: "#7036FF", x: 200 },
+                  { color: "#C029DE", x: 200 },
+                  { color: "#C029DE", x: 300 },
+                  { color: "#FF3366", x: 300 },
+                  { color: "#FF3366", x: 400 },
+                ];
+                const gradient = `linear-gradient(to right, ${rawStops
+                  .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
+                  .join(", ")})`;
+                // Tier boundary markers: real circles, outer = previous tier, inner = next tier.
+                const boundaries: { x: number; outer: string; inner: string }[] = [
+                  { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
+                  { x: 200, outer: "#7036FF", inner: "#C029DE" },
+                  { x: 300, outer: "#C029DE", inner: "#FF3366" },
+                ].filter((b) => memberPct > b.x);
                 return (
                 <div key={member.user_id}>
                   <div className="py-3 px-3 flex items-center gap-3">
                     <span className="text-sm text-foreground w-16 shrink-0 truncate">
                       {member.display_name || "Member"}
                     </span>
-                    <div
-                      className="flex-1 h-1.5 rounded-full relative flex overflow-hidden border"
-                      style={{ borderColor: "#0ABAB5" }}
-                    >
+                    <div className="flex-1 h-1.5 rounded-full relative bg-transparent">
                       <div
-                        className="h-full"
-                        style={{ width: `${filledPct}%`, backgroundColor: "#0ABAB5" }}
+                        className="h-full w-full rounded-full"
+                        style={{ background: gradient }}
                       />
-                      {overflowPct > 0 && (
+                      {boundaries.map((b) => (
                         <div
-                          className="h-full"
-                          style={{ width: `${overflowPct}%`, backgroundColor: "transparent" }}
-                        />
-                      )}
+                          key={b.x}
+                          className="absolute top-1/2 rounded-full flex items-center justify-center"
+                          style={{
+                            left: `${(b.x / denom) * 100}%`,
+                            width: 6,
+                            height: 6,
+                            transform: "translate(-50%, -50%)",
+                            backgroundColor: b.outer,
+                          }}
+                        >
+                          <div
+                            className="rounded-full"
+                            style={{ width: 3, height: 3, backgroundColor: b.inner }}
+                          />
+                        </div>
+                      ))}
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
                       {member.count.toLocaleString()}
