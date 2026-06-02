@@ -309,7 +309,7 @@ const DailySection = () => {
           return (
             <div className="flex gap-4 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
               {items.map((s) => (
-                <div key={s.label} className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
+                <div key={s.label} className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "115px" }}>
                   {s.label === "Avg. daily" ? (
                     <span className={`text-xl font-bold ${s.color}`}>Ø</span>
                   ) : s.isCustomIcon ? (
