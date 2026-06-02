@@ -137,12 +137,16 @@ const DailyGroupOverview = () => {
     });
 
     const contributions: MemberContribution[] = Array.from(userTotals.entries()).
-    map(([user_id, count]) => ({
-      user_id,
-      display_name: profiles.get(user_id) || null,
-      count
-    })).
-    sort((a, b) => b.count - a.count); // Sort by count descending
+    map(([user_id, count]) => {
+      const profile = profiles.get(user_id);
+      return {
+        user_id,
+        display_name: profile?.name ?? null,
+        count,
+        goal: profile?.goal ?? 29930,
+      };
+    }).
+    sort((a, b) => b.count - a.count);
 
     const total = contributions.reduce((sum, c) => sum + c.count, 0);
 
