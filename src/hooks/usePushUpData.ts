@@ -15,6 +15,29 @@ interface Profile {
 
 const DEFAULT_YEARLY_GOAL = 30000;
 
+// Debounced toast tracker: shows a single toast 6s after the last update per date
+const saveToastTimers = new Map<string, ReturnType<typeof setTimeout>>();
+const saveToastLatest = new Map<string, { count: number; date: Date; cleared: boolean }>();
+const SAVE_TOAST_DELAY = 6000;
+
+const scheduleSaveToast = (dateStr: string, count: number, date: Date, cleared: boolean) => {
+  saveToastLatest.set(dateStr, { count, date, cleared });
+  const existing = saveToastTimers.get(dateStr);
+  if (existing) clearTimeout(existing);
+  const timer = setTimeout(() => {
+    const latest = saveToastLatest.get(dateStr);
+    saveToastTimers.delete(dateStr);
+    saveToastLatest.delete(dateStr);
+    if (!latest) return;
+    if (latest.cleared) {
+      toast({ title: "Entry cleared", description: `Removed push-ups for ${format(latest.date, "MMM d")}` });
+    } else {
+      toast({ title: "Saved!", description: `${latest.count} push-ups recorded for ${format(latest.date, "MMM d")}` });
+    }
+  }, SAVE_TOAST_DELAY);
+  saveToastTimers.set(dateStr, timer);
+};
+
 export const usePushUpData = () => {
   const { user } = useAuth();
   const [entries, setEntries] = useState<PushUpEntry[]>([]);
