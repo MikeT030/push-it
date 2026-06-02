@@ -240,12 +240,27 @@ const TotalPage = () => {
               <div className="mt-4 rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2 pt-[20px] pb-[20px]">
                 {/* Pace indicator */}
                 <div>
-                  <p className="text-sm font-medium text-left text-muted-foreground">
-                    {stats.paceStatus === "ahead" ? "🎉 " : "💪 "}
-                    <span className={stats.paceStatus === "ahead" ? "text-primary font-semibold" : "text-[#C029DE] font-semibold"}>
-                      {stats.paceDiff.toLocaleString()}
-                    </span>{" "}
-                    push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target 82/d
+                  <p className="text-sm font-medium text-left text-muted-foreground flex items-center gap-1.5">
+                    <span
+                      className="inline-block w-4 h-4 flex-shrink-0"
+                      style={{
+                        backgroundColor: "#00C3FF",
+                        WebkitMaskImage: `url(${stats.paceStatus === "ahead" ? rocketAsset.url : megaphoneAsset.url})`,
+                        maskImage: `url(${stats.paceStatus === "ahead" ? rocketAsset.url : megaphoneAsset.url})`,
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                      }}
+                    />
+                    <span>
+                      <span className={stats.paceStatus === "ahead" ? "text-primary font-semibold" : "text-[#C029DE] font-semibold"}>
+                        {stats.paceDiff.toLocaleString()}
+                      </span>{" "}
+                      push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target 82/d
+                    </span>
                   </p>
                 </div>
 
