@@ -267,34 +267,51 @@ const DailyGroupOverview = () => {
               {memberContributions.map((member, index) => {
                 const personalTarget = Math.max(1, member.goal / 365);
                 const memberPct = (member.count / personalTarget) * 100;
-                // Each tier (teal/purple/magenta/crimson) spans 100 progress points.
-                // Hold the color solid for the first 85 points, then fade into the
-                // next tier color over the final 15 points.
                 const denom = Math.max(memberPct, 1);
+                // Solid tier colors with hard transitions (no fade, no gap).
                 const rawStops: { color: string; x: number }[] = [
                   { color: "#0ABAB5", x: 0 },
-                  { color: "#0ABAB5", x: 85 },
+                  { color: "#0ABAB5", x: 100 },
                   { color: "#7036FF", x: 100 },
-                  { color: "#7036FF", x: 185 },
+                  { color: "#7036FF", x: 200 },
                   { color: "#C029DE", x: 200 },
-                  { color: "#C029DE", x: 285 },
+                  { color: "#C029DE", x: 300 },
                   { color: "#FF3366", x: 300 },
                   { color: "#FF3366", x: 400 },
                 ];
                 const gradient = `linear-gradient(to right, ${rawStops
                   .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
                   .join(", ")})`;
+                // Tier boundary markers (small circles) at each transition the bar reaches.
+                const boundaries: { x: number; color: string }[] = [
+                  { x: 100, color: "#7036FF" },
+                  { x: 200, color: "#C029DE" },
+                  { x: 300, color: "#FF3366" },
+                ].filter((b) => memberPct > b.x);
                 return (
                 <div key={member.user_id}>
                   <div className="py-3 px-3 flex items-center gap-3">
                     <span className="text-sm text-foreground w-16 shrink-0 truncate">
                       {member.display_name || "Member"}
                     </span>
-                    <div className="flex-1 h-1.5 rounded-full overflow-hidden bg-transparent">
+                    <div className="flex-1 h-1.5 rounded-full relative bg-transparent">
                       <div
-                        className="h-full w-full rounded-full transition-[background] duration-500"
+                        className="h-full w-full rounded-full"
                         style={{ background: gradient }}
                       />
+                      {boundaries.map((b) => (
+                        <div
+                          key={b.x}
+                          className="absolute top-1/2 rounded-full"
+                          style={{
+                            left: `${(b.x / denom) * 100}%`,
+                            width: 8,
+                            height: 8,
+                            transform: "translate(-50%, -50%)",
+                            backgroundColor: b.color,
+                          }}
+                        />
+                      ))}
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
                       {member.count.toLocaleString()}
