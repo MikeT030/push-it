@@ -365,7 +365,7 @@ const DailySection = () => {
                       </TooltipContent>
                     </Tooltip>
                   ) : (
-                    <React.Fragment key={s.label}>{content}</React.Fragment>
+                    <div key={s.label} className="contents">{content}</div>
                   );
                 })}
               </TooltipProvider>
