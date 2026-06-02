@@ -27,7 +27,7 @@ interface EntryWithUser {
 
 const DailyGroupOverview = () => {
   const [allEntries, setAllEntries] = useState<EntryWithUser[]>([]);
-  const [profiles, setProfiles] = useState<Map<string, string | null>>(new Map());
+  const [profiles, setProfiles] = useState<Map<string, { name: string | null; goal: number }>>(new Map());
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
