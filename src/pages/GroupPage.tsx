@@ -109,7 +109,7 @@ const GroupPage = () => {
   const [users, setUsers] = useState<UserProgress[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leaderboard");
-  const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("alltime");
+  const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("weekly");
   const [leaderboardView, setLeaderboardView] = useState<LeaderboardView>("podium");
   const [allEntries, setAllEntries] = useState<any[]>([]);
   const [showGroupChart, setShowGroupChart] = useState(false);
