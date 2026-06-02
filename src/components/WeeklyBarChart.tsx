@@ -28,30 +28,31 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     const el = containerRef.current;
     if (!el) return;
 
-    // Trigger as soon as any part of the chart enters the viewport
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setAnimate(true);
-          }
-        });
-      },
-      { rootMargin: "0px 0px 0px 0px", threshold: 0 }
-    );
-    observer.observe(el);
-
-    // Fallback: if already visible on mount, trigger soon
-    const t = setTimeout(() => {
+    // Trigger only once the chart is fully scrolled into view from the bottom
+    // (i.e. its bottom edge has reached/passed the viewport's bottom edge)
+    const check = () => {
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
+      if (rect.bottom <= window.innerHeight && rect.top >= 0) {
         setAnimate(true);
+        return true;
       }
-    }, 50);
+      return false;
+    };
+
+    if (check()) return;
+
+    const onScroll = () => {
+      if (check()) {
+        window.removeEventListener("scroll", onScroll, true);
+        window.removeEventListener("resize", onScroll);
+      }
+    };
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", onScroll);
 
     return () => {
-      observer.disconnect();
-      clearTimeout(t);
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("resize", onScroll);
     };
   }, [days]);
 
