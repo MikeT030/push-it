@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame,
 import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
+import partyAsset from "@/assets/party.svg.asset.json";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
