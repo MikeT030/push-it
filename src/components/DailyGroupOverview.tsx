@@ -239,51 +239,26 @@ const DailyGroupOverview = () => {
           </div>
         </div>
 
-        {/* Progress bar with tier boundaries */}
+        {/* Progress bar: target = 100%, overflow shown as outline only */}
         {dayTotal > 0 && (() => {
-          const groupDenom = Math.max(percentage, 1);
-          const groupStops: { color: string; x: number }[] = [
-            { color: "#0ABAB5", x: 0 },
-            { color: "#0ABAB5", x: 100 },
-            { color: "#7036FF", x: 100 },
-            { color: "#7036FF", x: 200 },
-            { color: "#C029DE", x: 200 },
-            { color: "#C029DE", x: 300 },
-            { color: "#FF3366", x: 300 },
-            { color: "#FF3366", x: 400 },
-          ];
-          const groupGradient = `linear-gradient(to right, ${groupStops
-            .map((s) => `${s.color} ${(s.x / groupDenom) * 100}%`)
-            .join(", ")})`;
-          const groupBoundaries: { x: number; outer: string; inner: string }[] = [
-            { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
-            { x: 200, outer: "#7036FF", inner: "#C029DE" },
-            { x: 300, outer: "#C029DE", inner: "#FF3366" },
-          ].filter((b) => percentage > b.x);
+          const denom = Math.max(percentage, 100);
+          const filledPct = (Math.min(percentage, 100) / denom) * 100;
+          const overflowPct = percentage > 100 ? ((percentage - 100) / denom) * 100 : 0;
           return (
-            <div className="h-2 rounded-full relative mb-4 bg-transparent">
+            <div
+              className="h-2 rounded-full relative mb-4 flex overflow-hidden border border-primary"
+              style={{ borderColor: "#0ABAB5" }}
+            >
               <div
-                className="h-full w-full rounded-full transition-all duration-500"
-                style={{ background: groupGradient }}
+                className="h-full transition-all duration-500"
+                style={{ width: `${filledPct}%`, backgroundColor: "#0ABAB5" }}
               />
-              {groupBoundaries.map((b) => (
+              {overflowPct > 0 && (
                 <div
-                  key={b.x}
-                  className="absolute top-1/2 rounded-full flex items-center justify-center"
-                  style={{
-                    left: `${(b.x / groupDenom) * 100}%`,
-                    width: 8,
-                    height: 8,
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: b.outer,
-                  }}
-                >
-                  <div
-                    className="rounded-full"
-                    style={{ width: 4, height: 4, backgroundColor: b.inner }}
-                  />
-                </div>
-              ))}
+                  className="h-full transition-all duration-500"
+                  style={{ width: `${overflowPct}%`, backgroundColor: "transparent" }}
+                />
+              )}
             </div>
           );
         })()}
