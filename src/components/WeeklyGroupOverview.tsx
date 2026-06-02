@@ -275,12 +275,12 @@ const WeeklyGroupOverview = () => {
                       {format(day.date, "EEE")}
                     </span>
                     <span className="text-sm text-muted-foreground w-8 text-left">{format(day.date, "MMM")}</span>
+                    <span className="text-sm text-muted-foreground w-5 text-left">{format(day.date, "d")}</span>
                     {day.isToday && (
-                      <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium -mr-1">
+                      <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium -ml-1">
                         Today
                       </span>
                     )}
-                    <span className="text-sm text-muted-foreground w-5 text-left">{format(day.date, "d")}</span>
                   </div>
                   <span
                     className={`font-bold ${
