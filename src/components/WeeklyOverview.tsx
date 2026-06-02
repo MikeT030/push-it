@@ -174,14 +174,13 @@ const WeeklyOverview = () => {
             {weeklyData.days.map((day, index) => (
               <div key={format(day.date, "yyyy-MM-dd")}>
                 <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : ""}`}>
-                  <div className="flex items-center gap-3">
-                    <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-sm font-medium w-9 text-left ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
                       {format(day.date, "EEE")}
                     </span>
-                    <span className="text-sm text-muted-foreground">
-                      {format(day.date, "MMM d")}
-                    </span>
-                    {day.isToday && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                    <span className="text-sm text-muted-foreground w-5 text-left">{format(day.date, "d")}</span>
+                    <span className="text-sm text-muted-foreground w-8 text-left">{format(day.date, "MMM")}</span>
+                    {day.isToday && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium -ml-1">
                         Today
                       </span>}
                   </div>
