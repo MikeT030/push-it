@@ -12,6 +12,7 @@ import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 
 const DailySection = () => {
@@ -330,26 +331,44 @@ const DailySection = () => {
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
+          const exactDiff = `${diff >= 0 ? "+" : "−"}${absDiff.toLocaleString()}`;
           return (
             <div className="flex gap-4 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-              {items.map((s) => (
-                <div key={s.label} className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
-                  {s.label === "Avg. daily" ? (
-                    <span className={`text-xl font-bold ${s.color}`}>Ø</span>
-                  ) : s.isCustomIcon ? (
-                    <s.Icon className={`w-5 h-5 ${s.color}`} />
+              <TooltipProvider delayDuration={0}>
+                {items.map((s) => {
+                  const isTargetItem = s.label === "Above Tgt" || s.label === "Below Tgt";
+                  const content = (
+                    <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
+                      {s.label === "Avg. daily" ? (
+                        <span className={`text-xl font-bold ${s.color}`}>Ø</span>
+                      ) : s.isCustomIcon ? (
+                        <s.Icon className={`w-5 h-5 ${s.color}`} />
+                      ) : (
+                        <s.Icon className={`w-5 h-5 ${s.color}`} />
+                      )}
+                      <div>
+                        <p className="text-xs text-muted-foreground font-medium">{s.label}</p>
+                        <p className="text-xl font-black text-foreground">
+                          {s.value}
+                          <span className="text-sm font-medium text-muted-foreground ml-1">{s.unit}</span>
+                        </p>
+                      </div>
+                    </div>
+                  );
+                  return isTargetItem ? (
+                    <Tooltip key={s.label}>
+                      <TooltipTrigger asChild>
+                        {content}
+                      </TooltipTrigger>
+                      <TooltipContent side="top" sideOffset={6} className="bg-popover border border-[#3B404F] text-foreground font-black text-base px-3 py-1.5">
+                        {exactDiff}
+                      </TooltipContent>
+                    </Tooltip>
                   ) : (
-                    <s.Icon className={`w-5 h-5 ${s.color}`} />
-                  )}
-                  <div>
-                    <p className="text-xs text-muted-foreground font-medium">{s.label}</p>
-                    <p className="text-xl font-black text-foreground">
-                      {s.value}
-                      <span className="text-sm font-medium text-muted-foreground ml-1">{s.unit}</span>
-                    </p>
-                  </div>
-                </div>
-              ))}
+                    <div key={s.label} className="contents">{content}</div>
+                  );
+                })}
+              </TooltipProvider>
             </div>
           );
         })()}
