@@ -266,11 +266,14 @@ const TotalPage = () => {
 
                 {/* Projected completion date */}
                 <div>
-                  <p className="text-sm text-muted-foreground text-left">
+                  <p className="text-sm text-muted-foreground text-left flex items-center gap-1.5">
                     {stats.allTimeAvg > 0 ? <>
-                        🎯 Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
-                        <span className="font-semibold text-foreground">
-                          {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
+                        <MultiColorTargetIcon className="w-4 h-4 flex-shrink-0" />
+                        <span>
+                          Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
+                          <span className="font-semibold text-foreground">
+                            {format(new Date(Date.now() + remaining / stats.allTimeAvg * 24 * 60 * 60 * 1000), "MMMM d, yyyy")}
+                          </span>
                         </span>
                       </> : "Start logging push-ups to see your projected completion date"}
                   </p>
