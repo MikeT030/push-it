@@ -279,13 +279,13 @@ const DailyGroupOverview = () => {
                     </span>
                     <div className="flex-1 h-1.5 rounded-full overflow-hidden relative bg-transparent flex">
                       {tealW > 0 && (
-                        <div className="h-full" style={{ width: `${tealW}%`, backgroundColor: "#0ABAB5" }} />
+                        <div className="h-full rounded-full" style={{ width: `${tealW}%`, backgroundColor: "#0ABAB5" }} />
                       )}
                       {purpleW > 0 && (
-                        <div className="h-full" style={{ width: `${purpleW}%`, backgroundColor: "#7036FF" }} />
+                        <div className="h-full rounded-full" style={{ width: `${purpleW}%`, backgroundColor: "#7036FF" }} />
                       )}
                       {magentaW > 0 && (
-                        <div className="h-full" style={{ width: `${magentaW}%`, backgroundColor: "#C029DE" }} />
+                        <div className="h-full rounded-full" style={{ width: `${magentaW}%`, backgroundColor: "#C029DE" }} />
                       )}
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
