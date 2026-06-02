@@ -267,15 +267,20 @@ const DailyGroupOverview = () => {
               {memberContributions.map((member, index) => {
                 const personalTarget = Math.max(1, member.goal / 365);
                 const memberPct = (member.count / personalTarget) * 100;
-                const barColor = memberPct <= 100 ? "#0ABAB5" : memberPct <= 200 ? "#7036FF" : "#C029DE";
+                const total = Math.max(memberPct, 1);
+                const tealPct = (Math.min(memberPct, 100) / total) * 100;
+                const purplePct = (Math.max(0, Math.min(memberPct, 200) - 100) / total) * 100;
+                const magentaPct = (Math.max(0, memberPct - 200) / total) * 100;
                 return (
                 <div key={member.user_id}>
                   <div className="py-3 px-3 flex items-center gap-3">
                     <span className="text-sm text-foreground w-16 shrink-0 truncate">
                       {member.display_name || "Member"}
                     </span>
-                    <div className="flex-1 h-1.5 rounded-full overflow-hidden relative bg-transparent">
-                      <div className="h-full rounded-full" style={{ width: "100%", backgroundColor: barColor }} />
+                    <div className="flex-1 h-1.5 rounded-full overflow-hidden flex bg-transparent">
+                      {tealPct > 0 && <div className="h-full rounded-full" style={{ width: `${tealPct}%`, backgroundColor: "#0ABAB5" }} />}
+                      {purplePct > 0 && <div className="h-full rounded-full" style={{ width: `${purplePct}%`, backgroundColor: "#7036FF" }} />}
+                      {magentaPct > 0 && <div className="h-full rounded-full" style={{ width: `${magentaPct}%`, backgroundColor: "#C029DE" }} />}
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
                       {member.count.toLocaleString()}
