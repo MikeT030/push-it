@@ -274,8 +274,8 @@ const WeeklyGroupOverview = () => {
                     <span className={`text-sm font-medium w-9 text-left ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
                       {format(day.date, "EEE")}
                     </span>
-                    <span className="text-sm text-muted-foreground w-8 text-left">{format(day.date, "MMM")}</span>
                     <span className="text-sm text-muted-foreground w-5 text-left">{format(day.date, "d")}</span>
+                    <span className="text-sm text-muted-foreground w-8 text-left">{format(day.date, "MMM")}</span>
                     {day.isToday && (
                       <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium -ml-1">
                         Today
