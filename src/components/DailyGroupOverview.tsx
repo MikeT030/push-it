@@ -336,6 +336,17 @@ const DailyGroupOverview = () => {
                     <span className="text-sm text-foreground w-16 shrink-0 truncate">
                       {member.display_name || "Member"}
                     </span>
+                    {memberPct < 100 ? (
+                      <div
+                        className="flex-1 h-1.5 rounded-full relative border"
+                        style={{ borderColor: "#0ABAB5" }}
+                      >
+                        <div
+                          className="h-full rounded-full"
+                          style={{ width: `${memberPct}%`, backgroundColor: "#0ABAB5" }}
+                        />
+                      </div>
+                    ) : (
                     <div className="flex-1 h-1.5 rounded-full relative bg-transparent">
                       <div
                         className="h-full w-full rounded-full"
@@ -360,6 +371,7 @@ const DailyGroupOverview = () => {
                         </div>
                       ))}
                     </div>
+                    )}
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
                       {member.count.toLocaleString()}
                     </span>
