@@ -314,7 +314,7 @@ const DailySection = () => {
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
-            { label: diff >= 0 ? "above target" : "below target", value: diffDisplay, unit: "", Icon: PartyIcon, color: "", isCustomIcon: true },
+            { label: diff >= 0 ? "Above Tgt" : "Below Tgt", value: diffDisplay, unit: "", Icon: PartyIcon, color: "", isCustomIcon: true },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
