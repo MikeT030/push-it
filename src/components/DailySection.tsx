@@ -12,6 +12,7 @@ import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 
 const DailySection = () => {
