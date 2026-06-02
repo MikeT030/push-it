@@ -297,7 +297,7 @@ const DailySection = () => {
           const projectedDate = allTimeAvg > 0
             ? new Date(Date.now() + (remaining / allTimeAvg) * 24 * 60 * 60 * 1000)
             : null;
-          const projectedMonth = projectedDate ? format(projectedDate, "d MMM") : "—";
+          const projectedMonth = projectedDate ? format(projectedDate, "d. MMM") : "—";
           const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
