@@ -256,7 +256,7 @@ const TotalPage = () => {
                       }}
                     />
                     <span>
-                      <span className={stats.paceStatus === "ahead" ? "text-primary font-semibold" : "font-semibold text-slate-50"}>
+                      <span className="font-semibold text-slate-50">
                         {stats.paceDiff.toLocaleString()}
                       </span>{" "}
                       push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target 82/d
