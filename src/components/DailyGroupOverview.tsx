@@ -17,6 +17,7 @@ interface MemberContribution {
   user_id: string;
   display_name: string | null;
   count: number;
+  goal: number;
 }
 
 interface EntryWithUser {
@@ -27,7 +28,7 @@ interface EntryWithUser {
 
 const DailyGroupOverview = () => {
   const [allEntries, setAllEntries] = useState<EntryWithUser[]>([]);
-  const [profiles, setProfiles] = useState<Map<string, string | null>>(new Map());
+  const [profiles, setProfiles] = useState<Map<string, { name: string | null; goal: number }>>(new Map());
   const [memberCount, setMemberCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -93,15 +94,15 @@ const DailyGroupOverview = () => {
         setAllEntries(entries);
       }
 
-      // Fetch profiles for display names
+      // Fetch profiles for display names and yearly goals
       const { data: profilesData } = await supabase.
       from("profiles").
-      select("id, display_name");
+      select("id, display_name, yearly_goal");
 
       if (profilesData) {
-        const profilesMap = new Map<string, string | null>();
-        profilesData.forEach((p) => {
-          profilesMap.set(p.id, p.display_name);
+        const profilesMap = new Map<string, { name: string | null; goal: number }>();
+        profilesData.forEach((p: any) => {
+          profilesMap.set(p.id, { name: p.display_name, goal: Number(p.yearly_goal) || 29930 });
         });
         setProfiles(profilesMap);
       }
@@ -136,12 +137,16 @@ const DailyGroupOverview = () => {
     });
 
     const contributions: MemberContribution[] = Array.from(userTotals.entries()).
-    map(([user_id, count]) => ({
-      user_id,
-      display_name: profiles.get(user_id) || null,
-      count
-    })).
-    sort((a, b) => b.count - a.count); // Sort by count descending
+    map(([user_id, count]) => {
+      const profile = profiles.get(user_id);
+      return {
+        user_id,
+        display_name: profile?.name ?? null,
+        count,
+        goal: profile?.goal ?? 29930,
+      };
+    }).
+    sort((a, b) => b.count - a.count);
 
     const total = contributions.reduce((sum, c) => sum + c.count, 0);
 
@@ -260,31 +265,32 @@ const DailyGroupOverview = () => {
           {memberContributions.length > 0 ?
           <div>
               {memberContributions.map((member, index) => {
-                const memberPct = Math.round((member.count / DAILY_TARGET) * 100);
-                const barColor =
-                  memberPct >= 201 ? "#C029DE" :
-                  memberPct >= 101 ? "#7036FF" :
-                  "#0ABAB5";
+                const personalTarget = Math.max(1, member.goal / 365);
+                const memberPct = (member.count / personalTarget) * 100;
+                const MAX_SCALE = 300;
+                const tealW = Math.min(memberPct, 100) / MAX_SCALE * 100;
+                const purpleW = Math.max(0, Math.min(memberPct, 200) - 100) / MAX_SCALE * 100;
+                const magentaW = Math.max(0, Math.min(memberPct, MAX_SCALE) - 200) / MAX_SCALE * 100;
                 return (
                 <div key={member.user_id}>
-                  <div className="py-2 px-3 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-foreground">
-                        {member.display_name || "Member"}
-                      </span>
-                      <span className="font-bold text-foreground">
-                        {member.count.toLocaleString()}
-                      </span>
+                  <div className="py-3 px-3 flex items-center gap-3">
+                    <span className="text-sm text-foreground w-16 shrink-0 truncate">
+                      {member.display_name || "Member"}
+                    </span>
+                    <div className="flex-1 h-1.5 rounded-full overflow-hidden relative bg-transparent flex">
+                      {tealW > 0 && (
+                        <div className="h-full" style={{ width: `${tealW}%`, backgroundColor: "#0ABAB5" }} />
+                      )}
+                      {purpleW > 0 && (
+                        <div className="h-full" style={{ width: `${purpleW}%`, backgroundColor: "#7036FF" }} />
+                      )}
+                      {magentaW > 0 && (
+                        <div className="h-full" style={{ width: `${magentaW}%`, backgroundColor: "#C029DE" }} />
+                      )}
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden relative bg-[#3b404f]">
-                      <div
-                        className="h-full rounded-full transition-all duration-500 absolute left-0 top-0"
-                        style={{
-                          width: `${Math.min(memberPct, 100)}%`,
-                          backgroundColor: barColor,
-                        }}
-                      />
-                    </div>
+                    <span className="font-bold text-foreground w-12 shrink-0 text-right">
+                      {member.count.toLocaleString()}
+                    </span>
                   </div>
                   {index < memberContributions.length - 1 && (
                     <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
