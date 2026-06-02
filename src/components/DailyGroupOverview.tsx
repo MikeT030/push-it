@@ -219,7 +219,6 @@ const DailyGroupOverview = () => {
                 }`}
               >
                 {format(day.date, "EEE, MMM d")}
-                {day.isToday && " · Today"}
               </button>
             );
           })}
