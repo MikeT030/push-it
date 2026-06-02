@@ -302,8 +302,11 @@ const DailySection = () => {
           const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
           const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
           const diff = total - expectedByNow;
-          const diffCapped = Math.min(Math.abs(diff), 999);
-          const diffValue = `${diff >= 0 ? "+" : "−"}${diffCapped}`;
+          const absDiff = Math.abs(diff);
+          const diffValue = diff >= 0 ? "+" : "−";
+          const diffDisplay = absDiff >= 1000
+            ? `${diffValue}${Math.round(absDiff / 1000)}k`
+            : `${diffValue}${Math.min(absDiff, 999)}`;
           const PartyIcon = ({ className }: { className?: string }) => (
             <img src={partyAsset.url} alt="" className={className} />
           );
