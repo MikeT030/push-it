@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame,
 import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
+import partyAsset from "@/assets/party.svg.asset.json";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
@@ -299,10 +300,18 @@ const DailySection = () => {
             : null;
           const projectedMonth = projectedDate ? format(projectedDate, "d. MMM") : "—";
           const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
+          const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
+          const diff = total - expectedByNow;
+          const diffCapped = Math.min(Math.abs(diff), 999);
+          const diffValue = `${diff >= 0 ? "+" : "−"}${diffCapped}`;
+          const PartyIcon = ({ className }: { className?: string }) => (
+            <img src={partyAsset.url} alt="" className={className} />
+          );
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
+            { label: diff >= 0 ? "above target" : "below target", value: diffValue, unit: "", Icon: PartyIcon, color: "", isCustomIcon: true },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
