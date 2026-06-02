@@ -267,22 +267,41 @@ const DailyGroupOverview = () => {
               {memberContributions.map((member, index) => {
                 const personalTarget = Math.max(1, member.goal / 365);
                 const memberPct = (member.count / personalTarget) * 100;
-                const total = Math.max(memberPct, 1);
-                const tealPct = (Math.min(memberPct, 100) / total) * 100;
-                const purplePct = (Math.max(0, Math.min(memberPct, 200) - 100) / total) * 100;
-                const magentaPct = (Math.max(0, Math.min(memberPct, 300) - 200) / total) * 100;
-                const crimsonPct = (Math.max(0, memberPct - 300) / total) * 100;
+                // Build a fluid gradient across the full bar width.
+                // Color stops are placed at the centers of each tier the user has reached,
+                // so transitions blend smoothly instead of switching at hard boundaries.
+                const stops: { color: string; pos: number }[] = [{ color: "#0ABAB5", pos: 0 }];
+                if (memberPct > 100) {
+                  const p = Math.min(100, ((100 + Math.min(memberPct, 200)) / 2 / memberPct) * 100);
+                  stops.push({ color: "#7036FF", pos: p });
+                }
+                if (memberPct > 200) {
+                  const p = Math.min(100, ((200 + Math.min(memberPct, 300)) / 2 / memberPct) * 100);
+                  stops.push({ color: "#C029DE", pos: p });
+                }
+                if (memberPct > 300) {
+                  const p = Math.min(100, ((300 + memberPct) / 2 / memberPct) * 100);
+                  stops.push({ color: "#FF3366", pos: p });
+                }
+                // Anchor the final reached color at 100% so the end of the bar reflects current tier.
+                const lastColor = stops[stops.length - 1].color;
+                if (stops[stops.length - 1].pos < 100) {
+                  stops.push({ color: lastColor, pos: 100 });
+                }
+                const gradient = `linear-gradient(to right, ${stops
+                  .map((s) => `${s.color} ${s.pos}%`)
+                  .join(", ")})`;
                 return (
                 <div key={member.user_id}>
                   <div className="py-3 px-3 flex items-center gap-3">
                     <span className="text-sm text-foreground w-16 shrink-0 truncate">
                       {member.display_name || "Member"}
                     </span>
-                    <div className="flex-1 h-1.5 rounded-full overflow-hidden flex bg-transparent">
-                      {tealPct > 0 && <div className="h-full rounded-full" style={{ width: `${tealPct}%`, backgroundColor: "#0ABAB5" }} />}
-                      {purplePct > 0 && <div className="h-full rounded-full" style={{ width: `${purplePct}%`, backgroundColor: "#7036FF" }} />}
-                      {magentaPct > 0 && <div className="h-full rounded-full" style={{ width: `${magentaPct}%`, backgroundColor: "#C029DE" }} />}
-                      {crimsonPct > 0 && <div className="h-full rounded-full" style={{ width: `${crimsonPct}%`, backgroundColor: "#FF3366" }} />}
+                    <div className="flex-1 h-1.5 rounded-full overflow-hidden bg-transparent">
+                      <div
+                        className="h-full w-full rounded-full transition-[background] duration-500"
+                        style={{ background: gradient }}
+                      />
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
                       {member.count.toLocaleString()}
