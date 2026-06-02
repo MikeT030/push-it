@@ -6,6 +6,7 @@ import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import partyAsset from "@/assets/party.svg.asset.json";
 import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
+import rocketAsset from "@/assets/rocket.svg.asset.json";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
@@ -326,8 +327,8 @@ const DailySection = () => {
               className={className}
               style={{
                 backgroundColor: "#00C3FF",
-                WebkitMaskImage: `url(${diff >= 0 ? partyAsset.url : megaphoneAsset.url})`,
-                maskImage: `url(${diff >= 0 ? partyAsset.url : megaphoneAsset.url})`,
+                WebkitMaskImage: `url(${diff >= 0 ? rocketAsset.url : megaphoneAsset.url})`,
+                maskImage: `url(${diff >= 0 ? rocketAsset.url : megaphoneAsset.url})`,
                 WebkitMaskRepeat: "no-repeat",
                 maskRepeat: "no-repeat",
                 WebkitMaskPosition: "center",
