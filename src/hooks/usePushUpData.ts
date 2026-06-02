@@ -15,10 +15,10 @@ interface Profile {
 
 const DEFAULT_YEARLY_GOAL = 30000;
 
-// Debounced toast tracker: shows a single toast 3s after the last update per date
+// Debounced toast tracker: shows a single toast 1s after the last update per date
 const saveToastTimers = new Map<string, ReturnType<typeof setTimeout>>();
 const saveToastLatest = new Map<string, { count: number; date: Date; cleared: boolean }>();
-const SAVE_TOAST_DELAY = 3000;
+const SAVE_TOAST_DELAY = 1000;
 
 const scheduleSaveToast = (dateStr: string, count: number, date: Date, cleared: boolean) => {
   saveToastLatest.set(dateStr, { count, date, cleared });
