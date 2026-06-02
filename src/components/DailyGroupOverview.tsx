@@ -94,15 +94,15 @@ const DailyGroupOverview = () => {
         setAllEntries(entries);
       }
 
-      // Fetch profiles for display names
+      // Fetch profiles for display names and yearly goals
       const { data: profilesData } = await supabase.
       from("profiles").
-      select("id, display_name");
+      select("id, display_name, yearly_goal");
 
       if (profilesData) {
-        const profilesMap = new Map<string, string | null>();
-        profilesData.forEach((p) => {
-          profilesMap.set(p.id, p.display_name);
+        const profilesMap = new Map<string, { name: string | null; goal: number }>();
+        profilesData.forEach((p: any) => {
+          profilesMap.set(p.id, { name: p.display_name, goal: Number(p.yearly_goal) || 29930 });
         });
         setProfiles(profilesMap);
       }
