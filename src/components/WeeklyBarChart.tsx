@@ -28,7 +28,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     const el = containerRef.current;
     if (!el) return;
 
-    // Trigger when the chart's center crosses the viewport center
+    // Trigger as soon as any part of the chart enters the viewport
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -37,16 +37,14 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
           }
         });
       },
-      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+      { rootMargin: "0px 0px 0px 0px", threshold: 0 }
     );
     observer.observe(el);
 
-    // Fallback: if already at/near center on mount, trigger soon
+    // Fallback: if already visible on mount, trigger soon
     const t = setTimeout(() => {
       const rect = el.getBoundingClientRect();
-      const vhCenter = window.innerHeight / 2;
-      const elCenter = rect.top + rect.height / 2;
-      if (Math.abs(elCenter - vhCenter) < rect.height) {
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
         setAnimate(true);
       }
     }, 50);
