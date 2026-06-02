@@ -57,7 +57,8 @@ const DailyGroupOverview = () => {
 
   const selectedDay = selectedDayIndex >= 0 ? dayOptions[selectedDayIndex] : dayOptions[dayOptions.length - 1];
 
-  // Scroll to center the selected day
+  // Scroll to a day. For today (last item) align to the right edge so the
+  // current day and previous days are visible without empty space to the right.
   const scrollToCenter = useCallback((index: number, smooth = true) => {
     const container = scrollRef.current;
     const el = dayRefs.current.get(index);
@@ -65,11 +66,15 @@ const DailyGroupOverview = () => {
     const containerWidth = container.offsetWidth;
     const elLeft = el.offsetLeft;
     const elWidth = el.offsetWidth;
+    const isLast = index === dayOptions.length - 1;
+    const targetLeft = isLast
+      ? container.scrollWidth - containerWidth
+      : elLeft - containerWidth / 2 + elWidth / 2;
     container.scrollTo({
-      left: elLeft - containerWidth / 2 + elWidth / 2,
+      left: targetLeft,
       behavior: smooth ? "smooth" : "instant"
     });
-  }, []);
+  }, [dayOptions.length]);
 
   // Center selected day on mount/visibility
   useEffect(() => {
