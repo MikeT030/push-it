@@ -304,9 +304,21 @@ const DailySection = () => {
           const diff = total - expectedByNow;
           const absDiff = Math.abs(diff);
           const diffValue = diff >= 0 ? "+" : "−";
-          const diffDisplay = absDiff >= 1000
-            ? `${diffValue}${Math.round(absDiff / 1000)}k`
-            : `${diffValue}${Math.min(absDiff, 999)}`;
+          let diffDisplay: string;
+          if (absDiff < 1000) {
+            diffDisplay = `${diffValue}${Math.min(absDiff, 999)}`;
+          } else {
+            const k = absDiff / 1000;
+            if (k >= 100) {
+              diffDisplay = `${diffValue}${Math.round(k)}k`;
+            } else if (k >= 10) {
+              const formatted = k.toFixed(1).replace(/\.0$/, "");
+              diffDisplay = `${diffValue}${formatted}k`;
+            } else {
+              const formatted = k.toFixed(2).replace(/\.00$/, "");
+              diffDisplay = `${diffValue}${formatted}k`;
+            }
+          }
           const PartyIcon = ({ className }: { className?: string }) => (
             <img src={partyAsset.url} alt="" className={className} />
           );
