@@ -267,26 +267,15 @@ const DailyGroupOverview = () => {
               {memberContributions.map((member, index) => {
                 const personalTarget = Math.max(1, member.goal / 365);
                 const memberPct = (member.count / personalTarget) * 100;
-                const MAX_SCALE = 300;
-                const tealW = Math.min(memberPct, 100) / MAX_SCALE * 100;
-                const purpleW = Math.max(0, Math.min(memberPct, 200) - 100) / MAX_SCALE * 100;
-                const magentaW = Math.max(0, Math.min(memberPct, MAX_SCALE) - 200) / MAX_SCALE * 100;
+                const barColor = memberPct <= 100 ? "#0ABAB5" : memberPct <= 200 ? "#7036FF" : "#C029DE";
                 return (
                 <div key={member.user_id}>
                   <div className="py-3 px-3 flex items-center gap-3">
                     <span className="text-sm text-foreground w-16 shrink-0 truncate">
                       {member.display_name || "Member"}
                     </span>
-                    <div className="flex-1 h-1.5 rounded-full overflow-hidden relative bg-transparent flex">
-                      {tealW > 0 && (
-                        <div className="h-full rounded-full" style={{ width: `${tealW}%`, backgroundColor: "#0ABAB5" }} />
-                      )}
-                      {purpleW > 0 && (
-                        <div className="h-full rounded-full" style={{ width: `${purpleW}%`, backgroundColor: "#7036FF" }} />
-                      )}
-                      {magentaW > 0 && (
-                        <div className="h-full rounded-full" style={{ width: `${magentaW}%`, backgroundColor: "#C029DE" }} />
-                      )}
+                    <div className="flex-1 h-1.5 rounded-full overflow-hidden relative bg-transparent">
+                      <div className="h-full rounded-full" style={{ width: "100%", backgroundColor: barColor }} />
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
                       {member.count.toLocaleString()}
