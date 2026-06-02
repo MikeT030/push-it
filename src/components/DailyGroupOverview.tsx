@@ -240,7 +240,7 @@ const DailyGroupOverview = () => {
         </div>
 
         {/* Progress bar with tier boundaries */}
-        {(() => {
+        {dayTotal > 0 && (() => {
           const groupDenom = Math.max(percentage, 1);
           const groupStops: { color: string; x: number }[] = [
             { color: "#0ABAB5", x: 0 },
