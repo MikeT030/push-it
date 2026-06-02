@@ -241,6 +241,19 @@ const DailyGroupOverview = () => {
 
         {/* Progress bar with tier boundaries */}
         {dayTotal > 0 && (() => {
+          if (percentage < 100) {
+            return (
+              <div
+                className="h-2 rounded-full relative mb-4 border"
+                style={{ borderColor: "#0ABAB5" }}
+              >
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${percentage}%`, backgroundColor: "#0ABAB5" }}
+                />
+              </div>
+            );
+          }
           const groupDenom = Math.max(percentage, 1);
           const groupStops: { color: string; x: number }[] = [
             { color: "#0ABAB5", x: 0 },
