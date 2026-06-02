@@ -346,13 +346,8 @@ const DailyGroupOverview = () => {
                     </span>
                     {memberPct < 100 ? (
                       <div
-                        className="flex-1 h-1.5 rounded-full relative border"
-                        style={{
-                          borderColor: "#0ABAB5",
-                          transform: isOpen ? "scaleX(1)" : "scaleX(0)",
-                          transformOrigin: "left",
-                          transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
-                        }}
+                        className={`flex-1 h-1.5 rounded-full relative border origin-left ${isOpen ? "animate-expand-bar" : "scale-x-0"}`}
+                        style={{ borderColor: "#0ABAB5" }}
                       >
                         <div
                           className="h-full rounded-full"
@@ -361,12 +356,7 @@ const DailyGroupOverview = () => {
                       </div>
                     ) : (
                     <div
-                      className="flex-1 h-1.5 rounded-full relative bg-transparent"
-                      style={{
-                        transform: isOpen ? "scaleX(1)" : "scaleX(0)",
-                        transformOrigin: "left",
-                        transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
-                      }}
+                      className={`flex-1 h-1.5 rounded-full relative bg-transparent origin-left ${isOpen ? "animate-expand-bar" : "scale-x-0"}`}
                     >
                       <div
                         className="h-full w-full rounded-full"

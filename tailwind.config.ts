@@ -102,6 +102,10 @@ export default {
             opacity: "0" 
           },
         },
+        "expand-bar": {
+          "0%": { transform: "scaleX(0)" },
+          "100%": { transform: "scaleX(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -109,6 +113,7 @@ export default {
         "count-up": "count-up 0.4s ease-out",
         "splash-fade": "splash-fade 0.5s ease-in-out forwards",
         "muscle-fall": "muscle-fall 2s ease-in forwards",
+        "expand-bar": "expand-bar 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
       },
     },
   },
