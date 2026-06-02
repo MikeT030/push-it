@@ -239,26 +239,28 @@ const DailyGroupOverview = () => {
           </div>
         </div>
 
-        {/* Progress bar: target = 100%, overflow shown as outline only */}
+        {/* Progress bar: below 100% shows filled portion + outlined remainder to target.
+            At/above 100%, the bar is fully filled. */}
         {dayTotal > 0 && (() => {
-          const denom = Math.max(percentage, 100);
-          const filledPct = (Math.min(percentage, 100) / denom) * 100;
-          const overflowPct = percentage > 100 ? ((percentage - 100) / denom) * 100 : 0;
-          return (
-            <div
-              className="h-2 rounded-full relative mb-4 flex overflow-hidden border border-primary"
-              style={{ borderColor: "#0ABAB5" }}
-            >
+          if (percentage < 100) {
+            return (
               <div
-                className="h-full transition-all duration-500"
-                style={{ width: `${filledPct}%`, backgroundColor: "#0ABAB5" }}
-              />
-              {overflowPct > 0 && (
+                className="h-2 rounded-full relative mb-4 flex overflow-hidden border border-primary"
+                style={{ borderColor: "#0ABAB5" }}
+              >
                 <div
                   className="h-full transition-all duration-500"
-                  style={{ width: `${overflowPct}%`, backgroundColor: "transparent" }}
+                  style={{ width: `${percentage}%`, backgroundColor: "#0ABAB5" }}
                 />
-              )}
+              </div>
+            );
+          }
+          return (
+            <div className="h-2 rounded-full relative mb-4 overflow-hidden">
+              <div
+                className="h-full transition-all duration-500"
+                style={{ width: `100%`, backgroundColor: "#0ABAB5" }}
+              />
             </div>
           );
         })()}
