@@ -307,7 +307,7 @@ const DailySection = () => {
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
           return (
-            <div className="flex gap-3 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+            <div className="flex gap-4 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
               {items.map((s) => (
                 <div key={s.label} className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
                   {s.label === "Avg. daily" ? (
