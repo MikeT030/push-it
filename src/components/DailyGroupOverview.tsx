@@ -282,11 +282,11 @@ const DailyGroupOverview = () => {
                 const gradient = `linear-gradient(to right, ${rawStops
                   .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
                   .join(", ")})`;
-                // Tier boundary markers (small circles) at each transition the bar reaches.
-                const boundaries: { x: number; color: string }[] = [
-                  { x: 100, color: "#7036FF" },
-                  { x: 200, color: "#C029DE" },
-                  { x: 300, color: "#FF3366" },
+                // Tier boundary markers: real circles, outer = previous tier, inner = next tier.
+                const boundaries: { x: number; outer: string; inner: string }[] = [
+                  { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
+                  { x: 200, outer: "#7036FF", inner: "#C029DE" },
+                  { x: 300, outer: "#C029DE", inner: "#FF3366" },
                 ].filter((b) => memberPct > b.x);
                 return (
                 <div key={member.user_id}>
@@ -302,15 +302,20 @@ const DailyGroupOverview = () => {
                       {boundaries.map((b) => (
                         <div
                           key={b.x}
-                          className="absolute top-1/2 rounded-full"
+                          className="absolute top-1/2 rounded-full flex items-center justify-center"
                           style={{
                             left: `${(b.x / denom) * 100}%`,
-                            width: 6,
-                            height: 6,
+                            width: 12,
+                            height: 12,
                             transform: "translate(-50%, -50%)",
-                            backgroundColor: b.color,
+                            backgroundColor: b.outer,
                           }}
-                        />
+                        >
+                          <div
+                            className="rounded-full"
+                            style={{ width: 6, height: 6, backgroundColor: b.inner }}
+                          />
+                        </div>
                       ))}
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
