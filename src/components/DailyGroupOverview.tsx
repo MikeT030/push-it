@@ -17,6 +17,7 @@ interface MemberContribution {
   user_id: string;
   display_name: string | null;
   count: number;
+  goal: number;
 }
 
 interface EntryWithUser {
