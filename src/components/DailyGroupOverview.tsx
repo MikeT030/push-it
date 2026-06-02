@@ -270,7 +270,8 @@ const DailyGroupOverview = () => {
                 const total = Math.max(memberPct, 1);
                 const tealPct = (Math.min(memberPct, 100) / total) * 100;
                 const purplePct = (Math.max(0, Math.min(memberPct, 200) - 100) / total) * 100;
-                const magentaPct = (Math.max(0, memberPct - 200) / total) * 100;
+                const magentaPct = (Math.max(0, Math.min(memberPct, 300) - 200) / total) * 100;
+                const crimsonPct = (Math.max(0, memberPct - 300) / total) * 100;
                 return (
                 <div key={member.user_id}>
                   <div className="py-3 px-3 flex items-center gap-3">
@@ -281,6 +282,7 @@ const DailyGroupOverview = () => {
                       {tealPct > 0 && <div className="h-full rounded-full" style={{ width: `${tealPct}%`, backgroundColor: "#0ABAB5" }} />}
                       {purplePct > 0 && <div className="h-full rounded-full" style={{ width: `${purplePct}%`, backgroundColor: "#7036FF" }} />}
                       {magentaPct > 0 && <div className="h-full rounded-full" style={{ width: `${magentaPct}%`, backgroundColor: "#C029DE" }} />}
+                      {crimsonPct > 0 && <div className="h-full rounded-full" style={{ width: `${crimsonPct}%`, backgroundColor: "#FF3366" }} />}
                     </div>
                     <span className="font-bold text-foreground w-12 shrink-0 text-right">
                       {member.count.toLocaleString()}
