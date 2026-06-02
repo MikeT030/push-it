@@ -29,22 +29,29 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     if (!el) return;
 
     // Trigger only once the chart is fully scrolled into view from the bottom
-    // (i.e. its bottom edge has reached/passed the viewport's bottom edge)
-    const check = () => {
+    const isFullyInView = () => {
       const rect = el.getBoundingClientRect();
-      if (rect.bottom <= window.innerHeight && rect.top >= 0) {
-        setAnimate(true);
-        return true;
-      }
-      return false;
+      return rect.bottom <= window.innerHeight && rect.top >= 0;
     };
 
-    if (check()) return;
+    let rafId: number | null = null;
+    const trigger = () => {
+      // Defer to next frame so bars first render at 0 before animating to target
+      rafId = requestAnimationFrame(() => setAnimate(true));
+    };
+
+    if (isFullyInView()) {
+      trigger();
+      return () => {
+        if (rafId !== null) cancelAnimationFrame(rafId);
+      };
+    }
 
     const onScroll = () => {
-      if (check()) {
+      if (isFullyInView()) {
         window.removeEventListener("scroll", onScroll, true);
         window.removeEventListener("resize", onScroll);
+        trigger();
       }
     };
     window.addEventListener("scroll", onScroll, true);
@@ -53,6 +60,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     return () => {
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [days]);
 
