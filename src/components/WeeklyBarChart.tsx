@@ -103,7 +103,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                     className={`w-full max-w-[32px] rounded-t-sm cursor-pointer ${getBarColor()}`}
                     style={{
                       height: animate ? targetHeight : "0px",
-                      transition: "height 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                      transition: "height 1200ms cubic-bezier(0.22, 1, 0.36, 1)",
                     }}
                   />
                 </PopoverTrigger>
