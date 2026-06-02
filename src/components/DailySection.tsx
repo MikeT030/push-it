@@ -327,8 +327,8 @@ const DailySection = () => {
               className={className}
               style={{
                 backgroundColor: "#00C3FF",
-                WebkitMaskImage: `url(${diff >= 0 ? partyAsset.url : megaphoneAsset.url})`,
-                maskImage: `url(${diff >= 0 ? partyAsset.url : megaphoneAsset.url})`,
+                WebkitMaskImage: `url(${diff >= 0 ? rocketAsset.url : megaphoneAsset.url})`,
+                maskImage: `url(${diff >= 0 ? rocketAsset.url : megaphoneAsset.url})`,
                 WebkitMaskRepeat: "no-repeat",
                 maskRepeat: "no-repeat",
                 WebkitMaskPosition: "center",
