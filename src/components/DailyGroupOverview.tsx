@@ -267,29 +267,22 @@ const DailyGroupOverview = () => {
               {memberContributions.map((member, index) => {
                 const personalTarget = Math.max(1, member.goal / 365);
                 const memberPct = (member.count / personalTarget) * 100;
-                // Build a fluid gradient across the full bar width.
-                // Color stops are placed at the centers of each tier the user has reached,
-                // so transitions blend smoothly instead of switching at hard boundaries.
-                const stops: { color: string; pos: number }[] = [{ color: "#0ABAB5", pos: 0 }];
-                if (memberPct > 100) {
-                  const p = Math.min(100, ((100 + Math.min(memberPct, 200)) / 2 / memberPct) * 100);
-                  stops.push({ color: "#7036FF", pos: p });
-                }
-                if (memberPct > 200) {
-                  const p = Math.min(100, ((200 + Math.min(memberPct, 300)) / 2 / memberPct) * 100);
-                  stops.push({ color: "#C029DE", pos: p });
-                }
-                if (memberPct > 300) {
-                  const p = Math.min(100, ((300 + memberPct) / 2 / memberPct) * 100);
-                  stops.push({ color: "#FF3366", pos: p });
-                }
-                // Anchor the final reached color at 100% so the end of the bar reflects current tier.
-                const lastColor = stops[stops.length - 1].color;
-                if (stops[stops.length - 1].pos < 100) {
-                  stops.push({ color: lastColor, pos: 100 });
-                }
-                const gradient = `linear-gradient(to right, ${stops
-                  .map((s) => `${s.color} ${s.pos}%`)
+                // Each tier (teal/purple/magenta/crimson) spans 100 progress points.
+                // Hold the color solid for the first 85 points, then fade into the
+                // next tier color over the final 15 points.
+                const denom = Math.max(memberPct, 1);
+                const rawStops: { color: string; x: number }[] = [
+                  { color: "#0ABAB5", x: 0 },
+                  { color: "#0ABAB5", x: 85 },
+                  { color: "#7036FF", x: 100 },
+                  { color: "#7036FF", x: 185 },
+                  { color: "#C029DE", x: 200 },
+                  { color: "#C029DE", x: 285 },
+                  { color: "#FF3366", x: 300 },
+                  { color: "#FF3366", x: 400 },
+                ];
+                const gradient = `linear-gradient(to right, ${rawStops
+                  .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
                   .join(", ")})`;
                 return (
                 <div key={member.user_id}>
