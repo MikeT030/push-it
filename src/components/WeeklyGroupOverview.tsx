@@ -274,7 +274,7 @@ const WeeklyGroupOverview = () => {
                     <span className={`text-sm font-medium ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
                       {format(day.date, "EEE")}
                     </span>
-                    <span className="text-sm text-muted-foreground whitespace-nowrap">{format(day.date, "MMM d")}</span>
+                    <span className="text-sm text-muted-foreground">{format(day.date, "MMM d")}</span>
                     {day.isToday && (
                       <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
                         Today
