@@ -4,6 +4,8 @@ import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } fro
 import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
+import rocketAsset from "@/assets/rocket.svg.asset.json";
+import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
