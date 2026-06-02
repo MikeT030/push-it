@@ -321,14 +321,27 @@ const DailySection = () => {
               diffDisplay = `${diffValue}${formatted}k`;
             }
           }
-          const PartyIcon = ({ className }: { className?: string }) => (
-            <img src={partyAsset.url} alt="" className={className} />
+          const TargetDiffIcon = ({ className }: { className?: string }) => (
+            <div
+              className={className}
+              style={{
+                backgroundColor: "#00C3FF",
+                WebkitMaskImage: `url(${diff >= 0 ? partyAsset.url : megaphoneAsset.url})`,
+                maskImage: `url(${diff >= 0 ? partyAsset.url : megaphoneAsset.url})`,
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                maskPosition: "center",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+              }}
+            />
           );
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
-            { label: diff >= 0 ? "Above Tgt" : "Below Tgt", value: diffDisplay, unit: "", Icon: PartyIcon, color: "", isCustomIcon: true },
+            { label: diff >= 0 ? "Above Tgt" : "Below Tgt", value: diffDisplay, unit: "", Icon: TargetDiffIcon, color: "", isCustomIcon: true },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
