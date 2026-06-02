@@ -241,14 +241,19 @@ const DailyGroupOverview = () => {
 
         {/* Progress bar with tier boundaries */}
         {dayTotal > 0 && (() => {
+          const barTransform = {
+            transform: isOpen ? "scaleX(1)" : "scaleX(0)",
+            transformOrigin: "left",
+            transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
+          } as const;
           if (percentage < 100) {
             return (
               <div
                 className="h-2 rounded-full relative mb-4 border"
-                style={{ borderColor: "#0ABAB5" }}
+                style={{ borderColor: "#0ABAB5", ...barTransform }}
               >
                 <div
-                  className="h-full rounded-full transition-all duration-500"
+                  className="h-full rounded-full"
                   style={{ width: `${percentage}%`, backgroundColor: "#0ABAB5" }}
                 />
               </div>
@@ -274,9 +279,12 @@ const DailyGroupOverview = () => {
             { x: 300, outer: "#C029DE", inner: "#FF3366" },
           ].filter((b) => percentage > b.x);
           return (
-            <div className="h-2 rounded-full relative mb-4 bg-transparent">
+            <div
+              className="h-2 rounded-full relative mb-4 bg-transparent"
+              style={barTransform}
+            >
               <div
-                className="h-full w-full rounded-full transition-all duration-500"
+                className="h-full w-full rounded-full"
                 style={{ background: groupGradient }}
               />
               {groupBoundaries.map((b) => (
