@@ -130,7 +130,7 @@ export const usePushUpData = () => {
       if (error) {
         toast({ title: "Failed to save", description: error.message, variant: "destructive" });
       } else {
-        toast({ title: "Entry cleared", description: `Removed push-ups for ${format(date, "MMM d")}` });
+        scheduleSaveToast(dateStr, 0, date, true);
       }
     } else {
       const { error } = await supabase
@@ -144,7 +144,7 @@ export const usePushUpData = () => {
       if (error) {
         toast({ title: "Failed to save", description: error.message, variant: "destructive" });
       } else {
-        toast({ title: "Saved!", description: `${count} push-ups recorded for ${format(date, "MMM d")}` });
+        scheduleSaveToast(dateStr, count, date, false);
       }
     }
   }, [user]);
