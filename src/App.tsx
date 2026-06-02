@@ -14,7 +14,9 @@ import SplashScreen from "./components/SplashScreen";
 const lazyWithRetry = <T,>(factory: () => Promise<{ default: T }>) =>
   lazy(async () => {
     try {
-      return await factory();
+      const mod = await factory();
+      sessionStorage.removeItem("chunkReloaded");
+      return mod;
     } catch (err: any) {
       const msg = String(err?.message || "");
       if (
@@ -31,6 +33,7 @@ const lazyWithRetry = <T,>(factory: () => Promise<{ default: T }>) =>
       throw err;
     }
   });
+
 
 const DailyPage = lazyWithRetry(() => import("./pages/DailyPage"));
 const TotalPage = lazyWithRetry(() => import("./pages/TotalPage"));
