@@ -6,6 +6,7 @@ import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import partyAsset from "@/assets/party.svg.asset.json";
 import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
+import rocketAsset from "@/assets/rocket.svg.asset.json";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
