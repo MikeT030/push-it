@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { format, eachDayOfInterval, isSameDay } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { supabase } from "@/integrations/supabase/client";
+import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
+
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
