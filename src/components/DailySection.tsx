@@ -462,7 +462,7 @@ const DailySection = () => {
         aria-hidden={!isCalendarOpen}
       >
         <div className="overflow-hidden min-h-0">
-          <div className={`bg-card/40 rounded-2xl rounded-t-none border-t-0 p-5 pt-2 ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
+          <div className={`p-5 pt-2 ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
             <div className="flex items-center justify-between mb-[6px] px-[10px]">
               <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center text-foreground hover:bg-white/10 transition-colors">
                 <ChevronLeft className="w-5 h-5" />
