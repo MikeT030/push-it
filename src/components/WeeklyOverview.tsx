@@ -97,11 +97,11 @@ const WeeklyOverview = () => {
       </div>;
   }
   return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="col-span-2">
-      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px]" style={{
+      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{
       animationDelay: "0.25s"
     }}>
         <CollapsibleTrigger asChild>
-          <button className="flex items-center justify-between w-full text-left hover:opacity-80 transition-opacity mb-[6px]">
+          <button className="flex items-center justify-between w-full text-left hover:opacity-80 transition-opacity mb-[6px] mt-[10px] px-[10px] pt-[10px] pb-[10px] rounded-2xl">
             <h2 className="text-lg font-bold text-foreground">Weekly</h2>
             {isOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
           </button>
@@ -153,7 +153,7 @@ const WeeklyOverview = () => {
         </div>
 
       {/* Weekly Summary */}
-      <div className="flex items-center justify-between mb-4 p-3" onClick={(e) => e.stopPropagation()}>
+      <div className="flex items-center justify-between mb-[6px] px-[10px]" onClick={(e) => e.stopPropagation()}>
         <div>
           <p className="font-black text-foreground text-xl">{weeklyData.total}</p>
           <p className="text-sm text-muted-foreground">PU logged</p>

@@ -119,7 +119,7 @@ const CalendarSection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full card-glass rounded-2xl p-3 pt-6 pb-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-3"}`}
+        className={`w-full card-glass rounded-2xl p-3 pt-6 pb-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 px-[10px] ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-3"}`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
@@ -173,7 +173,7 @@ const CalendarSection = () => {
       >
         <div className="overflow-hidden min-h-0">
           <div className="card-glass rounded-2xl rounded-t-none border-t-0 p-5 pt-2">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-[6px] px-[10px]">
               <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
                 <ChevronLeft className="w-5 h-5" />
               </button>

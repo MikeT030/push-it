@@ -174,7 +174,7 @@ const TotalPage = () => {
         <div className="flex gap-3 overflow-x-auto -mx-2 px-2 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
           {statCards.filter(s => s.label !== "Today" && s.label !== "Remaining" && s.label !== "Avg. /d" && s.label !== "Streak").map((stat, index) => {
             const Icon = stat.icon;
-            return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up" style={{
+            return <div key={stat.label} className="flex-shrink-0 bg-card/40 rounded-2xl p-5 animate-slide-up px-[10px]" style={{
               minWidth: "140px",
               animationDelay: `${0.1 + index * 0.05}s`
             }}>
@@ -195,7 +195,7 @@ const TotalPage = () => {
         </div>
 
         {/* Main Progress Card */}
-          <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pb-[24px] pt-[10px]" style={{ animationDelay: "0.25s" }}>
+          <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pb-[24px] pt-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.25s" }}>
             <div className="flex items-center mb-[6px]">
               <h2 className="text-lg font-bold text-foreground">Yearly</h2>
             </div>

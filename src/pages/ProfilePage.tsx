@@ -153,7 +153,7 @@ const ProfilePage = () => {
         </header>
 
         {/* Profile Card */}
-        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]">
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
           <div
@@ -205,7 +205,7 @@ const ProfilePage = () => {
 
         {/* Admin Card */}
         {isAdmin && (
-          <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
+          <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.03s" }}>
             <h2 className="text-lg font-bold text-foreground mb-4">Admin</h2>
             <Button
               variant="outline"
@@ -219,7 +219,7 @@ const ProfilePage = () => {
         )}
 
         {/* Info Card */}
-        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px]" style={{
+        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{
         animationDelay: "0.1s"
       }}>
           <h2 className="text-lg font-bold text-foreground mb-[6px]">

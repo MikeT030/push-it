@@ -195,7 +195,7 @@ const DailySection = () => {
       <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Today Card */}
-      <div className="relative bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up pb-[10px] pt-[20px]" style={{ animationDelay: "0.05s" }}>
+      <div className="relative bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up pb-[10px] pt-[20px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.05s" }}>
         <button
           onClick={() => setActiveGame("select")}
           className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
@@ -206,7 +206,7 @@ const DailySection = () => {
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
             <div className="flex flex-col items-center text-center">
-              <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
+              <p className="text-sm text-muted-foreground font-medium">Today</p>
               {isEditable ?
                 <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-[1.2ch] min-w-[1.2ch] focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={{ width: `${Math.max((inputValue || "0").length, 1)}ch` }} /> :
                 <p className="font-black text-foreground text-xl">{currentCount}</p>
@@ -214,7 +214,7 @@ const DailySection = () => {
               <span className={`font-bold text-primary mt-1 text-base ${currentCount === 0 ? "invisible" : ""}`}>{currentCount > 0 ? `${Math.round(progress)}%` : "0%"}</span>
             </div>
             <div className="absolute right-0 top-0 flex flex-col items-end text-right">
-              <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
+              <p className="text-sm text-muted-foreground font-medium">Yesterday</p>
               <p className="font-black text-[#a7a8aa] text-xl">{yesterdayCount}</p>
             </div>
           </div>
@@ -392,7 +392,7 @@ const DailySection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full bg-card/40 rounded-2xl rounded-t-none p-3 py-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-0"}`}
+        className={`w-full bg-card/40 rounded-2xl rounded-t-none p-3 py-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 px-[10px] ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-0"}`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
@@ -462,7 +462,7 @@ const DailySection = () => {
       >
         <div className="overflow-hidden min-h-0">
           <div className={`bg-card/40 rounded-2xl rounded-t-none border-t-0 p-5 pt-2 ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-[6px] px-[10px]">
               <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center text-foreground hover:bg-white/10 transition-colors">
                 <ChevronLeft className="w-5 h-5" />
               </button>
