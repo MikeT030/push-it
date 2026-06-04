@@ -258,12 +258,20 @@ const DailyGroupOverview = () => {
         </div>
 
         {/* Progress bar with tier boundaries */}
-        {dayTotal > 0 && (() => {
+        {(() => {
           const barTransform = {
             transform: "scaleX(1)",
             transformOrigin: "left",
             transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
           } as const;
+          if (dayTotal === 0) {
+            return (
+              <div
+                className="h-2 rounded-full relative mb-4 border"
+                style={{ borderColor: "#0ABAB5", ...barTransform }}
+              />
+            );
+          }
           if (percentage < 100) {
             return (
               <div
