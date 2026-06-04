@@ -91,6 +91,8 @@
 
   body {
     @apply text-foreground font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: #101214;
     background-image:
