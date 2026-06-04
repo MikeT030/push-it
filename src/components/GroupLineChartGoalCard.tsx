@@ -173,7 +173,7 @@ const GroupLineChartGoalCard = ({ totalPushUps, groupGoal, progressPercent, allE
   }
 
   return (
-    <div ref={cardRef} className="bg-card/40 rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden" style={{ animationDelay: "0.25s" }}>
+    <div ref={cardRef} className="bg-card/40 rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden px-[10px]" style={{ animationDelay: "0.25s" }}>
       <div className="relative z-10 flex items-start justify-between">
         <div>
           <h2 className="text-lg font-bold text-foreground mb-1">We Push Goal {year}</h2>
