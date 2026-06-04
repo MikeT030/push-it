@@ -58,7 +58,7 @@ const DemoBottomNav = () => {
                 }`}
               >
                 <Icon className="w-6 h-6" strokeWidth={active ? 2.5 : 2} />
-                <span className="font-semibold text-xs">{tab.label}</span>
+                <span className="font-semibold text-sm">{tab.label}</span>
               </button>
 
             </div>
