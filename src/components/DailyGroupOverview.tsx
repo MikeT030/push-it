@@ -172,9 +172,9 @@ const DailyGroupOverview = () => {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up">
+      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px]">
         <CollapsibleTrigger asChild>
-          <button className="flex items-center justify-between w-full text-left mb-4 hover:opacity-80 transition-opacity">
+          <button className="flex items-center justify-between w-full text-left mb-[6px] hover:opacity-80 transition-opacity">
             <h2 className="text-lg font-bold text-foreground">Daily We Push</h2>
             {isOpen ?
             <ChevronDown className="w-5 h-5 text-muted-foreground" /> :
