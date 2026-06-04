@@ -229,7 +229,7 @@ const DailyGroupOverview = () => {
         </div>
 
         {/* Progress bar with tier boundaries */}
-        {(() => {
+        <div className="px-[10px]">{(() => {
           const barTransform = {
             transform: "scaleX(1)",
             transformOrigin: "left",
@@ -304,7 +304,7 @@ const DailyGroupOverview = () => {
               ))}
             </div>
           );
-        })()}
+        })()}</div>
 
         <CollapsibleContent className="space-y-4">
 
