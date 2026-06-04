@@ -196,7 +196,7 @@ const DailySection = () => {
 
       {/* Combined Today + Calendar Card */}
       <div className="bg-card/40 rounded-2xl border border-[#3B404F] animate-slide-up overflow-hidden" style={{ animationDelay: "0.05s" }}>
-      <div className="relative p-6 pb-[10px] pt-[20px] px-[10px]">
+      <div className="relative p-6 pt-[20px] px-[10px] pb-[2px]">
         <button
           onClick={() => setActiveGame("select")}
           className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
@@ -393,7 +393,7 @@ const DailySection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full p-3 py-8 transition-all duration-300 ease-out hover:opacity-90 px-[10px] ${isCalendarOpen ? "mb-0 pb-4" : "mb-0"}`}
+        className={`w-full p-3 py-8 transition-all duration-300 ease-out hover:opacity-90 px-[10px] pt-[20px] ${isCalendarOpen ? "mb-0 pb-4" : "mb-0"}`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
