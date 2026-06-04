@@ -4,7 +4,6 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
 
-
 const DAILY_TARGET = 82; // 82 push-ups per day per person
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
 
@@ -21,21 +20,32 @@ interface MemberContribution {
   goal: number;
 }
 
-interface EntryWithUser {
-  date: string;
-  count: number;
-  user_id: string;
-}
-
 const DailyGroupOverview = () => {
-  const [allEntries, setAllEntries] = useState<EntryWithUser[]>([]);
-  const [profiles, setProfiles] = useState<Map<string, { name: string | null; goal: number }>>(new Map());
-  const [memberCount, setMemberCount] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const entriesQuery = useGroupEntries();
+  const profilesQuery = useGroupProfiles();
+  const usersQuery = useGroupUserProgress();
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(-1);
   const scrollRef = useRef<HTMLDivElement>(null);
   const dayRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
+
+  const isLoaded =
+    !entriesQuery.isLoading && !profilesQuery.isLoading && !usersQuery.isLoading;
+  const allEntries = entriesQuery.data || [];
+
+  const profiles = useMemo(() => {
+    const map = new Map<string, { name: string | null; goal: number }>();
+    (profilesQuery.data || []).forEach((p) => {
+      map.set(p.id, { name: p.display_name, goal: p.yearly_goal });
+    });
+    return map;
+  }, [profilesQuery.data]);
+
+  const memberCount = useMemo(
+    () => (usersQuery.data || []).filter((u) => u.total_pushups >= 82).length,
+    [usersQuery.data]
+  );
 
   // Generate day options from year start to today
   const dayOptions = useMemo((): DayOption[] => {
@@ -88,46 +98,6 @@ const DailyGroupOverview = () => {
       return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
     }
   }, [scrollToCenter, selectedDayIndex]);
-
-  useEffect(() => {
-    const fetchDailyData = async () => {
-      // Fetch all push up entries with user_id
-      const { data: entries } = await supabase.
-      from("push_up_entries").
-      select("date, count, user_id");
-
-      if (entries) {
-        setAllEntries(entries);
-      }
-
-      // Fetch profiles for display names and yearly goals
-      const { data: profilesData } = await supabase.
-      from("profiles").
-      select("id, display_name, yearly_goal");
-
-      if (profilesData) {
-        const profilesMap = new Map<string, { name: string | null; goal: number }>();
-        profilesData.forEach((p: any) => {
-          profilesMap.set(p.id, { name: p.display_name, goal: Number(p.yearly_goal) || 29930 });
-        });
-        setProfiles(profilesMap);
-      }
-
-      // Fetch member count (users with 82+ push-ups)
-      const { data: users } = await supabase.
-      from("user_progress").
-      select("user_id, total_pushups");
-
-      if (users) {
-        const activeMembers = users.filter((u) => u.total_pushups >= 82).length;
-        setMemberCount(activeMembers);
-      }
-
-      setIsLoaded(true);
-    };
-
-    fetchDailyData();
-  }, []);
 
   // Calculate data for selected day
   const selectedDateStr = selectedDay ? format(selectedDay.date, "yyyy-MM-dd") : "";
