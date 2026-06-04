@@ -316,9 +316,9 @@ const GroupPage = () => {
 
 
         {/* Section Label */}
-        <h2 className="text-foreground mb-6 text-xl font-medium">Leaderboard & Stats</h2>
+        <h2 className="text-foreground mb-6 text-xl font-medium animate-fade-in" style={{ animationDelay: "0.05s" }}>Leaderboard & Stats</h2>
 
-        <div>
+        <div className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
           <div>
             <div className="mt-0">
 
