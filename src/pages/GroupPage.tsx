@@ -11,7 +11,6 @@ import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
 import DailyGroupOverview from "@/components/DailyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
