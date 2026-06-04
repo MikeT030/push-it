@@ -172,7 +172,7 @@ const DailyGroupOverview = () => {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px]">
+      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px]">
         <CollapsibleTrigger asChild>
           <button className="flex items-center justify-between w-full text-left mb-[6px] hover:opacity-80 transition-opacity">
             <h2 className="text-lg font-bold text-foreground">Daily We Push</h2>
