@@ -474,7 +474,7 @@ const GroupPage = () => {
                   )}
                 </div>
 
-                <div className="h-px mb-4 bg-[#3b404f]" />
+                <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
                 
                 <div className="flex items-center justify-between">
                   <div>

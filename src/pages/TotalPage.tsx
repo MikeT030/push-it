@@ -176,7 +176,7 @@ const TotalPage = () => {
               <h2 className="text-lg text-foreground font-semibold">Yearly</h2>
             </div>
 
-            <div className="h-px mb-4 bg-[#3b404f]" />
+            <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
 
             {/* Progress bar */}
             <div className="mb-2 h-3 rounded-full overflow-hidden bg-[#3b404f]">
