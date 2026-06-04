@@ -155,7 +155,7 @@ const DailyGroupOverview = () => {
           </button>
         </CollapsibleTrigger>
 
-        <div className="h-px mb-4 bg-[#3b404f]" />
+        <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
 
         {/* Horizontally Scrollable Day Selector */}
         <div
