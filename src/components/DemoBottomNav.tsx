@@ -27,7 +27,7 @@ const GroupSportsIcon = ({ className }: { className?: string; strokeWidth?: numb
 const DemoBottomNav = () => {
   const tabs = [
     { id: "total", label: "You Push", icon: MuscleIcon },
-    { id: "group", label: "We Push", icon: Users },
+    { id: "group", label: "We Push", icon: GroupSportsIcon },
   ];
 
   const [activeId, setActiveId] = useState("total");
