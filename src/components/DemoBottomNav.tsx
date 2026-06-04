@@ -8,8 +8,8 @@ const MuscleIcon = ({ className }: { className?: string; strokeWidth?: number })
 );
 
 /**
- * Sandbox copy of BottomNav. Edit freely to iterate on the design.
- * Not wired to react-router — uses local state for the active tab.
+ * Sandbox copy of BottomNav. Edge-to-edge glass bar with a vertical
+ * divider between the two buttons; buttons feel slightly lifted.
  */
 const DemoBottomNav = () => {
   const tabs = [
@@ -20,25 +20,34 @@ const DemoBottomNav = () => {
   const [activeId, setActiveId] = useState("total");
 
   return (
-    <div className="relative w-full">
-      <div className="nav-bar p-3 flex items-stretch justify-between gap-3">
-        {tabs.map((tab) => {
+    <div className="relative w-full left-1/2 right-1/2 -mx-[50vw] w-screen">
+      <div
+        className="relative flex items-stretch w-full backdrop-blur-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border-t border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_-8px_24px_rgba(0,0,0,0.45)] pb-[26px]"
+      >
+        {tabs.map((tab, i) => {
           const Icon = tab.icon;
           const active = activeId === tab.id;
 
           return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveId(tab.id)}
-              className={`flex-1 flex flex-col items-center justify-center gap-2 py-[9px] rounded-2xl transition-all duration-300 backdrop-blur-xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.35),0_8px_24px_rgba(0,0,0,0.45)] active:translate-y-[1px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_2px_rgba(0,0,0,0.3),0_4px_12px_rgba(0,0,0,0.4)] ${
-                active
-                  ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-gradient-to-b from-white/10 to-white/[0.02]"
-                  : "text-foreground border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] hover:from-white/10"
-              }`}
-            >
-              <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
-              <span className="font-semibold text-sm">{tab.label}</span>
-            </button>
+            <div key={tab.id} className="relative flex-1 flex p-2">
+              {i > 0 && (
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent"
+                />
+              )}
+              <button
+                onClick={() => setActiveId(tab.id)}
+                className={`flex-1 flex flex-row items-center justify-center gap-2 py-[11px] rounded-2xl transition-all duration-200 backdrop-blur-xl border -translate-y-[2px] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-2px_4px_rgba(0,0,0,0.35),0_6px_16px_rgba(0,0,0,0.45)] active:translate-y-0 active:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_2px_rgba(0,0,0,0.3),0_2px_8px_rgba(0,0,0,0.4)] ${
+                  active
+                    ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-gradient-to-b from-white/[0.12] to-white/[0.03]"
+                    : "text-foreground border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.01]"
+                }`}
+              >
+                <Icon className="w-4 h-4" strokeWidth={active ? 2.5 : 2} />
+                <span className="font-semibold text-xs">{tab.label}</span>
+              </button>
+            </div>
           );
         })}
       </div>
