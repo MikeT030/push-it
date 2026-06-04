@@ -476,7 +476,7 @@ const GroupPage = () => {
                   className="flex items-center justify-between cursor-pointer mb-[6px]"
                   onClick={() => setShowGroupChart(v => !v)}
                 >
-                  <h2 className="text-lg font-bold text-foreground">
+                  <h2 className="text-lg text-foreground font-semibold">
                     We Push Goal {new Date().getFullYear()}
                   </h2>
                   {showGroupChart ? (

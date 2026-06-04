@@ -123,7 +123,7 @@ const CalendarSection = () => {
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
-          <h2 className="text-lg font-bold text-foreground">Calendar</h2>
+          <h2 className="text-lg text-foreground font-semibold">Calendar</h2>
           {isCalendarOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
         </div>
         <p className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 px-1">
@@ -201,7 +201,7 @@ const CalendarSection = () => {
                 />
                 <ChevronLeft className="w-5 h-5 relative" />
               </button>
-              <h2 className="text-lg font-bold text-foreground">{format(currentMonth, "MMMM yyyy")}</h2>
+              <h2 className="text-lg text-foreground font-semibold">{format(currentMonth, "MMMM yyyy")}</h2>
               <button
                 onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
                 aria-label="Next month"
