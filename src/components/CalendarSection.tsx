@@ -174,12 +174,60 @@ const CalendarSection = () => {
         <div className="overflow-hidden min-h-0">
           <div className="card-glass rounded-2xl rounded-t-none border-t-0 p-5 pt-2">
             <div className="flex items-center justify-between mb-[6px] px-[10px]">
-              <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
-                <ChevronLeft className="w-5 h-5" />
+              <button
+                onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+                aria-label="Previous month"
+                className="relative w-10 h-10 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden"
+                style={{
+                  background:
+                    'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                  backdropFilter: 'blur(6px) saturate(1.2)',
+                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                  boxShadow: [
+                    'inset 0 2px 4px rgba(0,0,0,0.55)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                    '0 2px 6px rgba(0,0,0,0.3)',
+                    '0 6px 14px rgba(0,0,0,0.25)',
+                  ].join(', '),
+                }}
+              >
+                <span
+                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                    filter: 'blur(3px)',
+                  }}
+                />
+                <ChevronLeft className="w-5 h-5 relative" />
               </button>
               <h2 className="text-lg font-bold text-foreground">{format(currentMonth, "MMMM yyyy")}</h2>
-              <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
-                <ChevronRight className="w-5 h-5" />
+              <button
+                onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+                aria-label="Next month"
+                className="relative w-10 h-10 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden"
+                style={{
+                  background:
+                    'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                  backdropFilter: 'blur(6px) saturate(1.2)',
+                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                  boxShadow: [
+                    'inset 0 2px 4px rgba(0,0,0,0.55)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                    '0 2px 6px rgba(0,0,0,0.3)',
+                    '0 6px 14px rgba(0,0,0,0.25)',
+                  ].join(', '),
+                }}
+              >
+                <span
+                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                    filter: 'blur(3px)',
+                  }}
+                />
+                <ChevronRight className="w-5 h-5 relative" />
               </button>
             </div>
 
