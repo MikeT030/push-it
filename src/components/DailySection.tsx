@@ -194,8 +194,9 @@ const DailySection = () => {
     <>
       <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
-      {/* Today Card */}
-      <div className="relative bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up pb-[10px] pt-[20px] px-[10px] border border-[#3B404F] border-b-0" style={{ animationDelay: "0.05s" }}>
+      {/* Combined Today + Calendar Card */}
+      <div className="bg-card/40 rounded-2xl border border-[#3B404F] animate-slide-up overflow-hidden" style={{ animationDelay: "0.05s" }}>
+      <div className="relative p-6 pb-[10px] pt-[20px] px-[10px]">
         <button
           onClick={() => setActiveGame("select")}
           className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
@@ -392,7 +393,7 @@ const DailySection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full bg-card/40 rounded-2xl rounded-t-none p-3 py-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 px-[10px] border border-[#3B404F] border-t-0 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-0"}`}
+        className={`w-full p-3 py-8 transition-all duration-300 ease-out hover:opacity-90 px-[10px] ${isCalendarOpen ? "mb-0 pb-4" : "mb-0"}`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
@@ -461,7 +462,7 @@ const DailySection = () => {
         aria-hidden={!isCalendarOpen}
       >
         <div className="overflow-hidden min-h-0">
-          <div className={`bg-card/40 rounded-2xl rounded-t-none border-t-0 p-5 pt-2 ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
+          <div className={`p-5 pt-2 ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
             <div className="flex items-center justify-between mb-[6px] px-[10px]">
               <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-transparent border border-white flex items-center justify-center text-foreground hover:bg-white/10 transition-colors">
                 <ChevronLeft className="w-5 h-5" />
@@ -505,6 +506,10 @@ const DailySection = () => {
           </div>
         </div>
       </div>
+      </div>
+
+
+
 
 
 
