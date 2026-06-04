@@ -393,7 +393,7 @@ const DailySection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full p-3 py-8 transition-all duration-300 ease-out hover:opacity-90 px-[10px] pt-[20px] ${isCalendarOpen ? "mb-0 pb-4" : "mb-0"}`}
+        className={`w-full p-3 py-8 transition-all duration-300 ease-out hover:opacity-90 px-[10px] mb-0 pt-[10px] pb-[24px]`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
