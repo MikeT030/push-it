@@ -75,11 +75,13 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     <div ref={containerRef} className="flex items-end justify-between gap-1 h-16 mb-4">
       {days.map((day) => {
         const percentage = day.isBeforeYearStart ? 0 : (day.count / dailyTarget) * 100;
-        const isTripleTarget = percentage >= 201;
+        const isQuadTarget = percentage >= 301;
+        const isTripleTarget = percentage >= 201 && percentage < 301;
         const isDoubleTarget = percentage >= 101 && percentage < 201;
 
         const getBarColor = () => {
           if (day.isBeforeYearStart || day.count === 0) return "bg-muted/50";
+          if (isQuadTarget) return "bg-[#FF2C2C]";
           if (isTripleTarget) return "bg-[#BA25D8]";
           if (isDoubleTarget) return "bg-[#7036FF]";
           return "bg-[#0ABAB5]";
