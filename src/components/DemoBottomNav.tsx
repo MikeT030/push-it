@@ -46,7 +46,7 @@ const DemoBottomNav = () => {
               {i > 0 && (
                 <span
                   aria-hidden
-                  className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent"
+                  className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent pl-0"
                 />
               )}
               <button
