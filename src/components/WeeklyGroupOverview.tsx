@@ -2,8 +2,8 @@ import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { supabase } from "@/integrations/supabase/client";
 import WeeklyBarChart from "./WeeklyBarChart";
+import { useGroupEntries, useGroupUserProgress } from "@/hooks/useGroupData";
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
@@ -21,51 +21,33 @@ interface DailyGroupEntry {
 }
 
 const WeeklyGroupOverview = () => {
-  const [dailyTotals, setDailyTotals] = useState<DailyGroupEntry[]>([]);
-  const [memberCount, setMemberCount] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { data: entries, isLoading: entriesLoading } = useGroupEntries();
+  const { data: users, isLoading: usersLoading } = useGroupUserProgress();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedWeekIndex, setSelectedWeekIndex] = useState(-1);
   const scrollRef = useRef<HTMLDivElement>(null);
   const weekRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
-  // Fetch group data
-  useEffect(() => {
-    const fetchGroupData = async () => {
-      // Fetch all push up entries grouped by date
-      const { data: entries } = await supabase.
-      from("push_up_entries").
-      select("date, count");
 
-      if (entries) {
-        // Group by date and sum counts
-        const dailyMap = new Map<string, number>();
-        entries.forEach((entry) => {
-          const current = dailyMap.get(entry.date) || 0;
-          dailyMap.set(entry.date, current + entry.count);
-        });
+  const isLoaded = !entriesLoading && !usersLoading;
 
-        const totals: DailyGroupEntry[] = Array.from(dailyMap.entries()).map(([date, total_count]) => ({
-          date,
-          total_count
-        }));
-        setDailyTotals(totals);
-      }
+  // Group entries by date and sum counts
+  const dailyTotals = useMemo<DailyGroupEntry[]>(() => {
+    if (!entries) return [];
+    const dailyMap = new Map<string, number>();
+    entries.forEach((entry) => {
+      const current = dailyMap.get(entry.date) || 0;
+      dailyMap.set(entry.date, current + entry.count);
+    });
+    return Array.from(dailyMap.entries()).map(([date, total_count]) => ({
+      date,
+      total_count,
+    }));
+  }, [entries]);
 
-      // Fetch member count (users with 82+ push-ups)
-      const { data: users } = await supabase.
-      from("user_progress").
-      select("user_id, total_pushups");
-
-      if (users) {
-        const activeMembers = users.filter((u) => u.total_pushups >= 82).length;
-        setMemberCount(activeMembers);
-      }
-
-      setIsLoaded(true);
-    };
-
-    fetchGroupData();
-  }, []);
+  const memberCount = useMemo(
+    () => (users ?? []).filter((u) => u.total_pushups >= 82).length,
+    [users]
+  );
 
   // Generate week options starting from January 1, 2026
   const weekOptions = useMemo((): WeekOption[] => {

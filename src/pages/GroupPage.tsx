@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, differenceInDays } from "date-fns";
 import { Users, Trophy, Flame, TrendingUp, Info, List, ChevronDown, ChevronRight } from "lucide-react";
@@ -11,7 +11,7 @@ import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
 import DailyGroupOverview from "@/components/DailyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
@@ -106,87 +106,75 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
 const GroupPage = () => {
   const navigate = useNavigate();
   const { avatar } = useUserAvatar();
-  const [users, setUsers] = useState<UserProgress[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leaderboard");
   const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("weekly");
   const [leaderboardView, setLeaderboardView] = useState<LeaderboardView>("podium");
-  const [allEntries, setAllEntries] = useState<any[]>([]);
   const [showGroupChart, setShowGroupChart] = useState(false);
-  useEffect(() => {
-    const fetchGroupProgress = async () => {
-      const [
-      { data, error },
-      { data: profiles },
-      { data: entries }] =
-      await Promise.all([
-      supabase.from("user_progress").select("*").order("total_pushups", { ascending: false }),
-      supabase.from("profiles").select("id, avatar_url"),
-      supabase.from("push_up_entries").select("date, user_id, count")]
-      );
 
-      if (!error && data) {
-        const avatarMap = new Map(profiles?.map((p: any) => [p.id, p.avatar_url]) || []);
-        const streakMap = new Map<string, number>();
-        if (entries) {
-          // Group dates by user
-          const userDates = new Map<string, Set<string>>();
-          entries.forEach((e: any) => {
-            if (!userDates.has(e.user_id)) userDates.set(e.user_id, new Set());
-            userDates.get(e.user_id)!.add(e.date);
-          });
-          // Calculate streak for each user
-          userDates.forEach((dates, userId) => {
-            let streak = 0;
-            let checkDate = new Date();
-            const todayStr = format(checkDate, "yyyy-MM-dd");
-            // If today has an entry, count it; otherwise skip today (day isn't over yet)
-            if (dates.has(todayStr)) {
-              streak++;
-              checkDate = subDays(checkDate, 1);
-            } else {
-              checkDate = subDays(checkDate, 1);
-            }
-            while (true) {
-              const dateStr = format(checkDate, "yyyy-MM-dd");
-              if (dates.has(dateStr)) {
-                streak++;
-                checkDate = subDays(checkDate, 1);
-              } else {
-                break;
-              }
-            }
-            streakMap.set(userId, streak);
-          });
-        }
+  const progressQuery = useGroupUserProgress();
+  const profilesQuery = useGroupProfiles();
+  const entriesQuery = useGroupEntries();
 
-        // Calculate average push-ups per logged day
-        const avgMap = new Map<string, number>();
-        if (entries) {
-          const userTotals = new Map<string, {total: number;days: Set<string>;}>();
-          entries.forEach((e: any) => {
-            if (!userTotals.has(e.user_id)) userTotals.set(e.user_id, { total: 0, days: new Set() });
-            const ut = userTotals.get(e.user_id)!;
-            ut.total += e.count;
-            ut.days.add(e.date);
-          });
-          userTotals.forEach((val, userId) => {
-            avgMap.set(userId, val.days.size > 0 ? val.total / val.days.size : 0);
-          });
-        }
+  const isLoading =
+    progressQuery.isLoading || profilesQuery.isLoading || entriesQuery.isLoading;
+  const allEntries = entriesQuery.data || [];
 
-        setAllEntries(entries || []);
-        setUsers(data.map((u: any) => ({
-          ...u,
-          avatar_url: avatarMap.get(u.user_id) || null,
-          streak: streakMap.get(u.user_id) || 0,
-          avg_pushups: avgMap.get(u.user_id) || 0
-        })));
+  const users = useMemo<UserProgress[]>(() => {
+    const data = progressQuery.data || [];
+    const profiles = profilesQuery.data || [];
+    const entries = entriesQuery.data || [];
+
+    const avatarMap = new Map(profiles.map((p) => [p.id, p.avatar_url]));
+
+    // Streaks
+    const userDates = new Map<string, Set<string>>();
+    entries.forEach((e) => {
+      if (!userDates.has(e.user_id)) userDates.set(e.user_id, new Set());
+      userDates.get(e.user_id)!.add(e.date);
+    });
+    const streakMap = new Map<string, number>();
+    userDates.forEach((dates, userId) => {
+      let streak = 0;
+      let checkDate = new Date();
+      const todayStr = format(checkDate, "yyyy-MM-dd");
+      if (dates.has(todayStr)) {
+        streak++;
+        checkDate = subDays(checkDate, 1);
+      } else {
+        checkDate = subDays(checkDate, 1);
       }
-      setIsLoading(false);
-    };
-    fetchGroupProgress();
-  }, []);
+      while (true) {
+        const dateStr = format(checkDate, "yyyy-MM-dd");
+        if (dates.has(dateStr)) {
+          streak++;
+          checkDate = subDays(checkDate, 1);
+        } else {
+          break;
+        }
+      }
+      streakMap.set(userId, streak);
+    });
+
+    // Average push-ups per logged day
+    const avgMap = new Map<string, number>();
+    const userTotals = new Map<string, { total: number; days: Set<string> }>();
+    entries.forEach((e) => {
+      if (!userTotals.has(e.user_id)) userTotals.set(e.user_id, { total: 0, days: new Set() });
+      const ut = userTotals.get(e.user_id)!;
+      ut.total += e.count;
+      ut.days.add(e.date);
+    });
+    userTotals.forEach((val, userId) => {
+      avgMap.set(userId, val.days.size > 0 ? val.total / val.days.size : 0);
+    });
+
+    return data.map((u: any) => ({
+      ...u,
+      avatar_url: avatarMap.get(u.user_id) || null,
+      streak: streakMap.get(u.user_id) || 0,
+      avg_pushups: avgMap.get(u.user_id) || 0,
+    }));
+  }, [progressQuery.data, profilesQuery.data, entriesQuery.data]);
 
   // Compute period-filtered leaderboard users
   const filteredUsers = useMemo(() => {
