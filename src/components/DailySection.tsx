@@ -214,7 +214,7 @@ const DailySection = () => {
               <span className={`font-bold text-primary mt-1 text-base ${currentCount === 0 ? "invisible" : ""}`}>{currentCount > 0 ? `${Math.round(progress)}%` : "0%"}</span>
             </div>
             <div className="absolute right-0 top-0 flex flex-col items-end text-right">
-              <p className="text-sm text-muted-foreground font-medium mb-1">Yesterday</p>
+              <p className="text-sm text-muted-foreground font-medium">Yesterday</p>
               <p className="font-black text-[#a7a8aa] text-xl">{yesterdayCount}</p>
             </div>
           </div>
