@@ -153,7 +153,7 @@ const WeeklyOverview = () => {
         </div>
 
       {/* Weekly Summary */}
-      <div className="flex items-center justify-between mb-4 p-3" onClick={(e) => e.stopPropagation()}>
+      <div className="flex items-center justify-between mb-[6px] p-3" onClick={(e) => e.stopPropagation()}>
         <div>
           <p className="font-black text-foreground text-xl">{weeklyData.total}</p>
           <p className="text-sm text-muted-foreground">PU logged</p>
