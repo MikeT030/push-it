@@ -1,33 +1,59 @@
-## Add "Above/Below Target" key figure to DailySection
+# Performance Optimization Plan
 
-Add a new tile in the key figures strip on the Daily page (You Push), positioned right after the "30k on" tile.
+Scope is strictly backend data-fetching and caching. No UI, no behavior, no design tokens change.
 
-### What it shows
-- **Label:** "above target" when the user is ahead of pace, "below target" when behind
-- **Value:** the number of push-ups above/below the year-to-date target, shown with a sign and capped at 3 digits (e.g. `+87`, `-142`, `+999` when over 999)
-- **Icon:** the uploaded `Party.svg`
+## 1. Database indexes (migration)
 
-### Calculation
-```
-daysElapsed   = days since Jan 1 (inclusive)
-expectedByNow = round(daysElapsed / 365 * yearlyGoal)
-diff          = getTotalPushUps() - expectedByNow
-value         = (diff >= 0 ? "+" : "−") + min(abs(diff), 999)
-label         = diff >= 0 ? "above target" : "below target"
-```
+Add indexes that match the existing query patterns on `push_up_entries`:
 
-The value updates live with the existing entries (same data source already used by the surrounding tiles).
+- `(user_id, date)` — used by per-user history fetches in `usePushUpData`, `ProfilePage`, etc.
+- `(date)` — used by daily/weekly group overviews filtering by date range.
 
-### Implementation notes (technical)
-1. Upload `Party.svg` to Lovable Assets via the CLI and reference it as an `<img>` in the tile (icon already sized `w-5 h-5` like its siblings). The SVG fill is black, so we'll render it via `<img>` so it stays as-is — no recolor.
-2. In `src/components/DailySection.tsx` (around lines 282–308), compute `expectedByNow` and `diff`, then insert a new entry into the `items` array immediately after the `30k on` entry:
-   ```ts
-   { label: diff >= 0 ? "above target" : "below target",
-     value: (diff >= 0 ? "+" : "−") + Math.min(Math.abs(diff), 999),
-     unit: "", Icon: PartyIcon, color: "", isCustomIcon: true }
-   ```
-3. The render loop already handles `isCustomIcon`, so no JSX changes are needed beyond letting `PartyIcon` accept a `className`. The strip already has horizontal scroll, so adding a 6th tile is safe on mobile.
+`profiles` and `user_roles` already have primary-key / unique lookups; no new indexes needed.
 
-### Out of scope
-- No changes to the Group page or other sections
-- No changes to data hooks or backend
+## 2. Stop fetching the entire `push_up_entries` table
+
+Today several components do `select("date, user_id, count")` with no filter and pull every row in the DB on mount:
+
+- `src/pages/GroupPage.tsx` (line 125)
+- `src/components/DailyGroupOverview.tsx` (line 95)
+- `src/components/WeeklyGroupOverview.tsx` (line 36)
+
+Change to scoped queries:
+
+- All three need only **current-year** data → add `.gte("date", "2026-01-01")`.
+- `DailyGroupOverview` and `WeeklyGroupOverview` can additionally constrain to a rolling window (e.g. last ~120 days) since their selectors only render recent days/weeks.
+
+No UI/logic change — same shape of data, just less of it.
+
+## 3. React Query for shared fetches
+
+`DailyGroupOverview`, `WeeklyGroupOverview`, `GroupPage`, and the leaderboard each independently re-fetch `profiles` + `push_up_entries` + `user_progress` via `useEffect`. Replace these with `useQuery` keyed by `["entries", year]`, `["profiles"]`, `["user-progress"]`.
+
+Effects:
+- Single network request shared across mounted components.
+- Cached across tab switches (no refetch when toggling Daily/Weekly tabs).
+- `staleTime: 60_000` so it still updates when the user logs new push-ups.
+
+`QueryClientProvider` is already wired up in `App.tsx` — no infra change.
+
+## What is NOT touched
+
+- No UI / design tokens / animations.
+- No auth, RLS, or policy changes.
+- No new dependencies (React Query already installed).
+- No removal of features; `usePushUpData` and personal-page queries already scope by `user_id` and stay as-is (they only benefit from the new index).
+
+## Files to change
+
+- New migration: indexes on `push_up_entries`.
+- `src/pages/GroupPage.tsx`
+- `src/components/DailyGroupOverview.tsx`
+- `src/components/WeeklyGroupOverview.tsx`
+- (Optional small refactor) a new `src/hooks/useGroupData.ts` housing the three shared queries so the components stay thin.
+
+## Validation
+
+- Confirm Network tab shows one `push_up_entries` request instead of three on `/group`.
+- Confirm payload size drops (year-scoped vs full table).
+- Visual diff: none expected.
