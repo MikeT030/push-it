@@ -244,7 +244,7 @@ const DailyGroupOverview = () => {
         </div>
 
         {/* Daily Summary */}
-        <div className="flex items-center justify-between p-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setIsOpen((prev) => !prev)}>
+        <div className="flex items-center justify-between p-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity pb-[16px]" onClick={() => setIsOpen((prev) => !prev)}>
           <div>
             <p className="font-black text-foreground text-xl">{dayTotal.toLocaleString()}</p>
             <p className="text-sm text-muted-foreground">Push-Ups</p>
