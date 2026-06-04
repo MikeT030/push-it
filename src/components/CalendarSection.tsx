@@ -173,7 +173,7 @@ const CalendarSection = () => {
       >
         <div className="overflow-hidden min-h-0">
           <div className="card-glass rounded-2xl rounded-t-none border-t-0 p-5 pt-2">
-            <div className="flex items-center justify-between mb-[6px] px-1">
+            <div className="flex items-center justify-between mb-[6px] px-[10px]">
               <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-muted transition-colors">
                 <ChevronLeft className="w-5 h-5" />
               </button>
