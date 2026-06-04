@@ -354,7 +354,7 @@ const DailySection = () => {
                 {items.map((s) => {
                   const isTargetItem = s.label === "Above Tgt" || s.label === "Below Tgt";
                   const content = (
-                    <div className="flex-shrink-0 flex items-start gap-2" style={{ minWidth: "90px" }}>
+                    <div className="flex-shrink-0 flex items-start gap-2 pl-[4px] pr-[4px]" style={{ minWidth: "90px" }}>
                       {s.label === "Avg. daily" ? (
                         <span className={`text-xl font-bold ${s.color}`}>Ø</span>
                       ) : s.isCustomIcon ? (
