@@ -205,7 +205,7 @@ const DailyPage = () => {
       {activeGame === "select" && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
           <div className="bg-card border border-border rounded-2xl p-6 max-w-sm w-full space-y-4" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-xl font-bold text-foreground text-center">Choose a Game</h2>
+            <h2 className="text-xl text-foreground font-semibold text-center">Choose a Game</h2>
             <button
               onClick={() => setActiveGame("brickbreaker")}
               className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"

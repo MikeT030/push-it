@@ -197,7 +197,7 @@ const TotalPage = () => {
         {/* Main Progress Card */}
           <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pb-[24px] pt-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.25s" }}>
             <div className="flex items-center mb-[6px]">
-              <h2 className="text-lg font-bold text-foreground">Yearly</h2>
+              <h2 className="text-lg text-foreground font-semibold">Yearly</h2>
             </div>
 
             <div className="h-px mb-4 bg-[#3b404f]" />

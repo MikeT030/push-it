@@ -59,7 +59,7 @@ const MountainGoalCard = ({ remaining, yearProgress, daysElapsed, year }: Mounta
     <div ref={cardRef} className="col-span-2 bg-card rounded-2xl p-6 pb-4 animate-slide-up overflow-hidden" style={{ animationDelay: "0.4s" }}>
       {/* Text content */}
       <div className="relative z-10">
-        <h2 className="text-lg font-bold text-foreground mb-4">
+        <h2 className="text-lg text-foreground font-semibold mb-4">
           Personal Goal {year}
         </h2>
         
