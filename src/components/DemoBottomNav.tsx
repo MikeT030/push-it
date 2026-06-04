@@ -38,15 +38,16 @@ const DemoBottomNav = () => {
               )}
               <button
                 onClick={() => setActiveId(tab.id)}
-                className={`flex-1 flex flex-row items-center justify-center gap-2 py-[11px] rounded-2xl transition-all duration-200 backdrop-blur-xl border -translate-y-[2px] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-2px_4px_rgba(0,0,0,0.35),0_6px_16px_rgba(0,0,0,0.45)] active:translate-y-0 active:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_2px_rgba(0,0,0,0.3),0_2px_8px_rgba(0,0,0,0.4)] ${
+                className={`flex-1 flex flex-row items-center justify-center gap-2 py-[11px] rounded-2xl border transition-all duration-200 ${
                   active
-                    ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-gradient-to-b from-white/[0.12] to-white/[0.03]"
-                    : "text-foreground border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.01]"
+                    ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-[#0ABAB5]/10 translate-y-[1px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)]"
+                    : "text-foreground border-white/15 bg-transparent shadow-none"
                 }`}
               >
                 <Icon className="w-4 h-4" strokeWidth={active ? 2.5 : 2} />
                 <span className="font-semibold text-xs">{tab.label}</span>
               </button>
+
             </div>
           );
         })}
