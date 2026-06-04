@@ -392,7 +392,7 @@ const DailySection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full bg-card/40 rounded-2xl rounded-t-none p-3 py-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 px-[10px] border border-[#3B404F] border-t-0 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-0"}`}
+        className={`w-full bg-card/40 rounded-2xl rounded-t-none p-3 py-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 px-[10px] ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-0"}`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
