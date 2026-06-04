@@ -183,7 +183,7 @@ const DailyPage = () => {
 
 
 
-        <div className="flex items-center justify-end mb-4">
+        <div className="flex items-center justify-end mb-4 animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <button
             onClick={() => setActiveGame("select")}
             className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
@@ -195,7 +195,7 @@ const DailyPage = () => {
 
 
         {/* Weekly Overview */}
-        <div className={`mt-6 mb-6 transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
+        <div className={`mt-6 mb-6 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{ animationDelay: "0.2s" }}>
           <WeeklyOverview />
         </div>
       </div>
