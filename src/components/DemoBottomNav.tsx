@@ -24,7 +24,7 @@ const DemoBottomNav = () => {
   return (
     <div className="relative w-full left-1/2 right-1/2 -mx-[50vw] w-screen">
       <div
-        className="relative flex items-stretch w-full backdrop-blur-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border-t border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_-8px_24px_rgba(0,0,0,0.45)] pb-[26px] pt-[8px]"
+        className="relative flex items-stretch w-full backdrop-blur-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border-t border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_-8px_24px_rgba(0,0,0,0.45)] pb-[26px] pt-[8px] px-4"
       >
         {tabs.map((tab, i) => {
           const Icon = tab.icon;
