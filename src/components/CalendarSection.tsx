@@ -122,7 +122,7 @@ const CalendarSection = () => {
         className={`w-full card-glass rounded-2xl p-3 pt-6 pb-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 px-[10px] border border-[#3B404F] ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-3"}`}
         aria-label="Toggle calendar"
       >
-        <div className="flex items-center justify-between px-1 mb-[6px]">
+        <div className="flex items-center justify-between px-1 mb-[6px] pl-[10px] pr-[10px]">
           <h2 className="text-lg text-foreground font-semibold">Calendar</h2>
           {isCalendarOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
         </div>
