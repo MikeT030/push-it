@@ -304,7 +304,7 @@ const DailyGroupOverview = () => {
               ))}
             </div>
           );
-        })()}
+        })()}</div>
 
         <CollapsibleContent className="space-y-4">
 
