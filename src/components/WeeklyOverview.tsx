@@ -101,7 +101,7 @@ const WeeklyOverview = () => {
       animationDelay: "0.25s"
     }}>
         <CollapsibleTrigger asChild>
-          <button className="flex items-center justify-between w-full text-left hover:opacity-80 transition-opacity mb-[6px] mt-[10px] px-[10px]">
+          <button className="flex items-center justify-between w-full text-left hover:opacity-80 transition-opacity mb-[6px] mt-[10px] px-[10px] pt-[10px]">
             <h2 className="text-lg font-bold text-foreground">Weekly</h2>
             {isOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
           </button>
