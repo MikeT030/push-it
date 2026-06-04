@@ -97,7 +97,7 @@ const WeeklyOverview = () => {
       </div>;
   }
   return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="col-span-2">
-      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px]" style={{
+      <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{
       animationDelay: "0.25s"
     }}>
         <CollapsibleTrigger asChild>
