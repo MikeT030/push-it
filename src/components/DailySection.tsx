@@ -349,7 +349,7 @@ const DailySection = () => {
           ];
           const exactDiff = `${diff >= 0 ? "+" : "−"}${absDiff.toLocaleString()}`;
           return (
-            <div className="flex gap-4 pt-4 mt-2 border-t border-b border-[#3B404F] pb-4 mb-2 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+            <div className="flex gap-4 pt-4 mt-2 border-t border-b border-[#3B404F] mb-2 overflow-x-auto pb-[20px]" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
               <TooltipProvider delayDuration={0}>
                 {items.map((s) => {
                   const isTargetItem = s.label === "Above Tgt" || s.label === "Below Tgt";
