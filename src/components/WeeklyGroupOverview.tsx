@@ -184,7 +184,7 @@ const WeeklyGroupOverview = () => {
       <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] mb-[10px] px-[10px] border border-[#3B404F] pb-[12px]" style={{ animationDelay: "0.15s" }}>
         <CollapsibleTrigger asChild>
           <button className="flex items-center justify-between w-full text-left hover:opacity-80 transition-opacity mb-[6px] px-[10px] rounded-2xl border-0 py-0 pt-0 pb-0 mt-0">
-            <h2 className="text-lg font-bold text-foreground">Weekly We Push</h2>
+            <h2 className="text-lg text-foreground font-semibold">Weekly We Push</h2>
             {isOpen ?
             <ChevronDown className="w-5 h-5 text-muted-foreground" /> :
 
