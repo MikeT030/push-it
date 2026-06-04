@@ -107,7 +107,7 @@ const WeeklyOverview = () => {
           </button>
         </CollapsibleTrigger>
 
-        <div className="h-px mb-4 bg-[#3b404f]" />
+        <div className="h-px mb-6 bg-[#3b404f]" />
 
         {/* Horizontally Scrollable Week Selector */}
         <div
