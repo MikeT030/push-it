@@ -57,7 +57,9 @@ const DemoBottomNav = () => {
                     : "text-foreground border-transparent bg-transparent shadow-none"
                 }`}
               >
-                <Icon className="w-6 h-6" strokeWidth={active ? 2.5 : 2} />
+                <span className={`flex items-center justify-center w-9 h-9 rounded-full transition-colors ${active ? 'bg-[#0ABAB5]' : 'bg-transparent'}`}>
+                  <Icon className={`w-6 h-6 ${active ? 'text-white' : ''}`} strokeWidth={active ? 2.5 : 2} />
+                </span>
                 <span className="font-semibold text-sm">{tab.label}</span>
               </button>
 
