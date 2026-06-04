@@ -260,7 +260,7 @@ const DailyGroupOverview = () => {
         {/* Progress bar with tier boundaries */}
         {dayTotal > 0 && (() => {
           const barTransform = {
-            transform: isOpen ? "scaleX(1)" : "scaleX(0)",
+            transform: "scaleX(1)",
             transformOrigin: "left",
             transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
           } as const;
