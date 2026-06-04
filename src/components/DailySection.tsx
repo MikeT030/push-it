@@ -506,6 +506,10 @@ const DailySection = () => {
           </div>
         </div>
       </div>
+      </div>
+
+
+
 
 
 
