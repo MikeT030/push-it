@@ -205,7 +205,7 @@ const ProfilePage = () => {
 
         {/* Admin Card */}
         {isAdmin && (
-          <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
+          <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px]" style={{ animationDelay: "0.03s" }}>
             <h2 className="text-lg font-bold text-foreground mb-4">Admin</h2>
             <Button
               variant="outline"

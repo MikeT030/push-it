@@ -130,7 +130,7 @@ const AdminPage = () => {
         </div>
 
         {/* Backups Card */}
-        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
+        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px]" style={{ animationDelay: "0.03s" }}>
           <h2 className="text-lg font-bold text-foreground mb-4">Backups</h2>
           <div className="flex flex-col gap-3">
             <Button variant="outline" onClick={handleBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
