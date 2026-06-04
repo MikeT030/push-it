@@ -160,12 +160,12 @@ const TotalPage = () => {
 
 
         {/* Daily Push-ups + Calendar */}
-        <div>
+        <div className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
           <DailySection />
         </div>
 
         {/* Weekly Overview & Goal Cards Grid */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: "0.15s" }}>
           {/* Weekly Overview Card */}
           <WeeklyOverview />
         </div>
