@@ -471,7 +471,7 @@ const GroupPage = () => {
               </div>
 
               {/* Goal Card */}
-              <div className="bg-card/40 rounded-2xl p-6 mb-6 animate-slide-up pt-[10px]" style={{ animationDelay: "0.15s" }}>
+              <div className="bg-transparent rounded-2xl p-6 mb-6 animate-slide-up pt-[10px] pb-[10px] px-[10px]" style={{ animationDelay: "0.15s" }}>
                 <div
                   className="flex items-center justify-between cursor-pointer mb-[6px]"
                   onClick={() => setShowGroupChart(v => !v)}
