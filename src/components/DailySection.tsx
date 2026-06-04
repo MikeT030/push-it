@@ -195,7 +195,7 @@ const DailySection = () => {
       <MuscleConfetti trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Today Card */}
-      <div className="relative bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up pb-[10px] pt-[20px] px-[10px]" style={{ animationDelay: "0.05s" }}>
+      <div className="relative bg-card/40 rounded-2xl rounded-b-none p-6 animate-slide-up pb-[10px] pt-[20px] px-[10px] border border-[#3B404F] border-b-0" style={{ animationDelay: "0.05s" }}>
         <button
           onClick={() => setActiveGame("select")}
           className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
