@@ -396,7 +396,7 @@ const DailySection = () => {
         className={`w-full p-3 py-8 transition-all duration-300 ease-out hover:opacity-90 px-[10px] mb-0 pb-[24px] pt-0`}
         aria-label="Toggle calendar"
       >
-        <div className="flex items-center justify-between px-1 mb-[6px]">
+        <div className="flex items-center justify-between px-1 mb-[6px] pl-[10px] pr-[10px]">
           <h2 className="text-lg text-foreground font-semibold">Calendar</h2>
           {isCalendarOpen ? <ChevronDown className="w-5 h-5 text-muted-foreground" /> : <ChevronRight className="w-5 h-5 text-muted-foreground" />}
         </div>
