@@ -119,7 +119,7 @@ const CalendarSection = () => {
       {/* Mini Calendar */}
       <button
         onClick={() => setIsCalendarOpen((v) => !v)}
-        className={`w-full card-glass rounded-2xl p-3 pt-6 pb-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-3"}`}
+        className={`w-full card-glass rounded-2xl p-3 pt-6 pb-8 animate-slide-up transition-all duration-300 ease-out hover:opacity-90 px-[10px] ${isCalendarOpen ? "rounded-b-none mb-0 pb-4" : "mb-3"}`}
         aria-label="Toggle calendar"
       >
         <div className="flex items-center justify-between px-1 mb-[6px]">
