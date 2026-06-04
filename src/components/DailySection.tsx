@@ -206,7 +206,7 @@ const DailySection = () => {
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
             <div className="flex flex-col items-center text-center">
-              <p className="text-sm text-muted-foreground font-medium mb-1">Today</p>
+              <p className="text-sm text-muted-foreground font-medium">Today</p>
               {isEditable ?
                 <input type="number" inputMode="numeric" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} placeholder="0" className="text-5xl font-black text-foreground bg-transparent border-none outline-none w-[1.2ch] min-w-[1.2ch] focus:ring-0 placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={{ width: `${Math.max((inputValue || "0").length, 1)}ch` }} /> :
                 <p className="font-black text-foreground text-xl">{currentCount}</p>
