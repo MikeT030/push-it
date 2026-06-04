@@ -62,7 +62,7 @@ const LineChartGoalCard = ({ totalPushUps, yearlyGoal, yearProgress, getEntryFor
       {/* Header */}
       <div className="relative z-10 flex items-start justify-between">
         <div>
-          <h2 className="text-lg font-bold text-foreground mb-1">
+          <h2 className="text-lg text-foreground font-semibold mb-1">
             Progress {year}
           </h2>
           <p className="text-4xl font-black text-foreground">

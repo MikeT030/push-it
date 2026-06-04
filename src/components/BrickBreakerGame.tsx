@@ -516,7 +516,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
         {/* Game over overlay */}
         {gameState !== "playing" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-2xl">
-            <h2 className="text-3xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-semibold text-white mb-4">
               {gameState === "won" ? "🎉 You Win!" : "💥 Game Over"}
             </h2>
             <p className="text-white/80 mb-6">Score: {score}</p>

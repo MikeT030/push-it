@@ -122,7 +122,7 @@ const AdminPage = () => {
         <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-6 animate-slide-up">
           <div className="flex items-center gap-3 mb-4">
             <Shield className="w-5 h-5 text-primary" />
-            <h2 className="text-lg font-bold text-foreground">Welcome, admin</h2>
+            <h2 className="text-lg text-foreground font-semibold">Welcome, admin</h2>
           </div>
           <p className="text-muted-foreground text-sm">
             This is the admin area. Admin tools and controls will live here.
@@ -131,7 +131,7 @@ const AdminPage = () => {
 
         {/* Backups Card */}
         <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.03s" }}>
-          <h2 className="text-lg font-bold text-foreground mb-4">Backups</h2>
+          <h2 className="text-lg text-foreground font-semibold mb-4">Backups</h2>
           <div className="flex flex-col gap-3">
             <Button variant="outline" onClick={handleBackup} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
               <Download className="w-4 h-4 mr-2" />
@@ -146,7 +146,7 @@ const AdminPage = () => {
 
         {/* Demo Leaderboard */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.04s" }}>
-          <h2 className="text-lg font-bold text-foreground mb-4">Demo Leaderboard</h2>
+          <h2 className="text-lg text-foreground font-semibold mb-4">Demo Leaderboard</h2>
           <LeaderboardPodium
             users={[
               { user_id: "demo-1", display_name: "MichiPU", avatar_url: "tiger", total_pushups: 17352, yearly_goal: 30000, progress_percent: 57, days_logged: 120, streak: 42, avg_pushups: 145 },
@@ -160,7 +160,7 @@ const AdminPage = () => {
 
         {/* Demo Player Card */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
-          <h2 className="text-lg font-bold text-foreground mb-2">
+          <h2 className="text-lg text-foreground font-semibold mb-2">
             Demo Player Card
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
@@ -183,7 +183,7 @@ const AdminPage = () => {
 
         {/* Demo Daily Section */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.075s" }}>
-          <h2 className="text-lg font-bold text-foreground mb-2">
+          <h2 className="text-lg text-foreground font-semibold mb-2">
             Demo Daily Section
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
@@ -195,7 +195,7 @@ const AdminPage = () => {
 
         {/* Demo Calendar Section */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.09s" }}>
-          <h2 className="text-lg font-bold text-foreground mb-2">
+          <h2 className="text-lg text-foreground font-semibold mb-2">
             Demo Calendar
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
@@ -207,7 +207,7 @@ const AdminPage = () => {
 
         {/* Demo Bottom Navigation */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-          <h2 className="text-lg font-bold text-foreground mb-2">
+          <h2 className="text-lg text-foreground font-semibold mb-2">
             Demo Bottom Navigation
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
