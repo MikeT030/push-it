@@ -8,7 +8,7 @@ const MuscleIcon = ({ className, fill = "#0ABAB5" }: { className?: string; strok
   </span>
 );
 
-const GroupSportsIcon = ({ className }: { className?: string; strokeWidth?: number }) => (
+const GroupSportsIcon = ({ className }: { className?: string; strokeWidth?: number; fill?: string }) => (
   <span className={className}>
     <svg viewBox="0 0 77 79" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
       <path d="M38.5 16C42.9183 16 46.5 12.4183 46.5 8C46.5 3.58172 42.9183 0 38.5 0C34.0817 0 30.5 3.58172 30.5 8C30.5 12.4183 34.0817 16 38.5 16Z"/>
