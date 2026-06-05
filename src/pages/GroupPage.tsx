@@ -110,6 +110,7 @@ const GroupPage = () => {
   const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("weekly");
   const [leaderboardView, setLeaderboardView] = useState<LeaderboardView>("podium");
   const [showGroupChart, setShowGroupChart] = useState(false);
+  const [groupSelectedDate, setGroupSelectedDate] = useState<Date>(() => new Date());
 
   const progressQuery = useGroupUserProgress();
   const profilesQuery = useGroupProfiles();
