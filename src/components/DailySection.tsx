@@ -459,8 +459,8 @@ const DailySection = () => {
                 style={{
                   flex: "0 0 calc((100% - 16px) / 3)",
                   background: tinted
-                    ? `radial-gradient(circle at 50% 55%, rgba(${r},${g},${b},0.75) 0%, rgba(${r},${g},${b},0.6) 60%, rgba(${r},${g},${b},0.45) 100%)`
-                    : 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                    ? `radial-gradient(circle at 50% 55%, rgba(${r},${g},${b},0.45) 0%, rgba(${r},${g},${b},0.36) 60%, rgba(${r},${g},${b},0.27) 100%)`
+                    : 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.33) 0%, rgba(31,36,46,0.27) 60%, rgba(22,26,34,0.21) 100%)',
                   boxShadow: [
                     'inset 0 2px 4px rgba(0,0,0,0.55)',
                     'inset 0 -1px 2px rgba(255,255,255,0.07)',
