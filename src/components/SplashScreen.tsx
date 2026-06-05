@@ -91,6 +91,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                   "--circumference": c,
                   strokeDasharray: c,
                   strokeDashoffset: c,
+                  willChange: "stroke-dashoffset",
                   animation: `splash-ring-fill ${DURATION}s ease-out ${delay}s forwards`,
                 }}
               />
