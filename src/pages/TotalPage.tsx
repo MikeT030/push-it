@@ -12,8 +12,6 @@ import { useUserAvatar } from "@/hooks/useUserAvatar";
 import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
-import MountainGoalCard from "@/components/MountainGoalCard";
-import LineChartGoalCard from "@/components/LineChartGoalCard";
 import DailySection from "@/components/DailySection";
 
 const TotalPage = () => {
