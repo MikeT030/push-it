@@ -37,41 +37,23 @@ const BottomNav = () => {
 
   return (
     <nav className={`fixed bottom-0 left-0 right-0 z-40 transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
-      <div className="relative flex items-stretch w-full backdrop-blur-2xl bg-gradient-to-b from-[#1a1f29] via-[#13171f] to-[#0a0d13] border-t border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.6),0_-8px_24px_rgba(0,0,0,0.55)] pb-[26px] pt-[10px] px-4 gap-3">
+      <div className="relative flex items-stretch w-full backdrop-blur-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border-t border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_-8px_24px_rgba(0,0,0,0.45)] pb-[26px] pt-[8px] px-4">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = isActive(tab.path);
 
           return (
-            <div key={tab.id} className="relative flex-1 flex p-1.5">
+            <div key={tab.id} className="relative flex-1 flex p-2">
               <button
                 onClick={() => navigate(tab.path)}
-                className={`group relative flex-1 flex flex-row items-center justify-center gap-2 py-[12px] rounded-2xl transition-all duration-150 ease-out bg-gradient-to-b ${
+                className={`flex-1 flex flex-row items-center justify-center gap-2 py-[11px] rounded-2xl border transition-all duration-200 ${
                   active
-                    ? "from-[#0a0d13] to-[#10141c] text-[#0ABAB5] translate-y-[2px] shadow-[inset_0_3px_6px_rgba(0,0,0,0.85),inset_0_-1px_0_rgba(255,255,255,0.04),inset_0_0_14px_rgba(10,186,181,0.25),0_0_0_1px_rgba(10,186,181,0.55),0_0_18px_rgba(10,186,181,0.35)]"
-                    : "from-[#222732] to-[#13171f] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-2px_0_rgba(0,0,0,0.55),0_2px_0_rgba(0,0,0,0.55),0_4px_10px_rgba(0,0,0,0.5)] hover:from-[#262b37] hover:to-[#161a23] active:translate-y-[1px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"
+                    ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-[#0ABAB5]/10 translate-y-[1px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)]"
+                    : "text-foreground border-transparent bg-transparent shadow-none"
                 }`}
               >
-                <span
-                  aria-hidden
-                  className={`pointer-events-none absolute inset-x-3 top-[3px] h-px rounded-full transition-opacity duration-150 ${
-                    active ? "opacity-0" : "opacity-100 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  }`}
-                />
-                <Icon
-                  className={`w-6 h-6 transition-[filter] duration-150 ${
-                    active ? "[filter:drop-shadow(0_0_6px_rgba(10,186,181,0.85))]" : ""
-                  }`}
-                  strokeWidth={active ? 2.5 : 2}
-                  fill={active ? "#0ABAB5" : "#FFFFFF"}
-                />
-                <span
-                  className={`font-semibold text-sm tracking-wide transition-[text-shadow] duration-150 ${
-                    active ? "[text-shadow:0_0_8px_rgba(10,186,181,0.75)]" : ""
-                  }`}
-                >
-                  {tab.label}
-                </span>
+                <Icon className="w-6 h-6" strokeWidth={active ? 2.5 : 2} fill={active ? "#0ABAB5" : "#FFFFFF"} />
+                <span className="font-semibold text-sm">{tab.label}</span>
               </button>
             </div>
           );
