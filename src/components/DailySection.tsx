@@ -78,7 +78,7 @@ const DailySection = () => {
 
   useEffect(() => {
     if (miniScrollRef.current) {
-      miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
+      miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth - 2;
     }
   }, [isLoaded]);
 
