@@ -198,7 +198,18 @@ const DailySection = () => {
     }
   };
 
-  if (!isLoaded) return null;
+  if (!isLoaded) {
+    return (
+      <div className="bg-card/40 rounded-2xl border border-[#3B404F] overflow-hidden animate-pulse">
+        <div className="p-6 pt-[20px] px-[10px] pb-[20px]">
+          <div className="h-4 w-12 mx-auto bg-muted/40 rounded mb-3" />
+          <div className="h-12 w-16 mx-auto bg-muted/40 rounded mb-4" />
+          <div className="h-[138px] w-[138px] mx-auto rounded-full bg-muted/30 mb-6" />
+          <div className="h-16 w-full bg-muted/20 rounded" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
