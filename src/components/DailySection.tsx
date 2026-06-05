@@ -427,7 +427,7 @@ const DailySection = () => {
         <div
           ref={miniScrollRef}
           onClick={(e) => e.stopPropagation()}
-          className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory pt-[4px] pb-[4px] pl-0 pr-0 mx-[2px]"
+          className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory pt-[4px] pb-[4px] mx-[2px] pl-[2px] pr-[2px]"
         >
           {miniDays.map((day) => {
             const isSelected = isSameDay(day, selectedDate);
