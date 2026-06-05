@@ -309,7 +309,12 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
   );
 };
 
-const DailyGroupOverview = () => {
+interface DailyGroupOverviewProps {
+  selectedDate?: Date;
+  onSelectedDateChange?: (date: Date) => void;
+}
+
+const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOverviewProps = {}) => {
 
   const entriesQuery = useGroupEntries();
   const profilesQuery = useGroupProfiles();
@@ -355,6 +360,15 @@ const DailyGroupOverview = () => {
       setSelectedDayIndex(dayOptions.length - 1);
     }
   }, [dayOptions, selectedDayIndex]);
+
+  // Sync from controlled prop
+  useEffect(() => {
+    if (!selectedDate || dayOptions.length === 0) return;
+    const idx = dayOptions.findIndex((d) => isSameDay(d.date, selectedDate));
+    if (idx >= 0 && idx !== selectedDayIndex) {
+      setSelectedDayIndex(idx);
+    }
+  }, [selectedDate, dayOptions, selectedDayIndex]);
 
   const selectedDay = selectedDayIndex >= 0 ? dayOptions[selectedDayIndex] : dayOptions[dayOptions.length - 1];
 
@@ -469,6 +483,7 @@ const DailyGroupOverview = () => {
                     setSelectedDayIndex(index);
                     scrollToCenter(index);
                     setIsOpen(true);
+                    onSelectedDateChange?.(day.date);
                   }
                 }}
                 style={{

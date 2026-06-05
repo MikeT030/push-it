@@ -110,6 +110,7 @@ const GroupPage = () => {
   const [leaderboardPeriod, setLeaderboardPeriod] = useState<LeaderboardPeriod>("weekly");
   const [leaderboardView, setLeaderboardView] = useState<LeaderboardView>("podium");
   const [showGroupChart, setShowGroupChart] = useState(false);
+  const [groupSelectedDate, setGroupSelectedDate] = useState<Date>(() => new Date());
 
   const progressQuery = useGroupUserProgress();
   const profilesQuery = useGroupProfiles();
@@ -450,14 +451,20 @@ const GroupPage = () => {
 
               {/* Daily Group Overview */}
               <div className="mb-6 mt-6 animate-slide-up">
-                <DailyGroupOverview />
+                <DailyGroupOverview
+                  selectedDate={groupSelectedDate}
+                  onSelectedDateChange={setGroupSelectedDate}
+                />
               </div>
 
               {/* Weekly Group Overview */}
               <div className="mb-6 animate-slide-up" style={{
               animationDelay: "0.1s"
             }}>
-                <WeeklyGroupOverview />
+                <WeeklyGroupOverview
+                  selectedDate={groupSelectedDate}
+                  onSelectedDateChange={setGroupSelectedDate}
+                />
               </div>
 
               {/* Goal Card */}

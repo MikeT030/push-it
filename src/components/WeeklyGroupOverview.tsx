@@ -20,7 +20,12 @@ interface DailyGroupEntry {
   total_count: number;
 }
 
-const WeeklyGroupOverview = () => {
+interface WeeklyGroupOverviewProps {
+  selectedDate?: Date;
+  onSelectedDateChange?: (date: Date) => void;
+}
+
+const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroupOverviewProps = {}) => {
   const { data: entries, isLoading: entriesLoading } = useGroupEntries();
   const { data: users, isLoading: usersLoading } = useGroupUserProgress();
   const [isOpen, setIsOpen] = useState(false);
@@ -77,6 +82,18 @@ const WeeklyGroupOverview = () => {
       setSelectedWeekIndex(weekOptions.length - 1);
     }
   }, [weekOptions, selectedWeekIndex]);
+
+  // Sync from controlled selectedDate prop
+  useEffect(() => {
+    if (!selectedDate || weekOptions.length === 0) return;
+    const idx = weekOptions.findIndex(
+      (w) => selectedDate >= startOfWeek(w.startDate, { weekStartsOn: 1 }) &&
+             selectedDate <= endOfWeek(w.startDate, { weekStartsOn: 1 })
+    );
+    if (idx >= 0 && idx !== selectedWeekIndex) {
+      setSelectedWeekIndex(idx);
+    }
+  }, [selectedDate, weekOptions, selectedWeekIndex]);
 
   const selectedWeek = selectedWeekIndex >= 0 ? weekOptions[selectedWeekIndex] : weekOptions[weekOptions.length - 1];
 
@@ -199,6 +216,13 @@ const WeeklyGroupOverview = () => {
                     setSelectedWeekIndex(index);
                     scrollToCenter(index);
                     setIsOpen(true);
+                    // Emit first day of selected week, clamped to [YEAR_START, today]
+                    const monday = startOfWeek(week.startDate, { weekStartsOn: 1 });
+                    const today = new Date();
+                    let target = monday;
+                    if (target < YEAR_START) target = YEAR_START;
+                    if (target > today) target = today;
+                    onSelectedDateChange?.(target);
                   }
                 }}
                 style={{
