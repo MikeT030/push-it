@@ -23,14 +23,18 @@ const CalendarSection = () => {
     return days;
   }, []);
 
-  const scrollMiniToDate = (date: Date) => {
+  const scrollMiniToDate = (date: Date, smooth = true) => {
     const el = miniScrollRef.current;
     if (!el) return;
     const idx = miniDays.findIndex((d) => isSameDay(d, date));
     if (idx < 0) return;
     const child = el.children[idx] as HTMLElement | undefined;
     if (!child) return;
-    el.scrollLeft = child.offsetLeft + child.offsetWidth - el.clientWidth;
+    // Today stays at the rightmost; any other day centers in the 3-day view
+    const target = isToday(date)
+      ? el.scrollWidth - el.clientWidth
+      : child.offsetLeft + child.offsetWidth / 2 - el.clientWidth / 2;
+    el.scrollTo({ left: target, behavior: smooth ? "smooth" : "auto" });
   };
 
   useEffect(() => {
@@ -41,8 +45,8 @@ const CalendarSection = () => {
 
   useEffect(() => {
     if (!isLoaded) return;
-    if (isCalendarOpen) scrollMiniToDate(selectedDate);
-  }, [selectedDate, isCalendarOpen, isLoaded]);
+    scrollMiniToDate(selectedDate);
+  }, [selectedDate, isLoaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
