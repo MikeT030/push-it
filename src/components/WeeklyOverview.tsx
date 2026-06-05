@@ -178,7 +178,9 @@ const WeeklyOverview = () => {
       </div>
 
       {/* Bar Chart */}
-      <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET} />
+      <div className="mx-[10px]">
+        <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET} />
+      </div>
 
         <CollapsibleContent className="space-y-4">
           <div>
