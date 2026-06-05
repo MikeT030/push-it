@@ -20,7 +20,147 @@ interface MemberContribution {
   goal: number;
 }
 
+interface MemberBarProps {
+  cycleKey: string;
+  name: string;
+  count: number;
+  memberPct: number;
+  isOpen: boolean;
+}
+
+const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps) => {
+  const barRef = useRef<HTMLDivElement>(null);
+  const [animate, setAnimate] = useState(false);
+
+  // Reset and replay animation whenever the day selection (or open state) changes.
+  useEffect(() => {
+    setAnimate(false);
+    const el = barRef.current;
+    if (el) {
+      // Force a reflow so the next paint sees the reset width.
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      el.offsetHeight;
+    }
+    if (!isOpen) return;
+    const r1 = requestAnimationFrame(() => {
+      const r2 = requestAnimationFrame(() => setAnimate(true));
+      (barRef as any).__r2 = r2;
+    });
+    return () => {
+      cancelAnimationFrame(r1);
+      const r2 = (barRef as any).__r2;
+      if (r2) cancelAnimationFrame(r2);
+    };
+  }, [cycleKey, isOpen]);
+
+  const tierColor =
+    count === 0
+      ? "#3B404F"
+      : memberPct >= 301
+      ? "#FF3366"
+      : memberPct >= 201
+      ? "#C029DE"
+      : memberPct >= 101
+      ? "#7036FF"
+      : "#0ABAB5";
+
+  const denom = Math.max(memberPct, 1);
+  const rawStops: { color: string; x: number }[] = [
+    { color: "#0ABAB5", x: 0 },
+    { color: "#0ABAB5", x: 100 },
+    { color: "#7036FF", x: 100 },
+    { color: "#7036FF", x: 200 },
+    { color: "#C029DE", x: 200 },
+    { color: "#C029DE", x: 300 },
+    { color: "#FF3366", x: 300 },
+    { color: "#FF3366", x: 400 },
+  ];
+  const gradient = `linear-gradient(to right, ${rawStops
+    .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
+    .join(", ")})`;
+  const boundaries: { x: number; outer: string; inner: string }[] = [
+    { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
+    { x: 200, outer: "#7036FF", inner: "#C029DE" },
+    { x: 300, outer: "#C029DE", inner: "#FF3366" },
+  ].filter((b) => memberPct > b.x);
+
+  const clipStyle = {
+    clipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+    WebkitClipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+    transition:
+      "clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
+  } as const;
+
+  return (
+    <div className="py-3 px-3 flex items-center gap-3">
+      <span className="text-sm text-foreground w-16 shrink-0 truncate">{name}</span>
+
+      {/* Track + animated fill */}
+      <div className="flex-1 relative h-2 rounded-full bg-white/5">
+        <div
+          ref={barRef}
+          className="absolute inset-0 rounded-full overflow-hidden"
+          style={clipStyle}
+        >
+          {memberPct < 100 ? (
+            <div
+              className="h-full rounded-full"
+              style={{ width: `${memberPct}%`, backgroundColor: "#0ABAB5" }}
+            />
+          ) : (
+            <>
+              <div
+                className="h-full w-full rounded-full"
+                style={{ background: gradient }}
+              />
+              {boundaries.map((b) => (
+                <div
+                  key={b.x}
+                  className="absolute top-1/2 rounded-full flex items-center justify-center"
+                  style={{
+                    left: `${(b.x / denom) * 100}%`,
+                    width: 6,
+                    height: 6,
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: b.outer,
+                  }}
+                >
+                  <div
+                    className="rounded-full"
+                    style={{ width: 3, height: 3, backgroundColor: b.inner }}
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Count badge */}
+      <div
+        className="shrink-0 flex items-center justify-center rounded-full bg-background border-2"
+        style={{
+          borderColor: tierColor,
+          minWidth: "44px",
+          height: "22px",
+          padding: "0 6px",
+          opacity: animate ? 1 : 0,
+          transform: `translateY(${animate ? "0" : "4px"})`,
+          transition: "opacity 600ms ease 1200ms, transform 600ms ease 1200ms",
+        }}
+      >
+        <span
+          className="text-[11px] font-bold leading-none"
+          style={{ color: tierColor }}
+        >
+          {count.toLocaleString()}
+        </span>
+      </div>
+    </div>
+  );
+};
 const DailyGroupOverview = () => {
+
   const entriesQuery = useGroupEntries();
   const profilesQuery = useGroupProfiles();
   const usersQuery = useGroupUserProgress();
@@ -314,75 +454,15 @@ const DailyGroupOverview = () => {
               {memberContributions.map((member, index) => {
                 const personalTarget = Math.max(1, member.goal / 365);
                 const memberPct = (member.count / personalTarget) * 100;
-                const denom = Math.max(memberPct, 1);
-                // Solid tier colors with hard transitions (no fade, no gap).
-                const rawStops: { color: string; x: number }[] = [
-                  { color: "#0ABAB5", x: 0 },
-                  { color: "#0ABAB5", x: 100 },
-                  { color: "#7036FF", x: 100 },
-                  { color: "#7036FF", x: 200 },
-                  { color: "#C029DE", x: 200 },
-                  { color: "#C029DE", x: 300 },
-                  { color: "#FF3366", x: 300 },
-                  { color: "#FF3366", x: 400 },
-                ];
-                const gradient = `linear-gradient(to right, ${rawStops
-                  .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
-                  .join(", ")})`;
-                // Tier boundary markers: real circles, outer = previous tier, inner = next tier.
-                const boundaries: { x: number; outer: string; inner: string }[] = [
-                  { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
-                  { x: 200, outer: "#7036FF", inner: "#C029DE" },
-                  { x: 300, outer: "#C029DE", inner: "#FF3366" },
-                ].filter((b) => memberPct > b.x);
                 return (
                 <div key={member.user_id}>
-                  <div className="py-3 px-3 flex items-center gap-3">
-                    <span className="text-sm text-foreground w-16 shrink-0 truncate">
-                      {member.display_name || "Member"}
-                    </span>
-                    {memberPct < 100 ? (
-                      <div
-                        className={`flex-1 h-1.5 rounded-full relative border origin-left ${isOpen ? "animate-expand-bar" : "scale-x-0"}`}
-                        style={{ borderColor: "#0ABAB5" }}
-                      >
-                        <div
-                          className="h-full rounded-full"
-                          style={{ width: `${memberPct}%`, backgroundColor: "#0ABAB5" }}
-                        />
-                      </div>
-                    ) : (
-                    <div
-                      className={`flex-1 h-1.5 rounded-full relative bg-transparent origin-left ${isOpen ? "animate-expand-bar" : "scale-x-0"}`}
-                    >
-                      <div
-                        className="h-full w-full rounded-full"
-                        style={{ background: gradient }}
-                      />
-                      {boundaries.map((b) => (
-                        <div
-                          key={b.x}
-                          className="absolute top-1/2 rounded-full flex items-center justify-center"
-                          style={{
-                            left: `${(b.x / denom) * 100}%`,
-                            width: 6,
-                            height: 6,
-                            transform: "translate(-50%, -50%)",
-                            backgroundColor: b.outer,
-                          }}
-                        >
-                          <div
-                            className="rounded-full"
-                            style={{ width: 3, height: 3, backgroundColor: b.inner }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    )}
-                    <span className="font-bold text-foreground w-12 shrink-0 text-right">
-                      {member.count.toLocaleString()}
-                    </span>
-                  </div>
+                  <MemberBar
+                    cycleKey={`${selectedDateStr}-${isOpen}`}
+                    name={member.display_name || "Member"}
+                    count={member.count}
+                    memberPct={memberPct}
+                    isOpen={isOpen}
+                  />
                   {index < memberContributions.length - 1 && (
                     <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
                   )}
