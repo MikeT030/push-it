@@ -159,7 +159,7 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
     </div>
   );
 };
-
+const DailyGroupOverview = () => {
 
   const entriesQuery = useGroupEntries();
   const profilesQuery = useGroupProfiles();
