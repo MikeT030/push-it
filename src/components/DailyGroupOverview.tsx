@@ -150,8 +150,7 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
         }}
       >
         <span
-          className="text-[11px] font-bold leading-none"
-          style={{ color: tierColor }}
+          className="text-[11px] font-bold leading-none text-white"
         >
           {count.toLocaleString()}
         </span>
