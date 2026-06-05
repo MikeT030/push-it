@@ -22,9 +22,13 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
 
-  // Reset animation whenever the week (days) changes — e.g. via nav arrow tap
-  useEffect(() => {
+  // Synchronously reset bar heights to 0 before paint whenever days change
+  useLayoutEffect(() => {
     setAnimate(false);
+  }, [days]);
+
+  // Then trigger the grow animation
+  useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
