@@ -145,6 +145,20 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
               ))}
             </>
           )}
+
+          {/* Final sweep: paint bar right-to-left with last tier's two colors */}
+          {sweep && (
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: `linear-gradient(to right, ${sweep.from}, ${sweep.to})`,
+                clipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
+                WebkitClipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
+                transition:
+                  "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
+              }}
+            />
+          )}
         </div>
 
         {/* Count badge attached to tip of bar */}
