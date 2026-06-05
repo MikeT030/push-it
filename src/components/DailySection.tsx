@@ -71,8 +71,8 @@ const DailySection = () => {
     if (!child) return;
     // Today stays at the rightmost; any other day centers in the 3-day view
     const target = isToday(date)
-      ? el.scrollWidth - el.clientWidth
-      : child.offsetLeft + child.offsetWidth / 2 - el.clientWidth / 2;
+      ? el.scrollWidth - el.clientWidth - 2
+      : child.offsetLeft + child.offsetWidth / 2 - el.clientWidth / 2 - 2;
     el.scrollTo({ left: target, behavior: smooth ? "smooth" : "auto" });
   };
 
