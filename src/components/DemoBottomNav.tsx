@@ -49,7 +49,7 @@ const DemoBottomNav = () => {
               onClick={() => setActiveId(tab.id)}
               className={`group relative flex-1 flex flex-row items-center justify-center gap-2 py-[14px] rounded-2xl transition-all duration-200 overflow-hidden
                 ${active
-                  ? "translate-y-[1px] border border-white/10 bg-gradient-to-b from-black/70 via-black/55 to-black/40 shadow-[inset_0_2px_6px_rgba(0,0,0,0.75),inset_0_-1px_0_rgba(255,255,255,0.05)]"
+                  ? "translate-y-[1px] border border-[#0ABAB5]/70 bg-gradient-to-b from-white/[0.02] via-white/[0.04] to-white/[0.08] shadow-[inset_0_3px_6px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.08),0_0_0_1px_rgba(10,186,181,0.15)]"
                   : "bg-transparent border border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.4)]"
                 }`}
             >
