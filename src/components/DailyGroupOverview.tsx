@@ -230,12 +230,7 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
       : null;
 
   if (dayTotal === 0) {
-    return (
-      <div
-        className="h-2 rounded-full relative mb-4 border"
-        style={{ borderColor: "#0ABAB5" }}
-      />
-    );
+    return <div className="h-2 rounded-full relative mb-4 bg-white/5" />;
   }
 
   const denom = Math.max(percentage, 1);
@@ -258,13 +253,9 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
     { x: 300, outer: "#C029DE", inner: "#FF3366" },
   ].filter((b) => percentage > b.x);
 
-  const hasBorder = percentage < 100;
-
   return (
-    <div
-      className={`h-2 rounded-full relative mb-4 ${hasBorder ? "border" : "bg-transparent"}`}
-      style={hasBorder ? { borderColor: "#0ABAB5" } : undefined}
-    >
+    <div className="h-2 rounded-full relative mb-4 bg-white/5">
+
       <div
         ref={barRef}
         className="absolute inset-0 rounded-full overflow-hidden"
