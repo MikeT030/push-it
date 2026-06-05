@@ -94,15 +94,43 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
         };
 
         const colorHex = getColorHex();
-        const barColorClass = colorHex
-          ? ""
-          : "bg-muted/50";
 
         const heightPercentage = (day.count / maxCount) * 100;
         const targetHeight =
           day.isBeforeYearStart || day.count === 0
             ? "4px"
             : `${Math.max(heightPercentage, 8)}%`;
+
+        const denom = Math.max(percentage, 1);
+        const rawStops: { color: string; y: number }[] = [
+          { color: "#0ABAB5", y: 0 },
+          { color: "#0ABAB5", y: 100 },
+          { color: "#7036FF", y: 100 },
+          { color: "#7036FF", y: 200 },
+          { color: "#BA25D8", y: 200 },
+          { color: "#BA25D8", y: 300 },
+          { color: "#FF2C2C", y: 300 },
+          { color: "#FF2C2C", y: 400 },
+        ];
+        const gradient = `linear-gradient(to top, ${rawStops
+          .map((s) => `${s.color} ${(s.y / denom) * 100}%`)
+          .join(", ")})`;
+        const boundaries: { y: number; outer: string; inner: string }[] = [
+          { y: 100, outer: "#0ABAB5", inner: "#7036FF" },
+          { y: 200, outer: "#7036FF", inner: "#BA25D8" },
+          { y: 300, outer: "#BA25D8", inner: "#FF2C2C" },
+        ].filter((b) => percentage > b.y);
+
+        const sweep =
+          percentage >= 301
+            ? { from: "#BA25D8", to: "#FF2C2C" }
+            : percentage >= 201
+            ? { from: "#7036FF", to: "#BA25D8" }
+            : percentage >= 101
+            ? { from: "#0ABAB5", to: "#7036FF" }
+            : null;
+
+        const hasFill = !!colorHex;
 
         return (
           <div
@@ -118,14 +146,60 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
               {/* Bar */}
               <div
                 ref={(el) => (barRefs.current[i] = el)}
-                className={`relative w-full max-w-[22px] rounded-full ${barColorClass}`}
+                className="relative w-full max-w-[22px] rounded-full overflow-hidden"
                 style={{
                   height: animate ? targetHeight : "0px",
                   transition: "height 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
-                  backgroundColor: colorHex ?? undefined,
+                  backgroundColor: hasFill ? undefined : "transparent",
                   boxShadow: colorHex ? `0 0 12px ${colorHex}55` : undefined,
                 }}
               >
+                {hasFill && (percentage < 100 ? (
+                  <div
+                    className="absolute inset-0 rounded-full"
+                    style={{ backgroundColor: "#0ABAB5" }}
+                  />
+                ) : (
+                  <>
+                    <div
+                      className="absolute inset-0 rounded-full"
+                      style={{ background: gradient }}
+                    />
+                    {boundaries.map((b) => (
+                      <div
+                        key={b.y}
+                        className="absolute left-1/2 rounded-full flex items-center justify-center"
+                        style={{
+                          bottom: `${(b.y / denom) * 100}%`,
+                          width: 6,
+                          height: 6,
+                          transform: "translate(-50%, 50%)",
+                          backgroundColor: b.outer,
+                        }}
+                      >
+                        <div
+                          className="rounded-full"
+                          style={{ width: 3, height: 3, backgroundColor: b.inner }}
+                        />
+                      </div>
+                    ))}
+                  </>
+                ))}
+
+                {/* Final sweep: paint bar top-to-bottom with last tier's two colors */}
+                {hasFill && sweep && (
+                  <div
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: `linear-gradient(to top, ${sweep.from}, ${sweep.to})`,
+                      clipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
+                      WebkitClipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
+                      transition:
+                        "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
+                    }}
+                  />
+                )}
+
                 {/* Count badge on top of bar */}
                 {!day.isBeforeYearStart && day.count > 0 && (
                   <div
@@ -140,10 +214,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                       transition: "opacity 600ms ease 1200ms, transform 600ms ease 1200ms",
                     }}
                   >
-                    <span
-                      className="text-[10px] font-bold leading-none"
-                      style={{ color: colorHex ?? undefined }}
-                    >
+                    <span className="text-[10px] font-bold leading-none text-white">
                       {day.count}
                     </span>
                   </div>
