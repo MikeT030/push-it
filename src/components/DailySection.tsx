@@ -62,28 +62,52 @@ const DailySection = () => {
     return days;
   }, []);
 
-  const scrollMiniToDate = (date: Date) => {
+  // Virtualization: only render the window of cells currently in view
+  const GAP = 8;
+  const BUFFER = 6;
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const cellWidth = containerWidth > 0 ? (containerWidth - 2 * GAP) / 3 : 0;
+  const stride = cellWidth + GAP;
+  const startIdx = stride > 0
+    ? Math.max(0, Math.floor(scrollLeft / stride) - BUFFER)
+    : 0;
+  const endIdx = stride > 0
+    ? Math.min(miniDays.length, Math.ceil((scrollLeft + containerWidth) / stride) + BUFFER)
+    : Math.min(miniDays.length, 12);
+  const leadingWidth = startIdx > 0 ? Math.max(0, startIdx * stride - GAP) : 0;
+  const trailingWidth = endIdx < miniDays.length ? Math.max(0, (miniDays.length - endIdx) * stride - GAP) : 0;
+
+  useEffect(() => {
     const el = miniScrollRef.current;
     if (!el) return;
+    const measure = () => setContainerWidth(el.clientWidth);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const scrollMiniToDate = (date: Date) => {
+    const el = miniScrollRef.current;
+    if (!el || stride <= 0) return;
     const idx = miniDays.findIndex((d) => isSameDay(d, date));
     if (idx < 0) return;
-    const child = el.children[idx] as HTMLElement | undefined;
-    if (!child) return;
     // Place selected day as the rightmost of the 3 visible
-    el.scrollLeft = child.offsetLeft + child.offsetWidth - el.clientWidth;
+    el.scrollLeft = idx * stride + cellWidth - el.clientWidth;
   };
 
   useEffect(() => {
     if (miniScrollRef.current) {
       miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
     }
-  }, [isLoaded]);
+  }, [isLoaded, containerWidth]);
 
   // Sync mini strip with selected date when calendar is open
   useEffect(() => {
     if (!isLoaded) return;
     if (isCalendarOpen) scrollMiniToDate(selectedDate);
-  }, [selectedDate, isCalendarOpen, isLoaded]);
+  }, [selectedDate, isCalendarOpen, isLoaded, containerWidth]);
 
   // When calendar closes, reset to today + last 2
   useEffect(() => {
@@ -102,28 +126,34 @@ const DailySection = () => {
   useEffect(() => {
     const el = miniScrollRef.current;
     if (!el) return;
-    const updateVisibleMonth = () => {
-      const children = Array.from(el.children) as HTMLElement[];
-      if (children.length === 0) return;
-      const centerX = el.scrollLeft + el.clientWidth / 2;
-      let bestIdx = 0;
-      let bestDist = Infinity;
-      for (let i = 0; i < children.length; i++) {
-        const c = children[i];
-        const mid = c.offsetLeft + c.offsetWidth / 2;
-        const d = Math.abs(mid - centerX);
-        if (d < bestDist) { bestDist = d; bestIdx = i; }
-      }
-      const day = miniDays[bestIdx];
-      if (day) {
-        setVisibleMonth((prev) => isSameMonth(prev, day) ? prev : day);
-        setCurrentMonth((prev) => isSameMonth(prev, day) ? prev : day);
-      }
+    let rafId: number | null = null;
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const sl = el.scrollLeft;
+        setScrollLeft(sl);
+        if (stride > 0) {
+          const centerX = sl + el.clientWidth / 2;
+          const idx = Math.min(
+            miniDays.length - 1,
+            Math.max(0, Math.round((centerX - cellWidth / 2) / stride))
+          );
+          const day = miniDays[idx];
+          if (day) {
+            setVisibleMonth((prev) => (isSameMonth(prev, day) ? prev : day));
+            setCurrentMonth((prev) => (isSameMonth(prev, day) ? prev : day));
+          }
+        }
+      });
     };
-    updateVisibleMonth();
-    el.addEventListener("scroll", updateVisibleMonth, { passive: true });
-    return () => el.removeEventListener("scroll", updateVisibleMonth);
-  }, [miniDays, isLoaded]);
+    onScroll();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, [miniDays, isLoaded, stride, cellWidth]);
 
   useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
