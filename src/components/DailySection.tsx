@@ -98,16 +98,18 @@ const DailySection = () => {
   };
 
   useEffect(() => {
-    if (miniScrollRef.current) {
-      miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
-    }
-  }, [isLoaded, containerWidth]);
+    if (!miniScrollRef.current || stride <= 0) return;
+    const el = miniScrollRef.current;
+    // Park at today (last cell), computed deterministically — don't read scrollWidth
+    // (it can fluctuate sub-pixel while the virtualization window settles).
+    el.scrollLeft = Math.max(0, miniDays.length * stride - el.clientWidth);
+  }, [isLoaded, stride, miniDays.length]);
 
   // Sync mini strip with selected date when calendar is open
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || stride <= 0) return;
     if (isCalendarOpen) scrollMiniToDate(selectedDate);
-  }, [selectedDate, isCalendarOpen, isLoaded, containerWidth]);
+  }, [selectedDate, isCalendarOpen, isLoaded, stride]);
 
   // When calendar closes, reset to today + last 2
   useEffect(() => {
@@ -115,12 +117,13 @@ const DailySection = () => {
     if (!isCalendarOpen) {
       setSelectedDate(new Date());
       requestAnimationFrame(() => {
-        if (miniScrollRef.current) {
-          miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
+        const el = miniScrollRef.current;
+        if (el && stride > 0) {
+          el.scrollLeft = Math.max(0, miniDays.length * stride - el.clientWidth);
         }
       });
     }
-  }, [isCalendarOpen, isLoaded]);
+  }, [isCalendarOpen, isLoaded, stride, miniDays.length]);
 
 
   useEffect(() => {
@@ -454,7 +457,7 @@ const DailySection = () => {
         <div
           ref={miniScrollRef}
           onClick={(e) => e.stopPropagation()}
-          className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory pt-[4px] pb-[4px] pl-0 pr-0 mx-[2px]"
+          className="flex gap-2 overflow-x-auto scrollbar-hide pt-[4px] pb-[4px] pl-0 pr-0 mx-[2px]"
         >
           {leadingWidth > 0 && (
             <div aria-hidden style={{ flex: `0 0 ${leadingWidth}px` }} />
@@ -486,7 +489,7 @@ const DailySection = () => {
                   background: bg,
                   boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
                 }}
-                className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
+                className={`relative overflow-hidden flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
               >
                 <span className="relative text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
                 <span className="relative text-lg font-bold">{format(day, "d")}</span>
