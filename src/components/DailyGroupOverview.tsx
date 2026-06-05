@@ -483,6 +483,7 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
                     setSelectedDayIndex(index);
                     scrollToCenter(index);
                     setIsOpen(true);
+                    onSelectedDateChange?.(day.date);
                   }
                 }}
                 style={{
