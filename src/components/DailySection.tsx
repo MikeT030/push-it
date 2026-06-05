@@ -379,6 +379,8 @@ const DailySection = () => {
                         <span className={`text-xl font-bold ${s.color}`}>Ø</span>
                       ) : s.isCustomIcon ? (
                         <s.Icon className={`w-5 h-5 ${s.color}`} />
+                      ) : s.label === "Streak" ? (
+                        <s.Icon className={`w-5 h-5 ${s.color}`} fill="currentColor" />
                       ) : (
                         <s.Icon className={`w-5 h-5 ${s.color}`} />
                       )}
