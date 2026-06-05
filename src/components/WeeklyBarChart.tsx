@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -20,28 +20,39 @@ interface WeeklyBarChartProps {
 
 const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const barRefs = useRef<Array<HTMLDivElement | null>>([]);
+  // Bump on every days change to force a fresh animation cycle
+  const [cycle, setCycle] = useState(0);
   const [animate, setAnimate] = useState(false);
 
-  // Synchronously reset bar heights to 0 before paint whenever days change
-  useLayoutEffect(() => {
+  // Whenever days change, snap bars to 0 and start a new cycle
+  useEffect(() => {
     setAnimate(false);
+    setCycle((c) => c + 1);
   }, [days]);
 
-  // Then trigger the grow animation
+  // Trigger the grow animation when in view
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    // Trigger once any part of the chart is in the viewport
     const isInView = () => {
       const rect = el.getBoundingClientRect();
       return rect.bottom > 0 && rect.top < window.innerHeight;
     };
 
+    // Force a reflow at height 0 so the next height change transitions from 0
+    barRefs.current.forEach((b) => {
+      if (b) {
+        b.style.height = "0px";
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        b.offsetHeight;
+      }
+    });
+
     let rafId: number | null = null;
     let rafId2: number | null = null;
     const trigger = () => {
-      // Double rAF: ensures bars paint at height 0 before transitioning to target
       rafId = requestAnimationFrame(() => {
         rafId2 = requestAnimationFrame(() => setAnimate(true));
       });
@@ -71,13 +82,13 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
       if (rafId !== null) cancelAnimationFrame(rafId);
       if (rafId2 !== null) cancelAnimationFrame(rafId2);
     };
-  }, [days]);
+  }, [cycle]);
 
   const maxCount = Math.max(dailyTarget, ...days.map((d) => d.count));
 
   return (
     <div ref={containerRef} className="flex items-end justify-between gap-1 h-16 mb-4">
-      {days.map((day) => {
+      {days.map((day, i) => {
         const percentage = day.isBeforeYearStart ? 0 : (day.count / dailyTarget) * 100;
         const isQuadTarget = percentage >= 301;
         const isTripleTarget = percentage >= 201 && percentage < 301;
@@ -106,6 +117,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
               <Popover>
                 <PopoverTrigger asChild>
                   <div
+                    ref={(el) => (barRefs.current[i] = el)}
                     className={`w-full max-w-[28px] rounded-t-sm cursor-pointer ${getBarColor()}`}
                     style={{
                       height: animate ? targetHeight : "0px",
