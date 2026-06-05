@@ -93,6 +93,16 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
 
   const fillEndPct = Math.min(memberPct, 100);
 
+  // Final sweep colors: the last two colors of the highest tier reached.
+  const sweep =
+    memberPct >= 301
+      ? { from: "#C029DE", to: "#FF3366" }
+      : memberPct >= 201
+      ? { from: "#7036FF", to: "#C029DE" }
+      : memberPct >= 101
+      ? { from: "#0ABAB5", to: "#7036FF" }
+      : null;
+
   return (
     <div className="py-3 px-3 flex items-center gap-3">
       <span className="text-sm text-foreground w-16 shrink-0 truncate">{name}</span>
@@ -134,6 +144,20 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
                 </div>
               ))}
             </>
+          )}
+
+          {/* Final sweep: paint bar right-to-left with last tier's two colors */}
+          {sweep && (
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: `linear-gradient(to right, ${sweep.from}, ${sweep.to})`,
+                clipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
+                WebkitClipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
+                transition:
+                  "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
+              }}
+            />
           )}
         </div>
 
