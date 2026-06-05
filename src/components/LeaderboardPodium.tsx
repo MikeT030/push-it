@@ -71,7 +71,7 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
         {user.display_name || `Member`}
       </p>
       <p className="font-medium text-foreground text-xs flex items-center gap-0.5 justify-center">
-        <Flame className="w-3 h-3 text-[#FF2C2C]" /> <span className="font-bold">{user.streak ?? 0}d</span> streak
+        <Flame className="w-3 h-3 text-[#FF2C2C]" fill="#FF2C2C" /> <span className="font-bold">{user.streak ?? 0}d</span> streak
       </p>
       <p className="font-medium text-foreground flex items-center gap-0.5 justify-center text-xs">
         <span className="text-sm font-bold text-primary">Ø</span> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU
