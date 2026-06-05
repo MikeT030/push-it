@@ -91,14 +91,12 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
       "clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
   } as const;
 
-  const badgeLeftPct = Math.min(memberPct, 100);
-
   return (
     <div className="py-3 px-3 flex items-center gap-3">
       <span className="text-sm text-foreground w-16 shrink-0 truncate">{name}</span>
 
-      {/* Track + animated fill + attached badge */}
-      <div className="flex-1 relative h-[22px] rounded-full bg-white/5">
+      {/* Track + animated fill */}
+      <div className="flex-1 relative h-2 rounded-full bg-white/5">
         <div
           ref={barRef}
           className="absolute inset-0 rounded-full overflow-hidden"
@@ -107,20 +105,13 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
           {memberPct < 100 ? (
             <div
               className="h-full rounded-full"
-              style={{
-                width: `${memberPct}%`,
-                backgroundColor: "#0ABAB5",
-                boxShadow: "0 0 12px #0ABAB555",
-              }}
+              style={{ width: `${memberPct}%`, backgroundColor: "#0ABAB5" }}
             />
           ) : (
             <>
               <div
                 className="h-full w-full rounded-full"
-                style={{
-                  background: gradient,
-                  boxShadow: `0 0 12px ${tierColor}55`,
-                }}
+                style={{ background: gradient }}
               />
               {boundaries.map((b) => (
                 <div
@@ -143,36 +134,31 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
             </>
           )}
         </div>
+      </div>
 
-        {/* Count badge attached to the tip of the bar */}
-        {count > 0 && (
-          <div
-            className="absolute top-1/2 flex items-center justify-center rounded-full bg-background border-2 shadow-md pointer-events-none"
-            style={{
-              left: `${badgeLeftPct}%`,
-              borderColor: tierColor,
-              minWidth: "44px",
-              height: "22px",
-              padding: "0 6px",
-              transform: `translate(-50%, -50%) translateX(${animate ? "0" : "-6px"})`,
-              opacity: animate ? 1 : 0,
-              transition:
-                "opacity 600ms ease 1200ms, transform 600ms ease 1200ms",
-            }}
-          >
-            <span
-              className="text-[11px] font-bold leading-none"
-              style={{ color: tierColor }}
-            >
-              {count.toLocaleString()}
-            </span>
-          </div>
-        )}
+      {/* Count badge */}
+      <div
+        className="shrink-0 flex items-center justify-center rounded-full bg-background border-2"
+        style={{
+          borderColor: tierColor,
+          minWidth: "44px",
+          height: "22px",
+          padding: "0 6px",
+          opacity: animate ? 1 : 0,
+          transform: `translateY(${animate ? "0" : "4px"})`,
+          transition: "opacity 600ms ease 1200ms, transform 600ms ease 1200ms",
+        }}
+      >
+        <span
+          className="text-[11px] font-bold leading-none"
+          style={{ color: tierColor }}
+        >
+          {count.toLocaleString()}
+        </span>
       </div>
     </div>
   );
 };
-
 const DailyGroupOverview = () => {
 
   const entriesQuery = useGroupEntries();
