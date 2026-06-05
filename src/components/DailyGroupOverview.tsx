@@ -93,6 +93,16 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
 
   const fillEndPct = Math.min(memberPct, 100);
 
+  // Final sweep colors: the last two colors of the highest tier reached.
+  const sweep =
+    memberPct >= 301
+      ? { from: "#C029DE", to: "#FF3366" }
+      : memberPct >= 201
+      ? { from: "#7036FF", to: "#C029DE" }
+      : memberPct >= 101
+      ? { from: "#0ABAB5", to: "#7036FF" }
+      : null;
+
   return (
     <div className="py-3 px-3 flex items-center gap-3">
       <span className="text-sm text-foreground w-16 shrink-0 truncate">{name}</span>
