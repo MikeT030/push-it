@@ -456,7 +456,10 @@ const DailySection = () => {
           onClick={(e) => e.stopPropagation()}
           className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory pt-[4px] pb-[4px] pl-0 pr-0 mx-[2px]"
         >
-          {miniDays.map((day) => {
+          {leadingWidth > 0 && (
+            <div aria-hidden style={{ flex: `0 0 ${leadingWidth}px` }} />
+          )}
+          {miniDays.slice(startIdx, endIdx).map((day) => {
             const isSelected = isSameDay(day, selectedDate);
             const isTodayDate = isToday(day);
             const dayProgress = getDailyProgress(day);
@@ -464,18 +467,15 @@ const DailySection = () => {
             const hasEntry = dayCount > 0;
 
             // Determine the base tint for this day (matches prior calendar colors)
-            let baseRgb: [number, number, number] | null = null;
+            let bg = "rgb(36, 41, 51)"; // opaque dark base, no backdrop-filter
             let textColor = "text-foreground";
             if (hasEntry) {
-              if (dayProgress >= 300) { baseRgb = [255, 44, 44]; textColor = "text-white"; }
-              else if (dayProgress >= 200) { baseRgb = [192, 41, 222]; textColor = "text-white"; }
-              else if (dayProgress >= 100) { baseRgb = [112, 54, 255]; textColor = "text-white"; }
-              else { baseRgb = [10, 186, 181]; textColor = "text-white"; }
+              if (dayProgress >= 300) { bg = "rgb(178, 36, 36)"; textColor = "text-white"; }
+              else if (dayProgress >= 200) { bg = "rgb(146, 35, 168)"; textColor = "text-white"; }
+              else if (dayProgress >= 100) { bg = "rgb(89, 45, 200)"; textColor = "text-white"; }
+              else { bg = "rgb(12, 140, 137)"; textColor = "text-white"; }
             }
-            if (isSelected) { baseRgb = null; textColor = "text-primary"; }
-
-            const tinted = baseRgb !== null;
-            const [r, g, b] = baseRgb ?? [42, 47, 58];
+            if (isSelected) { bg = "rgb(36, 41, 51)"; textColor = "text-primary"; }
 
             return (
               <div
@@ -483,33 +483,19 @@ const DailySection = () => {
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
                 style={{
                   flex: "0 0 calc((100% - 16px) / 3)",
-                  background: tinted
-                    ? `radial-gradient(circle at 50% 55%, rgba(${r},${g},${b},0.75) 0%, rgba(${r},${g},${b},0.6) 60%, rgba(${r},${g},${b},0.45) 100%)`
-                    : 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
-                  backdropFilter: 'blur(6px) saturate(1.2)',
-                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
-                  boxShadow: [
-                    'inset 0 2px 4px rgba(0,0,0,0.55)',
-                    'inset 0 -1px 2px rgba(255,255,255,0.07)',
-                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
-                    '0 2px 6px rgba(0,0,0,0.3)',
-                    '0 6px 14px rgba(0,0,0,0.25)',
-                  ].join(', '),
+                  background: bg,
+                  boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
                 }}
-                className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
+                className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
               >
-                <span
-                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
-                  style={{
-                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
-                    filter: 'blur(3px)',
-                  }}
-                />
                 <span className="relative text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
                 <span className="relative text-lg font-bold">{format(day, "d")}</span>
               </div>
             );
           })}
+          {trailingWidth > 0 && (
+            <div aria-hidden style={{ flex: `0 0 ${trailingWidth}px` }} />
+          )}
         </div>
       </button>
 
