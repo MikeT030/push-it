@@ -463,7 +463,7 @@ const GroupPage = () => {
               {/* Goal Card */}
               <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] mb-[10px] px-[10px] border border-[#3B404F] pb-[12px]" style={{ animationDelay: "0.15s" }}>
                 <div
-                  className="flex items-center justify-between cursor-pointer mb-[6px]"
+                  className="flex items-center justify-between cursor-pointer mb-[6px] pl-[10px] pr-[10px]"
                   onClick={() => setShowGroupChart(v => !v)}
                 >
                   <h2 className="text-lg text-foreground font-semibold">
