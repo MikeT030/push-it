@@ -246,7 +246,9 @@ const WeeklyGroupOverview = () => {
         </div>
 
         {/* Bar Chart */}
-        <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET * Math.max(memberCount, 1)} />
+        <div className="mx-[10px]">
+          <WeeklyBarChart days={weeklyData.days} dailyTarget={DAILY_TARGET * Math.max(memberCount, 1)} />
+        </div>
 
         <CollapsibleContent className="space-y-4">
 
