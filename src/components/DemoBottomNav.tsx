@@ -37,33 +37,41 @@ const DemoBottomNav = () => {
   return (
     <div className="relative w-full left-1/2 right-1/2 -mx-[50vw] w-screen">
       <div
-        className="relative flex items-stretch w-full backdrop-blur-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border-t border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_-8px_24px_rgba(0,0,0,0.45)] pb-[26px] pt-[8px] px-4"
+        className="relative flex items-stretch w-full backdrop-blur-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border-t border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_-8px_24px_rgba(0,0,0,0.45)] pb-[26px] pt-[10px] px-3 gap-2"
       >
-        {tabs.map((tab, i) => {
+        {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = activeId === tab.id;
 
           return (
-            <div key={tab.id} className="relative flex-1 flex p-2">
-              {i > 0 && (
-                <span
-                  aria-hidden
-                  className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent pl-0 hidden"
-                />
-              )}
-              <button
-                onClick={() => setActiveId(tab.id)}
-                className={`flex-1 flex flex-row items-center justify-center gap-2 py-[11px] rounded-2xl border transition-all duration-200 ${
-                  active
-                    ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-[#0ABAB5]/10 translate-y-[1px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)]"
-                    : "text-foreground border-transparent bg-transparent shadow-none"
+            <button
+              key={tab.id}
+              onClick={() => setActiveId(tab.id)}
+              className={`group relative flex-1 flex flex-row items-center justify-center gap-2 py-[14px] rounded-2xl transition-all duration-200 overflow-hidden border border-white/10
+                ${active
+                  ? "translate-y-[1px] bg-gradient-to-b from-black/70 via-black/55 to-black/40 shadow-[inset_0_2px_6px_rgba(0,0,0,0.75),inset_0_-1px_0_rgba(255,255,255,0.05)]"
+                  : "bg-gradient-to-b from-white/[0.12] via-black/30 to-black/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),inset_0_-1px_0_rgba(0,0,0,0.6),0_2px_6px_rgba(0,0,0,0.5)]"
                 }`}
-              >
-                <Icon className="w-6 h-6" strokeWidth={active ? 2.5 : 2} fill={active ? "#0ABAB5" : "#FFFFFF"} />
-                <span className="font-semibold text-sm">{tab.label}</span>
-              </button>
-
-            </div>
+            >
+              {/* Top glossy highlight */}
+              <span
+                aria-hidden
+                className={`pointer-events-none absolute inset-x-0 top-0 h-1/2 rounded-t-2xl bg-gradient-to-b from-white/25 to-transparent ${active ? "opacity-20" : "opacity-90"}`}
+              />
+              {/* Bottom subtle reflection */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-2 bottom-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+              />
+              <Icon
+                className={`relative w-6 h-6 ${active ? "drop-shadow-[0_0_6px_rgba(10,186,181,0.6)]" : "drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]"}`}
+                strokeWidth={active ? 2.5 : 2}
+                fill={active ? "#0ABAB5" : "#FFFFFF"}
+              />
+              <span className={`relative font-semibold text-sm tracking-wide ${active ? "text-[#0ABAB5]" : "text-white/90 [text-shadow:0_1px_1px_rgba(0,0,0,0.8)]"}`}>
+                {tab.label}
+              </span>
+            </button>
           );
         })}
       </div>
