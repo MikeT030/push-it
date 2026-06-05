@@ -364,7 +364,7 @@ const DailySection = () => {
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
             { label: diff >= 0 ? "Above Tgt" : "Below Tgt", value: diffDisplay, unit: "", Icon: TargetDiffIcon, color: "", isCustomIcon: true },
-            { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
+            { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#3B404F]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
           const exactDiff = `${diff >= 0 ? "+" : "−"}${absDiff.toLocaleString()}`;
