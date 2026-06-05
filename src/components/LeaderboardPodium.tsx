@@ -148,7 +148,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                   <p className="text-sm font-medium text-foreground truncate">
                     {user.display_name || `Member ${index + 4}`}
                   </p>
-                  <p className="text-xs text-foreground flex items-center gap-0.5"><Flame className="w-3 h-3 text-[#FF2C2C]" /> <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
+                  <p className="text-xs text-foreground flex items-center gap-0.5"><Flame className="w-3 h-3 text-[#FF2C2C]" fill="#FF2C2C" /> <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
                   <p className="text-xs text-foreground flex items-center gap-0.5"><span className="text-xs font-bold text-primary">Ø</span> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU</p>
                 </div>
 
