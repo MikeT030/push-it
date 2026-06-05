@@ -1,10 +1,5 @@
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
 interface DayData {
   date: Date;
@@ -21,17 +16,14 @@ interface WeeklyBarChartProps {
 const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const barRefs = useRef<Array<HTMLDivElement | null>>([]);
-  // Bump on every days change to force a fresh animation cycle
   const [cycle, setCycle] = useState(0);
   const [animate, setAnimate] = useState(false);
 
-  // Whenever days change, snap bars to 0 and start a new cycle
   useEffect(() => {
     setAnimate(false);
     setCycle((c) => c + 1);
   }, [days]);
 
-  // Trigger the grow animation when in view
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -41,7 +33,6 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
       return rect.bottom > 0 && rect.top < window.innerHeight;
     };
 
-    // Force a reflow at height 0 so the next height change transitions from 0
     barRefs.current.forEach((b) => {
       if (b) {
         b.style.height = "0px";
@@ -87,20 +78,25 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
   const maxCount = Math.max(dailyTarget, ...days.map((d) => d.count));
 
   return (
-    <div ref={containerRef} className="flex items-end justify-between gap-1 h-16 mb-4">
+    <div ref={containerRef} className="flex items-end justify-between gap-1 h-28 mb-4 pt-3">
       {days.map((day, i) => {
         const percentage = day.isBeforeYearStart ? 0 : (day.count / dailyTarget) * 100;
         const isQuadTarget = percentage >= 301;
         const isTripleTarget = percentage >= 201 && percentage < 301;
         const isDoubleTarget = percentage >= 101 && percentage < 201;
 
-        const getBarColor = () => {
-          if (day.isBeforeYearStart || day.count === 0) return "bg-muted/50";
-          if (isQuadTarget) return "bg-[#FF2C2C]";
-          if (isTripleTarget) return "bg-[#BA25D8]";
-          if (isDoubleTarget) return "bg-[#7036FF]";
-          return "bg-[#0ABAB5]";
+        const getColorHex = () => {
+          if (day.isBeforeYearStart || day.count === 0) return null;
+          if (isQuadTarget) return "#FF2C2C";
+          if (isTripleTarget) return "#BA25D8";
+          if (isDoubleTarget) return "#7036FF";
+          return "#0ABAB5";
         };
+
+        const colorHex = getColorHex();
+        const barColorClass = colorHex
+          ? ""
+          : "bg-muted/50";
 
         const heightPercentage = (day.count / maxCount) * 100;
         const targetHeight =
@@ -113,22 +109,46 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
             key={format(day.date, "yyyy-MM-dd")}
             className="flex flex-col items-center flex-1 h-full"
           >
-            <div className="flex-1 w-full flex items-end justify-center">
-              <Popover>
-                <PopoverTrigger asChild>
+            <div className="relative flex-1 w-full flex items-end justify-center">
+              {/* Track background */}
+              <div className="absolute inset-x-0 top-0 bottom-0 flex justify-center pointer-events-none">
+                <div className="w-full max-w-[22px] h-full rounded-full bg-white/5" />
+              </div>
+
+              {/* Bar */}
+              <div
+                ref={(el) => (barRefs.current[i] = el)}
+                className={`relative w-full max-w-[22px] rounded-full ${barColorClass}`}
+                style={{
+                  height: animate ? targetHeight : "0px",
+                  transition: "height 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
+                  backgroundColor: colorHex ?? undefined,
+                  boxShadow: colorHex ? `0 0 12px ${colorHex}55` : undefined,
+                }}
+              >
+                {/* Count badge on top of bar */}
+                {!day.isBeforeYearStart && day.count > 0 && (
                   <div
-                    ref={(el) => (barRefs.current[i] = el)}
-                    className={`w-full max-w-[28px] rounded-t-sm cursor-pointer ${getBarColor()}`}
+                    className="absolute left-1/2 -translate-x-1/2 -top-3 flex items-center justify-center rounded-full bg-background border-2 shadow-md"
                     style={{
-                      height: animate ? targetHeight : "0px",
-                      transition: "height 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
+                      borderColor: colorHex ?? "hsl(var(--muted))",
+                      minWidth: "26px",
+                      height: "22px",
+                      padding: "0 4px",
+                      opacity: animate ? 1 : 0,
+                      transform: `translate(-50%, ${animate ? "0" : "6px"})`,
+                      transition: "opacity 600ms ease 1200ms, transform 600ms ease 1200ms",
                     }}
-                  />
-                </PopoverTrigger>
-                <PopoverContent side="top" sideOffset={8} avoidCollisions={false} className="w-auto px-2 py-1">
-                  <p className="font-medium text-sm">{day.count} PU</p>
-                </PopoverContent>
-              </Popover>
+                  >
+                    <span
+                      className="text-[10px] font-bold leading-none"
+                      style={{ color: colorHex ?? undefined }}
+                    >
+                      {day.count}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
             <span
               className={`text-[10px] mt-1 ${
