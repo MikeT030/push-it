@@ -83,6 +83,18 @@ const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroup
     }
   }, [weekOptions, selectedWeekIndex]);
 
+  // Sync from controlled selectedDate prop
+  useEffect(() => {
+    if (!selectedDate || weekOptions.length === 0) return;
+    const idx = weekOptions.findIndex(
+      (w) => selectedDate >= startOfWeek(w.startDate, { weekStartsOn: 1 }) &&
+             selectedDate <= endOfWeek(w.startDate, { weekStartsOn: 1 })
+    );
+    if (idx >= 0 && idx !== selectedWeekIndex) {
+      setSelectedWeekIndex(idx);
+    }
+  }, [selectedDate, weekOptions, selectedWeekIndex]);
+
   const selectedWeek = selectedWeekIndex >= 0 ? weekOptions[selectedWeekIndex] : weekOptions[weekOptions.length - 1];
 
   // Scroll to center the selected week
