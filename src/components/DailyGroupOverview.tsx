@@ -528,82 +528,13 @@ const DailyGroupOverview = () => {
         </div>
 
         {/* Progress bar with tier boundaries */}
-        <div className="px-[10px]">{(() => {
-          const barTransform = {
-            transform: "scaleX(1)",
-            transformOrigin: "left",
-            transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
-          } as const;
-          if (dayTotal === 0) {
-            return (
-              <div
-                className="h-2 rounded-full relative mb-4 border"
-                style={{ borderColor: "#0ABAB5", ...barTransform }}
-              />
-            );
-          }
-          if (percentage < 100) {
-            return (
-              <div
-                className="h-2 rounded-full relative mb-4 border"
-                style={{ borderColor: "#0ABAB5", ...barTransform }}
-              >
-                <div
-                  className="h-full rounded-full"
-                  style={{ width: `${percentage}%`, backgroundColor: "#0ABAB5" }}
-                />
-              </div>
-            );
-          }
-          const groupDenom = Math.max(percentage, 1);
-          const groupStops: { color: string; x: number }[] = [
-            { color: "#0ABAB5", x: 0 },
-            { color: "#0ABAB5", x: 100 },
-            { color: "#7036FF", x: 100 },
-            { color: "#7036FF", x: 200 },
-            { color: "#C029DE", x: 200 },
-            { color: "#C029DE", x: 300 },
-            { color: "#FF3366", x: 300 },
-            { color: "#FF3366", x: 400 },
-          ];
-          const groupGradient = `linear-gradient(to right, ${groupStops
-            .map((s) => `${s.color} ${(s.x / groupDenom) * 100}%`)
-            .join(", ")})`;
-          const groupBoundaries: { x: number; outer: string; inner: string }[] = [
-            { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
-            { x: 200, outer: "#7036FF", inner: "#C029DE" },
-            { x: 300, outer: "#C029DE", inner: "#FF3366" },
-          ].filter((b) => percentage > b.x);
-          return (
-            <div
-              className="h-2 rounded-full relative mb-4 bg-transparent"
-              style={barTransform}
-            >
-              <div
-                className="h-full w-full rounded-full"
-                style={{ background: groupGradient }}
-              />
-              {groupBoundaries.map((b) => (
-                <div
-                  key={b.x}
-                  className="absolute top-1/2 rounded-full flex items-center justify-center"
-                  style={{
-                    left: `${(b.x / groupDenom) * 100}%`,
-                    width: 8,
-                    height: 8,
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: b.outer,
-                  }}
-                >
-                  <div
-                    className="rounded-full"
-                    style={{ width: 4, height: 4, backgroundColor: b.inner }}
-                  />
-                </div>
-              ))}
-            </div>
-          );
-        })()}</div>
+        <div className="px-[10px]">
+          <GroupProgressBar
+            cycleKey={`day-${selectedDayIndex}-${dayTotal}-${percentage}`}
+            percentage={percentage}
+            dayTotal={dayTotal}
+          />
+        </div>
 
         <CollapsibleContent className="space-y-4">
 
