@@ -502,7 +502,7 @@ const GroupPage = () => {
 
                 {/* Progress bar - clickable to toggle chart */}
                 <div 
-                  className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative"
+                  className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative mx-[10px]"
                   onClick={() => setShowGroupChart(v => !v)}
                 >
                   <div className={`h-full bg-[#0ABAB5] absolute left-0 top-0 transition-all duration-700 ${
