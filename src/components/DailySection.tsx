@@ -489,7 +489,7 @@ const DailySection = () => {
                   background: bg,
                   boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
                 }}
-                className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
+                className={`relative overflow-hidden flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
               >
                 <span className="relative text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
                 <span className="relative text-lg font-bold">{format(day, "d")}</span>
