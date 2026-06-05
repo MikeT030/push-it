@@ -177,17 +177,17 @@ const TotalPage = () => {
             <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
 
             {/* Progress bar */}
-            <div className="mb-2 h-3 rounded-full overflow-hidden bg-[#3b404f]">
+            <div className="mb-2 h-3 rounded-full overflow-hidden bg-[#3b404f] mx-[10px]">
               <div className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-700" style={{
                 width: `${yearProgress}%`
               }} />
             </div>
-            <p className="text-sm text-muted-foreground mb-4 text-center">
+            <p className="text-sm text-muted-foreground mb-4 text-center mx-[10px]">
               Day {stats.daysElapsed} of 365
             </p>
 
             
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-6 mx-[10px]">
                 <div className="flex-1 flex items-start gap-8">
                   <div>
                     <p className="text-sm text-muted-foreground">Completed</p>
@@ -211,7 +211,7 @@ const TotalPage = () => {
               </div>
 
               {/* Inset cut-out group: pace + projected completion */}
-              <div className="mt-4 rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2 pt-[20px] pb-[20px]">
+              <div className="mt-4 rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] ring-1 ring-white/5 p-3 space-y-2 pt-[20px] pb-[20px] mx-[10px]">
                 {/* Pace indicator */}
                 <div>
                   <p className="text-sm font-medium text-left text-muted-foreground flex items-center gap-1.5">
