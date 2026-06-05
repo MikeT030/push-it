@@ -194,6 +194,8 @@ interface GroupProgressBarProps {
 const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarProps) => {
   const barRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
+  const stepDuration = 480;
+  const stepStagger = 360;
 
   useEffect(() => {
     setAnimate(false);
@@ -213,13 +215,6 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
     };
   }, [cycleKey]);
 
-  const clipStyle = {
-    clipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
-    WebkitClipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
-    transition:
-      "clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
-  } as const;
-
   const sweep =
     percentage >= 301
       ? { from: "#C029DE", to: "#FF3366" }
@@ -234,19 +229,18 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
   }
 
   const denom = Math.max(percentage, 1);
-  const stops: { color: string; x: number }[] = [
-    { color: "#0ABAB5", x: 0 },
-    { color: "#0ABAB5", x: 100 },
-    { color: "#7036FF", x: 100 },
-    { color: "#7036FF", x: 200 },
-    { color: "#C029DE", x: 200 },
-    { color: "#C029DE", x: 300 },
-    { color: "#FF3366", x: 300 },
-    { color: "#FF3366", x: 400 },
-  ];
-  const gradient = `linear-gradient(to right, ${stops
-    .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
-    .join(", ")})`;
+  const segments = percentage < 100
+    ? [{ key: "teal", from: 0, to: percentage, color: "#0ABAB5", delay: 0 }]
+    : [
+        { key: "teal", from: 0, to: Math.min(100, percentage), color: "#0ABAB5", delay: 0 },
+        { key: "purple", from: 100, to: Math.min(200, percentage), color: "#7036FF", delay: stepStagger },
+        { key: "magenta", from: 200, to: Math.min(300, percentage), color: "#C029DE", delay: stepStagger * 2 },
+        { key: "red", from: 300, to: percentage, color: "#FF3366", delay: stepStagger * 3 },
+      ].filter((segment) => percentage > segment.from);
+  const sweepDelay = Math.max(
+    1700,
+    (segments.length - 1) * stepStagger + stepDuration + 140
+  );
   const boundaries: { x: number; outer: string; inner: string }[] = [
     { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
     { x: 200, outer: "#7036FF", inner: "#C029DE" },
@@ -259,39 +253,39 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
       <div
         ref={barRef}
         className="absolute inset-0 rounded-full overflow-hidden"
-        style={clipStyle}
       >
-        {percentage < 100 ? (
+        {segments.map((segment) => (
           <div
-            className="h-full rounded-full"
-            style={{ width: `${percentage}%`, backgroundColor: "#0ABAB5" }}
+            key={segment.key}
+            className="absolute inset-y-0 rounded-full"
+            style={{
+              left: `${(segment.from / denom) * 100}%`,
+              width: animate ? `${((segment.to - segment.from) / denom) * 100}%` : "0%",
+              backgroundColor: segment.color,
+              transition: `width ${stepDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${segment.delay}ms`,
+            }}
           />
-        ) : (
-          <>
+        ))}
+        {boundaries.map((b, index) => (
+          <div
+            key={b.x}
+            className="absolute top-1/2 rounded-full flex items-center justify-center"
+            style={{
+              left: `${(b.x / denom) * 100}%`,
+              width: 6,
+              height: 6,
+              transform: `translate(-50%, -50%) scale(${animate ? 1 : 0.35})`,
+              opacity: animate ? 1 : 0,
+              backgroundColor: b.outer,
+              transition: `opacity 180ms ease ${stepStagger * (index + 1)}ms, transform 180ms ease ${stepStagger * (index + 1)}ms`,
+            }}
+          >
             <div
-              className="h-full w-full rounded-full"
-              style={{ background: gradient }}
+              className="rounded-full"
+              style={{ width: 3, height: 3, backgroundColor: b.inner }}
             />
-            {boundaries.map((b) => (
-              <div
-                key={b.x}
-                className="absolute top-1/2 rounded-full flex items-center justify-center"
-                style={{
-                  left: `${(b.x / denom) * 100}%`,
-                  width: 6,
-                  height: 6,
-                  transform: "translate(-50%, -50%)",
-                  backgroundColor: b.outer,
-                }}
-              >
-                <div
-                  className="rounded-full"
-                  style={{ width: 3, height: 3, backgroundColor: b.inner }}
-                />
-              </div>
-            ))}
-          </>
-        )}
+          </div>
+        ))}
 
         {sweep && (
           <div
@@ -301,7 +295,7 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
               clipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
               WebkitClipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
               transition:
-                "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
+                `clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) ${sweepDelay}ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) ${sweepDelay}ms`,
             }}
           />
         )}
