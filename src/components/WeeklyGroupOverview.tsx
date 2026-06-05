@@ -216,6 +216,13 @@ const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroup
                     setSelectedWeekIndex(index);
                     scrollToCenter(index);
                     setIsOpen(true);
+                    // Emit first day of selected week, clamped to [YEAR_START, today]
+                    const monday = startOfWeek(week.startDate, { weekStartsOn: 1 });
+                    const today = new Date();
+                    let target = monday;
+                    if (target < YEAR_START) target = YEAR_START;
+                    if (target > today) target = today;
+                    onSelectedDateChange?.(target);
                   }
                 }}
                 style={{
