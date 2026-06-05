@@ -184,6 +184,140 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
     </div>
   );
 };
+
+interface GroupProgressBarProps {
+  cycleKey: string;
+  percentage: number;
+  dayTotal: number;
+}
+
+const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarProps) => {
+  const barRef = useRef<HTMLDivElement>(null);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(false);
+    const el = barRef.current;
+    if (el) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      el.offsetHeight;
+    }
+    const r1 = requestAnimationFrame(() => {
+      const r2 = requestAnimationFrame(() => setAnimate(true));
+      (barRef as any).__r2 = r2;
+    });
+    return () => {
+      cancelAnimationFrame(r1);
+      const r2 = (barRef as any).__r2;
+      if (r2) cancelAnimationFrame(r2);
+    };
+  }, [cycleKey]);
+
+  const clipStyle = {
+    clipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+    WebkitClipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+    transition:
+      "clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
+  } as const;
+
+  const sweep =
+    percentage >= 301
+      ? { from: "#C029DE", to: "#FF3366" }
+      : percentage >= 201
+      ? { from: "#7036FF", to: "#C029DE" }
+      : percentage >= 101
+      ? { from: "#0ABAB5", to: "#7036FF" }
+      : null;
+
+  if (dayTotal === 0) {
+    return (
+      <div
+        className="h-2 rounded-full relative mb-4 border"
+        style={{ borderColor: "#0ABAB5" }}
+      />
+    );
+  }
+
+  const denom = Math.max(percentage, 1);
+  const stops: { color: string; x: number }[] = [
+    { color: "#0ABAB5", x: 0 },
+    { color: "#0ABAB5", x: 100 },
+    { color: "#7036FF", x: 100 },
+    { color: "#7036FF", x: 200 },
+    { color: "#C029DE", x: 200 },
+    { color: "#C029DE", x: 300 },
+    { color: "#FF3366", x: 300 },
+    { color: "#FF3366", x: 400 },
+  ];
+  const gradient = `linear-gradient(to right, ${stops
+    .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
+    .join(", ")})`;
+  const boundaries: { x: number; outer: string; inner: string }[] = [
+    { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
+    { x: 200, outer: "#7036FF", inner: "#C029DE" },
+    { x: 300, outer: "#C029DE", inner: "#FF3366" },
+  ].filter((b) => percentage > b.x);
+
+  const hasBorder = percentage < 100;
+
+  return (
+    <div
+      className={`h-2 rounded-full relative mb-4 ${hasBorder ? "border" : "bg-transparent"}`}
+      style={hasBorder ? { borderColor: "#0ABAB5" } : undefined}
+    >
+      <div
+        ref={barRef}
+        className="absolute inset-0 rounded-full overflow-hidden"
+        style={clipStyle}
+      >
+        {percentage < 100 ? (
+          <div
+            className="h-full rounded-full"
+            style={{ width: `${percentage}%`, backgroundColor: "#0ABAB5" }}
+          />
+        ) : (
+          <>
+            <div
+              className="h-full w-full rounded-full"
+              style={{ background: gradient }}
+            />
+            {boundaries.map((b) => (
+              <div
+                key={b.x}
+                className="absolute top-1/2 rounded-full flex items-center justify-center"
+                style={{
+                  left: `${(b.x / denom) * 100}%`,
+                  width: 8,
+                  height: 8,
+                  transform: "translate(-50%, -50%)",
+                  backgroundColor: b.outer,
+                }}
+              >
+                <div
+                  className="rounded-full"
+                  style={{ width: 4, height: 4, backgroundColor: b.inner }}
+                />
+              </div>
+            ))}
+          </>
+        )}
+
+        {sweep && (
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: `linear-gradient(to right, ${sweep.from}, ${sweep.to})`,
+              clipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
+              WebkitClipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
+              transition:
+                "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 const DailyGroupOverview = () => {
 
   const entriesQuery = useGroupEntries();
