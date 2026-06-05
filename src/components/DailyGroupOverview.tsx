@@ -65,24 +65,33 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
       : "#0ABAB5";
 
   const denom = Math.max(memberPct, 1);
-  const fillEndPct = Math.min(memberPct, 100);
-  const stepDuration = 480;
-  const stepStagger = 360;
-
-  const segments = memberPct < 100
-    ? [{ key: "teal", from: 0, to: memberPct, color: "#0ABAB5", delay: 0 }]
-    : [
-        { key: "teal", from: 0, to: Math.min(100, memberPct), color: "#0ABAB5", delay: 0 },
-        { key: "purple", from: 100, to: Math.min(200, memberPct), color: "#7036FF", delay: stepStagger },
-        { key: "magenta", from: 200, to: Math.min(300, memberPct), color: "#C029DE", delay: stepStagger * 2 },
-        { key: "red", from: 300, to: memberPct, color: "#FF3366", delay: stepStagger * 3 },
-      ].filter((segment) => memberPct > segment.from);
-
+  const rawStops: { color: string; x: number }[] = [
+    { color: "#0ABAB5", x: 0 },
+    { color: "#0ABAB5", x: 100 },
+    { color: "#7036FF", x: 100 },
+    { color: "#7036FF", x: 200 },
+    { color: "#C029DE", x: 200 },
+    { color: "#C029DE", x: 300 },
+    { color: "#FF3366", x: 300 },
+    { color: "#FF3366", x: 400 },
+  ];
+  const gradient = `linear-gradient(to right, ${rawStops
+    .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
+    .join(", ")})`;
   const boundaries: { x: number; outer: string; inner: string }[] = [
     { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
     { x: 200, outer: "#7036FF", inner: "#C029DE" },
     { x: 300, outer: "#C029DE", inner: "#FF3366" },
   ].filter((b) => memberPct > b.x);
+
+  const clipStyle = {
+    clipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+    WebkitClipPath: animate ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+    transition:
+      "clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
+  } as const;
+
+  const fillEndPct = Math.min(memberPct, 100);
 
   // Final sweep colors: the last two colors of the highest tier reached.
   const sweep =
@@ -94,11 +103,6 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
       ? { from: "#0ABAB5", to: "#7036FF" }
       : null;
 
-  const sweepDelay = Math.max(
-    1700,
-    (segments.length - 1) * stepStagger + stepDuration + 140
-  );
-
   return (
     <div className="py-3 px-3 flex items-center gap-3">
       <span className="text-sm text-foreground w-16 shrink-0 truncate">{name}</span>
@@ -108,39 +112,39 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
         <div
           ref={barRef}
           className="absolute inset-0 rounded-full overflow-hidden"
+          style={clipStyle}
         >
-          {segments.map((segment) => (
+          {memberPct < 100 ? (
             <div
-              key={segment.key}
-              className="absolute inset-y-0 rounded-full"
-              style={{
-                left: `${(segment.from / denom) * 100}%`,
-                width: animate ? `${((segment.to - segment.from) / denom) * 100}%` : "0%",
-                backgroundColor: segment.color,
-                transition: `width ${stepDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${segment.delay}ms`,
-              }}
+              className="h-full rounded-full"
+              style={{ width: `${memberPct}%`, backgroundColor: "#0ABAB5" }}
             />
-          ))}
-          {boundaries.map((b, index) => (
-            <div
-              key={b.x}
-              className="absolute top-1/2 rounded-full flex items-center justify-center"
-              style={{
-                left: `${(b.x / denom) * 100}%`,
-                width: 6,
-                height: 6,
-                transform: `translate(-50%, -50%) scale(${animate ? 1 : 0.35})`,
-                opacity: animate ? 1 : 0,
-                backgroundColor: b.outer,
-                transition: `opacity 180ms ease ${stepStagger * (index + 1)}ms, transform 180ms ease ${stepStagger * (index + 1)}ms`,
-              }}
-            >
+          ) : (
+            <>
               <div
-                className="rounded-full"
-                style={{ width: 3, height: 3, backgroundColor: b.inner }}
+                className="h-full w-full rounded-full"
+                style={{ background: gradient }}
               />
-            </div>
-          ))}
+              {boundaries.map((b) => (
+                <div
+                  key={b.x}
+                  className="absolute top-1/2 rounded-full flex items-center justify-center"
+                  style={{
+                    left: `${(b.x / denom) * 100}%`,
+                    width: 6,
+                    height: 6,
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: b.outer,
+                  }}
+                >
+                  <div
+                    className="rounded-full"
+                    style={{ width: 3, height: 3, backgroundColor: b.inner }}
+                  />
+                </div>
+              ))}
+            </>
+          )}
 
           {/* Final sweep: paint bar right-to-left with last tier's two colors */}
           {sweep && (
@@ -151,12 +155,11 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
                 clipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
                 WebkitClipPath: animate ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
                 transition:
-                  `clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) ${sweepDelay}ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) ${sweepDelay}ms`,
+                  "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
               }}
             />
           )}
         </div>
-
 
         {/* Count badge attached to tip of bar */}
         <div
