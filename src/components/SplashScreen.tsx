@@ -6,16 +6,16 @@ interface SplashScreenProps {
 
 const RINGS = [
   { r: 73, color: "#0ABAB5", delay: 0 },
-  { r: 53, color: "#4300FF", delay: 0.5 },
-  { r: 33, color: "#C029DE", delay: 1.0 },
-  { r: 13, color: "#FF2C2C", delay: 1.5 },
+  { r: 53, color: "#4300FF", delay: 0.25 },
+  { r: 33, color: "#C029DE", delay: 0.5 },
+  { r: 13, color: "#FF2C2C", delay: 0.75 },
 ];
 
-const DURATION = 1.8; // seconds per ring
+const DURATION = 1.0; // seconds per ring
 const TOTAL = DURATION + RINGS[RINGS.length - 1].delay; // last ring finishes
 
-const MORPH_MS = 900;
-const FADE_MS = 500;
+const MORPH_MS = 600;
+const FADE_MS: number = 350;
 
 const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   const [isMorphing, setIsMorphing] = useState(false);
@@ -43,9 +43,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       style={{
         backgroundImage: isFadingOut
           ? undefined
-          : `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.14 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"), radial-gradient(ellipse at top left, #0C2544 0%, #101214 90%)`,
+          : `radial-gradient(ellipse at top left, #0C2544 0%, #101214 90%)`,
         backgroundColor: isFadingOut ? "transparent" : "#101214",
-        backgroundAttachment: "fixed",
         transition: `opacity ${FADE_MS}ms ease-out, background-color ${FADE_MS}ms ease-out`,
         opacity: isFadingOut ? 0 : 1,
         pointerEvents: isFadingOut ? "none" : "auto",
@@ -92,6 +91,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                   "--circumference": c,
                   strokeDasharray: c,
                   strokeDashoffset: c,
+                  willChange: "stroke-dashoffset",
                   animation: `splash-ring-fill ${DURATION}s ease-out ${delay}s forwards`,
                 }}
               />
