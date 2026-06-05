@@ -278,15 +278,15 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
                 className="absolute top-1/2 rounded-full flex items-center justify-center"
                 style={{
                   left: `${(b.x / denom) * 100}%`,
-                  width: 8,
-                  height: 8,
+                  width: 6,
+                  height: 6,
                   transform: "translate(-50%, -50%)",
                   backgroundColor: b.outer,
                 }}
               >
                 <div
                   className="rounded-full"
-                  style={{ width: 4, height: 4, backgroundColor: b.inner }}
+                  style={{ width: 3, height: 3, backgroundColor: b.inner }}
                 />
               </div>
             ))}
