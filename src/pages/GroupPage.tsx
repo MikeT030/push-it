@@ -478,7 +478,7 @@ const GroupPage = () => {
 
                 <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between pl-[10px] pr-[10px]">
                   <div>
                     <p className="font-black line-through text-white text-lg">
                       {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
