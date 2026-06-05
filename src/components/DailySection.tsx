@@ -457,7 +457,7 @@ const DailySection = () => {
         <div
           ref={miniScrollRef}
           onClick={(e) => e.stopPropagation()}
-          className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory pt-[4px] pb-[4px] pl-0 pr-0 mx-[2px]"
+          className="flex gap-2 overflow-x-auto scrollbar-hide pt-[4px] pb-[4px] pl-0 pr-0 mx-[2px]"
         >
           {leadingWidth > 0 && (
             <div aria-hidden style={{ flex: `0 0 ${leadingWidth}px` }} />
