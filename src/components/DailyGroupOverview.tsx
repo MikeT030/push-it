@@ -309,7 +309,12 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
   );
 };
 
-const DailyGroupOverview = () => {
+interface DailyGroupOverviewProps {
+  selectedDate?: Date;
+  onSelectedDateChange?: (date: Date) => void;
+}
+
+const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOverviewProps = {}) => {
 
   const entriesQuery = useGroupEntries();
   const profilesQuery = useGroupProfiles();
