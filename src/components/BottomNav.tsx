@@ -48,7 +48,7 @@ const BottomNav = () => {
                 onClick={() => navigate(tab.path)}
                 className={`flex-1 flex flex-row items-center justify-center gap-2 py-[11px] rounded-2xl border transition-all duration-200 ${
                   active
-                    ? "text-[#0ABAB5] border-[#0ABAB5]/70 bg-[#0ABAB5]/10 translate-y-[1px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)]"
+                    ? "text-[#0ABAB5] border-[#0ABAB5]/70 translate-y-[1px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)]"
                     : "text-foreground border-transparent bg-transparent shadow-none"
                 }`}
               >
