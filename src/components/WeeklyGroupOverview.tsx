@@ -20,7 +20,12 @@ interface DailyGroupEntry {
   total_count: number;
 }
 
-const WeeklyGroupOverview = () => {
+interface WeeklyGroupOverviewProps {
+  selectedDate?: Date;
+  onSelectedDateChange?: (date: Date) => void;
+}
+
+const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroupOverviewProps = {}) => {
   const { data: entries, isLoading: entriesLoading } = useGroupEntries();
   const { data: users, isLoading: usersLoading } = useGroupUserProgress();
   const [isOpen, setIsOpen] = useState(false);
