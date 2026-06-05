@@ -98,16 +98,18 @@ const DailySection = () => {
   };
 
   useEffect(() => {
-    if (miniScrollRef.current) {
-      miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
-    }
-  }, [isLoaded, containerWidth]);
+    if (!miniScrollRef.current || stride <= 0) return;
+    const el = miniScrollRef.current;
+    // Park at today (last cell), computed deterministically — don't read scrollWidth
+    // (it can fluctuate sub-pixel while the virtualization window settles).
+    el.scrollLeft = Math.max(0, miniDays.length * stride - el.clientWidth);
+  }, [isLoaded, stride, miniDays.length]);
 
   // Sync mini strip with selected date when calendar is open
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || stride <= 0) return;
     if (isCalendarOpen) scrollMiniToDate(selectedDate);
-  }, [selectedDate, isCalendarOpen, isLoaded, containerWidth]);
+  }, [selectedDate, isCalendarOpen, isLoaded, stride]);
 
   // When calendar closes, reset to today + last 2
   useEffect(() => {
@@ -115,12 +117,13 @@ const DailySection = () => {
     if (!isCalendarOpen) {
       setSelectedDate(new Date());
       requestAnimationFrame(() => {
-        if (miniScrollRef.current) {
-          miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
+        const el = miniScrollRef.current;
+        if (el && stride > 0) {
+          el.scrollLeft = Math.max(0, miniDays.length * stride - el.clientWidth);
         }
       });
     }
-  }, [isCalendarOpen, isLoaded]);
+  }, [isCalendarOpen, isLoaded, stride, miniDays.length]);
 
 
   useEffect(() => {
