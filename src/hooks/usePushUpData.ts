@@ -57,25 +57,15 @@ export const usePushUpData = () => {
     }
 
     const loadData = async () => {
-      // Load profile
-      const { data: profileData } = await supabase
-        .from("profiles")
-        .select("yearly_goal")
-        .eq("id", user.id)
-        .maybeSingle();
+      // Run both queries in parallel instead of sequentially
+      const [profileRes, entriesRes] = await Promise.all([
+        supabase.from("profiles").select("yearly_goal").eq("id", user.id).maybeSingle(),
+        supabase.from("push_up_entries").select("date, count").eq("user_id", user.id),
+      ]);
 
-      if (profileData) {
-        setProfile(profileData);
-      }
-
-      // Load entries
-      const { data: entriesData } = await supabase
-        .from("push_up_entries")
-        .select("date, count")
-        .eq("user_id", user.id);
-
-      if (entriesData) {
-        setEntries(entriesData.map(e => ({ date: e.date, count: e.count })));
+      if (profileRes.data) setProfile(profileRes.data);
+      if (entriesRes.data) {
+        setEntries(entriesRes.data.map(e => ({ date: e.date, count: e.count })));
       }
 
       setIsLoaded(true);
