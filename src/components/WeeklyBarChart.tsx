@@ -146,7 +146,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
               {/* Bar */}
               <div
                 ref={(el) => (barRefs.current[i] = el)}
-                className="relative w-full max-w-[22px] rounded-full overflow-hidden"
+                className="relative w-full max-w-[22px] rounded-full"
                 style={{
                   height: animate ? targetHeight : "0px",
                   transition: "height 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -154,51 +154,54 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                   boxShadow: colorHex ? `0 0 12px ${colorHex}55` : undefined,
                 }}
               >
-                {hasFill && (percentage < 100 ? (
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{ backgroundColor: "#0ABAB5" }}
-                  />
-                ) : (
-                  <>
+                {/* Fill layer (clipped to bar shape) */}
+                <div className="absolute inset-0 rounded-full overflow-hidden">
+                  {hasFill && (percentage < 100 ? (
                     <div
                       className="absolute inset-0 rounded-full"
-                      style={{ background: gradient }}
+                      style={{ backgroundColor: "#0ABAB5" }}
                     />
-                    {boundaries.map((b) => (
+                  ) : (
+                    <>
                       <div
-                        key={b.y}
-                        className="absolute left-1/2 rounded-full flex items-center justify-center"
-                        style={{
-                          bottom: `${(b.y / denom) * 100}%`,
-                          width: 6,
-                          height: 6,
-                          transform: "translate(-50%, 50%)",
-                          backgroundColor: b.outer,
-                        }}
-                      >
+                        className="absolute inset-0 rounded-full"
+                        style={{ background: gradient }}
+                      />
+                      {boundaries.map((b) => (
                         <div
-                          className="rounded-full"
-                          style={{ width: 3, height: 3, backgroundColor: b.inner }}
-                        />
-                      </div>
-                    ))}
-                  </>
-                ))}
+                          key={b.y}
+                          className="absolute left-1/2 rounded-full flex items-center justify-center"
+                          style={{
+                            bottom: `${(b.y / denom) * 100}%`,
+                            width: 6,
+                            height: 6,
+                            transform: "translate(-50%, 50%)",
+                            backgroundColor: b.outer,
+                          }}
+                        >
+                          <div
+                            className="rounded-full"
+                            style={{ width: 3, height: 3, backgroundColor: b.inner }}
+                          />
+                        </div>
+                      ))}
+                    </>
+                  ))}
 
-                {/* Final sweep: paint bar top-to-bottom with last tier's two colors */}
-                {hasFill && sweep && (
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: `linear-gradient(to top, ${sweep.from}, ${sweep.to})`,
-                      clipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
-                      WebkitClipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
-                      transition:
-                        "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
-                    }}
-                  />
-                )}
+                  {/* Final sweep: paint bar top-to-bottom with last tier's two colors */}
+                  {hasFill && sweep && (
+                    <div
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background: `linear-gradient(to top, ${sweep.from}, ${sweep.to})`,
+                        clipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
+                        WebkitClipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
+                        transition:
+                          "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
+                      }}
+                    />
+                  )}
+                </div>
 
                 {/* Count badge on top of bar */}
                 {!day.isBeforeYearStart && day.count > 0 && (
