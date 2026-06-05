@@ -62,28 +62,52 @@ const DailySection = () => {
     return days;
   }, []);
 
-  const scrollMiniToDate = (date: Date) => {
+  // Virtualization: only render the window of cells currently in view
+  const GAP = 8;
+  const BUFFER = 6;
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const cellWidth = containerWidth > 0 ? (containerWidth - 2 * GAP) / 3 : 0;
+  const stride = cellWidth + GAP;
+  const startIdx = stride > 0
+    ? Math.max(0, Math.floor(scrollLeft / stride) - BUFFER)
+    : 0;
+  const endIdx = stride > 0
+    ? Math.min(miniDays.length, Math.ceil((scrollLeft + containerWidth) / stride) + BUFFER)
+    : Math.min(miniDays.length, 12);
+  const leadingWidth = startIdx > 0 ? Math.max(0, startIdx * stride - GAP) : 0;
+  const trailingWidth = endIdx < miniDays.length ? Math.max(0, (miniDays.length - endIdx) * stride - GAP) : 0;
+
+  useEffect(() => {
     const el = miniScrollRef.current;
     if (!el) return;
+    const measure = () => setContainerWidth(el.clientWidth);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const scrollMiniToDate = (date: Date) => {
+    const el = miniScrollRef.current;
+    if (!el || stride <= 0) return;
     const idx = miniDays.findIndex((d) => isSameDay(d, date));
     if (idx < 0) return;
-    const child = el.children[idx] as HTMLElement | undefined;
-    if (!child) return;
     // Place selected day as the rightmost of the 3 visible
-    el.scrollLeft = child.offsetLeft + child.offsetWidth - el.clientWidth;
+    el.scrollLeft = idx * stride + cellWidth - el.clientWidth;
   };
 
   useEffect(() => {
     if (miniScrollRef.current) {
       miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
     }
-  }, [isLoaded]);
+  }, [isLoaded, containerWidth]);
 
   // Sync mini strip with selected date when calendar is open
   useEffect(() => {
     if (!isLoaded) return;
     if (isCalendarOpen) scrollMiniToDate(selectedDate);
-  }, [selectedDate, isCalendarOpen, isLoaded]);
+  }, [selectedDate, isCalendarOpen, isLoaded, containerWidth]);
 
   // When calendar closes, reset to today + last 2
   useEffect(() => {
@@ -102,28 +126,34 @@ const DailySection = () => {
   useEffect(() => {
     const el = miniScrollRef.current;
     if (!el) return;
-    const updateVisibleMonth = () => {
-      const children = Array.from(el.children) as HTMLElement[];
-      if (children.length === 0) return;
-      const centerX = el.scrollLeft + el.clientWidth / 2;
-      let bestIdx = 0;
-      let bestDist = Infinity;
-      for (let i = 0; i < children.length; i++) {
-        const c = children[i];
-        const mid = c.offsetLeft + c.offsetWidth / 2;
-        const d = Math.abs(mid - centerX);
-        if (d < bestDist) { bestDist = d; bestIdx = i; }
-      }
-      const day = miniDays[bestIdx];
-      if (day) {
-        setVisibleMonth((prev) => isSameMonth(prev, day) ? prev : day);
-        setCurrentMonth((prev) => isSameMonth(prev, day) ? prev : day);
-      }
+    let rafId: number | null = null;
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const sl = el.scrollLeft;
+        setScrollLeft(sl);
+        if (stride > 0) {
+          const centerX = sl + el.clientWidth / 2;
+          const idx = Math.min(
+            miniDays.length - 1,
+            Math.max(0, Math.round((centerX - cellWidth / 2) / stride))
+          );
+          const day = miniDays[idx];
+          if (day) {
+            setVisibleMonth((prev) => (isSameMonth(prev, day) ? prev : day));
+            setCurrentMonth((prev) => (isSameMonth(prev, day) ? prev : day));
+          }
+        }
+      });
     };
-    updateVisibleMonth();
-    el.addEventListener("scroll", updateVisibleMonth, { passive: true });
-    return () => el.removeEventListener("scroll", updateVisibleMonth);
-  }, [miniDays, isLoaded]);
+    onScroll();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, [miniDays, isLoaded, stride, cellWidth]);
 
   useEffect(() => {
     setInputValue(currentCount > 0 ? currentCount.toString() : "");
@@ -426,7 +456,10 @@ const DailySection = () => {
           onClick={(e) => e.stopPropagation()}
           className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory pt-[4px] pb-[4px] pl-0 pr-0 mx-[2px]"
         >
-          {miniDays.map((day) => {
+          {leadingWidth > 0 && (
+            <div aria-hidden style={{ flex: `0 0 ${leadingWidth}px` }} />
+          )}
+          {miniDays.slice(startIdx, endIdx).map((day) => {
             const isSelected = isSameDay(day, selectedDate);
             const isTodayDate = isToday(day);
             const dayProgress = getDailyProgress(day);
@@ -434,18 +467,15 @@ const DailySection = () => {
             const hasEntry = dayCount > 0;
 
             // Determine the base tint for this day (matches prior calendar colors)
-            let baseRgb: [number, number, number] | null = null;
+            let bg = "rgb(36, 41, 51)"; // opaque dark base, no backdrop-filter
             let textColor = "text-foreground";
             if (hasEntry) {
-              if (dayProgress >= 300) { baseRgb = [255, 44, 44]; textColor = "text-white"; }
-              else if (dayProgress >= 200) { baseRgb = [192, 41, 222]; textColor = "text-white"; }
-              else if (dayProgress >= 100) { baseRgb = [112, 54, 255]; textColor = "text-white"; }
-              else { baseRgb = [10, 186, 181]; textColor = "text-white"; }
+              if (dayProgress >= 300) { bg = "rgb(178, 36, 36)"; textColor = "text-white"; }
+              else if (dayProgress >= 200) { bg = "rgb(146, 35, 168)"; textColor = "text-white"; }
+              else if (dayProgress >= 100) { bg = "rgb(89, 45, 200)"; textColor = "text-white"; }
+              else { bg = "rgb(12, 140, 137)"; textColor = "text-white"; }
             }
-            if (isSelected) { baseRgb = null; textColor = "text-primary"; }
-
-            const tinted = baseRgb !== null;
-            const [r, g, b] = baseRgb ?? [42, 47, 58];
+            if (isSelected) { bg = "rgb(36, 41, 51)"; textColor = "text-primary"; }
 
             return (
               <div
@@ -453,33 +483,19 @@ const DailySection = () => {
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
                 style={{
                   flex: "0 0 calc((100% - 16px) / 3)",
-                  background: tinted
-                    ? `radial-gradient(circle at 50% 55%, rgba(${r},${g},${b},0.75) 0%, rgba(${r},${g},${b},0.6) 60%, rgba(${r},${g},${b},0.45) 100%)`
-                    : 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
-                  backdropFilter: 'blur(6px) saturate(1.2)',
-                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
-                  boxShadow: [
-                    'inset 0 2px 4px rgba(0,0,0,0.55)',
-                    'inset 0 -1px 2px rgba(255,255,255,0.07)',
-                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
-                    '0 2px 6px rgba(0,0,0,0.3)',
-                    '0 6px 14px rgba(0,0,0,0.25)',
-                  ].join(', '),
+                  background: bg,
+                  boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
                 }}
-                className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
+                className={`relative overflow-hidden snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-transform duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
               >
-                <span
-                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
-                  style={{
-                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
-                    filter: 'blur(3px)',
-                  }}
-                />
                 <span className="relative text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
                 <span className="relative text-lg font-bold">{format(day, "d")}</span>
               </div>
             );
           })}
+          {trailingWidth > 0 && (
+            <div aria-hidden style={{ flex: `0 0 ${trailingWidth}px` }} />
+          )}
         </div>
       </button>
 
