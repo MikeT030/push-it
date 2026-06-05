@@ -71,14 +71,14 @@ const DailySection = () => {
     if (!child) return;
     // Today stays at the rightmost; any other day centers in the 3-day view
     const target = isToday(date)
-      ? el.scrollWidth - el.clientWidth - 2
-      : child.offsetLeft + child.offsetWidth / 2 - el.clientWidth / 2 - 2;
+      ? el.scrollWidth - el.clientWidth - 4
+      : child.offsetLeft + child.offsetWidth / 2 - el.clientWidth / 2 - 4;
     el.scrollTo({ left: target, behavior: smooth ? "smooth" : "auto" });
   };
 
   useEffect(() => {
     if (miniScrollRef.current) {
-      miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth - 2;
+      miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth - 4;
     }
   }, [isLoaded]);
 
@@ -95,7 +95,7 @@ const DailySection = () => {
       setSelectedDate(new Date());
       requestAnimationFrame(() => {
         if (miniScrollRef.current) {
-          miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth - 2;
+          miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth - 4;
         }
       });
     }
