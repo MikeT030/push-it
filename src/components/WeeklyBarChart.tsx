@@ -28,10 +28,10 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     const el = containerRef.current;
     if (!el) return;
 
-    // Trigger only once the chart is fully scrolled into view from the bottom
-    const isFullyInView = () => {
+    // Trigger once any part of the chart is in the viewport
+    const isInView = () => {
       const rect = el.getBoundingClientRect();
-      return rect.bottom <= window.innerHeight && rect.top >= 0;
+      return rect.bottom > 0 && rect.top < window.innerHeight;
     };
 
     let rafId: number | null = null;
@@ -43,7 +43,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
       });
     };
 
-    if (isFullyInView()) {
+    if (isInView()) {
       trigger();
       return () => {
         if (rafId !== null) cancelAnimationFrame(rafId);
@@ -52,7 +52,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
     }
 
     const onScroll = () => {
-      if (isFullyInView()) {
+      if (isInView()) {
         window.removeEventListener("scroll", onScroll, true);
         window.removeEventListener("resize", onScroll);
         trigger();
