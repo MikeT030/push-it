@@ -361,6 +361,15 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
     }
   }, [dayOptions, selectedDayIndex]);
 
+  // Sync from controlled prop
+  useEffect(() => {
+    if (!selectedDate || dayOptions.length === 0) return;
+    const idx = dayOptions.findIndex((d) => isSameDay(d.date, selectedDate));
+    if (idx >= 0 && idx !== selectedDayIndex) {
+      setSelectedDayIndex(idx);
+    }
+  }, [selectedDate, dayOptions, selectedDayIndex]);
+
   const selectedDay = selectedDayIndex >= 0 ? dayOptions[selectedDayIndex] : dayOptions[dayOptions.length - 1];
 
   // Scroll to a day. For today (last item) align to the right edge so the
