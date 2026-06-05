@@ -95,7 +95,7 @@ const DailySection = () => {
       setSelectedDate(new Date());
       requestAnimationFrame(() => {
         if (miniScrollRef.current) {
-          miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth;
+          miniScrollRef.current.scrollLeft = miniScrollRef.current.scrollWidth - 2;
         }
       });
     }
