@@ -155,17 +155,10 @@ const AuthPage = () => {
             )}
           </form>
 
-          {/* Toggle Login/Signup */}
+          {/* Sign-ups disabled */}
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-              <button
-                type="button"
-                onClick={() => setIsLogin(!isLogin)}
-                className="text-primary font-medium hover:underline"
-              >
-                {isLogin ? "Sign up" : "Sign in"}
-              </button>
+              New registrations are temporarily disabled.
             </p>
           </div>
         </div>
