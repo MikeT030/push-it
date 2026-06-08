@@ -12,12 +12,11 @@ const emailSchema = z.string().email("Invalid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
 
 const AuthPage = () => {
-  const [isLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showContent, setShowContent] = useState(() => sessionStorage.getItem("splashShown") === "true");
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,30 +55,16 @@ const AuthPage = () => {
     setIsSubmitting(true);
 
     try {
-      if (isLogin) {
-        const { error } = await signIn(email, password);
-        if (error) {
-          if (error.message.includes("Invalid login credentials")) {
-            toast.error("Invalid email or password");
-          } else {
-            toast.error(error.message);
-          }
+      const { error } = await signIn(email, password);
+      if (error) {
+        if (error.message.includes("Invalid login credentials")) {
+          toast.error("Invalid email or password");
         } else {
-          toast.success("Welcome, push Buddy!");
-          navigate("/");
+          toast.error(error.message);
         }
       } else {
-        const { error } = await signUp(email, password);
-        if (error) {
-          if (error.message.includes("already registered")) {
-            toast.error("This email is already registered. Try logging in instead.");
-          } else {
-            toast.error(error.message);
-          }
-        } else {
-          toast.success("Account created! You're now logged in.");
-          navigate("/");
-        }
+        toast.success("Welcome, push Buddy!");
+        navigate("/");
       }
     } finally {
       setIsSubmitting(false);
@@ -95,7 +80,7 @@ const AuthPage = () => {
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
           <h1 className="font-black text-white text-2xl">Push It</h1>
           <p className="text-muted-foreground mt-2">
-            {isLogin ? "Welcome, push Buddy!" : "30K Push Ups – 1 Year"}
+            Welcome, push Buddy!
           </p>
         </div>
 
@@ -136,23 +121,17 @@ const AuthPage = () => {
               disabled={isSubmitting}
               className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
             >
-              {isSubmitting
-                ? "Please wait..."
-                : isLogin
-                ? "Sign In"
-                : "Create Account"}
+              {isSubmitting ? "Please wait..." : "Sign In"}
             </Button>
 
-            {isLogin && (
-              <div className="text-center">
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-muted-foreground hover:text-primary hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-            )}
+            <div className="text-center">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-muted-foreground hover:text-primary hover:underline"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </form>
 
           {/* Sign-ups disabled */}
