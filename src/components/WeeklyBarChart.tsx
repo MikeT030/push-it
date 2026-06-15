@@ -149,7 +149,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                 className="relative w-full max-w-[22px] rounded-full"
                 style={{
                   height: animate ? targetHeight : "0px",
-                  transition: "height 1600ms cubic-bezier(0.16, 1, 0.3, 1)",
+                  transition: "height 1400ms cubic-bezier(0.33, 1, 0.68, 1)",
                   backgroundColor: hasFill ? undefined : "transparent",
                   boxShadow: colorHex ? `0 0 12px ${colorHex}55` : undefined,
                 }}
@@ -197,7 +197,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                         clipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
                         WebkitClipPath: animate ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
                         transition:
-                          "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1700ms",
+                          "clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1100ms, -webkit-clip-path 900ms cubic-bezier(0.65, 0, 0.35, 1) 1100ms",
                       }}
                     />
                   )}
@@ -214,7 +214,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                       padding: "0 4px",
                       opacity: animate ? 1 : 0,
                       transform: `translate(-50%, ${animate ? "0" : "6px"})`,
-                      transition: "opacity 600ms ease 1200ms, transform 600ms ease 1200ms",
+                      transition: "opacity 600ms ease 900ms, transform 600ms ease 900ms",
                     }}
                   >
                     <span className="text-[10px] font-bold leading-none text-white">
