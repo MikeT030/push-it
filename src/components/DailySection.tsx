@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame } from "lucide-react";
 import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
@@ -14,6 +14,7 @@ import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
+import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 const MuscleIcon = ({ className }: { className?: string }) => (
@@ -595,36 +596,12 @@ const DailySection = () => {
 
       <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
 
-      {activeGame === "select" && (
-        <div className="fixed inset-0 z-50 backdrop-blur-xl bg-[#0F1922]/40 flex flex-col" onClick={() => setActiveGame(null)}>
-          <button
-            onClick={(e) => { e.stopPropagation(); setActiveGame(null); }}
-            className="absolute top-[max(16px,env(safe-area-inset-top,0px))] right-4 z-[51] p-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
-            aria-label="Close"
-          >
-            <X size={20} />
-          </button>
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-20" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-2xl text-foreground font-semibold text-center mb-10">Choose a Game</h2>
-            <div className="w-full max-w-sm space-y-4">
-              <button
-                onClick={() => setActiveGame("brickbreaker")}
-                className="w-full p-6 rounded-2xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
-              >
-                <p className="font-semibold text-foreground text-lg">🧱 Brick Breaker</p>
-                <p className="text-sm text-muted-foreground mt-1">Classic brick-breaking action</p>
-              </button>
-              <button
-                onClick={() => setActiveGame("spaceshooter")}
-                className="w-full p-6 rounded-2xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
-              >
-                <p className="font-semibold text-foreground text-lg">🚀 Space Shooter</p>
-                <p className="text-sm text-muted-foreground mt-1">Blast falling objects in space</p>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <MiniGameSelectorLayer
+        isOpen={activeGame === "select"}
+        onClose={() => setActiveGame(null)}
+        onSelectBrickBreaker={() => setActiveGame("brickbreaker")}
+        onSelectSpaceShooter={() => setActiveGame("spaceshooter")}
+      />
 
       {activeGame === "spaceshooter" && (
         <div className="fixed inset-0 z-50">
