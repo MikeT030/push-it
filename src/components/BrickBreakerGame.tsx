@@ -461,27 +461,36 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   }, [isOpen, gameState, gameLoop]);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      scaleRef.current = {
+        sx: canvas.width / BASE_WIDTH,
+        sy: canvas.height / BASE_HEIGHT,
+      };
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
     const handleMouseMove = (e: MouseEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      const gameX = (e.clientX - rect.left) / scaleRef.current.sx;
       gameRef.current.paddle.x = Math.max(
         0,
-        Math.min(x - gameRef.current.paddle.width / 2, canvas.width - gameRef.current.paddle.width)
+        Math.min(gameX - gameRef.current.paddle.width / 2, BASE_WIDTH - gameRef.current.paddle.width)
       );
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas || !e.touches[0]) return;
-      
+      if (!e.touches[0]) return;
       const rect = canvas.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
+      const gameX = (e.touches[0].clientX - rect.left) / scaleRef.current.sx;
       gameRef.current.paddle.x = Math.max(
         0,
-        Math.min(x - gameRef.current.paddle.width / 2, canvas.width - gameRef.current.paddle.width)
+        Math.min(gameX - gameRef.current.paddle.width / 2, BASE_WIDTH - gameRef.current.paddle.width)
       );
     };
 
@@ -491,6 +500,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     }
 
     return () => {
+      window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
     };
