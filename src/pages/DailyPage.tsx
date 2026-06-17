@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 import ShareIcon from "@/components/ShareIcon";
@@ -16,6 +16,7 @@ import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { Switch } from "@/components/ui/switch";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
+import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 import controllerIcon from "@/assets/controller.svg";
 const DailyPage = () => {
   
@@ -201,37 +202,12 @@ const DailyPage = () => {
       </div>
       <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
       
-      {/* Game Selection Modal */}
-      {activeGame === "select" && (
-        <div className="fixed inset-0 z-50 backdrop-blur-xl bg-[#0F1922]/40 flex flex-col" onClick={() => setActiveGame(null)}>
-          <button
-            onClick={(e) => { e.stopPropagation(); setActiveGame(null); }}
-            className="absolute top-[max(16px,env(safe-area-inset-top,0px))] right-4 z-[51] p-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
-            aria-label="Close"
-          >
-            <X size={20} />
-          </button>
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-20" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-2xl text-foreground font-semibold text-center mb-10">Choose a Game</h2>
-            <div className="w-full max-w-sm space-y-4">
-              <button
-                onClick={() => setActiveGame("brickbreaker")}
-                className="w-full p-6 rounded-2xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
-              >
-                <p className="font-semibold text-foreground text-lg">🧱 Brick Breaker</p>
-                <p className="text-sm text-muted-foreground mt-1">Classic brick-breaking action</p>
-              </button>
-              <button
-                onClick={() => setActiveGame("spaceshooter")}
-                className="w-full p-6 rounded-2xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
-              >
-                <p className="font-semibold text-foreground text-lg">🚀 Space Shooter</p>
-                <p className="text-sm text-muted-foreground mt-1">Blast falling objects in space</p>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <MiniGameSelectorLayer
+        isOpen={activeGame === "select"}
+        onClose={() => setActiveGame(null)}
+        onSelectBrickBreaker={() => setActiveGame("brickbreaker")}
+        onSelectSpaceShooter={() => setActiveGame("spaceshooter")}
+      />
 
       {/* Space Shooter Game */}
       {activeGame === "spaceshooter" && (
