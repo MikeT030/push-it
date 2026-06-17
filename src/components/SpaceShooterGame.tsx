@@ -1356,7 +1356,7 @@ const MiniGame = ({ onBack }: MiniGameProps) => {
         {onBack && (
           <button
             onClick={onBack}
-            style={{ color: "rgba(255,255,255,0.7)", background: "none", border: "none", cursor: "pointer", fontSize: "16px", fontFamily: "sans-serif" }}
+            style={{ color: "rgba(255,255,255,0.7)", background: "none", border: "none", cursor: "pointer", fontSize: "14px", fontFamily: "sans-serif" }}
           >
             ← Back
           </button>
@@ -1364,11 +1364,11 @@ const MiniGame = ({ onBack }: MiniGameProps) => {
         <div style={{ display: "flex", alignItems: "center", gap: "16px", fontSize: "16px", fontFamily: "sans-serif", marginLeft: onBack ? 0 : "auto" }}>
           <span style={{ color: "rgba(255,255,255,0.8)" }}>Score: <span style={{ color: "#ff4d6d", fontWeight: "bold" }}>{score}</span></span>
           {plasmaBombs > 0 && (
-            <span style={{ color: "#d94dff", fontWeight: "bold" }}>💣 {plasmaBombs}</span>
+            <span style={{ color: "#d94dff", fontWeight: "bold", fontSize: "14px" }}>💣 {plasmaBombs}</span>
           )}
           <span style={{ color: "rgba(255,255,255,0.8)" }}>
             Lives: {Array.from({ length: lives }).map((_, i) => (
-              <span key={i} style={{ color: "#ff4d6d" }}>❤️</span>
+              <span key={i} style={{ color: "#ff4d6d", fontSize: "14px" }}>❤️</span>
             ))}
           </span>
         </div>
