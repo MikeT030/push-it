@@ -42,17 +42,17 @@ const MiniGameSelectorLayer = ({
       </button>
       <div className="flex-1 min-h-[100dvh] flex flex-col items-center justify-center px-6 py-20" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-2xl text-foreground font-semibold text-center mb-10">Choose a Game</h2>
-        <div className="w-full max-w-sm space-y-4">
+        <div className="w-full max-w-sm flex gap-4">
           <button
             onClick={onSelectBrickBreaker}
-            className="w-full p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all text-left"
+            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all text-left"
           >
             <p className="font-semibold text-foreground text-lg">🧱 Brick Breaker</p>
             <p className="text-sm text-muted-foreground mt-1">Classic brick-breaking action</p>
           </button>
           <button
             onClick={onSelectSpaceShooter}
-            className="w-full p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all text-left"
+            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all text-left"
           >
             <p className="font-semibold text-foreground text-lg">🚀 Space Shooter</p>
             <p className="text-sm text-muted-foreground mt-1">Blast falling objects in space</p>
