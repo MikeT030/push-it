@@ -41,7 +41,7 @@ const MiniGameSelectorLayer = ({
         <X size={20} />
       </button>
       <div className="flex-1 min-h-[100dvh] flex flex-col items-center justify-center px-6 py-20" onClick={(e) => e.stopPropagation()}>
-        <h2 className="text-2xl text-foreground font-semibold text-center mb-10">Choose a Game</h2>
+        <h2 className="text-2xl text-foreground font-semibold text-center mb-10 -mt-10">Choose a Game</h2>
         <div className="w-full max-w-sm flex gap-4">
           <button
             onClick={onSelectBrickBreaker}
