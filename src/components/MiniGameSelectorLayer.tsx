@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import brickBreakerBg from "@/assets/brick-breaker-bg.jpg";
+import spaceShooterBg from "@/assets/space-shooter-bg.jpg";
 
 interface MiniGameSelectorLayerProps {
   isOpen: boolean;
@@ -45,17 +47,19 @@ const MiniGameSelectorLayer = ({
         <div className="w-full max-w-sm flex gap-4">
           <button
             onClick={onSelectBrickBreaker}
-            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all flex flex-col items-center text-center"
+            style={{ backgroundImage: `url(${brickBreakerBg})` }}
+            className="relative flex-1 aspect-[4/5] p-6 rounded-2xl border border-white bg-cover bg-center overflow-hidden hover:brightness-110 transition-all flex flex-col items-center justify-end text-center"
           >
-            <span className="text-3xl mb-2">🧱</span>
-            <p className="font-semibold text-foreground text-lg">Brick Breaker</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <p className="relative font-semibold text-white text-lg drop-shadow-lg">Brick Breaker</p>
           </button>
           <button
             onClick={onSelectSpaceShooter}
-            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all flex flex-col items-center text-center"
+            style={{ backgroundImage: `url(${spaceShooterBg})` }}
+            className="relative flex-1 aspect-[4/5] p-6 rounded-2xl border border-white bg-cover bg-center overflow-hidden hover:brightness-110 transition-all flex flex-col items-center justify-end text-center"
           >
-            <span className="text-3xl mb-2">🚀</span>
-            <p className="font-semibold text-foreground text-lg">Space Shooter</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <p className="relative font-semibold text-white text-lg drop-shadow-lg">Space Shooter</p>
           </button>
         </div>
       </div>
