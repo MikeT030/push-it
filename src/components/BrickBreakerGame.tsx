@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { X } from "lucide-react";
 
+const BASE_WIDTH = 400;
+const BASE_HEIGHT = 550;
+
 interface BrickBreakerGameProps {
   isOpen: boolean;
   onClose: () => void;
@@ -50,6 +53,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   const animationRef = useRef<number>();
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">("playing");
   const [score, setScore] = useState(0);
+  const scaleRef = useRef({ sx: 1, sy: 1 });
   
   const gameRef = useRef({
     ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 } as Ball,
@@ -141,10 +145,14 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     if (!canvas) return;
 
     const { ball, paddle, bricks } = gameRef.current;
+    const { sx, sy } = scaleRef.current;
 
     // Clear canvas
     ctx.fillStyle = "hsl(240, 10%, 10%)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    ctx.scale(sx, sy);
 
     // Draw bricks
     bricks.forEach((brick) => {
@@ -183,6 +191,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
+    ctx.restore();
   }, [drawTarget]);
 
   const update = useCallback(() => {
@@ -195,8 +204,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ball.x += ball.dx;
     ball.y += ball.dy;
 
-    // Wall collisions
-    if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+    // Wall collisions (use base dimensions for consistent gameplay)
+    if (ball.x - ball.radius < 0 || ball.x + ball.radius > BASE_WIDTH) {
       ball.dx = -ball.dx;
     }
     if (ball.y - ball.radius < 0) {
@@ -204,7 +213,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     }
 
     // Bottom collision (lose)
-    if (ball.y + ball.radius > canvas.height) {
+    if (ball.y + ball.radius > BASE_HEIGHT) {
       setGameState("lost");
       return;
     }
@@ -452,27 +461,36 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   }, [isOpen, gameState, gameLoop]);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      scaleRef.current = {
+        sx: canvas.width / BASE_WIDTH,
+        sy: canvas.height / BASE_HEIGHT,
+      };
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
     const handleMouseMove = (e: MouseEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      const gameX = (e.clientX - rect.left) / scaleRef.current.sx;
       gameRef.current.paddle.x = Math.max(
         0,
-        Math.min(x - gameRef.current.paddle.width / 2, canvas.width - gameRef.current.paddle.width)
+        Math.min(gameX - gameRef.current.paddle.width / 2, BASE_WIDTH - gameRef.current.paddle.width)
       );
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas || !e.touches[0]) return;
-      
+      if (!e.touches[0]) return;
       const rect = canvas.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
+      const gameX = (e.touches[0].clientX - rect.left) / scaleRef.current.sx;
       gameRef.current.paddle.x = Math.max(
         0,
-        Math.min(x - gameRef.current.paddle.width / 2, canvas.width - gameRef.current.paddle.width)
+        Math.min(gameX - gameRef.current.paddle.width / 2, BASE_WIDTH - gameRef.current.paddle.width)
       );
     };
 
@@ -482,6 +500,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     }
 
     return () => {
+      window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
     };
@@ -490,45 +509,42 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 animate-fade-in">
-      <div className="relative bg-background rounded-2xl p-4 shadow-2xl">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-[calc(0.75rem+25px)] z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-        >
-          <X className="w-5 h-5 text-foreground" />
-        </button>
+    <div className="fixed inset-0 z-50 bg-black animate-fade-in" style={{ touchAction: "none" }}>
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-[max(12px,env(safe-area-inset-top,0px))] right-4 z-10 p-2 rounded-full bg-muted/80 hover:bg-muted transition-colors"
+      >
+        <X className="w-5 h-5 text-foreground" />
+      </button>
 
-        {/* Score */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 text-foreground font-bold text-lg">
-          Score: {score}
-        </div>
-
-        {/* Canvas */}
-        <canvas
-          ref={canvasRef}
-          width={400}
-          height={550}
-          className="rounded-xl mt-8"
-        />
-
-        {/* Game over overlay */}
-        {gameState !== "playing" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-2xl">
-            <h2 className="text-3xl font-semibold text-white mb-4">
-              {gameState === "won" ? "🎉 You Win!" : "💥 Game Over"}
-            </h2>
-            <p className="text-white/80 mb-6">Score: {score}</p>
-            <button
-              onClick={initGame}
-              className="px-8 py-3 w-[55%] bg-[hsl(293,70%,50%)] text-white font-bold rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Play Again
-            </button>
-          </div>
-        )}
+      {/* Score */}
+      <div className="absolute top-[max(12px,env(safe-area-inset-top,0px))] left-1/2 -translate-x-1/2 z-10 text-foreground font-bold text-lg">
+        Score: {score}
       </div>
+
+      {/* Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full block"
+        style={{ touchAction: "none" }}
+      />
+
+      {/* Game over overlay */}
+      {gameState !== "playing" && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-20">
+          <h2 className="text-3xl font-semibold text-white mb-4">
+            {gameState === "won" ? "🎉 You Win!" : "💥 Game Over"}
+          </h2>
+          <p className="text-white/80 mb-6">Score: {score}</p>
+          <button
+            onClick={initGame}
+            className="px-8 py-3 w-[55%] max-w-[200px] bg-[hsl(293,70%,50%)] text-white font-bold rounded-lg hover:opacity-90 transition-opacity"
+          >
+            Play Again
+          </button>
+        </div>
+      )}
     </div>
   );
 };
