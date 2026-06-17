@@ -249,7 +249,7 @@ const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroup
                     filter: 'blur(3px)',
                   }}
                 />
-                <span className="relative">{`Wk ${week.weekNumber} · ${format(week.startDate, "MMM d")}`}</span>
+                <span className="relative">{`CW ${week.weekNumber} · ${format(week.startDate, "MMM d")}`}</span>
               </button>
             );
           })}
