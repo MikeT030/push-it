@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, X } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 import ShareIcon from "@/components/ShareIcon";
@@ -203,19 +203,26 @@ const DailyPage = () => {
       
       {/* Game Selection Modal */}
       {activeGame === "select" && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
-          <div className="bg-card border border-border rounded-2xl p-6 max-w-sm w-full space-y-4" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 backdrop-blur-xl bg-[#0F1922]/30 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
+          <button
+            onClick={(e) => { e.stopPropagation(); setActiveGame(null); }}
+            className="fixed top-[max(16px,env(safe-area-inset-top,0px))] right-4 z-[51] p-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
+          <div className="rounded-2xl p-6 max-w-sm w-full space-y-4 bg-card/60 backdrop-blur-md border border-border/50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-xl text-foreground font-semibold text-center">Choose a Game</h2>
             <button
               onClick={() => setActiveGame("brickbreaker")}
-              className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
+              className="w-full p-4 rounded-xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
             >
               <p className="font-semibold text-foreground">🧱 Brick Breaker</p>
               <p className="text-sm text-muted-foreground">Classic brick-breaking action</p>
             </button>
             <button
               onClick={() => setActiveGame("spaceshooter")}
-              className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
+              className="w-full p-4 rounded-xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
             >
               <p className="font-semibold text-foreground">🚀 Space Shooter</p>
               <p className="text-sm text-muted-foreground">Blast falling objects in space</p>

@@ -596,26 +596,26 @@ const DailySection = () => {
       <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
 
       {activeGame === "select" && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
+        <div className="fixed inset-0 z-50 backdrop-blur-xl bg-[#0F1922]/30 flex items-center justify-center p-4" onClick={() => setActiveGame(null)}>
           <button
             onClick={(e) => { e.stopPropagation(); setActiveGame(null); }}
-            className="fixed top-[56px] right-4 z-[51] p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
+            className="fixed top-[max(16px,env(safe-area-inset-top,0px))] right-4 z-[51] p-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
             aria-label="Close"
           >
             <X size={20} />
           </button>
-          <div className="rounded-2xl p-6 max-w-sm w-full space-y-4 -mt-[60px]" style={{ backgroundColor: 'rgba(14, 26, 41, 0)' }} onClick={(e) => e.stopPropagation()}>
+          <div className="rounded-2xl p-6 max-w-sm w-full space-y-4 -mt-[60px] bg-card/60 backdrop-blur-md border border-border/50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-xl text-foreground font-semibold text-center">Choose a Game</h2>
             <button
               onClick={() => setActiveGame("brickbreaker")}
-              className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
+              className="w-full p-4 rounded-xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
             >
               <p className="font-semibold text-foreground">🧱 Brick Breaker</p>
               <p className="text-sm text-muted-foreground">Classic brick-breaking action</p>
             </button>
             <button
               onClick={() => setActiveGame("spaceshooter")}
-              className="w-full p-4 rounded-xl border border-border bg-muted/30 hover:bg-muted/60 transition-colors text-left"
+              className="w-full p-4 rounded-xl border border-border/50 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-left"
             >
               <p className="font-semibold text-foreground">🚀 Space Shooter</p>
               <p className="text-sm text-muted-foreground">Blast falling objects in space</p>
