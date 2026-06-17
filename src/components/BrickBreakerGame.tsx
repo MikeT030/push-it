@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { X } from "lucide-react";
 
+const BASE_WIDTH = 400;
+const BASE_HEIGHT = 550;
+
 interface BrickBreakerGameProps {
   isOpen: boolean;
   onClose: () => void;
