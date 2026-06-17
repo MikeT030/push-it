@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 const BASE_WIDTH = 400;
@@ -508,8 +509,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 bg-black animate-fade-in" style={{ touchAction: "none" }}>
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] bg-black animate-fade-in" style={{ touchAction: "none" }}>
       {/* Close button */}
       <button
         onClick={onClose}
@@ -545,7 +546,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
           </button>
         </div>
       )}
-    </div>
+    </div>,
+    document.body
   );
 };
 
