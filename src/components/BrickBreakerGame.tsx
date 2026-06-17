@@ -204,8 +204,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     ball.x += ball.dx;
     ball.y += ball.dy;
 
-    // Wall collisions
-    if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+    // Wall collisions (use base dimensions for consistent gameplay)
+    if (ball.x - ball.radius < 0 || ball.x + ball.radius > BASE_WIDTH) {
       ball.dx = -ball.dx;
     }
     if (ball.y - ball.radius < 0) {
@@ -213,7 +213,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     }
 
     // Bottom collision (lose)
-    if (ball.y + ball.radius > canvas.height) {
+    if (ball.y + ball.radius > BASE_HEIGHT) {
       setGameState("lost");
       return;
     }
