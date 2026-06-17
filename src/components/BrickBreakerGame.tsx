@@ -54,7 +54,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   const animationRef = useRef<number>();
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">("playing");
   const [score, setScore] = useState(0);
-  const scaleRef = useRef({ sx: 1, sy: 1 });
+  const scaleRef = useRef({ sx: 1, sy: 1, offsetX: 0, offsetY: 0 });
   
   const gameRef = useRef({
     ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 } as Ball,
@@ -146,13 +146,14 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     if (!canvas) return;
 
     const { ball, paddle, bricks } = gameRef.current;
-    const { sx, sy } = scaleRef.current;
+    const { sx, sy, offsetX, offsetY } = scaleRef.current;
 
     // Clear canvas
     ctx.fillStyle = "hsl(240, 10%, 10%)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
+    ctx.translate(offsetX, offsetY);
     ctx.scale(sx, sy);
 
     // Draw bricks
@@ -468,9 +469,12 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      const scale = Math.min(canvas.width / BASE_WIDTH, canvas.height / BASE_HEIGHT);
       scaleRef.current = {
-        sx: canvas.width / BASE_WIDTH,
-        sy: canvas.height / BASE_HEIGHT,
+        sx: scale,
+        sy: scale,
+        offsetX: (canvas.width - BASE_WIDTH * scale) / 2,
+        offsetY: (canvas.height - BASE_HEIGHT * scale) / 2,
       };
     };
     resize();
@@ -478,7 +482,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      const gameX = (e.clientX - rect.left) / scaleRef.current.sx;
+      const { sx, offsetX } = scaleRef.current;
+      const gameX = (e.clientX - rect.left - offsetX) / sx;
       gameRef.current.paddle.x = Math.max(
         0,
         Math.min(gameX - gameRef.current.paddle.width / 2, BASE_WIDTH - gameRef.current.paddle.width)
@@ -488,7 +493,8 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     const handleTouchMove = (e: TouchEvent) => {
       if (!e.touches[0]) return;
       const rect = canvas.getBoundingClientRect();
-      const gameX = (e.touches[0].clientX - rect.left) / scaleRef.current.sx;
+      const { sx, offsetX } = scaleRef.current;
+      const gameX = (e.touches[0].clientX - rect.left - offsetX) / sx;
       gameRef.current.paddle.x = Math.max(
         0,
         Math.min(gameX - gameRef.current.paddle.width / 2, BASE_WIDTH - gameRef.current.paddle.width)
@@ -514,7 +520,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-[max(12px,env(safe-area-inset-top,0px))] right-4 z-10 p-2 rounded-full bg-muted/80 hover:bg-muted transition-colors"
+        className="absolute top-[max(12px,env(safe-area-inset-top,0px))] right-4 z-30 p-2 rounded-full bg-muted/80 hover:bg-muted transition-colors"
       >
         <X className="w-5 h-5 text-foreground" />
       </button>
