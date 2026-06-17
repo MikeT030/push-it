@@ -603,10 +603,11 @@ const DailySection = () => {
         onSelectSpaceShooter={() => setActiveGame("spaceshooter")}
       />
 
-      {activeGame === "spaceshooter" && (
-        <div className="fixed inset-0 z-50">
+      {activeGame === "spaceshooter" && createPortal(
+        <div className="fixed inset-0 z-[9999]">
           <SpaceShooterGame onBack={() => setActiveGame(null)} />
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
