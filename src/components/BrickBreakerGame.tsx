@@ -146,13 +146,14 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     if (!canvas) return;
 
     const { ball, paddle, bricks } = gameRef.current;
-    const { sx, sy } = scaleRef.current;
+    const { sx, sy, offsetX, offsetY } = scaleRef.current;
 
     // Clear canvas
     ctx.fillStyle = "hsl(240, 10%, 10%)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
+    ctx.translate(offsetX, offsetY);
     ctx.scale(sx, sy);
 
     // Draw bricks
