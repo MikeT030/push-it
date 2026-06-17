@@ -45,17 +45,17 @@ const MiniGameSelectorLayer = ({
         <div className="w-full max-w-sm flex gap-4">
           <button
             onClick={onSelectBrickBreaker}
-            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all text-left"
+            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all flex flex-col items-center text-center"
           >
-            <p className="font-semibold text-foreground text-lg">🧱 Brick Breaker</p>
-            <p className="text-sm text-muted-foreground mt-1">Classic brick-breaking action</p>
+            <span className="text-3xl mb-2">🧱</span>
+            <p className="font-semibold text-foreground text-lg">Brick Breaker</p>
           </button>
           <button
             onClick={onSelectSpaceShooter}
-            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all text-left"
+            className="flex-1 p-6 rounded-2xl border border-white bg-transparent hover:bg-white/5 transition-all flex flex-col items-center text-center"
           >
-            <p className="font-semibold text-foreground text-lg">🚀 Space Shooter</p>
-            <p className="text-sm text-muted-foreground mt-1">Blast falling objects in space</p>
+            <span className="text-3xl mb-2">🚀</span>
+            <p className="font-semibold text-foreground text-lg">Space Shooter</p>
           </button>
         </div>
       </div>
