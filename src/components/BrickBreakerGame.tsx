@@ -53,6 +53,7 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   const animationRef = useRef<number>();
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">("playing");
   const [score, setScore] = useState(0);
+  const scaleRef = useRef({ sx: 1, sy: 1 });
   
   const gameRef = useRef({
     ball: { x: 200, y: 450, dx: 4, dy: -4, radius: 8 } as Ball,
