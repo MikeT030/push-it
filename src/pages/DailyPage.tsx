@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { format, addMonths, subMonths, subDays, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, X } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 import ShareIcon from "@/components/ShareIcon";
