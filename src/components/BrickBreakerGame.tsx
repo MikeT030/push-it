@@ -548,8 +548,5 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
     </div>
   );
 };
-    </div>
-  );
-};
 
 export default BrickBreakerGame;
