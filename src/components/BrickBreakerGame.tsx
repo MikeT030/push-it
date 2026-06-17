@@ -509,45 +509,45 @@ const BrickBreakerGame = ({ isOpen, onClose }: BrickBreakerGameProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 animate-fade-in">
-      <div className="relative bg-background rounded-2xl p-4 shadow-2xl">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-[calc(0.75rem+25px)] z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-        >
-          <X className="w-5 h-5 text-foreground" />
-        </button>
+    <div className="fixed inset-0 z-50 bg-black animate-fade-in" style={{ touchAction: "none" }}>
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-[max(12px,env(safe-area-inset-top,0px))] right-4 z-10 p-2 rounded-full bg-muted/80 hover:bg-muted transition-colors"
+      >
+        <X className="w-5 h-5 text-foreground" />
+      </button>
 
-        {/* Score */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 text-foreground font-bold text-lg">
-          Score: {score}
-        </div>
-
-        {/* Canvas */}
-        <canvas
-          ref={canvasRef}
-          width={400}
-          height={550}
-          className="rounded-xl mt-8"
-        />
-
-        {/* Game over overlay */}
-        {gameState !== "playing" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-2xl">
-            <h2 className="text-3xl font-semibold text-white mb-4">
-              {gameState === "won" ? "🎉 You Win!" : "💥 Game Over"}
-            </h2>
-            <p className="text-white/80 mb-6">Score: {score}</p>
-            <button
-              onClick={initGame}
-              className="px-8 py-3 w-[55%] bg-[hsl(293,70%,50%)] text-white font-bold rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Play Again
-            </button>
-          </div>
-        )}
+      {/* Score */}
+      <div className="absolute top-[max(12px,env(safe-area-inset-top,0px))] left-1/2 -translate-x-1/2 z-10 text-foreground font-bold text-lg">
+        Score: {score}
       </div>
+
+      {/* Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full block"
+        style={{ touchAction: "none" }}
+      />
+
+      {/* Game over overlay */}
+      {gameState !== "playing" && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-20">
+          <h2 className="text-3xl font-semibold text-white mb-4">
+            {gameState === "won" ? "🎉 You Win!" : "💥 Game Over"}
+          </h2>
+          <p className="text-white/80 mb-6">Score: {score}</p>
+          <button
+            onClick={initGame}
+            className="px-8 py-3 w-[55%] max-w-[200px] bg-[hsl(293,70%,50%)] text-white font-bold rounded-lg hover:opacity-90 transition-opacity"
+          >
+            Play Again
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
     </div>
   );
 };
