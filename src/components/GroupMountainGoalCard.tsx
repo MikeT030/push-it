@@ -141,12 +141,15 @@ const GroupMountainGoalCard = ({
     return { d, end: { x: last.x, y: last.y } };
   };
 
-  const safeGoal = groupGoal > 0 ? groupGoal : 1;
-  const progressFrac = Math.min(totalPushUps / safeGoal, 1);
-  const projectionFrac = Math.min(projectedEOY / safeGoal, 1);
+  // The mountain's peak now represents the LARGER of expected (goal) or projected EOY.
+  // Whichever is bigger reaches the tip; the smaller one sits partway down the ridge.
+  const peakValue = Math.max(groupGoal, projectedEOY, 1);
+  const expectedFrac = Math.min(groupGoal / peakValue, 1);
+  const projectionFrac = Math.min(projectedEOY / peakValue, 1);
+  const progressFrac = Math.min(totalPushUps / peakValue, 1);
 
   const progress = ridgePath(progressFrac);
-  const idealPath = ridgePath(1);
+  const expectedPath = ridgePath(expectedFrac);
   const projection = ridgePath(projectionFrac);
   const peakCoord = { x: peakX, y: peakY };
 
@@ -310,27 +313,42 @@ const GroupMountainGoalCard = ({
           </defs>
 
           <g clipPath={`url(#${gradientId}-clip)`}>
-            {/* First mountain tier — gets pushed fully off-screen when projection toggled on */}
-            <g
-              style={{
-                transform: tierActive ? `translateY(${H}px)` : "translateY(0px)",
-                transition: "transform 1100ms cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-            >
-
-              {/* Goal line at peak height */}
+            <g>
+              {/* Expected (goal) horizontal reference line at its ridge height */}
               <line
                 x1={0}
-                y1={peakY}
+                y1={expectedPath.end.y}
                 x2={W}
-                y2={peakY}
+                y2={expectedPath.end.y}
                 stroke="#0ABAB5"
                 strokeWidth="1"
                 strokeDasharray="3 5"
-                opacity="0.25"
+                opacity="0.3"
               />
-              <text x={6} y={peakY - 4} fill="#0ABAB5" fontSize="10" opacity="0.75">
+              <text x={6} y={expectedPath.end.y - 4} fill="#0ABAB5" fontSize="10" opacity="0.8">
                 {(groupGoal / 1000).toFixed(0)}k goal
+              </text>
+
+              {/* Projected horizontal reference line at its ridge height */}
+              <line
+                x1={0}
+                y1={projection.end.y}
+                x2={W}
+                y2={projection.end.y}
+                stroke="#C029DE"
+                strokeWidth="1"
+                strokeDasharray="3 5"
+                opacity="0.3"
+              />
+              <text
+                x={W - 6}
+                y={projection.end.y - 4}
+                fill="#C029DE"
+                fontSize="10"
+                opacity="0.85"
+                textAnchor="end"
+              >
+                {(projectedEOY / 1000).toFixed(0)}k projected
               </text>
 
               {/* Mountain body — muted gray fill, light gray outline */}
@@ -345,21 +363,35 @@ const GroupMountainGoalCard = ({
               {/* Snow cap */}
               <path d={snowPath} fill="#E8FBFA" opacity="0.85" />
 
-              {/* Expected pace — dashed line following the exact left ridge to the peak */}
+              {/* Expected pace — dashed teal along the ridge up to expected fraction */}
               {showIdealPace && (
                 <path
-                  d={idealPath.d}
+                  d={expectedPath.d}
                   fill="none"
                   stroke="#0ABAB5"
-                  strokeWidth="2"
+                  strokeWidth="2.5"
                   strokeDasharray="6 4"
                   strokeLinejoin="round"
-                  opacity="0.85"
+                  opacity="0.9"
                   filter={`url(#${gradientId}-glow)`}
                 />
               )}
 
-              {/* Actual progress — solid line along the ridge up to current progress */}
+              {/* Projection — dashed magenta along the ridge up to projected fraction */}
+              {showProjection && (
+                <path
+                  d={projection.d}
+                  fill="none"
+                  stroke="#C029DE"
+                  strokeWidth="2.5"
+                  strokeDasharray="5 4"
+                  strokeLinejoin="round"
+                  opacity="0.9"
+                  filter={`url(#${gradientId}-glow)`}
+                />
+              )}
+
+              {/* Actual progress — solid white line along the ridge up to current progress */}
               {progressFrac > 0 && (
                 <path
                   d={progress.d}
@@ -372,79 +404,19 @@ const GroupMountainGoalCard = ({
                 />
               )}
 
-              {/* Projection — dashed along the ridge from current point to projected EOY */}
-              {showProjection && projectionFrac > progressFrac && (
-                <path
-                  d={projection.d}
-                  fill="none"
-                  stroke="#C029DE"
-                  strokeWidth="2.5"
-                  strokeDasharray="5 4"
-                  strokeLinejoin="round"
-                  opacity="0.7"
-                />
-              )}
-
               {/* Current position marker */}
               <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#FFFFFF" stroke="#0F1922" strokeWidth="1.5" />
 
-              {/* Peak flag */}
-              <circle cx={peakCoord.x} cy={peakCoord.y} r="3" fill="#0ABAB5" />
+              {/* Tip marker — colored by whichever value is the peak */}
+              <circle
+                cx={peakCoord.x}
+                cy={peakCoord.y}
+                r="3"
+                fill={projectedEOY >= groupGoal ? "#C029DE" : "#0ABAB5"}
+              />
             </g>
-
-            {/* Second mountain tier — zooms in from above and takes over the view */}
-            {hasSecondTier && (
-              <g
-                style={{
-                  transformOrigin: `${peakX}px ${baseY}px`,
-                  transform: tierActive
-                    ? "translateY(0px) scale(1)"
-                    : `translateY(${-H * 0.6}px) scale(0.35)`,
-                  opacity: tierActive ? 1 : 0,
-                  transition:
-                    "transform 1100ms cubic-bezier(0.22, 1, 0.36, 1), opacity 700ms ease-out",
-                }}
-              >
-                <line
-                  x1={0}
-                  y1={m2PeakY}
-                  x2={W}
-                  y2={m2PeakY}
-                  stroke="#C029DE"
-                  strokeWidth="1"
-                  strokeDasharray="3 5"
-                  opacity="0.35"
-                />
-                <text x={6} y={m2PeakY - 4} fill="#C029DE" fontSize="10" opacity="0.85">
-                  {(projectedEOY / 1000).toFixed(0)}k projected
-                </text>
-                <path
-                  d={mountain2Path}
-                  fill={`url(#${gradientId}-mtn)`}
-                  stroke="#6B5E8A"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                  opacity="0.95"
-                />
-                {/* Snow at the BASE — the new ground */}
-                <path d={m2SnowPath} fill="#E8FBFA" opacity="0.9" />
-
-                {/* Projected progress line along the new mountain's ridge — only projection, no actual progress */}
-                <path
-                  d={m2Full.d}
-                  fill="none"
-                  stroke="#C029DE"
-                  strokeWidth="3.5"
-                  strokeDasharray="5 4"
-                  strokeLinejoin="round"
-                  opacity="0.85"
-                  filter={`url(#${gradientId}-glow)`}
-                />
-                <circle cx={m2Progress.end.x} cy={m2Progress.end.y} r="3.5" fill="#C029DE" stroke="#0F1922" strokeWidth="1.5" />
-                <circle cx={m2PeakX} cy={m2PeakY} r="3" fill="#C029DE" />
-              </g>
-            )}
           </g>
+
 
         </svg>
       </div>
