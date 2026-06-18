@@ -217,16 +217,21 @@ const TotalPage = () => {
                     </p>
                   </div>
                   <div className="relative flex flex-col items-center">
-                    <button
-                      type="button"
-                      onClick={() => setShowGoalAdjust((s) => !s)}
-                      className="text-left focus:outline-none"
-                    >
-                      <p className="text-sm text-muted-foreground">Goal</p>
-                      <p className="text-xl font-bold text-foreground">
-                        {yearlyGoal.toLocaleString()}
-                      </p>
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      <div className="text-left">
+                        <p className="text-sm text-muted-foreground">Goal</p>
+                        <p className="text-xl font-bold text-foreground">
+                          {yearlyGoal.toLocaleString()}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowGoalAdjust((s) => !s)}
+                        className="focus:outline-none mt-3"
+                      >
+                        <Wrench size={14} className="text-muted-foreground hover:text-foreground transition-colors" />
+                      </button>
+                    </div>
                     <div className="mt-1 h-px w-8 bg-white/30 rounded-full" />
                     {showGoalAdjust && (
                       <div
