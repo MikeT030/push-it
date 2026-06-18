@@ -430,7 +430,10 @@ const GroupMountainGoalCard = ({
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
             showIdealPace ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]" : "text-muted-foreground border-[#3B404F]"
           }`}
-          onClick={() => setShowIdealPace((v) => !v)}
+          onClick={() => {
+            setShowIdealPace(true);
+            setShowProjection(false);
+          }}
         >
           <p className="text-[10px] leading-tight">Exp. PU (EOY)</p>
           <p className="text-base font-bold leading-snug">{groupGoal.toLocaleString("de-DE")}</p>
@@ -439,7 +442,10 @@ const GroupMountainGoalCard = ({
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
             showProjection ? "bg-[#C029DE]/10 border-[#C029DE] text-[#C029DE]" : "text-muted-foreground border-[#3B404F]"
           }`}
-          onClick={() => setShowProjection((v) => !v)}
+          onClick={() => {
+            setShowProjection(true);
+            setShowIdealPace(false);
+          }}
         >
           <p className="text-[10px] leading-tight">Proj. PU (EOY)</p>
           <p className="text-base font-bold leading-snug">{projectedEOY.toLocaleString("de-DE")}</p>
