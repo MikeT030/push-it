@@ -98,8 +98,10 @@ const GroupMountainGoalCard = ({
   // Map a (week, value) point to coordinates that climb the LEFT slope of the mountain.
   // x progresses with time from left base to peak; y rises from base to peak proportional to value/goal.
   const climb = (week: number, value: number) => {
-    const t = Math.min(week / totalWeeks, 1);
-    const v = Math.min(value / groupGoal, 1.1);
+    const safeGoal = groupGoal > 0 ? groupGoal : 1;
+    const t = Math.min((Number.isFinite(week) ? week : 0) / totalWeeks, 1);
+    const rawV = (Number.isFinite(value) ? value : 0) / safeGoal;
+    const v = Math.min(Math.max(rawV, 0), 1.1);
     const x = leftBaseX + t * (peakX - leftBaseX);
     const y = baseY - v * (baseY - peakY);
     return { x, y };
