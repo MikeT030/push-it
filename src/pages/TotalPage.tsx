@@ -102,7 +102,7 @@ const TotalPage = () => {
   const recommendedBoost = useMemo(() => {
     if (!isLoaded) return 0;
     const projectedEOY = Math.round(stats.allTimeAvg * 365);
-    const boostOptions = [10, 20, 30];
+    const boostOptions = [10, 15, 20, 25, 30];
     let best = 0;
     for (const opt of boostOptions) {
       if (projectedEOY >= BASE_GOAL + opt * 1000) best = opt;
