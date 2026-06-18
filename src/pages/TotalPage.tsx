@@ -214,11 +214,48 @@ const TotalPage = () => {
                       {remaining.toLocaleString()}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Goal</p>
-                    <p className="text-xl font-bold text-foreground">
-                      {yearlyGoal.toLocaleString()}
-                    </p>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setShowGoalAdjust((s) => !s)}
+                      className="text-left focus:outline-none"
+                    >
+                      <p className="text-sm text-muted-foreground">Goal</p>
+                      <p className="text-xl font-bold text-foreground">
+                        {yearlyGoal.toLocaleString()}
+                      </p>
+                    </button>
+                    {showGoalAdjust && (
+                      <div
+                        className="absolute z-20 top-full left-1/2 -translate-x-1/2 mt-2 rounded-xl p-2 backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex gap-1.5 animate-fade-in"
+                      >
+                        {[10, 20, 30].map((inc) => (
+                          <button
+                            key={inc}
+                            type="button"
+                            onClick={() => {
+                              setGoalBoost((b) => b + inc);
+                              setShowGoalAdjust(false);
+                            }}
+                            className="px-2.5 py-1 rounded-lg text-xs font-semibold text-foreground bg-white/5 hover:bg-white/15 border border-white/10 backdrop-blur-md transition-colors whitespace-nowrap"
+                          >
+                            +{inc}K
+                          </button>
+                        ))}
+                        {goalBoost > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setGoalBoost(0);
+                              setShowGoalAdjust(false);
+                            }}
+                            className="px-2.5 py-1 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground bg-white/0 hover:bg-white/10 border border-white/10 transition-colors"
+                          >
+                            Reset
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
