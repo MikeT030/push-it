@@ -2,6 +2,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeft, Shield, Download, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
+import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
