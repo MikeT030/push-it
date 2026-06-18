@@ -201,7 +201,7 @@ const TotalPage = () => {
 
             
               <div className="flex items-center gap-6 mx-[10px]">
-                <div className="flex-1 flex items-start gap-8">
+                <div className="flex-1 flex items-start gap-5">
                   <div>
                     <p className="text-sm text-muted-foreground">Completed</p>
                     <p className="font-black text-[#0ab8b2] text-xl">
@@ -217,41 +217,39 @@ const TotalPage = () => {
                     </p>
                   </div>
                   <div className="relative flex flex-col items-center">
-                    <div className="flex items-center gap-1.5">
-                      <div className="text-left">
-                        <p className="text-sm text-muted-foreground">Goal</p>
-                        <p className="text-xl font-bold text-foreground">
-                          {yearlyGoal.toLocaleString()}
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setShowGoalAdjust((s) => !s)}
-                        className="relative w-8 h-8 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden focus:outline-none"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
-                          backdropFilter: 'blur(6px) saturate(1.2)',
-                          WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
-                          boxShadow: [
-                            'inset 0 2px 4px rgba(0,0,0,0.55)',
-                            'inset 0 -1px 2px rgba(255,255,255,0.07)',
-                            'inset 0 0 0 1px rgba(255,255,255,0.06)',
-                            '0 2px 6px rgba(0,0,0,0.3)',
-                            '0 6px 14px rgba(0,0,0,0.25)',
-                          ].join(', '),
-                        }}
-                      >
-                        <span
-                          className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
-                          style={{
-                            background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
-                            filter: 'blur(3px)',
-                          }}
-                        />
-                        <Wrench size={14} className="relative" />
-                      </button>
+                    <div className="text-center">
+                      <p className="text-sm text-muted-foreground">Goal</p>
+                      <p className="text-xl font-bold text-foreground">
+                        {yearlyGoal.toLocaleString()}
+                      </p>
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowGoalAdjust((s) => !s)}
+                      className="relative w-8 h-8 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden focus:outline-none mt-1"
+                      style={{
+                        background:
+                          'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                        backdropFilter: 'blur(6px) saturate(1.2)',
+                        WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                        boxShadow: [
+                          'inset 0 2px 4px rgba(0,0,0,0.55)',
+                          'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                          'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                          '0 2px 6px rgba(0,0,0,0.3)',
+                          '0 6px 14px rgba(0,0,0,0.25)',
+                        ].join(', '),
+                      }}
+                    >
+                      <span
+                        className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+                        style={{
+                          background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                          filter: 'blur(3px)',
+                        }}
+                      />
+                      <Wrench size={14} className="relative" />
+                    </button>
                     <div className="mt-1 h-px w-8 bg-white/30 rounded-full" />
                     {showGoalAdjust && (
                       <div
