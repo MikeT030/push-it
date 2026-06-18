@@ -383,7 +383,7 @@ const GroupMountainGoalCard = ({
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#0ABAB5]" />
           <p className="text-sm text-muted-foreground">
-            {memberCount} active members
+            {memberCount} act. members
           </p>
         </div>
       </div>
