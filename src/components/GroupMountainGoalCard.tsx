@@ -229,48 +229,29 @@ const GroupMountainGoalCard = ({
           </defs>
 
           <g clipPath={`url(#${gradientId}-clip)`}>
-            {/* Second mountain tier — sits above, slides down into view when projection toggled on */}
+            {/* Second mountain tier — same design as tier 1, sits BEHIND and offset right.
+                Hidden behind tier 1 by default; slides UP into view when projection toggled on. */}
             {hasSecondTier && (
               <g
                 style={{
-                  transform: `translateY(${tierShift - H}px)`,
+                  transform: `translate(${tier2OffsetX}px, ${tier2RevealY}px)`,
                   transition: "transform 900ms cubic-bezier(0.22, 1, 0.36, 1)",
-                  opacity: showProjection ? 1 : 0,
                 }}
               >
-                <line
-                  x1={0}
-                  y1={peakY}
-                  x2={W}
-                  y2={peakY}
-                  stroke="#C029DE"
-                  strokeWidth="1"
-                  strokeDasharray="3 5"
-                  opacity="0.30"
-                />
-                <text x={6} y={peakY - 4} fill="#C029DE" fontSize="10" opacity="0.85">
-                  {(projectedEOY / 1000).toFixed(0)}k projected
-                </text>
                 <path
-                  d={mountain2Path}
+                  d={mountainPath}
                   fill={`url(#${gradientId}-mtn2)`}
-                  stroke="#6B5E8A"
+                  stroke="#4B5260"
                   strokeWidth="1.5"
                   strokeLinejoin="round"
                   opacity="0.95"
                 />
-                {/* Snow at the BASE of the second mountain */}
-                <path d={m2SnowPath} fill="#E8FBFA" opacity="0.9" />
+                <path d={snowPath} fill="#E8FBFA" opacity="0.85" />
               </g>
             )}
 
-            {/* First mountain tier — gets pushed down when projection toggled on */}
-            <g
-              style={{
-                transform: `translateY(${tierShift}px)`,
-                transition: "transform 900ms cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-            >
+            {/* First mountain tier — stays fixed; tier 2 emerges behind it */}
+            <g>
               {/* Goal line at peak height */}
               <line
                 x1={0}
@@ -285,6 +266,7 @@ const GroupMountainGoalCard = ({
               <text x={6} y={peakY - 4} fill="#0ABAB5" fontSize="10" opacity="0.75">
                 {(groupGoal / 1000).toFixed(0)}k goal
               </text>
+
 
               {/* Mountain body — muted gray fill, light gray outline */}
               <path
