@@ -145,6 +145,46 @@ const AdminPage = () => {
           </div>
         </div>
 
+        {/* Demo Group Goal Card */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.035s" }}>
+          <h2 className="text-lg text-foreground font-semibold mb-2">
+            Demo Group Goal Card
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Sandbox copy of the We Push Goal card. Edit it here before rolling
+            changes out to all users.
+          </p>
+          <GroupLineChartGoalCard
+            totalPushUps={210000}
+            groupGoal={299300}
+            progressPercent={70.1}
+            allEntries={[
+              { date: "2026-01-01", count: 1200, user_id: "demo-1" },
+              { date: "2026-01-02", count: 950, user_id: "demo-2" },
+              { date: "2026-01-03", count: 1100, user_id: "demo-1" },
+              { date: "2026-01-04", count: 800, user_id: "demo-3" },
+              { date: "2026-01-05", count: 1300, user_id: "demo-2" },
+              { date: "2026-01-06", count: 1150, user_id: "demo-1" },
+              { date: "2026-01-07", count: 900, user_id: "demo-3" },
+              { date: "2026-01-08", count: 1050, user_id: "demo-2" },
+              { date: "2026-01-09", count: 1400, user_id: "demo-1" },
+              { date: "2026-01-10", count: 1250, user_id: "demo-3" },
+              { date: "2026-01-11", count: 1100, user_id: "demo-2" },
+              { date: "2026-01-12", count: 950, user_id: "demo-1" },
+              { date: "2026-01-13", count: 1350, user_id: "demo-3" },
+              { date: "2026-01-14", count: 1000, user_id: "demo-2" },
+              { date: "2026-01-15", count: 1200, user_id: "demo-1" },
+              { date: "2026-01-16", count: 850, user_id: "demo-3" },
+              { date: "2026-01-17", count: 1300, user_id: "demo-2" },
+              { date: "2026-01-18", count: 1150, user_id: "demo-1" },
+              { date: "2026-01-19", count: 900, user_id: "demo-3" },
+              { date: "2026-01-20", count: 1250, user_id: "demo-2" },
+            ]}
+            year={2026}
+            memberCount={7}
+          />
+        </div>
+
         {/* Demo Leaderboard */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.04s" }}>
           <h2 className="text-lg text-foreground font-semibold mb-4">Demo Leaderboard</h2>
