@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { format, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, differenceInDays } from "date-fns";
+import { format, parseISO, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, differenceInDays } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
