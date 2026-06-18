@@ -99,6 +99,17 @@ const TotalPage = () => {
     };
   }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
 
+  const recommendedBoost = useMemo(() => {
+    if (!isLoaded) return 0;
+    const projectedEOY = Math.round(stats.allTimeAvg * 365);
+    const boostOptions = [10, 20, 30];
+    let best = 0;
+    for (const opt of boostOptions) {
+      if (projectedEOY >= BASE_GOAL + opt * 1000) best = opt;
+    }
+    return best;
+  }, [isLoaded, stats.allTimeAvg]);
+
   const completionDate = useMemo(() => {
     if (!isLoaded || totalPushUps < yearlyGoal) return null;
     return getGoalCompletionDate();
