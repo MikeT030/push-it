@@ -260,7 +260,7 @@ const GroupMountainGoalCard = ({
             <path
               d={progress.d}
               fill="none"
-              stroke="#C029DE"
+              stroke="#FFFFFF"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -282,7 +282,7 @@ const GroupMountainGoalCard = ({
           )}
 
           {/* Current position marker */}
-          <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#C029DE" stroke="#0F1922" strokeWidth="1.5" />
+          <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#FFFFFF" stroke="#0F1922" strokeWidth="1.5" />
 
           {/* Peak flag */}
           <circle cx={peakCoord.x} cy={peakCoord.y} r="3" fill="#0ABAB5" />
@@ -293,7 +293,7 @@ const GroupMountainGoalCard = ({
       <div className="flex justify-between items-center mt-2 pt-3 border-t border-border/30">
         <div>
           <p className="text-xs text-muted-foreground">We Push progress</p>
-          <p className="text-xl font-bold text-[#c02bde]">{progressPercent.toFixed(1)}%</p>
+          <p className="text-xl font-bold text-white">{progressPercent.toFixed(1)}%</p>
         </div>
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
