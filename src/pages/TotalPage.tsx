@@ -21,22 +21,21 @@ const TotalPage = () => {
     getYearProgress,
     getEntryForDate,
     getGoalCompletionDate,
-    yearlyGoal: baseYearlyGoal,
+    yearlyGoal,
+    setYearlyGoal,
     dailyTarget,
     isLoaded
   } = usePushUpData();
   const { avatar } = useUserAvatar();
 
-  const [goalBoost, setGoalBoost] = useState(0); // in thousands
+  const BASE_GOAL = 30000;
   const [showGoalAdjust, setShowGoalAdjust] = useState(false);
-  const yearlyGoal = baseYearlyGoal + goalBoost * 1000;
+  const goalBoost = Math.max(0, Math.round((yearlyGoal - BASE_GOAL) / 1000));
 
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
-  const rawYearProgress = isLoaded ? getYearProgress() : 0;
-  const yearProgress = baseYearlyGoal > 0
-    ? Math.min(100, (rawYearProgress * baseYearlyGoal) / yearlyGoal)
-    : rawYearProgress;
+  const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
+
 
   const stats = useMemo(() => {
     if (!isLoaded) {
@@ -210,11 +209,12 @@ const TotalPage = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Remaining</p>
-                    <p className={`text-xl font-bold ${totalPushUps >= baseYearlyGoal && goalBoost === 0 ? 'text-[#0ab8b2]' : 'text-foreground'}`}>
-                      {totalPushUps >= baseYearlyGoal && goalBoost === 0
-                        ? `+${(totalPushUps - baseYearlyGoal).toLocaleString()}`
+                    <p className={`text-xl font-bold ${totalPushUps >= BASE_GOAL && goalBoost === 0 ? 'text-[#0ab8b2]' : 'text-foreground'}`}>
+                      {totalPushUps >= BASE_GOAL && goalBoost === 0
+                        ? `+${(totalPushUps - BASE_GOAL).toLocaleString()}`
                         : remaining.toLocaleString()}
                     </p>
+
                   </div>
                   <div className="relative flex flex-col items-center">
                     <div className="flex items-center gap-1.5">
@@ -261,7 +261,8 @@ const TotalPage = () => {
                           <button
                             type="button"
                             onClick={() => {
-                              setGoalBoost(0);
+                              setYearlyGoal(BASE_GOAL);
+
                               setShowGoalAdjust(false);
                             }}
                             className="px-2.5 py-1 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground bg-white/0 hover:bg-white/10 border border-white/10 transition-colors"
@@ -275,8 +276,9 @@ const TotalPage = () => {
                               key={inc}
                               type="button"
                               onClick={() => {
-                                setGoalBoost((b) => b + inc);
+                                setYearlyGoal(yearlyGoal + inc * 1000);
                                 setShowGoalAdjust(false);
+
                               }}
                               className="px-2.5 py-1 rounded-lg text-xs font-semibold text-foreground bg-white/5 hover:bg-white/15 border border-white/10 backdrop-blur-md transition-colors whitespace-nowrap"
                             >
