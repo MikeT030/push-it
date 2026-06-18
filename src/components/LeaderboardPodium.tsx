@@ -77,17 +77,17 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
         <span className="text-sm font-bold text-primary">Ø</span> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU
       </p>
 
+      {/* Goal badge */}
+      {user.yearly_goal !== 30000 && (
+        <div className="flex items-center gap-1 rounded-full px-2.5 py-0.5 pt-[4px] border border-[#C029DE]">
+          <span className="text-sm font-bold text-[#C029DE]">{Math.round(user.yearly_goal / 1000)}K</span>
+        </div>
+      )}
+
       {/* Score badge */}
       <div className="flex items-center gap-1 rounded-full px-2.5 py-0.5 pt-[4px] border border-[#575F78]">
         <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
       </div>
-
-      {user.yearly_goal !== 30000 && (
-        <div className="text-center mt-1">
-          <p className="text-[10px] text-muted-foreground font-normal leading-tight">Goal</p>
-          <p className="text-xl font-bold text-foreground leading-tight">{user.yearly_goal.toLocaleString()}</p>
-        </div>
-      )}
     </div>);
 };
 
@@ -159,16 +159,15 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                   <p className="text-xs text-foreground flex items-center gap-0.5"><span className="text-xs font-bold text-primary">Ø</span> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU</p>
                 </div>
 
+                {user.yearly_goal !== 30000 && (
+                  <div className="flex items-center gap-1 rounded-full px-2.5 py-1 border border-[#C029DE]">
+                    <span className="text-sm font-bold text-[#C029DE]">{Math.round(user.yearly_goal / 1000)}K</span>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-1 rounded-full px-2.5 py-1">
                   <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
                 </div>
-
-                {user.yearly_goal !== 30000 && (
-                  <div className="text-center min-w-[60px]">
-                    <p className="text-[10px] text-muted-foreground font-normal leading-tight">Goal</p>
-                    <p className="text-xl font-bold text-foreground leading-tight">{user.yearly_goal.toLocaleString()}</p>
-                  </div>
-                )}
               </div>);
         })}
         </div>
