@@ -49,6 +49,9 @@ const AdminPage = () => {
       groupGoal: activeUserCount * 82 * 365,
     };
   }, [progressQuery.data, realAllEntries]);
+
+  const handleBackup = async () => {
+    if (!user) return;
     const { data, error } = await supabase
       .from("push_up_entries")
       .select("id, user_id, date, count, created_at, updated_at")
