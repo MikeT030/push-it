@@ -299,7 +299,7 @@ const GroupMountainGoalCard = ({
       <div className="relative z-10 flex items-start justify-between">
         <div>
           <h2 className="text-lg text-foreground font-semibold mb-1">We Push Goal {year}</h2>
-          <p className="text-4xl font-black text-foreground">{displayCount.toLocaleString("de-DE")} PU</p>
+          <p className="text-xl font-black text-foreground">{displayCount.toLocaleString("de-DE")} PU</p>
           <p className="text-sm text-muted-foreground mt-1">of {groupGoal.toLocaleString("de-DE")} PU</p>
         </div>
       </div>
