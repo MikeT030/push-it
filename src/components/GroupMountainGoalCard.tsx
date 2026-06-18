@@ -188,14 +188,58 @@ const GroupMountainGoalCard = ({
 
   const gradientId = useMemo(() => `mtn-${Math.random().toString(36).slice(2)}`, []);
 
-  // Second mountain — appears above when projection toggled on (projected > goal)
+  // Second mountain — zooms in and pushes first tier fully down when projection toggled on
   const hasSecondTier = projectedEOY > groupGoal;
-  const tierShift = showProjection && hasSecondTier ? H * 0.55 : 0;
+  const tierActive = showProjection && hasSecondTier;
 
-  // Second mountain geometry — mirrored vibe, snow at the BOTTOM (where it meets tier 1's peak area)
+  // Second mountain geometry — snow at the BOTTOM (the new ground line)
   const m2PeakX = peakX;
-  const m2PeakY = peakY; // its own peak at top of its local space
+  const m2PeakY = peakY;
   const m2BaseY = baseY;
+
+  // Second mountain left ridge — for the projection progress line along its slope
+  const m2LeftRidge = [
+    { x: leftBaseX, y: m2BaseY },
+    { x: leftBaseX + 30, y: m2BaseY - 56 },
+    { x: leftBaseX + 58, y: m2BaseY - 40 },
+    { x: leftBaseX + 88, y: m2BaseY - 92 },
+    { x: leftBaseX + 122, y: m2BaseY - 78 },
+    { x: leftBaseX + 150, y: m2BaseY - 138 },
+    { x: m2PeakX - 6, y: m2PeakY + 6 },
+    { x: m2PeakX, y: m2PeakY },
+  ];
+  const m2SegLens: number[] = [];
+  let m2RidgeLen = 0;
+  for (let i = 1; i < m2LeftRidge.length; i++) {
+    const l = Math.hypot(m2LeftRidge[i].x - m2LeftRidge[i - 1].x, m2LeftRidge[i].y - m2LeftRidge[i - 1].y);
+    m2SegLens.push(l);
+    m2RidgeLen += l;
+  }
+  const m2RidgePath = (f: number) => {
+    const frac = Math.max(0, Math.min(1, f));
+    const target = frac * m2RidgeLen;
+    let acc = 0;
+    let d = `M${m2LeftRidge[0].x},${m2LeftRidge[0].y}`;
+    for (let i = 0; i < m2SegLens.length; i++) {
+      if (acc + m2SegLens[i] >= target) {
+        const t = m2SegLens[i] === 0 ? 0 : (target - acc) / m2SegLens[i];
+        const p0 = m2LeftRidge[i];
+        const p1 = m2LeftRidge[i + 1];
+        const x = p0.x + (p1.x - p0.x) * t;
+        const y = p0.y + (p1.y - p0.y) * t;
+        d += ` L${x.toFixed(2)},${y.toFixed(2)}`;
+        return { d, end: { x, y } };
+      }
+      acc += m2SegLens[i];
+      d += ` L${m2LeftRidge[i + 1].x},${m2LeftRidge[i + 1].y}`;
+    }
+    const last = m2LeftRidge[m2LeftRidge.length - 1];
+    return { d, end: { x: last.x, y: last.y } };
+  };
+  const safeProj = projectedEOY > 0 ? projectedEOY : 1;
+  const m2ProgressFrac = Math.min(totalPushUps / safeProj, 1);
+  const m2Progress = m2RidgePath(m2ProgressFrac);
+  const m2Full = m2RidgePath(1);
   const mountain2Path = `
     M${leftBaseX},${m2BaseY}
     L${leftBaseX + 30},${m2BaseY - 56}
