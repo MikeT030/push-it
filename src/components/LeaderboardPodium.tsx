@@ -79,8 +79,8 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
 
       {/* Goal badge */}
       {user.yearly_goal !== 30000 && (
-        <div className="flex items-center gap-1 rounded-full px-2.5 py-0.5 pt-[4px] border border-[#C029DE]">
-          <span className="text-sm font-bold text-[#C029DE]">{Math.round(user.yearly_goal / 1000)}K</span>
+        <div className="flex items-center gap-1 rounded-full px-1.5 py-[2px] border border-white/60">
+          <span className="text-[10px] font-bold text-white">{Math.round(user.yearly_goal / 1000)}K</span>
         </div>
       )}
 
@@ -160,8 +160,8 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
                 </div>
 
                 {user.yearly_goal !== 30000 && (
-                  <div className="flex items-center gap-1 rounded-full px-2.5 py-1 border border-[#C029DE]">
-                    <span className="text-sm font-bold text-[#C029DE]">{Math.round(user.yearly_goal / 1000)}K</span>
+                  <div className="flex items-center gap-1 rounded-full px-1.5 py-[2px] border border-white/60">
+                    <span className="text-[10px] font-bold text-white">{Math.round(user.yearly_goal / 1000)}K</span>
                   </div>
                 )}
 
