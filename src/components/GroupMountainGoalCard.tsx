@@ -344,7 +344,7 @@ const GroupMountainGoalCard = ({
                 x={W - 6}
                 y={projection.end.y - 4}
                 fill="#C029DE"
-                fontSize="10"
+                fontSize={showProjection ? "14" : "12"}
                 opacity="0.85"
                 textAnchor="end"
               >
