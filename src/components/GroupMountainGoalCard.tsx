@@ -391,12 +391,12 @@ const GroupMountainGoalCard = ({
                 />
               )}
 
-              {/* Actual progress — solid white line along the ridge up to current progress */}
+              {/* Actual progress — solid purple line along the ridge up to current progress */}
               {progressFrac > 0 && (
                 <path
                   d={progress.d}
                   fill="none"
-                  stroke="#FFFFFF"
+                  stroke="#7036FF"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
