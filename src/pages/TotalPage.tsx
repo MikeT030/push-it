@@ -32,17 +32,6 @@ const TotalPage = () => {
   const [showGoalAdjust, setShowGoalAdjust] = useState(false);
   const goalBoost = Math.max(0, Math.round((yearlyGoal - BASE_GOAL) / 1000));
 
-  const recommendedBoost = useMemo(() => {
-    if (!isLoaded) return 0;
-    const projectedEOY = Math.round(stats.allTimeAvg * 365);
-    const boostOptions = [10, 20, 30];
-    let best = 0;
-    for (const opt of boostOptions) {
-      if (projectedEOY >= BASE_GOAL + opt * 1000) best = opt;
-    }
-    return best;
-  }, [isLoaded, stats.allTimeAvg]);
-
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
   const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
