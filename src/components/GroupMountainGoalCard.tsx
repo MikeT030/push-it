@@ -391,7 +391,72 @@ const GroupMountainGoalCard = ({
               {/* Peak flag */}
               <circle cx={peakCoord.x} cy={peakCoord.y} r="3" fill="#0ABAB5" />
             </g>
+
+            {/* Second mountain tier — zooms in from above and takes over the view */}
+            {hasSecondTier && (
+              <g
+                style={{
+                  transformOrigin: `${peakX}px ${baseY}px`,
+                  transform: tierActive
+                    ? "translateY(0px) scale(1)"
+                    : `translateY(${-H * 0.6}px) scale(0.35)`,
+                  opacity: tierActive ? 1 : 0,
+                  transition:
+                    "transform 1100ms cubic-bezier(0.22, 1, 0.36, 1), opacity 700ms ease-out",
+                }}
+              >
+                <line
+                  x1={0}
+                  y1={m2PeakY}
+                  x2={W}
+                  y2={m2PeakY}
+                  stroke="#C029DE"
+                  strokeWidth="1"
+                  strokeDasharray="3 5"
+                  opacity="0.35"
+                />
+                <text x={6} y={m2PeakY - 4} fill="#C029DE" fontSize="10" opacity="0.85">
+                  {(projectedEOY / 1000).toFixed(0)}k projected
+                </text>
+                <path
+                  d={mountain2Path}
+                  fill={`url(#${gradientId}-mtn2)`}
+                  stroke="#6B5E8A"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                  opacity="0.95"
+                />
+                {/* Snow at the BASE — the new ground */}
+                <path d={m2SnowPath} fill="#E8FBFA" opacity="0.9" />
+
+                {/* Projected progress line along the new mountain's ridge */}
+                {m2ProgressFrac > 0 && (
+                  <path
+                    d={m2Progress.d}
+                    fill="none"
+                    stroke="#FFFFFF"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    filter={`url(#${gradientId}-glow)`}
+                  />
+                )}
+                {/* Dashed continuation up to the projected peak */}
+                <path
+                  d={m2Full.d}
+                  fill="none"
+                  stroke="#C029DE"
+                  strokeWidth="2.5"
+                  strokeDasharray="5 4"
+                  strokeLinejoin="round"
+                  opacity="0.7"
+                />
+                <circle cx={m2Progress.end.x} cy={m2Progress.end.y} r="3.5" fill="#FFFFFF" stroke="#0F1922" strokeWidth="1.5" />
+                <circle cx={m2PeakX} cy={m2PeakY} r="3" fill="#C029DE" />
+              </g>
+            )}
           </g>
+
         </svg>
       </div>
 
