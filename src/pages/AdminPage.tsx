@@ -3,6 +3,7 @@ import { ArrowLeft, Shield, Download, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
+import GroupMountainGoalCard from "@/components/GroupMountainGoalCard";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -154,7 +155,7 @@ const AdminPage = () => {
             Sandbox copy of the We Push Goal card. Edit it here before rolling
             changes out to all users.
           </p>
-          <GroupLineChartGoalCard
+          <GroupMountainGoalCard
             totalPushUps={210000}
             groupGoal={299300}
             progressPercent={70.1}
