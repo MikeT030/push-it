@@ -21,22 +21,21 @@ const TotalPage = () => {
     getYearProgress,
     getEntryForDate,
     getGoalCompletionDate,
-    yearlyGoal: baseYearlyGoal,
+    yearlyGoal,
+    setYearlyGoal,
     dailyTarget,
     isLoaded
   } = usePushUpData();
   const { avatar } = useUserAvatar();
 
-  const [goalBoost, setGoalBoost] = useState(0); // in thousands
+  const BASE_GOAL = 30000;
   const [showGoalAdjust, setShowGoalAdjust] = useState(false);
-  const yearlyGoal = baseYearlyGoal + goalBoost * 1000;
+  const goalBoost = Math.max(0, Math.round((yearlyGoal - BASE_GOAL) / 1000));
 
   const totalPushUps = isLoaded ? getTotalPushUps() : 0;
-  const rawYearProgress = isLoaded ? getYearProgress() : 0;
-  const yearProgress = baseYearlyGoal > 0
-    ? Math.min(100, (rawYearProgress * baseYearlyGoal) / yearlyGoal)
-    : rawYearProgress;
+  const yearProgress = isLoaded ? getYearProgress() : 0;
   const remaining = Math.max(0, yearlyGoal - totalPushUps);
+
 
   const stats = useMemo(() => {
     if (!isLoaded) {
