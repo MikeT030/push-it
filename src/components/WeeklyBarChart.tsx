@@ -146,7 +146,7 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
               {/* Bar */}
               <div
                 ref={(el) => (barRefs.current[i] = el)}
-                className="relative w-full max-w-[22px] rounded-full"
+                className="relative w-full max-w-[28px] rounded-full"
                 style={{
                   height: animate ? targetHeight : "0px",
                   transition: "height 1400ms cubic-bezier(0.33, 1, 0.68, 1)",
