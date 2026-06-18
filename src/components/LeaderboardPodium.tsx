@@ -161,7 +161,7 @@ const LeaderboardPodium = ({ users }: LeaderboardPodiumProps) => {
 
                 {user.yearly_goal !== 30000 && (
                   <div className="flex items-center gap-1 rounded-full px-1.5 py-[2px] border border-white/60">
-                    <span className="text-[10px] font-bold text-white">{Math.round(user.yearly_goal / 1000)}K</span>
+                    <span className="text-[10px] font-bold text-white">+{Math.round((user.yearly_goal - 30000) / 1000)}K</span>
                   </div>
                 )}
 
