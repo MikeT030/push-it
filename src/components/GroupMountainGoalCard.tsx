@@ -324,20 +324,31 @@ const GroupMountainGoalCard = ({
 
       <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
 
-      <div className="flex items-center justify-between pl-[10px] pr-[10px]">
-        <div>
-          <p className="font-black line-through text-white text-lg">
-            {groupGoal.toLocaleString()}
-          </p>
-          <p className="font-black text-gradient text-2xl">
-            {remaining.toLocaleString()}
-          </p>
-          <p className="text-sm text-muted-foreground mt-1">Push-Ups remaining</p>
+      <div className="flex items-center gap-6 mx-[10px] mt-2">
+        <div className="flex-1 flex items-start gap-8">
+          <div>
+            <p className="text-sm text-muted-foreground">Completed</p>
+            <p className="font-black text-[#0ab8b2] text-xl">
+              {totalPushUps.toLocaleString()}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Remaining</p>
+            <p className="text-xl font-bold text-foreground">
+              {remaining.toLocaleString()}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Goal</p>
+            <p className="text-xl font-bold text-foreground">
+              {groupGoal.toLocaleString()}
+            </p>
+          </div>
         </div>
       </div>
 
       <div
-        className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative mx-[10px]"
+        className="mt-4 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative mx-[10px]"
         onClick={() => setShowChart((v) => !v)}
       >
         <div
@@ -369,28 +380,6 @@ const GroupMountainGoalCard = ({
         </p>
       </div>
 
-      <div className="flex items-center gap-6 mx-[10px] mt-4">
-        <div className="flex-1 flex items-start gap-8">
-          <div>
-            <p className="text-sm text-muted-foreground">Completed</p>
-            <p className="font-black text-[#0ab8b2] text-xl">
-              {totalPushUps.toLocaleString()}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Remaining</p>
-            <p className="text-xl font-bold text-foreground">
-              {remaining.toLocaleString()}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Goal</p>
-            <p className="text-xl font-bold text-foreground">
-              {groupGoal.toLocaleString()}
-            </p>
-          </div>
-        </div>
-      </div>
 
       <div className="flex items-center justify-center gap-2 mt-3 mx-[10px]">
         <span className="w-2 h-2 rounded-full bg-[#0ABAB5]" />
