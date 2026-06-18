@@ -467,84 +467,14 @@ const GroupPage = () => {
               </div>
 
               {/* Goal Card */}
-              <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] mb-[10px] px-[10px] border border-[#3B404F] pb-[12px]" style={{ animationDelay: "0.15s" }}>
-                <div
-                  className="flex items-center justify-between cursor-pointer mb-[6px] pl-[10px] pr-[10px]"
-                  onClick={() => setShowGroupChart(v => !v)}
-                >
-                  <h2 className="text-lg text-foreground font-semibold">
-                    We Push Goal {new Date().getFullYear()}
-                  </h2>
-                  {showGroupChart ? (
-                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
-                  ) : (
-                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
-                  )}
-                </div>
-
-                <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
-                
-                <div className="flex items-center justify-between pl-[10px] pr-[10px]">
-                  <div>
-                    <p className="font-black line-through text-white text-lg">
-                      {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal, 0).toLocaleString()}
-                    </p>
-                    <p className="font-black text-gradient text-2xl">
-                      {users.filter((u) => u.total_pushups >= 82).reduce((sum, u) => sum + u.yearly_goal - u.total_pushups, 0).toLocaleString()}
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Push-Ups remaining
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-foreground text-xl">
-                      {users.filter((u) => u.total_pushups >= 82).length}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      members
-                    </p>
-                  </div>
-                </div>
-
-                {/* Progress bar - clickable to toggle chart */}
-                <div 
-                  className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative mx-[10px]"
-                  onClick={() => setShowGroupChart(v => !v)}
-                >
-                  <div className={`h-full bg-[#0ABAB5] absolute left-0 top-0 transition-all duration-700 ${
-                    stats.expectedProgress > stats.avgProgress ? 'rounded-full' : 'rounded-l-full'
-                  }`} style={{
-                    width: `${Math.min(stats.expectedProgress, 100)}%`
-                  }} />
-                  {stats.avgProgress > stats.expectedProgress && (
-                    <div className="h-full bg-[#BA25D8] absolute top-0 rounded-r-full transition-all duration-700" style={{
-                      left: `${Math.min(stats.expectedProgress, 100)}%`,
-                      width: `${Math.min(stats.avgProgress - stats.expectedProgress, 100 - stats.expectedProgress)}%`
-                    }} />
-                  )}
-                  {stats.avgProgress < stats.expectedProgress && (
-                    <div className="h-full bg-[#BA25D8] absolute left-0 top-0 rounded-full transition-all duration-700" style={{
-                      width: `${Math.min(stats.avgProgress, 100)}%`
-                    }} />
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground mt-2 text-center">
-                  {Math.round(stats.avgProgress)}% average progress
-                </p>
-
-                {/* Expandable chart section */}
-                {showGroupChart && (
-                  <GroupMountainGoalCard
-                    totalPushUps={stats.totalPushups}
-                    groupGoal={activeUserCount * 82 * 365}
-                    progressPercent={stats.avgProgress}
-                    allEntries={allEntries}
-                    year={new Date().getFullYear()}
-                    memberCount={activeUserCount}
-                    embedded
-                  />
-                )}
-              </div>
+              <GroupMountainGoalCard
+                totalPushUps={stats.totalPushups}
+                groupGoal={activeUserCount * 82 * 365}
+                progressPercent={stats.avgProgress}
+                allEntries={allEntries}
+                year={new Date().getFullYear()}
+                memberCount={activeUserCount}
+              />
             </div>
 
             {/* Call to Action */}
