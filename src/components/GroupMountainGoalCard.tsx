@@ -366,9 +366,12 @@ const GroupMountainGoalCard = ({
           />
         )}
       </div>
-      <p className="text-sm text-muted-foreground mt-2 text-center">
-        {Math.round(avgProgress)}% average progress
-      </p>
+      <div className="flex items-center justify-center gap-2 mt-2">
+        <span className="w-2 h-2 rounded-full bg-[#BA25D8]" />
+        <p className="text-sm text-muted-foreground">
+          {Math.round(avgProgress)}% average progress
+        </p>
+      </div>
 
       {showChart && <div className="mt-4">{chartContent}</div>}
     </div>
