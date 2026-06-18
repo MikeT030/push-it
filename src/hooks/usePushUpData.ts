@@ -221,6 +221,20 @@ export const usePushUpData = () => {
     return Math.max(...entries.map((e) => e.count));
   }, [entries]);
 
+  const getGoalCompletionDate = useCallback((): Date | null => {
+    const sorted = [...entries].sort(
+      (a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime()
+    );
+    let cumulative = 0;
+    for (const entry of sorted) {
+      cumulative += entry.count;
+      if (cumulative >= yearlyGoal) {
+        return parseISO(entry.date);
+      }
+    }
+    return null;
+  }, [entries, yearlyGoal]);
+
   const setYearlyGoal = useCallback(async (newGoal: number) => {
     if (!user) return;
 
@@ -251,6 +265,7 @@ export const usePushUpData = () => {
     getDaysBehindSchedule,
     getWeeklyAverage,
     getMaxSingleDay,
+    getGoalCompletionDate,
     setYearlyGoal,
   };
 };
