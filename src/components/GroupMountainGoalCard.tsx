@@ -282,7 +282,7 @@ const GroupMountainGoalCard = ({
           )}
 
           {/* Current position marker */}
-          <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#C029DE" stroke="#0F1922" strokeWidth="1.5" />
+          <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#FFFFFF" stroke="#0F1922" strokeWidth="1.5" />
 
           {/* Peak flag */}
           <circle cx={peakCoord.x} cy={peakCoord.y} r="3" fill="#0ABAB5" />
