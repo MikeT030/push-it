@@ -373,6 +373,29 @@ const GroupMountainGoalCard = ({
         </p>
       </div>
 
+      <div className="flex items-center gap-6 mx-[10px] mt-4">
+        <div className="flex-1 flex items-start gap-8">
+          <div>
+            <p className="text-sm text-muted-foreground">Completed</p>
+            <p className="font-black text-[#0ab8b2] text-xl">
+              {totalPushUps.toLocaleString()}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Remaining</p>
+            <p className="text-xl font-bold text-foreground">
+              {remaining.toLocaleString()}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Goal</p>
+            <p className="text-xl font-bold text-foreground">
+              {groupGoal.toLocaleString()}
+            </p>
+          </div>
+        </div>
+      </div>
+
       {showChart && <div className="mt-4">{chartContent}</div>}
     </div>
   );
