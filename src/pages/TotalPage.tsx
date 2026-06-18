@@ -201,7 +201,7 @@ const TotalPage = () => {
 
             
               <div className="flex items-center gap-6 mx-[10px]">
-                <div className="flex-1 flex items-start gap-[30px]">
+                <div className="flex-1 flex items-start gap-[28px]">
                   <div>
                     <p className="text-sm text-muted-foreground">Completed</p>
                     <p className="font-black text-[#0ab8b2] text-xl">
