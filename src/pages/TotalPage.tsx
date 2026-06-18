@@ -201,7 +201,7 @@ const TotalPage = () => {
 
             
               <div className="flex items-center gap-6 mx-[10px]">
-                <div className="flex-1 flex items-start gap-8">
+                <div className="flex-1 flex items-start gap-[30px]">
                   <div>
                     <p className="text-sm text-muted-foreground">Completed</p>
                     <p className="font-black text-[#0ab8b2] text-xl">
@@ -227,7 +227,7 @@ const TotalPage = () => {
                       <button
                         type="button"
                         onClick={() => setShowGoalAdjust((s) => !s)}
-                        className="relative w-8 h-8 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden focus:outline-none"
+                        className="relative self-end w-8 h-8 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden focus:outline-none"
                         style={{
                           background:
                             'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
