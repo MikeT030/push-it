@@ -24,8 +24,31 @@ const AdminPage = () => {
   const navigate = useNavigate();
   const demoNavActive = useDemoNav();
 
-  const handleBackup = async () => {
-    if (!user) return;
+  const progressQuery = useGroupUserProgress();
+  const entriesQuery = useGroupEntries();
+  const realAllEntries = entriesQuery.data || [];
+
+  const realStats = useMemo(() => {
+    const progress = progressQuery.data || [];
+    const activeUsers = progress.filter((u: any) => u.total_pushups >= 82);
+    const totalPushups = activeUsers.reduce((sum: number, u: any) => sum + u.total_pushups, 0);
+    const avgProgress =
+      activeUsers.length > 0
+        ? activeUsers.reduce((sum: number, u: any) => sum + u.progress_percent, 0) / activeUsers.length
+        : 0;
+    const cutoff = format(subDays(new Date(), 30), "yyyy-MM-dd");
+    const activeIds = new Set<string>();
+    realAllEntries.forEach((e: any) => {
+      if (e.date >= cutoff && e.count > 0) activeIds.add(e.user_id);
+    });
+    const activeUserCount = activeIds.size;
+    return {
+      totalPushups,
+      avgProgress,
+      activeUserCount,
+      groupGoal: activeUserCount * 82 * 365,
+    };
+  }, [progressQuery.data, realAllEntries]);
     const { data, error } = await supabase
       .from("push_up_entries")
       .select("id, user_id, date, count, created_at, updated_at")
