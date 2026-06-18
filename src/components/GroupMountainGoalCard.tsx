@@ -202,8 +202,8 @@ const GroupMountainGoalCard = ({
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[200px] block" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id={`${gradientId}-mtn`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#0ABAB5" stopOpacity="0.18" />
-              <stop offset="100%" stopColor="#0ABAB5" stopOpacity="0.02" />
+              <stop offset="0%" stopColor="#5A6273" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#3B404F" stopOpacity="0.15" />
             </linearGradient>
             <filter id={`${gradientId}-glow`}>
               <feGaussianBlur stdDeviation="2.5" result="blur" />
