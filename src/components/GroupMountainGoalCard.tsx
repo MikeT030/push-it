@@ -334,10 +334,6 @@ const GroupMountainGoalCard = ({
           </p>
           <p className="text-sm text-muted-foreground mt-1">Push-Ups remaining</p>
         </div>
-        <div className="text-right">
-          <p className="font-bold text-foreground text-xl">{memberCount}</p>
-          <p className="text-sm text-muted-foreground">members</p>
-        </div>
       </div>
 
       <div
