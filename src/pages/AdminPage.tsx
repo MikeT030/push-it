@@ -155,7 +155,7 @@ const AdminPage = () => {
             Sandbox copy of the We Push Goal card. Edit it here before rolling
             changes out to all users.
           </p>
-          <GroupLineChartGoalCard
+          <GroupMountainGoalCard
             totalPushUps={210000}
             groupGoal={299300}
             progressPercent={70.1}
