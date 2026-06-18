@@ -93,6 +93,11 @@ const TotalPage = () => {
     };
   }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
 
+  const completionDate = useMemo(() => {
+    if (!isLoaded || totalPushUps < yearlyGoal) return null;
+    return getGoalCompletionDate();
+  }, [isLoaded, totalPushUps, yearlyGoal, getGoalCompletionDate]);
+
   const statCards = useMemo(() => [{
     label: "Today",
     value: `${getEntryForDate(new Date())}`,
