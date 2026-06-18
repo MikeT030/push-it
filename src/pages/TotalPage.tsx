@@ -206,7 +206,7 @@ const TotalPage = () => {
 
                   </div>
                   <div className="relative flex flex-col items-center">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                       <div className="text-left">
                         <p className="text-sm text-muted-foreground">Goal</p>
                         <p className="text-xl font-bold text-foreground">
