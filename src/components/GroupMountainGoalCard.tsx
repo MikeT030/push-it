@@ -429,29 +429,18 @@ const GroupMountainGoalCard = ({
                 {/* Snow at the BASE — the new ground */}
                 <path d={m2SnowPath} fill="#E8FBFA" opacity="0.9" />
 
-                {/* Projected progress line along the new mountain's ridge */}
-                {m2ProgressFrac > 0 && (
-                  <path
-                    d={m2Progress.d}
-                    fill="none"
-                    stroke="#FFFFFF"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    filter={`url(#${gradientId}-glow)`}
-                  />
-                )}
-                {/* Dashed continuation up to the projected peak */}
+                {/* Projected progress line along the new mountain's ridge — only projection, no actual progress */}
                 <path
                   d={m2Full.d}
                   fill="none"
                   stroke="#C029DE"
-                  strokeWidth="2.5"
+                  strokeWidth="3.5"
                   strokeDasharray="5 4"
                   strokeLinejoin="round"
-                  opacity="0.7"
+                  opacity="0.85"
+                  filter={`url(#${gradientId}-glow)`}
                 />
-                <circle cx={m2Progress.end.x} cy={m2Progress.end.y} r="3.5" fill="#FFFFFF" stroke="#0F1922" strokeWidth="1.5" />
+                <circle cx={m2Progress.end.x} cy={m2Progress.end.y} r="3.5" fill="#C029DE" stroke="#0F1922" strokeWidth="1.5" />
                 <circle cx={m2PeakX} cy={m2PeakY} r="3" fill="#C029DE" />
               </g>
             )}
