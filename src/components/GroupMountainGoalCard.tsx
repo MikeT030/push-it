@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { startOfYear, eachWeekOfInterval, endOfWeek, min, format, differenceInDays } from "date-fns";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 interface GroupMountainGoalCardProps {
   totalPushUps: number;
@@ -17,6 +18,7 @@ const GroupMountainGoalCard = ({
   progressPercent,
   allEntries,
   year,
+  memberCount,
   embedded,
 }: GroupMountainGoalCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -24,6 +26,7 @@ const GroupMountainGoalCard = ({
   const hasAnimated = useRef(false);
   const [showIdealPace, setShowIdealPace] = useState(true);
   const [showProjection, setShowProjection] = useState(false);
+  const [showChart, setShowChart] = useState(false);
 
   const animateCount = useCallback((target: number) => {
     const duration = 1200;
@@ -292,20 +295,82 @@ const GroupMountainGoalCard = ({
     );
   }
 
+  const today = new Date();
+  const yearStart = startOfYear(today);
+  const daysElapsed = differenceInDays(today, yearStart) + 1;
+  const expectedProgress = Math.min((daysElapsed / 365) * 100, 100);
+  const avgProgress = progressPercent;
+  const remaining = Math.max(groupGoal - totalPushUps, 0);
+
   return (
     <div
       ref={cardRef}
-      className="bg-card/40 rounded-2xl p-6 pb-4 mb-6 animate-slide-up overflow-hidden px-[10px]"
+      className="bg-card/40 rounded-2xl animate-slide-up pt-[10px] mb-[10px] px-[10px] border border-[#3B404F] pb-[12px]"
       style={{ animationDelay: "0.25s" }}
     >
-      <div className="relative z-10 flex items-start justify-between">
+      <div
+        className="flex items-center justify-between cursor-pointer mb-[6px] pl-[10px] pr-[10px]"
+        onClick={() => setShowChart((v) => !v)}
+      >
+        <h2 className="text-lg text-foreground font-semibold">
+          We Push Goal {year}
+        </h2>
+        {showChart ? (
+          <ChevronDown className="w-5 h-5 text-muted-foreground" />
+        ) : (
+          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+        )}
+      </div>
+
+      <div className="h-px mb-4 mx-[10px] bg-[#3b404f]" />
+
+      <div className="flex items-center justify-between pl-[10px] pr-[10px]">
         <div>
-          <h2 className="text-lg text-foreground font-semibold mb-1">We Push Goal {year}</h2>
-          <p className="text-xl font-black text-foreground">{displayCount.toLocaleString("de-DE")} PU</p>
-          <p className="text-sm text-muted-foreground mt-1">Made PUs</p>
+          <p className="font-black line-through text-white text-lg">
+            {groupGoal.toLocaleString()}
+          </p>
+          <p className="font-black text-gradient text-2xl">
+            {remaining.toLocaleString()}
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">Push-Ups remaining</p>
+        </div>
+        <div className="text-right">
+          <p className="font-bold text-foreground text-xl">{memberCount}</p>
+          <p className="text-sm text-muted-foreground">members</p>
         </div>
       </div>
-      <div className="mt-4">{chartContent}</div>
+
+      <div
+        className="mt-6 h-3 rounded-full overflow-hidden bg-[#3b404f] cursor-pointer active:scale-[0.98] transition-transform relative mx-[10px]"
+        onClick={() => setShowChart((v) => !v)}
+      >
+        <div
+          className={`h-full bg-[#0ABAB5] absolute left-0 top-0 transition-all duration-700 ${
+            expectedProgress > avgProgress ? "rounded-full" : "rounded-l-full"
+          }`}
+          style={{ width: `${Math.min(expectedProgress, 100)}%` }}
+        />
+        {avgProgress > expectedProgress && (
+          <div
+            className="h-full bg-[#BA25D8] absolute top-0 rounded-r-full transition-all duration-700"
+            style={{
+              left: `${Math.min(expectedProgress, 100)}%`,
+              width: `${Math.min(avgProgress - expectedProgress, 100 - expectedProgress)}%`,
+            }}
+          />
+        )}
+        {avgProgress < expectedProgress && (
+          <div
+            className="h-full bg-[#BA25D8] absolute left-0 top-0 rounded-full transition-all duration-700"
+            style={{ width: `${Math.min(avgProgress, 100)}%` }}
+          />
+        )}
+      </div>
+      <p className="text-sm text-muted-foreground mt-2 text-center">
+        {Math.round(avgProgress)}% average progress
+      </p>
+
+      {showChart && <div className="mt-4">{chartContent}</div>}
     </div>
   );
 };
