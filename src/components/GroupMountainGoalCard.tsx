@@ -405,7 +405,7 @@ const GroupMountainGoalCard = ({
               )}
 
               {/* Current position marker */}
-              <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#FFFFFF" stroke="#0F1922" strokeWidth="1.5" />
+              <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#7036FF" stroke="#0F1922" strokeWidth="1.5" />
 
               {/* Tip marker — colored by whichever value is the peak */}
               <circle
