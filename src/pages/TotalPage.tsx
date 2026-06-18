@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
+import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
+import spannerSvg from "@/assets/spanner.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
 import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
 import { Button } from "@/components/ui/button";
@@ -229,7 +230,7 @@ const TotalPage = () => {
                         onClick={() => setShowGoalAdjust((s) => !s)}
                         className="focus:outline-none mt-3"
                       >
-                        <Wrench size={14} className="text-muted-foreground hover:text-foreground transition-colors" />
+                        <img src={spannerSvg} alt="Adjust goal" className="w-3.5 h-auto opacity-60 hover:opacity-100 invert transition-opacity" />
                       </button>
                     </div>
                     <div className="mt-1 h-px w-8 bg-white/30 rounded-full" />
