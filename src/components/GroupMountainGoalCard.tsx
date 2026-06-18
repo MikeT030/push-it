@@ -260,7 +260,7 @@ const GroupMountainGoalCard = ({
             <path
               d={progress.d}
               fill="none"
-              stroke="#C029DE"
+              stroke="#FFFFFF"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
