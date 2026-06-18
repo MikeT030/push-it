@@ -276,8 +276,9 @@ const TotalPage = () => {
                               key={inc}
                               type="button"
                               onClick={() => {
-                                setGoalBoost((b) => b + inc);
+                                setYearlyGoal(yearlyGoal + inc * 1000);
                                 setShowGoalAdjust(false);
+
                               }}
                               className="px-2.5 py-1 rounded-lg text-xs font-semibold text-foreground bg-white/5 hover:bg-white/15 border border-white/10 backdrop-blur-md transition-colors whitespace-nowrap"
                             >
