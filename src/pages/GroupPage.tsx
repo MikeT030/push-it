@@ -534,7 +534,7 @@ const GroupPage = () => {
 
                 {/* Expandable chart section */}
                 {showGroupChart && (
-                  <GroupLineChartGoalCard
+                  <GroupMountainGoalCard
                     totalPushUps={stats.totalPushups}
                     groupGoal={activeUserCount * 82 * 365}
                     progressPercent={stats.avgProgress}
