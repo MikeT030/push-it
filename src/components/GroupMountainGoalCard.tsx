@@ -392,6 +392,13 @@ const GroupMountainGoalCard = ({
         </div>
       </div>
 
+      <div className="flex items-center justify-center gap-2 mt-3 mx-[10px]">
+        <span className="w-2 h-2 rounded-full bg-[#0ABAB5]" />
+        <p className="text-sm text-muted-foreground">
+          {memberCount} active members
+        </p>
+      </div>
+
       {showChart && <div className="mt-4">{chartContent}</div>}
     </div>
   );
