@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeft, Shield, Download, Users } from "lucide-react";
+import { format, subDays } from "date-fns";
 import { Button } from "@/components/ui/button";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
@@ -14,6 +16,7 @@ import DailySection from "@/components/DailySection";
 import CalendarSection from "@/components/CalendarSection";
 import { getAvatarById } from "@/data/avatars";
 import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
+import { useGroupUserProgress, useGroupEntries } from "@/hooks/useGroupData";
 
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
