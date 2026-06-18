@@ -81,6 +81,13 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
       <div className="flex items-center gap-1 rounded-full px-2.5 py-0.5 pt-[4px] border border-[#575F78]">
         <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
       </div>
+
+      {user.yearly_goal !== 30000 && (
+        <div className="text-center mt-1">
+          <p className="text-[10px] text-muted-foreground font-normal leading-tight">Goal</p>
+          <p className="text-xl font-bold text-foreground leading-tight">{user.yearly_goal.toLocaleString()}</p>
+        </div>
+      )}
     </div>);
 };
 
