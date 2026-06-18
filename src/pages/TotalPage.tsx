@@ -20,6 +20,7 @@ const TotalPage = () => {
     getTotalPushUps,
     getYearProgress,
     getEntryForDate,
+    getGoalCompletionDate,
     yearlyGoal,
     dailyTarget,
     isLoaded
