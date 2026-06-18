@@ -141,12 +141,15 @@ const GroupMountainGoalCard = ({
     return { d, end: { x: last.x, y: last.y } };
   };
 
-  const safeGoal = groupGoal > 0 ? groupGoal : 1;
-  const progressFrac = Math.min(totalPushUps / safeGoal, 1);
-  const projectionFrac = Math.min(projectedEOY / safeGoal, 1);
+  // The mountain's peak now represents the LARGER of expected (goal) or projected EOY.
+  // Whichever is bigger reaches the tip; the smaller one sits partway down the ridge.
+  const peakValue = Math.max(groupGoal, projectedEOY, 1);
+  const expectedFrac = Math.min(groupGoal / peakValue, 1);
+  const projectionFrac = Math.min(projectedEOY / peakValue, 1);
+  const progressFrac = Math.min(totalPushUps / peakValue, 1);
 
   const progress = ridgePath(progressFrac);
-  const idealPath = ridgePath(1);
+  const expectedPath = ridgePath(expectedFrac);
   const projection = ridgePath(projectionFrac);
   const peakCoord = { x: peakX, y: peakY };
 
