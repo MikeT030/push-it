@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
+import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
+import spannerSvg from "@/assets/spanner.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
 import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
 import { Button } from "@/components/ui/button";
