@@ -3,6 +3,7 @@ import { ArrowLeft, Shield, Download, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
+import GroupMountainGoalCard from "@/components/GroupMountainGoalCard";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
