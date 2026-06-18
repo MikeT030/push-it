@@ -286,6 +286,11 @@ const TotalPage = () => {
                             </button>
                           ))}
                         </div>
+                        {recommendedBoost > 0 && (
+                          <p className="text-[10px] text-muted-foreground text-center mt-1">
+                            Based on your pace, +{recommendedBoost}K is a good fit
+                          </p>
+                        )}
                       </div>
                     )}
                   </div>
