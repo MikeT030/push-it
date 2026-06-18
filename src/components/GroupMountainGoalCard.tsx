@@ -194,17 +194,17 @@ const GroupMountainGoalCard = ({
 
   // Second mountain geometry — snow at the BOTTOM (the new ground line)
   const m2PeakX = peakX;
-  const m2PeakY = peakY;
+  const m2PeakY = peakY - 12;
   const m2BaseY = baseY;
 
   // Second mountain left ridge — for the projection progress line along its slope
   const m2LeftRidge = [
-    { x: leftBaseX, y: m2BaseY },
-    { x: leftBaseX + 30, y: m2BaseY - 56 },
-    { x: leftBaseX + 58, y: m2BaseY - 40 },
-    { x: leftBaseX + 88, y: m2BaseY - 92 },
-    { x: leftBaseX + 122, y: m2BaseY - 78 },
-    { x: leftBaseX + 150, y: m2BaseY - 138 },
+    { x: leftBaseX + 32, y: m2BaseY },
+    { x: leftBaseX + 60, y: m2BaseY - 64 },
+    { x: leftBaseX + 86, y: m2BaseY - 46 },
+    { x: leftBaseX + 114, y: m2BaseY - 100 },
+    { x: leftBaseX + 144, y: m2BaseY - 84 },
+    { x: leftBaseX + 170, y: m2BaseY - 146 },
     { x: m2PeakX - 6, y: m2PeakY + 6 },
     { x: m2PeakX, y: m2PeakY },
   ];
@@ -241,38 +241,38 @@ const GroupMountainGoalCard = ({
   const m2Progress = m2RidgePath(m2ProgressFrac);
   const m2Full = m2RidgePath(1);
   const mountain2Path = `
-    M${leftBaseX},${m2BaseY}
-    L${leftBaseX + 30},${m2BaseY - 56}
-    L${leftBaseX + 58},${m2BaseY - 40}
-    L${leftBaseX + 88},${m2BaseY - 92}
-    L${leftBaseX + 122},${m2BaseY - 78}
-    L${leftBaseX + 150},${m2BaseY - 138}
+    M${leftBaseX + 32},${m2BaseY}
+    L${leftBaseX + 60},${m2BaseY - 64}
+    L${leftBaseX + 86},${m2BaseY - 46}
+    L${leftBaseX + 114},${m2BaseY - 100}
+    L${leftBaseX + 144},${m2BaseY - 84}
+    L${leftBaseX + 170},${m2BaseY - 146}
     L${m2PeakX - 6},${m2PeakY + 6}
     L${m2PeakX},${m2PeakY}
-    L${m2PeakX + 12},${m2PeakY + 14}
-    L${m2PeakX + 42},${m2BaseY - 128}
-    L${m2PeakX + 70},${m2BaseY - 100}
-    L${m2PeakX + 104},${m2BaseY - 72}
-    L${m2PeakX + 134},${m2BaseY - 82}
-    L${m2PeakX + 162},${m2BaseY - 36}
-    L${rightBaseX},${m2BaseY}
+    L${m2PeakX + 6},${m2PeakY + 6}
+    L${m2PeakX + 30},${m2BaseY - 136}
+    L${m2PeakX + 56},${m2BaseY - 106}
+    L${m2PeakX + 86},${m2BaseY - 78}
+    L${m2PeakX + 114},${m2BaseY - 88}
+    L${m2PeakX + 140},${m2BaseY - 42}
+    L${rightBaseX - 32},${m2BaseY}
     Z
   `;
   // Snow structure at the BOTTOM of mountain 2 — jagged white band across its base
   const m2SnowPath = `
-    M${leftBaseX},${m2BaseY}
-    L${leftBaseX + 24},${m2BaseY - 10}
-    L${leftBaseX + 52},${m2BaseY - 4}
-    L${leftBaseX + 84},${m2BaseY - 14}
-    L${leftBaseX + 118},${m2BaseY - 6}
-    L${leftBaseX + 150},${m2BaseY - 16}
+    M${leftBaseX + 32},${m2BaseY}
+    L${leftBaseX + 56},${m2BaseY - 10}
+    L${leftBaseX + 84},${m2BaseY - 4}
+    L${leftBaseX + 116},${m2BaseY - 14}
+    L${leftBaseX + 150},${m2BaseY - 6}
+    L${leftBaseX + 170},${m2BaseY - 16}
     L${m2PeakX - 10},${m2BaseY - 8}
-    L${m2PeakX + 30},${m2BaseY - 18}
-    L${m2PeakX + 70},${m2BaseY - 6}
-    L${m2PeakX + 110},${m2BaseY - 14}
-    L${m2PeakX + 150},${m2BaseY - 4}
-    L${rightBaseX},${m2BaseY - 12}
-    L${rightBaseX},${m2BaseY}
+    L${m2PeakX + 28},${m2BaseY - 18}
+    L${m2PeakX + 62},${m2BaseY - 6}
+    L${m2PeakX + 102},${m2BaseY - 14}
+    L${m2PeakX + 140},${m2BaseY - 4}
+    L${rightBaseX - 32},${m2BaseY - 12}
+    L${rightBaseX - 32},${m2BaseY}
     Z
   `;
 
@@ -420,7 +420,7 @@ const GroupMountainGoalCard = ({
                 </text>
                 <path
                   d={mountain2Path}
-                  fill={`url(#${gradientId}-mtn2)`}
+                  fill={`url(#${gradientId}-mtn)`}
                   stroke="#6B5E8A"
                   strokeWidth="1.5"
                   strokeLinejoin="round"
