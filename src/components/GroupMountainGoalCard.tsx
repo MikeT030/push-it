@@ -310,48 +310,14 @@ const GroupMountainGoalCard = ({
           </defs>
 
           <g clipPath={`url(#${gradientId}-clip)`}>
-            {/* Second mountain tier — sits above, slides down into view when projection toggled on */}
-            {hasSecondTier && (
-              <g
-                style={{
-                  transform: `translateY(${tierShift - H}px)`,
-                  transition: "transform 900ms cubic-bezier(0.22, 1, 0.36, 1)",
-                  opacity: showProjection ? 1 : 0,
-                }}
-              >
-                <line
-                  x1={0}
-                  y1={peakY}
-                  x2={W}
-                  y2={peakY}
-                  stroke="#C029DE"
-                  strokeWidth="1"
-                  strokeDasharray="3 5"
-                  opacity="0.30"
-                />
-                <text x={6} y={peakY - 4} fill="#C029DE" fontSize="10" opacity="0.85">
-                  {(projectedEOY / 1000).toFixed(0)}k projected
-                </text>
-                <path
-                  d={mountain2Path}
-                  fill={`url(#${gradientId}-mtn2)`}
-                  stroke="#6B5E8A"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                  opacity="0.95"
-                />
-                {/* Snow at the BASE of the second mountain */}
-                <path d={m2SnowPath} fill="#E8FBFA" opacity="0.9" />
-              </g>
-            )}
-
-            {/* First mountain tier — gets pushed down when projection toggled on */}
+            {/* First mountain tier — gets pushed fully off-screen when projection toggled on */}
             <g
               style={{
-                transform: `translateY(${tierShift}px)`,
-                transition: "transform 900ms cubic-bezier(0.22, 1, 0.36, 1)",
+                transform: tierActive ? `translateY(${H}px)` : "translateY(0px)",
+                transition: "transform 1100ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
+
               {/* Goal line at peak height */}
               <line
                 x1={0}
