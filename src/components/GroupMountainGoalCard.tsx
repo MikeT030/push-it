@@ -334,10 +334,6 @@ const GroupMountainGoalCard = ({
           </p>
           <p className="text-sm text-muted-foreground mt-1">Push-Ups remaining</p>
         </div>
-        <div className="text-right">
-          <p className="font-bold text-foreground text-xl">{memberCount}</p>
-          <p className="text-sm text-muted-foreground">members</p>
-        </div>
       </div>
 
       <div
@@ -394,6 +390,13 @@ const GroupMountainGoalCard = ({
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-2 mt-3 mx-[10px]">
+        <span className="w-2 h-2 rounded-full bg-[#0ABAB5]" />
+        <p className="text-sm text-muted-foreground">
+          {memberCount} active members
+        </p>
       </div>
 
       {showChart && <div className="mt-4">{chartContent}</div>}
