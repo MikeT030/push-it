@@ -64,9 +64,9 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               <p className="text-sm font-medium text-foreground truncate flex items-center gap-1.5">
                 {user.display_name || `Member ${index + 1}`}
                 {user.yearly_goal > 30000 && (
-                  <span className="text-[10px] font-bold text-[#C029DE] bg-[#C029DE]/15 border border-[#C029DE]/40 rounded-full px-1.5 py-0.5 leading-none">
-                    +{Math.round((user.yearly_goal - 30000) / 1000)}K
-                  </span>
+                  <div className="flex items-center gap-1 rounded-full px-1.5 py-[2px] border border-white/60">
+                    <span className="text-[10px] font-bold text-white">+{Math.round((user.yearly_goal - 30000) / 1000)}K</span>
+                  </div>
                 )}
               </p>
               <p className="text-xs text-foreground flex items-center gap-0.5"><Flame className="w-3 h-3 text-[#FF2C2C]" fill="#FF2C2C" /> <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
