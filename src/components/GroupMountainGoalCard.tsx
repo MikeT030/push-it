@@ -542,7 +542,7 @@ const GroupMountainGoalCard = ({
         )}
       </div>
       <div className="flex items-center justify-center gap-2 mt-2">
-        <span className="w-2 h-2 rounded-full bg-[#0ABAB5]" />
+        <span className="w-2 h-2 rounded-full bg-[#7036FF]" />
         <p className="text-sm text-muted-foreground">Average progress {avgProgress.toFixed(1)}%</p>
       </div>
 
