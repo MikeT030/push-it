@@ -98,31 +98,58 @@ const GroupMountainGoalCard = ({
   const rightBaseX = W - 18;
   const totalWeeks = 52;
 
-  // Map a (week, value) point to coordinates that climb the LEFT slope of the mountain.
-  // x progresses with time from left base to peak; y rises from base to peak proportional to value/goal.
-  const climb = (week: number, value: number) => {
-    const safeGoal = groupGoal > 0 ? groupGoal : 1;
-    const t = Math.min((Number.isFinite(week) ? week : 0) / totalWeeks, 1);
-    const rawV = (Number.isFinite(value) ? value : 0) / safeGoal;
-    const v = Math.min(Math.max(rawV, 0), 1.1);
-    const x = leftBaseX + t * (peakX - leftBaseX);
-    const y = baseY - v * (baseY - peakY);
-    return { x, y };
+  // Left ridge points — the exact vertices of the mountain's left slope, from base up to peak.
+  const leftRidge = [
+    { x: leftBaseX, y: baseY },
+    { x: leftBaseX + 38, y: baseY - 42 },
+    { x: leftBaseX + 62, y: baseY - 30 },
+    { x: leftBaseX + 96, y: baseY - 78 },
+    { x: leftBaseX + 126, y: baseY - 70 },
+    { x: leftBaseX + 156, y: baseY - 130 },
+    { x: peakX - 8, y: peakY + 8 },
+    { x: peakX, y: peakY },
+  ];
+
+  const segLens: number[] = [];
+  let ridgeLen = 0;
+  for (let i = 1; i < leftRidge.length; i++) {
+    const l = Math.hypot(leftRidge[i].x - leftRidge[i - 1].x, leftRidge[i].y - leftRidge[i - 1].y);
+    segLens.push(l);
+    ridgeLen += l;
+  }
+
+  // Build a path along the left ridge from base up to the given fraction (0..1) of total ridge length.
+  const ridgePath = (f: number) => {
+    const frac = Math.max(0, Math.min(1, f));
+    const target = frac * ridgeLen;
+    let acc = 0;
+    let d = `M${leftRidge[0].x},${leftRidge[0].y}`;
+    for (let i = 0; i < segLens.length; i++) {
+      if (acc + segLens[i] >= target) {
+        const t = segLens[i] === 0 ? 0 : (target - acc) / segLens[i];
+        const p0 = leftRidge[i];
+        const p1 = leftRidge[i + 1];
+        const x = p0.x + (p1.x - p0.x) * t;
+        const y = p0.y + (p1.y - p0.y) * t;
+        d += ` L${x.toFixed(2)},${y.toFixed(2)}`;
+        return { d, end: { x, y } };
+      }
+      acc += segLens[i];
+      d += ` L${leftRidge[i + 1].x},${leftRidge[i + 1].y}`;
+    }
+    const last = leftRidge[leftRidge.length - 1];
+    return { d, end: { x: last.x, y: last.y } };
   };
 
-  const progressPath = chartData.length
-    ? chartData
-        .map((p, i) => {
-          const { x, y } = climb(p.week, p.total);
-          return `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
-        })
-        .join(" ")
-    : "";
+  const safeGoal = groupGoal > 0 ? groupGoal : 1;
+  const progressFrac = Math.min(totalPushUps / safeGoal, 1);
+  const projectionFrac = Math.min(projectedEOY / safeGoal, 1);
 
-  const lastPoint = chartData.length ? chartData[chartData.length - 1] : null;
-  const lastCoord = lastPoint ? climb(lastPoint.week, lastPoint.total) : null;
+  const progress = ridgePath(progressFrac);
+  const idealPath = ridgePath(1);
+  const projection = ridgePath(projectionFrac);
   const peakCoord = { x: peakX, y: peakY };
-  const projectedCoord = climb(totalWeeks, projectedEOY);
+
 
   // Mountain silhouette with jagged ridge
   const mountainPath = `
@@ -175,8 +202,8 @@ const GroupMountainGoalCard = ({
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[200px] block" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id={`${gradientId}-mtn`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#0ABAB5" stopOpacity="0.18" />
-              <stop offset="100%" stopColor="#0ABAB5" stopOpacity="0.02" />
+              <stop offset="0%" stopColor="#5A6273" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#3B404F" stopOpacity="0.15" />
             </linearGradient>
             <filter id={`${gradientId}-glow`}>
               <feGaussianBlur stdDeviation="2.5" result="blur" />
@@ -202,30 +229,36 @@ const GroupMountainGoalCard = ({
             {(groupGoal / 1000).toFixed(0)}k goal
           </text>
 
-          {/* Mountain body */}
-          <path d={mountainPath} fill={`url(#${gradientId}-mtn)`} stroke="#0ABAB5" strokeWidth="1.5" strokeLinejoin="round" opacity="0.9" />
+          {/* Mountain body — muted gray fill, light gray outline */}
+          <path
+            d={mountainPath}
+            fill={`url(#${gradientId}-mtn)`}
+            stroke="#4B5260"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+            opacity="0.95"
+          />
           {/* Snow cap */}
           <path d={snowPath} fill="#E8FBFA" opacity="0.85" />
 
-          {/* Expected pace — climbs the left outline to the peak */}
+          {/* Expected pace — dashed line following the exact left ridge to the peak */}
           {showIdealPace && (
-            <line
-              x1={leftBaseX}
-              y1={baseY}
-              x2={peakCoord.x}
-              y2={peakCoord.y}
+            <path
+              d={idealPath.d}
+              fill="none"
               stroke="#0ABAB5"
               strokeWidth="2"
               strokeDasharray="6 4"
+              strokeLinejoin="round"
               opacity="0.85"
               filter={`url(#${gradientId}-glow)`}
             />
           )}
 
-          {/* Actual progress line climbing the mountain */}
-          {progressPath && (
+          {/* Actual progress — solid line along the ridge up to current progress */}
+          {progressFrac > 0 && (
             <path
-              d={progressPath}
+              d={progress.d}
               fill="none"
               stroke="#C029DE"
               strokeWidth="2.5"
@@ -235,27 +268,25 @@ const GroupMountainGoalCard = ({
             />
           )}
 
-          {/* Projection from last point continuing toward the peak */}
-          {showProjection && lastCoord && (
-            <line
-              x1={lastCoord.x}
-              y1={lastCoord.y}
-              x2={projectedCoord.x}
-              y2={projectedCoord.y}
+          {/* Projection — dashed along the ridge from current point to projected EOY */}
+          {showProjection && projectionFrac > progressFrac && (
+            <path
+              d={projection.d}
+              fill="none"
               stroke="#C029DE"
               strokeWidth="1.5"
               strokeDasharray="5 4"
+              strokeLinejoin="round"
               opacity="0.7"
             />
           )}
 
           {/* Current position marker */}
-          {lastCoord && (
-            <circle cx={lastCoord.x} cy={lastCoord.y} r="3.5" fill="#C029DE" stroke="#0F1922" strokeWidth="1.5" />
-          )}
+          <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#C029DE" stroke="#0F1922" strokeWidth="1.5" />
 
           {/* Peak flag */}
           <circle cx={peakCoord.x} cy={peakCoord.y} r="3" fill="#0ABAB5" />
+
         </svg>
       </div>
 
