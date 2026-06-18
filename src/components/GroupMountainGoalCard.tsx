@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { startOfYear, eachWeekOfInterval, endOfWeek, min, format, differenceInDays } from "date-fns";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 interface GroupMountainGoalCardProps {
   totalPushUps: number;
