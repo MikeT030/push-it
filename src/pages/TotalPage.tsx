@@ -230,7 +230,7 @@ const TotalPage = () => {
                         onClick={() => setShowGoalAdjust((s) => !s)}
                         className="focus:outline-none mt-3"
                       >
-                        <Wrench size={14} className="text-muted-foreground hover:text-foreground transition-colors" />
+                        <img src={spannerSvg} alt="Adjust goal" className="w-3.5 h-auto opacity-60 hover:opacity-100 invert transition-opacity" />
                       </button>
                     </div>
                     <div className="mt-1 h-px w-8 bg-white/30 rounded-full" />
