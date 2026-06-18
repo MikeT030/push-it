@@ -18,6 +18,7 @@ const GroupMountainGoalCard = ({
   progressPercent,
   allEntries,
   year,
+  memberCount,
   embedded,
 }: GroupMountainGoalCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -25,6 +26,7 @@ const GroupMountainGoalCard = ({
   const hasAnimated = useRef(false);
   const [showIdealPace, setShowIdealPace] = useState(true);
   const [showProjection, setShowProjection] = useState(false);
+  const [showChart, setShowChart] = useState(false);
 
   const animateCount = useCallback((target: number) => {
     const duration = 1200;
