@@ -547,7 +547,7 @@ const GroupMountainGoalCard = ({
       </div>
 
 
-      {showChart && <div className="mt-4">{chartContent}</div>}
+      {showChart && <div className="mt-6">{chartContent}</div>}
     </div>
   );
 };
