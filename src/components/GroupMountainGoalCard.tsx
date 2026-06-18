@@ -325,7 +325,7 @@ const GroupMountainGoalCard = ({
                 strokeDasharray="3 5"
                 opacity="0.3"
               />
-              <text x={6} y={expectedPath.end.y - 4} fill="#0ABAB5" fontSize="10" opacity="0.8">
+              <text x={6} y={expectedPath.end.y - 4} fill="#0ABAB5" fontSize={showIdealPace ? "14" : "12"} opacity="0.8">
                 {(groupGoal / 1000).toFixed(0)}k goal
               </text>
 
