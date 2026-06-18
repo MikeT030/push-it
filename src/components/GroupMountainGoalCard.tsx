@@ -373,13 +373,11 @@ const GroupMountainGoalCard = ({
           />
         )}
       </div>
-      <div className="flex items-center justify-center gap-6 mt-2">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#BA25D8]" />
-          <p className="text-sm text-muted-foreground">
-            {Math.round(avgProgress)}% average progress, {memberCount} act. members
-          </p>
-        </div>
+      <div className="flex items-center justify-center gap-2 mt-2">
+        <span className="w-2 h-2 rounded-full bg-[#BA25D8]" />
+        <p className="text-sm text-muted-foreground">
+          {Math.round(avgProgress)}% average progress, {memberCount} act. members
+        </p>
       </div>
 
 
