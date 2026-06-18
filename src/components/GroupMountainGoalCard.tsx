@@ -188,49 +188,12 @@ const GroupMountainGoalCard = ({
 
   const gradientId = useMemo(() => `mtn-${Math.random().toString(36).slice(2)}`, []);
 
-  // Second mountain — appears above when projection toggled on (projected > goal)
+  // Second mountain — same design as first, sits behind & horizontally offset.
+  // When projection is OFF: hidden behind tier 1 (no vertical offset).
+  // When projection is ON: slides up so its peak appears above tier 1.
   const hasSecondTier = projectedEOY > groupGoal;
-  const tierShift = showProjection && hasSecondTier ? H * 0.55 : 0;
-
-  // Second mountain geometry — mirrored vibe, snow at the BOTTOM (where it meets tier 1's peak area)
-  const m2PeakX = peakX;
-  const m2PeakY = peakY; // its own peak at top of its local space
-  const m2BaseY = baseY;
-  const mountain2Path = `
-    M${leftBaseX},${m2BaseY}
-    L${leftBaseX + 30},${m2BaseY - 56}
-    L${leftBaseX + 58},${m2BaseY - 40}
-    L${leftBaseX + 88},${m2BaseY - 92}
-    L${leftBaseX + 122},${m2BaseY - 78}
-    L${leftBaseX + 150},${m2BaseY - 138}
-    L${m2PeakX - 6},${m2PeakY + 6}
-    L${m2PeakX},${m2PeakY}
-    L${m2PeakX + 12},${m2PeakY + 14}
-    L${m2PeakX + 42},${m2BaseY - 128}
-    L${m2PeakX + 70},${m2BaseY - 100}
-    L${m2PeakX + 104},${m2BaseY - 72}
-    L${m2PeakX + 134},${m2BaseY - 82}
-    L${m2PeakX + 162},${m2BaseY - 36}
-    L${rightBaseX},${m2BaseY}
-    Z
-  `;
-  // Snow structure at the BOTTOM of mountain 2 — jagged white band across its base
-  const m2SnowPath = `
-    M${leftBaseX},${m2BaseY}
-    L${leftBaseX + 24},${m2BaseY - 10}
-    L${leftBaseX + 52},${m2BaseY - 4}
-    L${leftBaseX + 84},${m2BaseY - 14}
-    L${leftBaseX + 118},${m2BaseY - 6}
-    L${leftBaseX + 150},${m2BaseY - 16}
-    L${m2PeakX - 10},${m2BaseY - 8}
-    L${m2PeakX + 30},${m2BaseY - 18}
-    L${m2PeakX + 70},${m2BaseY - 6}
-    L${m2PeakX + 110},${m2BaseY - 14}
-    L${m2PeakX + 150},${m2BaseY - 4}
-    L${rightBaseX},${m2BaseY - 12}
-    L${rightBaseX},${m2BaseY}
-    Z
-  `;
+  const tier2OffsetX = 70; // horizontal nudge so the revealed peak sits to the right of tier 1
+  const tier2RevealY = showProjection && hasSecondTier ? -(H * 0.45) : 0;
 
   const chartContent = (
     <>
