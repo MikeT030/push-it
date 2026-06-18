@@ -210,8 +210,10 @@ const TotalPage = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Remaining</p>
-                    <p className="text-xl font-bold text-foreground">
-                      {remaining.toLocaleString()}
+                    <p className={`text-xl font-bold ${totalPushUps >= baseYearlyGoal && goalBoost === 0 ? 'text-[#0ab8b2]' : 'text-foreground'}`}>
+                      {totalPushUps >= baseYearlyGoal && goalBoost === 0
+                        ? `+${(totalPushUps - baseYearlyGoal).toLocaleString()}`
+                        : remaining.toLocaleString()}
                     </p>
                   </div>
                   <div className="relative flex flex-col items-center">
