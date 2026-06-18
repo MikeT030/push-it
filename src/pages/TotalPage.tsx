@@ -20,6 +20,7 @@ const TotalPage = () => {
     getTotalPushUps,
     getYearProgress,
     getEntryForDate,
+    getGoalCompletionDate,
     yearlyGoal,
     dailyTarget,
     isLoaded
@@ -91,6 +92,11 @@ const TotalPage = () => {
       expectedByNow
     };
   }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
+
+  const completionDate = useMemo(() => {
+    if (!isLoaded || totalPushUps < yearlyGoal) return null;
+    return getGoalCompletionDate();
+  }, [isLoaded, totalPushUps, yearlyGoal, getGoalCompletionDate]);
 
   const statCards = useMemo(() => [{
     label: "Today",
@@ -241,7 +247,15 @@ const TotalPage = () => {
                 {/* Projected completion date */}
                 <div>
                   <p className="text-sm text-muted-foreground text-left flex items-center gap-1.5">
-                    {stats.allTimeAvg > 0 ? <>
+                    {completionDate ? <>
+                        <MultiColorTargetIcon className="w-4 h-4 flex-shrink-0" />
+                        <span>
+                          You completed {Math.round(yearlyGoal / 1000)}k PUS on{" "}
+                          <span className="font-semibold text-foreground">
+                            {format(completionDate, "MMMM d, yyyy")}
+                          </span>
+                        </span>
+                      </> : stats.allTimeAvg > 0 ? <>
                         <MultiColorTargetIcon className="w-4 h-4 flex-shrink-0" />
                         <span>
                           Hitting {Math.round(yearlyGoal / 1000)}K on{" "}
