@@ -255,7 +255,7 @@ const TotalPage = () => {
                     
                     {showGoalAdjust && (
                       <div
-                        className="absolute z-20 top-full left-1/2 -translate-x-1/2 -ml-[99px] mt-2 rounded-xl p-2 backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col gap-1.5 animate-fade-in items-center"
+                        className="absolute z-20 top-full left-1/2 -translate-x-1/2 -ml-[97px] mt-2 rounded-xl p-2 backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col gap-1.5 animate-fade-in items-center"
                       >
                         {goalBoost > 0 && (
                           <button
