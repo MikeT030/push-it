@@ -15,6 +15,7 @@ import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GroupLineChartGoalCard from "@/components/GroupLineChartGoalCard";
+import GroupMountainGoalCard from "@/components/GroupMountainGoalCard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
@@ -533,7 +534,7 @@ const GroupPage = () => {
 
                 {/* Expandable chart section */}
                 {showGroupChart && (
-                  <GroupLineChartGoalCard
+                  <GroupMountainGoalCard
                     totalPushUps={stats.totalPushups}
                     groupGoal={activeUserCount * 82 * 365}
                     progressPercent={stats.avgProgress}
