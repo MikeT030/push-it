@@ -228,21 +228,8 @@ const TotalPage = () => {
                     <div className="mt-1 h-px w-8 bg-white/30 rounded-full" />
                     {showGoalAdjust && (
                       <div
-                        className="absolute z-20 top-full left-1/2 -translate-x-1/2 mt-2 rounded-xl p-2 backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex gap-1.5 animate-fade-in"
+                        className="absolute z-20 top-full left-1/2 -translate-x-1/2 mt-2 rounded-xl p-2 backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col gap-1.5 animate-fade-in items-center"
                       >
-                        {[10, 20, 30].map((inc) => (
-                          <button
-                            key={inc}
-                            type="button"
-                            onClick={() => {
-                              setGoalBoost((b) => b + inc);
-                              setShowGoalAdjust(false);
-                            }}
-                            className="px-2.5 py-1 rounded-lg text-xs font-semibold text-foreground bg-white/5 hover:bg-white/15 border border-white/10 backdrop-blur-md transition-colors whitespace-nowrap"
-                          >
-                            +{inc}K
-                          </button>
-                        ))}
                         {goalBoost > 0 && (
                           <button
                             type="button"
@@ -255,6 +242,21 @@ const TotalPage = () => {
                             Reset
                           </button>
                         )}
+                        <div className="flex gap-1.5">
+                          {[10, 20, 30].map((inc) => (
+                            <button
+                              key={inc}
+                              type="button"
+                              onClick={() => {
+                                setGoalBoost((b) => b + inc);
+                                setShowGoalAdjust(false);
+                              }}
+                              className="px-2.5 py-1 rounded-lg text-xs font-semibold text-foreground bg-white/5 hover:bg-white/15 border border-white/10 backdrop-blur-md transition-colors whitespace-nowrap"
+                            >
+                              +{inc}K
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
