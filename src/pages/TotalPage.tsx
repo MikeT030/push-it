@@ -261,7 +261,8 @@ const TotalPage = () => {
                           <button
                             type="button"
                             onClick={() => {
-                              setGoalBoost(0);
+                              setYearlyGoal(BASE_GOAL);
+
                               setShowGoalAdjust(false);
                             }}
                             className="px-2.5 py-1 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground bg-white/0 hover:bg-white/10 border border-white/10 transition-colors"
