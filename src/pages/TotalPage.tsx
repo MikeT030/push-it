@@ -271,7 +271,7 @@ const TotalPage = () => {
                           </button>
                         )}
                         <div className="flex gap-1.5">
-                          {[10, 20, 30].map((inc) => (
+                          {[10, 15, 20, 25, 30].map((inc) => (
                             <button
                               key={inc}
                               type="button"
