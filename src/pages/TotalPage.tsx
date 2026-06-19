@@ -231,14 +231,24 @@ const TotalPage = () => {
                           {yearlyGoal.toLocaleString()}
                         </p>
                       </div>
-                      {totalPushUps >= BASE_GOAL && (
                       <button
                         type="button"
-                        onClick={() => setShowGoalAdjust((s) => !s)}
-                        className="relative self-end w-8 h-8 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden focus:outline-none"
+                        disabled={totalPushUps < BASE_GOAL}
+                        onClick={() => {
+                          if (totalPushUps >= BASE_GOAL) {
+                            setShowGoalAdjust((s) => !s);
+                          }
+                        }}
+                        className={`relative self-end w-8 h-8 rounded-full flex items-center justify-center transition-all duration-150 ease-out overflow-hidden focus:outline-none ${
+                          totalPushUps >= BASE_GOAL
+                            ? 'text-slate-100 active:translate-y-[1px] active:scale-[0.98]'
+                            : 'text-slate-100/30 cursor-not-allowed'
+                        }`}
                         style={{
                           background:
-                            'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                            totalPushUps >= BASE_GOAL
+                              ? 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)'
+                              : 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.25) 0%, rgba(31,36,46,0.15) 60%, rgba(22,26,34,0.10) 100%)',
                           backdropFilter: 'blur(6px) saturate(1.2)',
                           WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
                           boxShadow: [
@@ -259,7 +269,6 @@ const TotalPage = () => {
                         />
                         <Wrench size={14} className="relative" />
                       </button>
-                      )}
                     </div>
                     
                     {showGoalAdjust && (
