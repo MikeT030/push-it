@@ -231,6 +231,7 @@ const TotalPage = () => {
                           {yearlyGoal.toLocaleString()}
                         </p>
                       </div>
+                      {totalPushUps >= BASE_GOAL && (
                       <button
                         type="button"
                         onClick={() => setShowGoalAdjust((s) => !s)}
@@ -258,7 +259,7 @@ const TotalPage = () => {
                         />
                         <Wrench size={14} className="relative" />
                       </button>
-                    )}
+                      )}
                     </div>
                     
                     {showGoalAdjust && (
