@@ -258,6 +258,7 @@ const TotalPage = () => {
                         />
                         <Wrench size={14} className="relative" />
                       </button>
+                    )}
                     </div>
                     
                     {showGoalAdjust && (
