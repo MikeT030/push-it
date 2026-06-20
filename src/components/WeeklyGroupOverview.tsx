@@ -322,7 +322,7 @@ const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroup
 
           {/* Member count note */}
           <p className="text-xs text-muted-foreground text-center">
-            Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (82+ push-ups)
+            Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (last 30 days)
           </p>
         </CollapsibleContent>
       </div>
