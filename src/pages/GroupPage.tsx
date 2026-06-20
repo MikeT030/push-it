@@ -228,18 +228,20 @@ const GroupPage = () => {
     sort((a, b) => b.total_pushups - a.total_pushups);
   }, [users, allEntries, leaderboardPeriod]);
 
-  // Count users active in the last 30 days (logged > 0 push-ups)
-  const activeUserCount = useMemo(() => {
+  // Active users = logged at least one push-up in the last 30 calendar days
+  const activeUserIds = useMemo(() => {
     const cutoff = format(subDays(new Date(), 30), "yyyy-MM-dd");
-    const activeIds = new Set<string>();
+    const ids = new Set<string>();
     allEntries.forEach((e: any) => {
-      if (e.date >= cutoff && e.count > 0) activeIds.add(e.user_id);
+      if (e.date >= cutoff && e.count > 0) ids.add(e.user_id);
     });
-    return activeIds.size;
+    return ids;
   }, [allEntries]);
 
+  const activeUserCount = activeUserIds.size;
+
   const stats = useMemo(() => {
-    const activeUsers = users.filter((u) => u.total_pushups >= 82);
+    const activeUsers = users.filter((u) => activeUserIds.has(u.user_id));
     const totalMembers = activeUsers.length;
     const totalPushups = activeUsers.reduce((sum, u) => sum + u.total_pushups, 0);
     const avgProgress = totalMembers > 0 ? activeUsers.reduce((sum, u) => sum + u.progress_percent, 0) / totalMembers : 0;
@@ -257,7 +259,8 @@ const GroupPage = () => {
       expectedProgress,
       avgPuPerDay
     };
-  }, [users]);
+  }, [users, activeUserIds]);
+
 
   // Swipe handling
   const handleTouchStart = (e: React.TouchEvent) => {
