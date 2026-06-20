@@ -1,13 +1,15 @@
-## Problem
-The current `recommendedBoost` logic picks the highest boost where `BASE_GOAL + boost*1000 <= projectedEOY`, effectively rounding down. For Michi (20.7K on day 170, avg 122/day → EOY ~44.5K), this yields +10K even though +15K is barely 500 over the projection.
+## Plan: Reduce Weekly Bar Chart Bar Width by 30%
 
-## Fix
-1. Change the rounding from "largest ≤ projection" to "closest to projection" (nearest boost).
-   - For 44.5K: +15K = 45K, difference 440; +10K = 40K, difference 4,560. → +15K wins.
-2. Move the existing suggestion text inside the dropdown menu, below the buttons row.
-   - Existing copy: "Based on your pace, +{recommendedBoost}K is a good fit"
+### Context
+The `WeeklyBarChart` component is used by both the personal weekly overview and the group "Weekly We Push" card. The bars currently have a maximum width of `28px`.
 
-## File
-`src/pages/TotalPage.tsx` — update `recommendedBoost` useMemo and reposition the suggestion `<p>` inside the menu dropdown.
+### Change
+In `src/components/WeeklyBarChart.tsx`, update both occurrences of `max-w-[28px]` to `max-w-[20px]`:
+- Line 143: Track background bar
+- Line 149: Animated bar element
 
-No schema or backend changes needed.
+This reduces the bar width by ~30% (from 28px to 20px), affecting both the personal and group weekly charts since they share this component.
+
+### Verification
+- Build passes.
+- Visual check confirms bars are narrower in both weekly chart instances.
