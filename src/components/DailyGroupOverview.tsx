@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import { format, eachDayOfInterval, isSameDay } from "date-fns";
+import { format, eachDayOfInterval, isSameDay, subDays } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
@@ -337,10 +337,14 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
     return map;
   }, [profilesQuery.data]);
 
-  const memberCount = useMemo(
-    () => (usersQuery.data || []).filter((u) => u.total_pushups >= 82).length,
-    [usersQuery.data]
-  );
+  const memberCount = useMemo(() => {
+    const cutoff = format(subDays(new Date(), 30), "yyyy-MM-dd");
+    const ids = new Set<string>();
+    allEntries.forEach((e: any) => {
+      if (e.date >= cutoff && e.count > 0) ids.add(e.user_id);
+    });
+    return ids.size;
+  }, [allEntries]);
 
   // Generate day options from year start to today
   const dayOptions = useMemo((): DayOption[] => {
@@ -574,7 +578,7 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
 
           {/* Member count note */}
           <p className="text-xs text-muted-foreground text-center">
-            Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (82+ push-ups)
+            Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (last 30 days)
           </p>
         </CollapsibleContent>
       </div>

@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay } from "date-fns";
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay, subDays } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import WeeklyBarChart from "./WeeklyBarChart";
@@ -49,10 +49,14 @@ const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroup
     }));
   }, [entries]);
 
-  const memberCount = useMemo(
-    () => (users ?? []).filter((u) => u.total_pushups >= 82).length,
-    [users]
-  );
+  const memberCount = useMemo(() => {
+    const cutoff = format(subDays(new Date(), 30), "yyyy-MM-dd");
+    const ids = new Set<string>();
+    (entries ?? []).forEach((e: any) => {
+      if (e.date >= cutoff && e.count > 0) ids.add(e.user_id);
+    });
+    return ids.size;
+  }, [entries]);
 
   // Generate week options starting from January 1, 2026
   const weekOptions = useMemo((): WeekOption[] => {
@@ -318,7 +322,7 @@ const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroup
 
           {/* Member count note */}
           <p className="text-xs text-muted-foreground text-center">
-            Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (82+ push-ups)
+            Based on {memberCount} active {memberCount === 1 ? "member" : "members"} (last 30 days)
           </p>
         </CollapsibleContent>
       </div>
