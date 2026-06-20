@@ -36,7 +36,7 @@ const AdminPage = () => {
       if (e.date >= cutoff && e.count > 0) activeIds.add(e.user_id);
     });
     const activeUsers = progress.filter((u: any) => activeIds.has(u.user_id));
-    const totalPushups = activeUsers.reduce((sum: number, u: any) => sum + u.total_pushups, 0);
+    const totalPushups = progress.reduce((sum: number, u: any) => sum + u.total_pushups, 0);
     const avgProgress =
       activeUsers.length > 0
         ? activeUsers.reduce((sum: number, u: any) => sum + u.progress_percent, 0) / activeUsers.length

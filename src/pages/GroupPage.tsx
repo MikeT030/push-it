@@ -243,7 +243,8 @@ const GroupPage = () => {
   const stats = useMemo(() => {
     const activeUsers = users.filter((u) => activeUserIds.has(u.user_id));
     const totalMembers = activeUsers.length;
-    const totalPushups = activeUsers.reduce((sum, u) => sum + u.total_pushups, 0);
+    // Total push-ups includes ALL users (historical push-ups are never removed)
+    const totalPushups = users.reduce((sum, u) => sum + u.total_pushups, 0);
     const avgProgress = totalMembers > 0 ? activeUsers.reduce((sum, u) => sum + u.progress_percent, 0) / totalMembers : 0;
     const today = new Date();
     const yearStart = startOfYear(today);
