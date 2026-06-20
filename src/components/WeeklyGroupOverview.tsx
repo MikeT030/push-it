@@ -49,10 +49,14 @@ const WeeklyGroupOverview = ({ selectedDate, onSelectedDateChange }: WeeklyGroup
     }));
   }, [entries]);
 
-  const memberCount = useMemo(
-    () => (users ?? []).filter((u) => u.total_pushups >= 82).length,
-    [users]
-  );
+  const memberCount = useMemo(() => {
+    const cutoff = format(subDays(new Date(), 30), "yyyy-MM-dd");
+    const ids = new Set<string>();
+    (entries ?? []).forEach((e: any) => {
+      if (e.date >= cutoff && e.count > 0) ids.add(e.user_id);
+    });
+    return ids.size;
+  }, [entries]);
 
   // Generate week options starting from January 1, 2026
   const weekOptions = useMemo((): WeekOption[] => {
