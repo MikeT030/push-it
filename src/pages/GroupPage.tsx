@@ -20,7 +20,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
-import InsightsCard from "@/components/InsightsCard";
 
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
@@ -468,10 +467,6 @@ const GroupPage = () => {
                 />
               </div>
 
-              {/* Insights Card */}
-              <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.08s" }}>
-                <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
-              </div>
 
               {/* Weekly Group Overview */}
               <div className="mb-6 animate-slide-up" style={{
