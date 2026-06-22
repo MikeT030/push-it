@@ -167,7 +167,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
                   <Flame className="w-4 h-4 text-[#FF2C2C]" fill="#FF2C2C" />
                   Personal bests
                 </h3>
-                <h4 className="text-xs font-semibold text-foreground mb-4">Most Push-Ups</h4>
+                <h4 className="text-xs font-semibold text-foreground mt-[10px] mb-4">Most Push-Ups</h4>
                 <div className="space-y-4">
                   <BestRow
                     label="in a day"
