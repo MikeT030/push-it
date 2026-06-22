@@ -189,7 +189,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
               {/* Winner counts */}
               <section className="card-glass rounded-2xl p-5">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <Trophy className="w-4 h-4 text-[#0ABAB5]" />
+                  <img src={wreathIcon} alt="" className="w-4 h-4" />
                   Group wins
                 </h3>
                 <div className="grid grid-cols-3 gap-3">
