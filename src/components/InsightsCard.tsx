@@ -153,13 +153,13 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
           </div>
 
           {!insights?.hasData ? (
-            <div className="card-glass rounded-2xl p-8 text-center">
+            <div className="card-glass rounded-2xl p-8 text-center mt-5">
               <p className="text-muted-foreground">
                 Log some push-ups to unlock your insights.
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4 mt-5">
               {/* Personal bests */}
               <section className="card-glass rounded-2xl p-5">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
