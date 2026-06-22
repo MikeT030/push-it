@@ -19,8 +19,14 @@ import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
 import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 import controllerIcon from "@/assets/controller.svg";
+import InsightsCard from "@/components/InsightsCard";
+import { useAuth } from "@/contexts/AuthContext";
+import { useGroupEntries } from "@/hooks/useGroupData";
 const DailyPage = () => {
   
+  const { user: authUser } = useAuth();
+  const { data: allEntriesData } = useGroupEntries();
+  const allEntries = allEntriesData || [];
   const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
   const navigate = useNavigate();
   const { avatar } = useUserAvatar();
@@ -195,6 +201,11 @@ const DailyPage = () => {
           </button>
         </div>
 
+
+        {/* Insights Card */}
+        <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
+          <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
+        </div>
 
         {/* Weekly Overview */}
         <div className={`mt-6 mb-6 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{ animationDelay: "0.2s" }}>
