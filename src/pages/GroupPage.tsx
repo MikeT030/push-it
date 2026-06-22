@@ -469,11 +469,6 @@ const GroupPage = () => {
                 />
               </div>
 
-              {/* Insights Card */}
-              <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.08s" }}>
-                <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
-              </div>
-
               {/* Weekly Group Overview */}
               <div className="mb-6 animate-slide-up" style={{
               animationDelay: "0.1s"
