@@ -4,7 +4,7 @@ import { Sparkles, X, Trophy, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
-import wreathIcon from "@/assets/wreath.svg";
+import wreathIcon from "@/assets/medal.svg";
 
 interface InsightsCardProps {
   userId: string | null;
