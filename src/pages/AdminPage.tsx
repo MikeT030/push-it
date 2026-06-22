@@ -17,6 +17,7 @@ import CalendarSection from "@/components/CalendarSection";
 import { getAvatarById } from "@/data/avatars";
 import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 import { useGroupUserProgress, useGroupEntries } from "@/hooks/useGroupData";
+import InsightsCard from "@/components/InsightsCard";
 
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
@@ -174,6 +175,11 @@ const AdminPage = () => {
               Users Backup
             </Button>
           </div>
+        </div>
+
+        {/* Insights Card */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
+          <InsightsCard userId={user?.id ?? null} allEntries={realAllEntries} />
         </div>
 
         {/* Demo Group Goal Card */}
