@@ -134,6 +134,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
 
       <SheetContent
         side="bottom"
+        hideCloseButton
         className="h-[100dvh] w-full max-w-none rounded-none border-none bg-background p-0 overflow-y-auto"
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
