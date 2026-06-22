@@ -138,7 +138,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
         className="h-[100dvh] w-full max-w-none rounded-none border-none bg-background p-0 overflow-y-auto"
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-6 mt-5">
             <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-[#0ABAB5]" />
               Insights
@@ -153,13 +153,13 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
           </div>
 
           {!insights?.hasData ? (
-            <div className="card-glass rounded-2xl p-8 text-center">
+            <div className="card-glass rounded-2xl p-8 text-center mt-5">
               <p className="text-muted-foreground">
                 Log some push-ups to unlock your insights.
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4 mt-5">
               {/* Personal bests */}
               <section className="card-glass rounded-2xl p-5">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
