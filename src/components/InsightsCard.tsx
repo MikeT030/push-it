@@ -209,33 +209,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
                 <p className="text-xs text-muted-foreground mb-4">
                   Average push-ups by weekday across your whole history.
                 </p>
-                <div className="flex items-end justify-between gap-2 h-32">
-                  {insights.weekdayAvg.map((avg, i) => {
-                    const heightPct = (avg / insights.maxAvg) * 100;
-                    const isTop = avg === insights.maxAvg && avg > 0;
-                    return (
-                      <div key={i} className="flex-1 flex flex-col items-center gap-2 h-full">
-                        <div className="flex-1 w-full flex items-end justify-center">
-                          <div
-                            className="w-full max-w-[20px] rounded-full transition-all"
-                            style={{
-                              height: `${Math.max(heightPct, 4)}%`,
-                              background: isTop ? "#0ABAB5" : "#3B404F",
-                            }}
-                          />
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <span className="text-[10px] font-bold text-foreground">
-                            {Math.round(avg)}
-                          </span>
-                          <span className="text-[10px] text-muted-foreground">
-                            {WEEKDAY_LABELS[i]}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                <WeekdayBarChart weekdayAvg={insights.weekdayAvg} maxAvg={insights.maxAvg} />
               </section>
             </div>
           )}
