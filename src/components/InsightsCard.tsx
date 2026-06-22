@@ -213,9 +213,9 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
                     const isTop = avg === insights.maxAvg && avg > 0;
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-2 h-full">
-                        <div className="flex-1 w-full flex items-end">
+                        <div className="flex-1 w-full flex items-end justify-center">
                           <div
-                            className="w-full rounded-md transition-all"
+                            className="w-full max-w-[20px] rounded-full transition-all"
                             style={{
                               height: `${Math.max(heightPct, 4)}%`,
                               background: isTop ? "#0ABAB5" : "#3B404F",
