@@ -163,23 +163,24 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
             <div className="space-y-4 mt-5">
               {/* Personal bests */}
               <section className="card-glass rounded-2xl p-5">
-                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
+                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-2">
                   <Flame className="w-4 h-4 text-[#FF2C2C]" fill="#FF2C2C" />
                   Personal bests
                 </h3>
+                <h4 className="text-xs font-semibold text-foreground mb-4">Most Push-Ups</h4>
                 <div className="space-y-4">
                   <BestRow
-                    label="Most push-ups in a day"
+                    label="in a day"
                     value={insights.bestDay.count}
                     sub={formatBestDay(insights.bestDay.date)}
                   />
                   <BestRow
-                    label="Most push-ups in a week"
+                    label="in a week"
                     value={insights.bestWeek.count}
                     sub={formatBestWeek(insights.bestWeek.key)}
                   />
                   <BestRow
-                    label="Most push-ups in a month"
+                    label="in a month"
                     value={insights.bestMonth.count}
                     sub={formatBestMonth(insights.bestMonth.key)}
                   />
