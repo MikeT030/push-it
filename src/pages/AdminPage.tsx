@@ -177,9 +177,12 @@ const AdminPage = () => {
           </div>
         </div>
 
-        {/* Insights Card */}
+        {/* Insights Card — uses michaelthinius@hey.com data for editing/preview */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
-          <InsightsCard userId={user?.id ?? null} allEntries={realAllEntries} />
+          <InsightsCard
+            userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+            allEntries={realAllEntries}
+          />
         </div>
 
         {/* Demo Group Goal Card */}
