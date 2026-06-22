@@ -24,6 +24,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useGroupEntries } from "@/hooks/useGroupData";
 const DailyPage = () => {
   
+  const { user: authUser } = useAuth();
+  const { data: allEntriesData } = useGroupEntries();
+  const allEntries = allEntriesData || [];
   const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
   const navigate = useNavigate();
   const { avatar } = useUserAvatar();
