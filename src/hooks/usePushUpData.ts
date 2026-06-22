@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format, parseISO, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, differenceInDays } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -13,7 +14,14 @@ interface Profile {
   yearly_goal: number;
 }
 
+interface UserData {
+  profile: Profile | null;
+  entries: PushUpEntry[];
+}
+
 const DEFAULT_YEARLY_GOAL = 30000;
+const STALE_MS = 60_000;
+const WRITE_DEBOUNCE_MS = 600;
 
 // Debounced toast tracker: shows a single toast 1s after the last update per date
 const saveToastTimers = new Map<string, ReturnType<typeof setTimeout>>();
@@ -38,41 +46,99 @@ const scheduleSaveToast = (dateStr: string, count: number, date: Date, cleared: 
   saveToastTimers.set(dateStr, timer);
 };
 
+// Per-user debounced write queue. Module-level so writes survive component
+// unmount (e.g. route change immediately after tapping +10).
+type PendingWrite = {
+  count: number;
+  date: Date;
+  timer: ReturnType<typeof setTimeout> | null;
+};
+const pendingWrites = new Map<string, PendingWrite>(); // key: `${userId}|${dateStr}`
+
+const persistWrite = async (userId: string, dateStr: string) => {
+  const key = `${userId}|${dateStr}`;
+  const pending = pendingWrites.get(key);
+  if (!pending) return;
+  pendingWrites.delete(key);
+
+  const { count, date } = pending;
+  if (count === 0) {
+    const { error } = await supabase
+      .from("push_up_entries")
+      .delete()
+      .eq("user_id", userId)
+      .eq("date", dateStr);
+    if (error) {
+      toast({ title: "Failed to save", description: error.message, variant: "destructive" });
+    } else {
+      scheduleSaveToast(dateStr, 0, date, true);
+    }
+  } else {
+    const { error } = await supabase
+      .from("push_up_entries")
+      .upsert(
+        { user_id: userId, date: dateStr, count },
+        { onConflict: "user_id,date" }
+      );
+    if (error) {
+      toast({ title: "Failed to save", description: error.message, variant: "destructive" });
+    } else {
+      scheduleSaveToast(dateStr, count, date, false);
+    }
+  }
+};
+
+const flushAllForUser = async (userId: string) => {
+  const keys = Array.from(pendingWrites.keys()).filter(k => k.startsWith(`${userId}|`));
+  await Promise.all(
+    keys.map(k => {
+      const p = pendingWrites.get(k);
+      if (p?.timer) clearTimeout(p.timer);
+      if (p) p.timer = null;
+      const dateStr = k.slice(userId.length + 1);
+      return persistWrite(userId, dateStr);
+    })
+  );
+};
+
 export const usePushUpData = () => {
   const { user } = useAuth();
-  const [entries, setEntries] = useState<PushUpEntry[]>([]);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const queryClient = useQueryClient();
+  const userId = user?.id ?? null;
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["push-up-data", userId],
+    enabled: !!userId,
+    staleTime: STALE_MS,
+    queryFn: async (): Promise<UserData> => {
+      const [profileRes, entriesRes] = await Promise.all([
+        supabase.from("profiles").select("yearly_goal").eq("id", userId!).maybeSingle(),
+        supabase.from("push_up_entries").select("date, count").eq("user_id", userId!),
+      ]);
+      return {
+        profile: profileRes.data ?? null,
+        entries: (entriesRes.data ?? []).map(e => ({ date: e.date, count: e.count })),
+      };
+    },
+  });
+
+  const entries = data?.entries ?? [];
+  const profile = data?.profile ?? null;
   const yearlyGoal = profile?.yearly_goal ?? DEFAULT_YEARLY_GOAL;
   const dailyTarget = Math.round(yearlyGoal / 365);
+  const isLoaded = !userId ? true : !isLoading;
 
-  // Load data from database
+  // Flush pending writes on hide / unload so we never lose taps
   useEffect(() => {
-    if (!user) {
-      setEntries([]);
-      setProfile(null);
-      setIsLoaded(true);
-      return;
-    }
-
-    const loadData = async () => {
-      // Run both queries in parallel instead of sequentially
-      const [profileRes, entriesRes] = await Promise.all([
-        supabase.from("profiles").select("yearly_goal").eq("id", user.id).maybeSingle(),
-        supabase.from("push_up_entries").select("date, count").eq("user_id", user.id),
-      ]);
-
-      if (profileRes.data) setProfile(profileRes.data);
-      if (entriesRes.data) {
-        setEntries(entriesRes.data.map(e => ({ date: e.date, count: e.count })));
-      }
-
-      setIsLoaded(true);
+    if (!userId) return;
+    const onHide = () => { flushAllForUser(userId); };
+    window.addEventListener("visibilitychange", onHide);
+    window.addEventListener("pagehide", onHide);
+    return () => {
+      window.removeEventListener("visibilitychange", onHide);
+      window.removeEventListener("pagehide", onHide);
     };
-
-    loadData();
-  }, [user]);
+  }, [userId]);
 
   const getEntryForDate = useCallback(
     (date: Date): number => {
@@ -84,60 +150,40 @@ export const usePushUpData = () => {
   );
 
   const setEntryForDate = useCallback(async (date: Date, count: number) => {
-    if (!user) return;
+    if (!userId) return;
 
     // Defence-in-depth: clamp to match server CHECK constraint (0-9999)
     count = Math.max(0, Math.min(9999, Math.floor(Number(count) || 0)));
-
     const dateStr = format(date, "yyyy-MM-dd");
 
-    // Optimistic update
-    setEntries((prev) => {
-      const existingIndex = prev.findIndex((e) => e.date === dateStr);
-      const newEntries = [...prev];
-
+    // Optimistic cache update — all subscribers see new value immediately
+    queryClient.setQueryData<UserData>(["push-up-data", userId], (prev) => {
+      const base: UserData = prev ?? { profile, entries: [] };
+      const existingIndex = base.entries.findIndex((e) => e.date === dateStr);
+      const newEntries = [...base.entries];
       if (existingIndex >= 0) {
-        if (count === 0) {
-          newEntries.splice(existingIndex, 1);
-        } else {
-          newEntries[existingIndex] = { date: dateStr, count };
-        }
+        if (count === 0) newEntries.splice(existingIndex, 1);
+        else newEntries[existingIndex] = { date: dateStr, count };
       } else if (count > 0) {
         newEntries.push({ date: dateStr, count });
       }
-
-      return newEntries;
+      return { ...base, entries: newEntries };
     });
 
-    // Persist to database
-    if (count === 0) {
-      const { error } = await supabase
-        .from("push_up_entries")
-        .delete()
-        .eq("user_id", user.id)
-        .eq("date", dateStr);
-      
-      if (error) {
-        toast({ title: "Failed to save", description: error.message, variant: "destructive" });
-      } else {
-        scheduleSaveToast(dateStr, 0, date, true);
-      }
-    } else {
-      const { error } = await supabase
-        .from("push_up_entries")
-        .upsert({
-          user_id: user.id,
-          date: dateStr,
-          count,
-        }, { onConflict: "user_id,date" });
-      
-      if (error) {
-        toast({ title: "Failed to save", description: error.message, variant: "destructive" });
-      } else {
-        scheduleSaveToast(dateStr, count, date, false);
-      }
-    }
-  }, [user]);
+    // Debounce the network write — coalesce rapid taps into one upsert
+    const key = `${userId}|${dateStr}`;
+    const existing = pendingWrites.get(key);
+    if (existing?.timer) clearTimeout(existing.timer);
+    const entry: PendingWrite = { count, date, timer: null };
+    entry.timer = setTimeout(() => {
+      persistWrite(userId, dateStr).then(() => {
+        // Refresh group/leaderboard caches that depend on this user's entries
+        queryClient.invalidateQueries({ queryKey: ["group-entries"] });
+        queryClient.invalidateQueries({ queryKey: ["group-user-progress"] });
+      });
+    }, WRITE_DEBOUNCE_MS);
+    pendingWrites.set(key, entry);
+  }, [userId, queryClient, profile]);
 
   const getTotalPushUps = useCallback((): number => {
     return entries.reduce((sum, entry) => sum + entry.count, 0);
@@ -166,13 +212,11 @@ export const usePushUpData = () => {
     return !isAfter(targetDate, today);
   };
 
-  // Statistics functions
   const getCurrentStreak = useCallback((): number => {
     const today = new Date();
     let streak = 0;
     let checkDate = today;
 
-    // If today has no entry yet, don't break the streak — the day isn't over
     if (getEntryForDate(checkDate) > 0) {
       streak++;
       checkDate = subDays(checkDate, 1);
@@ -189,7 +233,7 @@ export const usePushUpData = () => {
         break;
       }
     }
-    
+
     return streak;
   }, [getEntryForDate]);
 
@@ -200,8 +244,6 @@ export const usePushUpData = () => {
     const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
     const total = getTotalPushUps();
     const behind = expectedByNow - total;
-    
-    // Convert push-ups behind to days behind
     if (behind <= 0) return 0;
     return Math.ceil(behind / dailyTarget);
   }, [getTotalPushUps, yearlyGoal, dailyTarget]);
@@ -236,18 +278,19 @@ export const usePushUpData = () => {
   }, [entries, yearlyGoal]);
 
   const setYearlyGoal = useCallback(async (newGoal: number) => {
-    if (!user) return;
-
-    // Defence-in-depth: server enforces yearly_goal > 0
+    if (!userId) return;
     const safeGoal = Math.max(1, Math.floor(Number(newGoal) || DEFAULT_YEARLY_GOAL));
 
-    setProfile(prev => prev ? { ...prev, yearly_goal: safeGoal } : { yearly_goal: safeGoal });
+    queryClient.setQueryData<UserData>(["push-up-data", userId], (prev) => {
+      const base: UserData = prev ?? { profile: null, entries: [] };
+      return { ...base, profile: { ...(base.profile ?? {}), yearly_goal: safeGoal } };
+    });
 
     await supabase
       .from("profiles")
       .update({ yearly_goal: safeGoal })
-      .eq("id", user.id);
-  }, [user]);
+      .eq("id", userId);
+  }, [userId, queryClient]);
 
   return {
     getEntryForDate,
@@ -260,7 +303,6 @@ export const usePushUpData = () => {
     yearlyGoal,
     dailyTarget,
     isLoaded,
-    // New statistics
     getCurrentStreak,
     getDaysBehindSchedule,
     getWeeklyAverage,

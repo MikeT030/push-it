@@ -1,36 +1,39 @@
-import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { getAvatarById, AvatarOption } from "@/data/avatars";
+import { getAvatarById } from "@/data/avatars";
+
+const STALE_MS = 5 * 60_000;
 
 export const useUserAvatar = () => {
   const { user } = useAuth();
-  const [avatarId, setAvatarId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
+  const userId = user?.id ?? null;
 
-  useEffect(() => {
-    if (!user) {
-      setIsLoading(false);
-      return;
-    }
-
-    const fetchAvatar = async () => {
+  const { data: avatarId = null, isLoading } = useQuery({
+    queryKey: ["avatar", userId],
+    enabled: !!userId,
+    staleTime: STALE_MS,
+    queryFn: async (): Promise<string | null> => {
       const { data } = await supabase
         .from("profiles")
         .select("avatar_url")
-        .eq("id", user.id)
+        .eq("id", userId!)
         .maybeSingle();
+      return data?.avatar_url ?? null;
+    },
+  });
 
-      if (data?.avatar_url) {
-        setAvatarId(data.avatar_url);
-      }
-      setIsLoading(false);
-    };
-
-    fetchAvatar();
-  }, [user]);
+  const setAvatarId = useCallback(
+    (next: string | null) => {
+      if (!userId) return;
+      queryClient.setQueryData(["avatar", userId], next);
+    },
+    [queryClient, userId]
+  );
 
   const avatar = getAvatarById(avatarId);
 
-  return { avatarId, avatar, isLoading, setAvatarId };
+  return { avatarId, avatar, isLoading: !!userId && isLoading, setAvatarId };
 };
