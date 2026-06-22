@@ -202,7 +202,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
               {/* Weekday distribution */}
               <section className="card-glass rounded-2xl p-5">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#7036FF]" />
+                  <Calendar className="w-4 h-4 text-white" />
                   Your push days
                 </h3>
                 <p className="text-xs text-muted-foreground mb-4">
