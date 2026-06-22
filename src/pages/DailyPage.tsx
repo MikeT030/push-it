@@ -19,6 +19,9 @@ import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
 import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 import controllerIcon from "@/assets/controller.svg";
+import InsightsCard from "@/components/InsightsCard";
+import { useAuth } from "@/contexts/AuthContext";
+import { useGroupEntries } from "@/hooks/useGroupData";
 const DailyPage = () => {
   
   const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
