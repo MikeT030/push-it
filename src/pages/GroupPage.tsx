@@ -20,7 +20,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
-import InsightsCard from "@/components/InsightsCard";
+
+
 
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
