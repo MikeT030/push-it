@@ -45,9 +45,23 @@ const WelcomePageV2 = () => {
       toast.error("Please choose a daily push-up goal");
       return;
     }
-    const goal = Math.min(999999, projectedTotal);
     setIsSubmitting(true);
     try {
+      // Sum everything the user has already pushed so the new goal builds
+      // on top of existing progress (same mechanic as the wrench button).
+      const { data: entries, error: entriesError } = await supabase
+        .from("push_up_entries")
+        .select("count")
+        .eq("user_id", user.id);
+      if (entriesError) {
+        toast.error(entriesError.message);
+        return;
+      }
+      const currentTotal = (entries ?? []).reduce(
+        (sum, e) => sum + (Number(e.count) || 0),
+        0,
+      );
+      const goal = Math.min(999999, currentTotal + projectedTotal);
       const { error } = await supabase
         .from("profiles")
         .update({ yearly_goal: goal, onboarded: true })
@@ -64,6 +78,7 @@ const WelcomePageV2 = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <div className="relative min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12 overflow-hidden">
