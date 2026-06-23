@@ -192,35 +192,17 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
                 </h3>
                 <h4 className="text-xs font-semibold text-foreground mt-[10px] mb-4">Most Push-Ups</h4>
 
-                {bestsVariant === 1 && (
-                  <div className="divide-y divide-[#3B404F]">
-                    <div className="pb-4">
-                      <BestRow label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
-                    </div>
-                    <div className="py-4">
-                      <BestRow label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
-                    </div>
-                    <div className="pt-4">
-                      <BestRow label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
-                    </div>
+                <div className="divide-y divide-[#3B404F]">
+                  <div className="pb-4">
+                    <BestRow label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
                   </div>
-                )}
-
-                {bestsVariant === 2 && (
-                  <div className="grid grid-cols-3 gap-3">
-                    <BestTile label="Day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
-                    <BestTile label="Week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
-                    <BestTile label="Month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
+                  <div className="py-4">
+                    <BestRow label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
                   </div>
-                )}
-
-                {bestsVariant === 3 && (
-                  <div>
-                    <BestListItem label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
-                    <BestListItem label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
-                    <BestListItem label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} last />
+                  <div className="pt-4">
+                    <BestRow label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
                   </div>
-                )}
+                </div>
               </section>
 
               {/* Winner counts */}
