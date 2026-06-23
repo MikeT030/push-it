@@ -116,6 +116,7 @@ const AppContent = () => {
               <WelcomePageV2 />
             </ProtectedRoute>
           }
+        />
         <Route
           path="/welcome-recalibrate"
           element={
