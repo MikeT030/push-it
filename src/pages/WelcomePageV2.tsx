@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-const PRESET_TIERS = [82, 90, 100, 110];
+const PRESET_TIERS = [82, 90, 100];
 
 const WelcomePageV2 = () => {
   const { user } = useAuth();
