@@ -219,7 +219,6 @@ const AdminPage = () => {
             <InsightsCard
               userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
               allEntries={realAllEntries}
-              colorVariant="sky"
             />
           </div>
 
