@@ -277,35 +277,6 @@ const BestTile = ({ label, value, sub }: { label: string; value: number; sub: st
   </div>
 );
 
-const BestListItem = ({
-  label,
-  value,
-  sub,
-  last,
-}: {
-  label: string;
-  value: number;
-  sub: string;
-  last?: boolean;
-}) => (
-  <div
-    className={`flex items-center justify-between gap-3 py-3 ${
-      last ? "" : "border-b border-[#575F78]/40"
-    }`}
-  >
-    <div className="flex items-center gap-3 min-w-0">
-      <Trophy className="w-4 h-4 text-[#0ABAB5] shrink-0" />
-      <div className="min-w-0">
-        <p className="text-sm text-foreground">Most {label}</p>
-        <p className="text-xs text-muted-foreground truncate">{sub}</p>
-      </div>
-    </div>
-    <p className="text-xl font-black text-foreground whitespace-nowrap">
-      {value.toLocaleString()}
-      <span className="text-xs font-medium text-muted-foreground ml-1">PU</span>
-    </p>
-  </div>
-);
 
 
 const WinCell = ({ label, value }: { label: string; value: number }) => (
