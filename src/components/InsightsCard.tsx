@@ -6,7 +6,14 @@ import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
 import wreathIcon from "@/assets/medal.svg";
 
-type InsightsColorVariant = "teal" | "purple" | "magenta" | "amber";
+type InsightsColorVariant =
+  | "teal"
+  | "purple"
+  | "magenta"
+  | "amber"
+  | "crimson"
+  | "emerald"
+  | "sky";
 
 interface InsightsCardProps {
   userId: string | null;
@@ -19,6 +26,9 @@ const VARIANT_COLORS: Record<InsightsColorVariant, string> = {
   purple: "#7036FF",
   magenta: "#C029DE",
   amber: "#F5A623",
+  crimson: "#FF2C55",
+  emerald: "#22C55E",
+  sky: "#38BDF8",
 };
 
 const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
