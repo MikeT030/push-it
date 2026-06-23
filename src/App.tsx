@@ -47,6 +47,7 @@ const ResetPasswordPage = lazyWithRetry(() => import("./pages/ResetPasswordPage"
 const AdminPage = lazyWithRetry(() => import("./pages/AdminPage"));
 const WelcomePage = lazyWithRetry(() => import("./pages/WelcomePage"));
 const WelcomePageV2 = lazyWithRetry(() => import("./pages/WelcomePageV2"));
+const WelcomeRecalibratePage = lazyWithRetry(() => import("./pages/WelcomeRecalibratePage"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -113,6 +114,14 @@ const AppContent = () => {
           element={
             <ProtectedRoute>
               <WelcomePageV2 />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/welcome-recalibrate"
+          element={
+            <ProtectedRoute>
+              <WelcomeRecalibratePage />
             </ProtectedRoute>
           }
         />
