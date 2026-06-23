@@ -137,7 +137,12 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
       <SheetContent
         side="bottom"
         hideCloseButton
-        className="h-[100dvh] w-full max-w-none rounded-none border-none bg-background p-0 overflow-y-auto"
+        className="h-[100dvh] w-full max-w-none rounded-none border-none p-0 overflow-y-auto"
+        style={{
+          backgroundColor: "#101214",
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.14 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\"), radial-gradient(ellipse at top left, #0C2544 0%, #101214 90%)",
+        }}
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-6 mt-5">
