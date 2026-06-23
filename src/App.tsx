@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { useOnboarded } from "@/hooks/useOnboarded";
+import { useHasEntries } from "@/hooks/useHasEntries";
 import { useGoalHit } from "@/hooks/useGoalHit";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
@@ -54,11 +54,11 @@ const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  const { onboarded, isLoading: onboardedLoading } = useOnboarded();
+  const { hasEntries, isLoading: entriesLoading } = useHasEntries();
   const { hit30k, isLoading: goalHitLoading } = useGoalHit();
   const location = useLocation();
 
-  if (loading || (user && (onboardedLoading || goalHitLoading))) {
+  if (loading || (user && (entriesLoading || goalHitLoading))) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -73,7 +73,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/auth" replace />;
   }
 
-  if (onboarded === true && location.pathname !== "/welcome") {
+  if (hasEntries === false && location.pathname !== "/welcome") {
     return <Navigate to="/welcome" replace />;
   }
 
