@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { useOnboarded } from "@/hooks/useOnboarded";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
@@ -43,14 +44,17 @@ const AuthPage = lazyWithRetry(() => import("./pages/AuthPage"));
 const ForgotPasswordPage = lazyWithRetry(() => import("./pages/ForgotPasswordPage"));
 const ResetPasswordPage = lazyWithRetry(() => import("./pages/ResetPasswordPage"));
 const AdminPage = lazyWithRetry(() => import("./pages/AdminPage"));
+const WelcomePage = lazyWithRetry(() => import("./pages/WelcomePage"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
+  const { onboarded, isLoading: onboardedLoading } = useOnboarded();
+  const location = useLocation();
 
-  if (loading) {
+  if (loading || (user && onboardedLoading)) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -63,6 +67,10 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) {
     return <Navigate to="/auth" replace />;
+  }
+
+  if (onboarded === false && location.pathname !== "/welcome") {
+    return <Navigate to="/welcome" replace />;
   }
 
   return <>{children}</>;
@@ -85,6 +93,14 @@ const AppContent = () => {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/welcome"
+          element={
+            <ProtectedRoute>
+              <WelcomePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/"
           element={
