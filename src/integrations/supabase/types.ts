@@ -21,6 +21,7 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          onboarded: boolean
           updated_at: string
           yearly_goal: number
         }
@@ -30,6 +31,7 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id: string
+          onboarded?: boolean
           updated_at?: string
           yearly_goal?: number
         }
@@ -39,6 +41,7 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
+          onboarded?: boolean
           updated_at?: string
           yearly_goal?: number
         }
