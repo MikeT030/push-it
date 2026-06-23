@@ -201,8 +201,12 @@ const TotalPage = () => {
         {/* Weekly Overview & Goal Cards Grid */}
         <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: "0.15s" }}>
           {/* Weekly Overview Card */}
+        {/* Weekly Overview & Goal Cards Grid */}
+        <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: "0.15s" }}>
+          {/* Weekly Overview Card */}
           <WeeklyOverview />
         </div>
+
 
         {/* Main Progress Card */}
           <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] px-[10px] border border-[#3B404F] pb-[10px] mb-0" style={{ animationDelay: "0.25s" }}>
