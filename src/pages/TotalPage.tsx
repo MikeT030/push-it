@@ -200,7 +200,7 @@ const TotalPage = () => {
 
         {/* Your Insights */}
         <div className="animate-slide-up" style={{ animationDelay: "0.13s" }}>
-          <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
+          <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} colorVariant="sky" />
         </div>
 
         {/* Weekly Overview & Goal Cards Grid */}
