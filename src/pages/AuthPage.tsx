@@ -12,11 +12,12 @@ const emailSchema = z.string().email("Invalid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
 
 const AuthPage = () => {
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showContent, setShowContent] = useState(() => sessionStorage.getItem("splashShown") === "true");
-  const { signIn, user } = useAuth();
+  const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,16 +56,25 @@ const AuthPage = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await signIn(email, password);
-      if (error) {
-        if (error.message.includes("Invalid login credentials")) {
-          toast.error("Invalid email or password");
-        } else {
+      if (mode === "signup") {
+        const { error } = await signUp(email, password);
+        if (error) {
           toast.error(error.message);
+        } else {
+          toast.success("Account created! Check your email to confirm.");
         }
       } else {
-        toast.success("Welcome, push Buddy!");
-        navigate("/");
+        const { error } = await signIn(email, password);
+        if (error) {
+          if (error.message.includes("Invalid login credentials")) {
+            toast.error("Invalid email or password");
+          } else {
+            toast.error(error.message);
+          }
+        } else {
+          toast.success("Welcome, push Buddy!");
+          navigate("/");
+        }
       }
     } finally {
       setIsSubmitting(false);
@@ -121,24 +131,32 @@ const AuthPage = () => {
               disabled={isSubmitting}
               className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
             >
-              {isSubmitting ? "Please wait..." : "Sign In"}
+              {isSubmitting ? "Please wait..." : mode === "signup" ? "Create Account" : "Sign In"}
             </Button>
 
-            <div className="text-center">
-              <Link
-                to="/forgot-password"
-                className="text-sm text-muted-foreground hover:text-primary hover:underline"
-              >
-                Forgot password?
-              </Link>
-            </div>
+            {mode === "signin" && (
+              <div className="text-center">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-muted-foreground hover:text-primary hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            )}
           </form>
 
-          {/* Sign-ups disabled */}
+          {/* Toggle sign-in/sign-up */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              New registrations are temporarily disabled.
-            </p>
+            <button
+              type="button"
+              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+              className="text-sm text-muted-foreground hover:text-primary hover:underline"
+            >
+              {mode === "signin"
+                ? "New here? Create an account"
+                : "Already have an account? Sign in"}
+            </button>
           </div>
         </div>
 
