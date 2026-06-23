@@ -6,15 +6,27 @@ import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
 import wreathIcon from "@/assets/medal.svg";
 
+type InsightsColorVariant = "teal" | "purple" | "magenta" | "amber";
+
 interface InsightsCardProps {
   userId: string | null;
   allEntries: GroupEntry[];
+  colorVariant?: InsightsColorVariant;
 }
+
+const VARIANT_COLORS: Record<InsightsColorVariant, string> = {
+  teal: "#0ABAB5",
+  purple: "#7036FF",
+  magenta: "#C029DE",
+  amber: "#F5A623",
+};
 
 const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
+const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCardProps) => {
   const [open, setOpen] = useState(false);
+  const accent = VARIANT_COLORS[colorVariant];
+
   
 
   const insights = useMemo(() => {
