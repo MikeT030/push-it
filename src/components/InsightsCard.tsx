@@ -127,7 +127,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
         <SheetTrigger asChild>
           <button
             disabled={!userId}
-            className="mt-4 w-full py-[11px] rounded-2xl border border-[#0ABAB5]/70 text-[#0ABAB5] bg-transparent font-medium shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)] transition-all duration-200 active:translate-y-[1px] disabled:opacity-40 disabled:cursor-not-allowed"
+            className="mt-4 w-full flex items-center justify-center py-[11px] rounded-2xl border border-[#0ABAB5]/70 text-[#0ABAB5] font-semibold text-sm translate-y-[1px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Get your insights
           </button>
