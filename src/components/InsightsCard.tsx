@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef, useEffect } from "react";
 import { format, parseISO, startOfWeek, startOfMonth, getDay } from "date-fns";
-import { Sparkles, X, Trophy, Flame, Calendar, TrendingUp } from "lucide-react";
+import { Sparkles, X, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
@@ -15,7 +15,7 @@ const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
   const [open, setOpen] = useState(false);
-  const [bestsVariant, setBestsVariant] = useState<1 | 2 | 3>(1);
+  
 
   const insights = useMemo(() => {
     if (!userId) {
@@ -149,23 +149,6 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
             <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-[#0ABAB5]" />
               Insights
-              <div className="flex items-center gap-1 ml-2">
-                {[1, 2, 3].map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setBestsVariant(v as 1 | 2 | 3)}
-                    aria-label={`Personal bests version ${v}`}
-                    className={`w-6 h-6 rounded-full text-[11px] font-bold border transition-colors flex items-center justify-center ${
-                      bestsVariant === v
-                        ? "border-[#0ABAB5] bg-[#0ABAB5]/10 text-[#0ABAB5]"
-                        : "border-[#3B404F] text-muted-foreground hover:border-[#0ABAB5]/50"
-                    }`}
-                  >
-                    {v}
-                  </button>
-                ))}
-              </div>
             </h2>
             <button
               onClick={() => setOpen(false)}
@@ -192,35 +175,17 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
                 </h3>
                 <h4 className="text-xs font-semibold text-foreground mt-[10px] mb-4">Most Push-Ups</h4>
 
-                {bestsVariant === 1 && (
-                  <div className="divide-y divide-[#3B404F]">
-                    <div className="pb-4">
-                      <BestRow label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
-                    </div>
-                    <div className="py-4">
-                      <BestRow label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
-                    </div>
-                    <div className="pt-4">
-                      <BestRow label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
-                    </div>
+                <div className="divide-y divide-[#3B404F]">
+                  <div className="pb-4">
+                    <BestRow label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
                   </div>
-                )}
-
-                {bestsVariant === 2 && (
-                  <div className="grid grid-cols-3 gap-3">
-                    <BestTile label="Day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
-                    <BestTile label="Week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
-                    <BestTile label="Month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
+                  <div className="py-4">
+                    <BestRow label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
                   </div>
-                )}
-
-                {bestsVariant === 3 && (
-                  <div>
-                    <BestListItem label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
-                    <BestListItem label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
-                    <BestListItem label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} last />
+                  <div className="pt-4">
+                    <BestRow label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
                   </div>
-                )}
+                </div>
               </section>
 
               {/* Winner counts */}
@@ -266,46 +231,7 @@ const BestRow = ({ label, value, sub }: { label: string; value: number; sub: str
   </div>
 );
 
-const BestTile = ({ label, value, sub }: { label: string; value: number; sub: string }) => (
-  <div className="bg-card/40 border border-[#3B404F] rounded-2xl p-3 flex flex-col items-start text-left">
-    <p className="text-[11px] uppercase tracking-wider text-muted-foreground">{label}</p>
-    <p className="text-2xl font-black text-foreground mt-1 whitespace-nowrap">
-      {value.toLocaleString()}
-      <span className="text-[10px] font-medium text-muted-foreground ml-1">PU</span>
-    </p>
-    <p className="text-[10px] text-muted-foreground mt-1 leading-tight">{sub}</p>
-  </div>
-);
 
-const BestListItem = ({
-  label,
-  value,
-  sub,
-  last,
-}: {
-  label: string;
-  value: number;
-  sub: string;
-  last?: boolean;
-}) => (
-  <div
-    className={`flex items-center justify-between gap-3 py-3 ${
-      last ? "" : "border-b border-[#575F78]/40"
-    }`}
-  >
-    <div className="flex items-center gap-3 min-w-0">
-      <Trophy className="w-4 h-4 text-[#0ABAB5] shrink-0" />
-      <div className="min-w-0">
-        <p className="text-sm text-foreground">Most {label}</p>
-        <p className="text-xs text-muted-foreground truncate">{sub}</p>
-      </div>
-    </div>
-    <p className="text-xl font-black text-foreground whitespace-nowrap">
-      {value.toLocaleString()}
-      <span className="text-xs font-medium text-muted-foreground ml-1">PU</span>
-    </p>
-  </div>
-);
 
 
 const WinCell = ({ label, value }: { label: string; value: number }) => (
