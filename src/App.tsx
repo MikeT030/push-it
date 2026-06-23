@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { useOnboarded } from "@/hooks/useOnboarded";
+import { useGoalHit } from "@/hooks/useGoalHit";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
@@ -53,9 +54,10 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   const { onboarded, isLoading: onboardedLoading } = useOnboarded();
+  const { hit30k, isLoading: goalHitLoading } = useGoalHit();
   const location = useLocation();
 
-  if (loading || (user && onboardedLoading)) {
+  if (loading || (user && (onboardedLoading || goalHitLoading))) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -72,6 +74,10 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   if (onboarded === false && location.pathname !== "/welcome") {
     return <Navigate to="/welcome" replace />;
+  }
+
+  if (hit30k && location.pathname !== "/welcome-v2") {
+    return <Navigate to="/welcome-v2" replace />;
   }
 
   return <>{children}</>;
