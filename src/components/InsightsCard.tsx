@@ -140,8 +140,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <div
-        className="rounded-2xl p-5 animate-slide-up border bg-transparent"
-        style={{ borderColor: accent }}
+        className="rounded-2xl p-5 animate-slide-up border border-transparent bg-transparent"
       >
         <SheetTrigger asChild>
           <Button
