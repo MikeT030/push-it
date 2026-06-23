@@ -204,7 +204,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
             <div className="space-y-4 mt-5">
               {/* Personal bests */}
               <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
-                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-2">
+                <h3 className="text-lg text-foreground font-semibold mb-1 flex items-center gap-2">
                   <Flame className="w-4 h-4 text-[#FF2C2C]" fill="#FF2C2C" />
                   Personal bests
                 </h3>
@@ -225,7 +225,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
 
               {/* Winner counts */}
               <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
-                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
+                <h3 className="text-lg text-foreground font-semibold mb-4 flex items-center gap-2">
                   <img src={wreathIcon} alt="" className="w-4 h-4" />
                   Group wins
                 </h3>
@@ -238,7 +238,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
 
               {/* Weekday distribution */}
               <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
-                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
+                <h3 className="text-lg text-foreground font-semibold mb-4 flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-white" />
                   Your push days
                 </h3>
