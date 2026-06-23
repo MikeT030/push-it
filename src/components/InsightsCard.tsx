@@ -153,14 +153,14 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
               color: accent,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = accent;
+              e.currentTarget.style.backgroundColor = `${accent}B3`;
               e.currentTarget.style.color = "#ffffff";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = `${accent}1A`;
               e.currentTarget.style.color = accent;
             }}
-            onMouseDown={(e) => (e.currentTarget.style.color = "#ffffff")}
+            onMouseDown={(e) => (e.currentTarget.style.backgroundColor = `${accent}B3`)}
           >
             <Sparkles className="w-5 h-5" />
             Get your insights
