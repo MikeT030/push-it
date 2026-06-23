@@ -303,7 +303,7 @@ const BestListItem = ({
 
 
 const WinCell = ({ label, value }: { label: string; value: number }) => (
-  <div className="rounded-xl border border-[#3B404F] p-3 flex flex-col items-center">
+  <div className="card-glass rounded-2xl p-3 flex flex-col items-center">
     <p className="text-2xl font-black text-foreground">{value}</p>
     <p className="text-[11px] text-muted-foreground mt-1">{label}</p>
   </div>
