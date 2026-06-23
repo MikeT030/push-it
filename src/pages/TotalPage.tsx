@@ -13,6 +13,9 @@ import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
 import DailySection from "@/components/DailySection";
+import InsightsCard from "@/components/InsightsCard";
+import { useGroupEntries } from "@/hooks/useGroupData";
+import { useAuth } from "@/contexts/AuthContext";
 
 const TotalPage = () => {
   const navigate = useNavigate();
