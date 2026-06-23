@@ -89,7 +89,7 @@ const WelcomePageV2 = () => {
         </div>
 
         {showRest && (
-        <div className="animate-fade-in">
+        <div className="animate-fade-in -mt-5">
 
         {/* Tier options */}
         <div className="space-y-3">
