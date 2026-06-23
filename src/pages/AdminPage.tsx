@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { ArrowLeft, Shield, Download, Users } from "lucide-react";
+import { ArrowLeft, Shield, Download, Users, Target } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { Button } from "@/components/ui/button";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
@@ -176,6 +176,18 @@ const AdminPage = () => {
               Users Backup
             </Button>
           </div>
+        </div>
+
+        {/* Recalibrate Goal */}
+        <div className="bg-card/40 rounded-2xl mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.035s" }}>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/welcome")}
+            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+          >
+            <Target className="w-4 h-4 mr-2" />
+            Recalibrate Your Goal
+          </Button>
         </div>
 
         {/* Demo Your Insights Card */}
