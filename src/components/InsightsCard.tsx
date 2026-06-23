@@ -125,12 +125,13 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
           </h2>
         </div>
         <SheetTrigger asChild>
-          <button
+          <Button
+            variant="outline"
             disabled={!userId}
-            className="mt-4 w-full flex items-center justify-center py-[11px] rounded-2xl border border-[#0ABAB5]/70 text-[#0ABAB5] font-semibold text-sm translate-y-[1px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="mt-4 w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
           >
             Get your insights
-          </button>
+          </Button>
         </SheetTrigger>
       </div>
 
