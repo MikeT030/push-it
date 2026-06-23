@@ -117,7 +117,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <div className="card-glass rounded-2xl p-5 animate-slide-up">
+      <div className="rounded-2xl p-5 animate-slide-up border border-[#0ABAB5] bg-transparent">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-xl font-medium text-foreground flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-[#0ABAB5]" />
@@ -125,12 +125,12 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
           </h2>
         </div>
         <SheetTrigger asChild>
-          <Button
-            className="mt-4 w-full rounded-full bg-[#0ABAB5] text-black hover:bg-[#0ABAB5]/90 font-semibold"
+          <button
             disabled={!userId}
+            className="mt-4 w-full py-[11px] rounded-2xl border border-[#0ABAB5]/70 text-[#0ABAB5] bg-transparent font-medium shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),inset_0_-1px_0_rgba(255,255,255,0.05)] transition-all duration-200 active:translate-y-[1px] disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Get your insights
-          </Button>
+          </button>
         </SheetTrigger>
       </div>
 
