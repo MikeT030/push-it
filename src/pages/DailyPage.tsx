@@ -13,6 +13,9 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useGame } from "@/contexts/GameContext";
 import WeeklyOverview from "@/components/WeeklyOverview";
+import InsightsCard from "@/components/InsightsCard";
+import { useGroupEntries } from "@/hooks/useGroupData";
+import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { Switch } from "@/components/ui/switch";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
@@ -29,6 +32,9 @@ const DailyPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(true);
+  const { user: authUser } = useAuth();
+  const groupEntriesQuery = useGroupEntries();
+  const allEntries = groupEntriesQuery.data || [];
   const {
     isGameActive
   } = useGame();
@@ -195,6 +201,11 @@ const DailyPage = () => {
           </button>
         </div>
 
+
+        {/* Your Insights */}
+        <div className="mt-6 mb-6 animate-slide-up" style={{ animationDelay: "0.18s" }}>
+          <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
+        </div>
 
         {/* Weekly Overview */}
         <div className={`mt-6 mb-6 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{ animationDelay: "0.2s" }}>
