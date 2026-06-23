@@ -12,11 +12,12 @@ const emailSchema = z.string().email("Invalid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
 
 const AuthPage = () => {
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showContent, setShowContent] = useState(() => sessionStorage.getItem("splashShown") === "true");
-  const { signIn, user } = useAuth();
+  const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
