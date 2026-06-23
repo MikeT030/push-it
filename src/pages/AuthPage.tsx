@@ -131,24 +131,32 @@ const AuthPage = () => {
               disabled={isSubmitting}
               className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
             >
-              {isSubmitting ? "Please wait..." : "Sign In"}
+              {isSubmitting ? "Please wait..." : mode === "signup" ? "Create Account" : "Sign In"}
             </Button>
 
-            <div className="text-center">
-              <Link
-                to="/forgot-password"
-                className="text-sm text-muted-foreground hover:text-primary hover:underline"
-              >
-                Forgot password?
-              </Link>
-            </div>
+            {mode === "signin" && (
+              <div className="text-center">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-muted-foreground hover:text-primary hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            )}
           </form>
 
-          {/* Sign-ups disabled */}
+          {/* Toggle sign-in/sign-up */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              New registrations are temporarily disabled.
-            </p>
+            <button
+              type="button"
+              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+              className="text-sm text-muted-foreground hover:text-primary hover:underline"
+            >
+              {mode === "signin"
+                ? "New here? Create an account"
+                : "Already have an account? Sign in"}
+            </button>
           </div>
         </div>
 
