@@ -261,7 +261,7 @@ const BestRow = ({ label, value, sub }: { label: string; value: number; sub: str
 );
 
 const BestTile = ({ label, value, sub }: { label: string; value: number; sub: string }) => (
-  <div className="rounded-xl border border-[#3B404F] bg-card/40 p-3 flex flex-col items-start text-left">
+  <div className="card-glass rounded-2xl p-3 flex flex-col items-start text-left">
     <p className="text-[11px] uppercase tracking-wider text-muted-foreground">{label}</p>
     <p className="text-2xl font-black text-foreground mt-1 whitespace-nowrap">
       {value.toLocaleString()}
