@@ -56,16 +56,25 @@ const AuthPage = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await signIn(email, password);
-      if (error) {
-        if (error.message.includes("Invalid login credentials")) {
-          toast.error("Invalid email or password");
-        } else {
+      if (mode === "signup") {
+        const { error } = await signUp(email, password);
+        if (error) {
           toast.error(error.message);
+        } else {
+          toast.success("Account created! Check your email to confirm.");
         }
       } else {
-        toast.success("Welcome, push Buddy!");
-        navigate("/");
+        const { error } = await signIn(email, password);
+        if (error) {
+          if (error.message.includes("Invalid login credentials")) {
+            toast.error("Invalid email or password");
+          } else {
+            toast.error(error.message);
+          }
+        } else {
+          toast.success("Welcome, push Buddy!");
+          navigate("/");
+        }
       }
     } finally {
       setIsSubmitting(false);
