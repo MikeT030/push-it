@@ -248,8 +248,8 @@ const BestRow = ({ label, value, sub }: { label: string; value: number; sub: str
   <div className="flex flex-col items-start">
     <p className="text-2xl font-black text-foreground whitespace-nowrap">
       {value.toLocaleString()}
-      <span className="text-xs font-medium text-muted-foreground ml-1">PU</span>
-      <span className="text-xs font-medium text-muted-foreground ml-1">{label}</span>
+      <span className="text-2xl font-normal text-muted-foreground ml-1">PU</span>
+      <span className="text-2xl font-normal text-muted-foreground ml-1">{label}</span>
     </p>
     <p className="text-xs text-muted-foreground mt-1">{sub}</p>
   </div>
