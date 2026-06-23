@@ -198,7 +198,7 @@ const AdminPage = () => {
             className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
           >
             <Target className="w-4 h-4 mr-2" />
-            Welcome
+            Recalibrate your Pushups
           </Button>
         </div>
 
