@@ -30,6 +30,9 @@ const TotalPage = () => {
     isLoaded
   } = usePushUpData();
   const { avatar } = useUserAvatar();
+  const { user: authUser } = useAuth();
+  const groupEntriesQuery = useGroupEntries();
+  const allEntries = groupEntriesQuery.data || [];
 
   const BASE_GOAL = 30000;
   const [showGoalAdjust, setShowGoalAdjust] = useState(false);
