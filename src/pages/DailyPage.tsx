@@ -32,6 +32,9 @@ const DailyPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(true);
+  const { user: authUser } = useAuth();
+  const groupEntriesQuery = useGroupEntries();
+  const allEntries = groupEntriesQuery.data || [];
   const {
     isGameActive
   } = useGame();
