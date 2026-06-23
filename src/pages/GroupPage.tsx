@@ -8,7 +8,6 @@ import defaultAvatarList from "@/assets/default-avatar-list.svg";
 import LeaderboardPodium from "@/components/LeaderboardPodium";
 import { getAvatarById } from "@/data/avatars";
 import WeeklyGroupOverview from "@/components/WeeklyGroupOverview";
-import InsightsCard from "@/components/InsightsCard";
 import DailyGroupOverview from "@/components/DailyGroupOverview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
