@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { differenceInCalendarDays, endOfYear } from "date-fns";
 import smallCircleIcon from "@/assets/small-circle-icon.svg";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import Fireworks from "@/components/Fireworks";
 
 const PRESET_TIERS = [82, 90, 100];
 
@@ -20,6 +21,12 @@ const WelcomePageV2 = () => {
   const [selected, setSelected] = useState<number | "custom">(82);
   const [customValue, setCustomValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showRest, setShowRest] = useState(false);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setShowRest(true), 5000);
+    return () => window.clearTimeout(t);
+  }, []);
 
   const daysRemaining = useMemo(() => {
     const today = new Date();
