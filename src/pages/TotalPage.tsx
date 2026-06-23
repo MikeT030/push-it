@@ -13,6 +13,9 @@ import ProgressRing from "@/components/ProgressRing";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
 import DailySection from "@/components/DailySection";
+import InsightsCard from "@/components/InsightsCard";
+import { useGroupEntries } from "@/hooks/useGroupData";
+import { useAuth } from "@/contexts/AuthContext";
 
 const TotalPage = () => {
   const navigate = useNavigate();
@@ -27,6 +30,9 @@ const TotalPage = () => {
     isLoaded
   } = usePushUpData();
   const { avatar } = useUserAvatar();
+  const { user: authUser } = useAuth();
+  const groupEntriesQuery = useGroupEntries();
+  const allEntries = groupEntriesQuery.data || [];
 
   const BASE_GOAL = 30000;
   const [showGoalAdjust, setShowGoalAdjust] = useState(false);
@@ -192,11 +198,17 @@ const TotalPage = () => {
           <DailySection />
         </div>
 
+        {/* Your Insights */}
+        <div className="animate-slide-up" style={{ animationDelay: "0.13s" }}>
+          <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
+        </div>
+
         {/* Weekly Overview & Goal Cards Grid */}
         <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: "0.15s" }}>
           {/* Weekly Overview Card */}
           <WeeklyOverview />
         </div>
+
 
         {/* Main Progress Card */}
           <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] px-[10px] border border-[#3B404F] pb-[10px] mb-0" style={{ animationDelay: "0.25s" }}>
