@@ -179,51 +179,60 @@ const AdminPage = () => {
 
         {/* Demo Your Insights Card */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
-          <h2 className="text-lg text-foreground font-semibold mb-2">
-            Demo Your Insights
-          </h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            Sandbox copy of the Your Insights card. Edit it here before rolling
-            changes out to all users.
-          </p>
-          <InsightsCard
-            userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
-            allEntries={realAllEntries}
-          />
-          <div className="mt-4 space-y-4">
-            <InsightsCard
-              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
-              allEntries={realAllEntries}
-              colorVariant="purple"
-            />
-            <InsightsCard
-              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
-              allEntries={realAllEntries}
-              colorVariant="magenta"
-            />
-            <InsightsCard
-              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
-              allEntries={realAllEntries}
-              colorVariant="amber"
-            />
-            <InsightsCard
-              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
-              allEntries={realAllEntries}
-              colorVariant="crimson"
-            />
-            <InsightsCard
-              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
-              allEntries={realAllEntries}
-              colorVariant="emerald"
-            />
-            <InsightsCard
-              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
-              allEntries={realAllEntries}
-            />
-          </div>
-
-
+          <Accordion type="single" collapsible>
+            <AccordionItem value="demo-insights" className="border-none">
+              <AccordionTrigger className="hover:no-underline py-2">
+                <div className="text-left">
+                  <h2 className="text-lg text-foreground font-semibold">
+                    Demo Your Insights
+                  </h2>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Sandbox copy of the Your Insights card. Edit it here before rolling
+                    changes out to all users.
+                  </p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <InsightsCard
+                  userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+                  allEntries={realAllEntries}
+                />
+                <div className="mt-4 space-y-4">
+                  <InsightsCard
+                    userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+                    allEntries={realAllEntries}
+                    colorVariant="purple"
+                  />
+                  <InsightsCard
+                    userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+                    allEntries={realAllEntries}
+                    colorVariant="magenta"
+                  />
+                  <InsightsCard
+                    userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+                    allEntries={realAllEntries}
+                    colorVariant="amber"
+                  />
+                  <InsightsCard
+                    userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+                    allEntries={realAllEntries}
+                    colorVariant="crimson"
+                  />
+                  <InsightsCard
+                    userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+                    allEntries={realAllEntries}
+                    colorVariant="emerald"
+                  />
+                  <InsightsCard
+                    userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+                    allEntries={realAllEntries}
+                  />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
+
 
         {/* Welcome V2 preview */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.032s" }}>
