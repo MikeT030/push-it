@@ -59,8 +59,9 @@ const WelcomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-[88px] pb-12">
-      <div className="w-full max-w-sm animate-fade-in">
+    <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
+      <div className="w-full max-w-sm animate-fade-in mt-10">
+
         {/* Header */}
         <div className="text-center mb-8 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
