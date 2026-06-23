@@ -67,8 +67,8 @@ const WelcomePageV2 = () => {
 
   return (
     <div className="relative min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12 overflow-hidden">
-      {/* Fireworks: from lower third up to top of page */}
-      <Fireworks className="pointer-events-none absolute inset-x-0 top-0 h-[66vh] z-0" />
+      {/* Fireworks: full screen background */}
+      <Fireworks className="pointer-events-none absolute inset-0 z-0" />
 
       <div className="relative z-10 w-full max-w-sm mt-10">
 
