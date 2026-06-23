@@ -202,6 +202,11 @@ const DailyPage = () => {
         </div>
 
 
+        {/* Your Insights */}
+        <div className="mt-6 mb-6 animate-slide-up" style={{ animationDelay: "0.18s" }}>
+          <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
+        </div>
+
         {/* Weekly Overview */}
         <div className={`mt-6 mb-6 animate-slide-up transition-opacity ${isGameActive ? "pointer-events-none opacity-50" : ""}`} style={{ animationDelay: "0.2s" }}>
           <WeeklyOverview />
