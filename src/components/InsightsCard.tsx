@@ -146,14 +146,21 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
           <Button
             variant="outline"
             disabled={!userId}
-            className="w-full h-12 hover:text-white active:text-white gap-2"
+            className="w-full h-12 gap-2"
             style={{
               backgroundColor: `${accent}1A`,
               borderColor: accent,
               color: accent,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = accent)}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = `${accent}1A`)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = accent;
+              e.currentTarget.style.color = "#ffffff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = `${accent}1A`;
+              e.currentTarget.style.color = accent;
+            }}
+            onMouseDown={(e) => (e.currentTarget.style.color = "#ffffff")}
           >
             <Sparkles className="w-5 h-5" />
             Get your insights
