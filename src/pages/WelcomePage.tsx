@@ -17,7 +17,7 @@ const WelcomePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState<number | "custom">(60);
+  const [selected, setSelected] = useState<number | "custom">(82);
   const [customValue, setCustomValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
