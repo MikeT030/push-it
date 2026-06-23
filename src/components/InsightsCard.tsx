@@ -193,10 +193,16 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
                 <h4 className="text-xs font-semibold text-foreground mt-[10px] mb-4">Most Push-Ups</h4>
 
                 {bestsVariant === 1 && (
-                  <div className="space-y-4">
-                    <BestRow label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
-                    <BestRow label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
-                    <BestRow label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
+                  <div className="divide-y divide-[#3B404F]">
+                    <div className="pb-4">
+                      <BestRow label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
+                    </div>
+                    <div className="py-4">
+                      <BestRow label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
+                    </div>
+                    <div className="pt-4">
+                      <BestRow label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
+                    </div>
                   </div>
                 )}
 
