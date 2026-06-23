@@ -143,17 +143,11 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
         className="rounded-2xl p-5 animate-slide-up border bg-transparent"
         style={{ borderColor: accent }}
       >
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="text-xl font-medium text-foreground flex items-center gap-2">
-            <Sparkles className="w-5 h-5" style={{ color: accent }} />
-            Your Insights
-          </h2>
-        </div>
         <SheetTrigger asChild>
           <Button
             variant="outline"
             disabled={!userId}
-            className="mt-4 w-full h-12 hover:text-white active:text-white"
+            className="w-full h-12 hover:text-white active:text-white gap-2"
             style={{
               backgroundColor: `${accent}1A`,
               borderColor: accent,
@@ -162,6 +156,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
             onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = accent)}
             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = `${accent}1A`)}
           >
+            <Sparkles className="w-5 h-5" />
             Get your insights
           </Button>
         </SheetTrigger>
