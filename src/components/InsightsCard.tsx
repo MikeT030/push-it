@@ -225,7 +225,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
 
               {/* Winner counts */}
               <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
-                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
+                <h3 className="text-lg text-foreground font-semibold mb-4 flex items-center gap-2">
                   <img src={wreathIcon} alt="" className="w-4 h-4" />
                   Group wins
                 </h3>
