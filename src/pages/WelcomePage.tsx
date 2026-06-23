@@ -145,6 +145,11 @@ const WelcomePage = () => {
           </button>
         </div>
 
+        {/* Info text */}
+        <p className="text-xs text-muted-foreground mt-8 leading-relaxed">
+          Don't go too low. If you push daily, you will make progress quickly, and what once seemed unreachable will be just a warm-up. But don't overdo it. Please watch your health and check out <span className="text-[#0ABAB5]">How to push-up</span>.
+        </p>
+
         {/* Confirm */}
         <Button
           type="button"
