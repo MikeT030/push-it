@@ -156,7 +156,7 @@ const WelcomePage = () => {
           variant="outline"
           onClick={handleConfirm}
           disabled={isSubmitting || dailyValue <= 0}
-          className="w-full h-12 mt-8 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+          className="w-full h-12 mt-4 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
         >
           {isSubmitting ? "Saving..." : "Confirm goal"}
         </Button>
