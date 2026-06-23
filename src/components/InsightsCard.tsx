@@ -149,23 +149,6 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
             <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-[#0ABAB5]" />
               Insights
-              <div className="flex items-center gap-1 ml-2">
-                {[1, 2, 3].map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setBestsVariant(v as 1 | 2 | 3)}
-                    aria-label={`Personal bests version ${v}`}
-                    className={`w-6 h-6 rounded-full text-[11px] font-bold border transition-colors flex items-center justify-center ${
-                      bestsVariant === v
-                        ? "border-[#0ABAB5] bg-[#0ABAB5]/10 text-[#0ABAB5]"
-                        : "border-[#3B404F] text-muted-foreground hover:border-[#0ABAB5]/50"
-                    }`}
-                  >
-                    {v}
-                  </button>
-                ))}
-              </div>
             </h2>
             <button
               onClick={() => setOpen(false)}
