@@ -182,7 +182,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-6 mt-5">
             <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-[#0ABAB5]" />
+              <Sparkles className="w-6 h-6" style={{ color: accent }} />
               Insights
             </h2>
             <button
