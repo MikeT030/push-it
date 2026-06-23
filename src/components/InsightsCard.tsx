@@ -220,7 +220,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
 };
 
 const BestRow = ({ label, value, sub }: { label: string; value: number; sub: string }) => (
-  <div className="flex flex-col items-end">
+  <div className="flex flex-col items-start">
     <p className="text-2xl font-black text-foreground whitespace-nowrap">
       {value.toLocaleString()}
       <span className="text-xs font-medium text-muted-foreground ml-1">PU</span>
