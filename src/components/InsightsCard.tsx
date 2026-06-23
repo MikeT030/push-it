@@ -6,15 +6,27 @@ import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
 import wreathIcon from "@/assets/medal.svg";
 
+type InsightsColorVariant = "teal" | "purple" | "magenta" | "amber";
+
 interface InsightsCardProps {
   userId: string | null;
   allEntries: GroupEntry[];
+  colorVariant?: InsightsColorVariant;
 }
+
+const VARIANT_COLORS: Record<InsightsColorVariant, string> = {
+  teal: "#0ABAB5",
+  purple: "#7036FF",
+  magenta: "#C029DE",
+  amber: "#F5A623",
+};
 
 const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
+const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCardProps) => {
   const [open, setOpen] = useState(false);
+  const accent = VARIANT_COLORS[colorVariant];
+
   
 
   const insights = useMemo(() => {
@@ -117,10 +129,13 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <div className="rounded-2xl p-5 animate-slide-up border border-[#0ABAB5] bg-transparent">
+      <div
+        className="rounded-2xl p-5 animate-slide-up border bg-transparent"
+        style={{ borderColor: accent }}
+      >
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-xl font-medium text-foreground flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-[#0ABAB5]" />
+            <Sparkles className="w-5 h-5" style={{ color: accent }} />
             Your Insights
           </h2>
         </div>
@@ -128,12 +143,20 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
           <Button
             variant="outline"
             disabled={!userId}
-            className="mt-4 w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+            className="mt-4 w-full h-12 hover:text-white active:text-white"
+            style={{
+              backgroundColor: `${accent}1A`,
+              borderColor: accent,
+              color: accent,
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = accent)}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = `${accent}1A`)}
           >
             Get your insights
           </Button>
         </SheetTrigger>
       </div>
+
 
       <SheetContent
         side="bottom"
