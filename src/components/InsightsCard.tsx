@@ -15,7 +15,7 @@ const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
   const [open, setOpen] = useState(false);
-  const [bestsVariant, setBestsVariant] = useState<1 | 2 | 3>(1);
+  
 
   const insights = useMemo(() => {
     if (!userId) {
