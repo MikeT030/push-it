@@ -137,7 +137,12 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
       <SheetContent
         side="bottom"
         hideCloseButton
-        className="h-[100dvh] w-full max-w-none rounded-none border-none bg-background p-0 overflow-y-auto"
+        className="h-[100dvh] w-full max-w-none rounded-none border-none p-0 overflow-y-auto"
+        style={{
+          backgroundColor: "#101214",
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.14 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\"), radial-gradient(ellipse at top left, #0C2544 0%, #101214 90%)",
+        }}
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-6 mt-5">
@@ -256,7 +261,7 @@ const BestRow = ({ label, value, sub }: { label: string; value: number; sub: str
 );
 
 const BestTile = ({ label, value, sub }: { label: string; value: number; sub: string }) => (
-  <div className="rounded-xl border border-[#3B404F] bg-card/40 p-3 flex flex-col items-start text-left">
+  <div className="card-glass rounded-2xl p-3 flex flex-col items-start text-left">
     <p className="text-[11px] uppercase tracking-wider text-muted-foreground">{label}</p>
     <p className="text-2xl font-black text-foreground mt-1 whitespace-nowrap">
       {value.toLocaleString()}
@@ -298,7 +303,7 @@ const BestListItem = ({
 
 
 const WinCell = ({ label, value }: { label: string; value: number }) => (
-  <div className="rounded-xl border border-[#3B404F] p-3 flex flex-col items-center">
+  <div className="card-glass rounded-2xl p-3 flex flex-col items-center">
     <p className="text-2xl font-black text-foreground">{value}</p>
     <p className="text-[11px] text-muted-foreground mt-1">{label}</p>
   </div>
