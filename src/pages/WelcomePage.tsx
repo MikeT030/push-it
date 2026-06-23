@@ -65,7 +65,7 @@ const WelcomePage = () => {
         {/* Header */}
         <div className="text-center mb-8 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
-          <h1 className="font-black text-white text-2xl">Welcome to the team</h1>
+          <h1 className="font-black text-white text-2xl">Welcome to the Team</h1>
           <p className="text-muted-foreground mt-2 text-sm">
             Set your personal push-up goal for the rest of the year.
           </p>
