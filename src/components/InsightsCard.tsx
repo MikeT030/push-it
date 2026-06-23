@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef, useEffect } from "react";
 import { format, parseISO, startOfWeek, startOfMonth, getDay } from "date-fns";
-import { Sparkles, X, Trophy, Flame, Calendar, TrendingUp } from "lucide-react";
+import { Sparkles, X, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
