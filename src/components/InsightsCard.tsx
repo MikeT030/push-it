@@ -177,7 +177,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
           </div>
 
           {!insights?.hasData ? (
-            <div className="card-glass rounded-2xl p-8 text-center mt-5">
+            <div className="bg-card/40 border border-[#3B404F] rounded-2xl p-8 text-center mt-5">
               <p className="text-muted-foreground">
                 Log some push-ups to unlock your insights.
               </p>
@@ -185,7 +185,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
           ) : (
             <div className="space-y-4 mt-5">
               {/* Personal bests */}
-              <section className="card-glass rounded-2xl p-5">
+              <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-2">
                   <Flame className="w-4 h-4 text-[#FF2C2C]" fill="#FF2C2C" />
                   Personal bests
@@ -218,7 +218,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
               </section>
 
               {/* Winner counts */}
-              <section className="card-glass rounded-2xl p-5">
+              <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
                   <img src={wreathIcon} alt="" className="w-4 h-4" />
                   Group wins
@@ -231,7 +231,7 @@ const InsightsCard = ({ userId, allEntries }: InsightsCardProps) => {
               </section>
 
               {/* Weekday distribution */}
-              <section className="card-glass rounded-2xl p-5">
+              <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-white" />
                   Your push days
@@ -261,7 +261,7 @@ const BestRow = ({ label, value, sub }: { label: string; value: number; sub: str
 );
 
 const BestTile = ({ label, value, sub }: { label: string; value: number; sub: string }) => (
-  <div className="card-glass rounded-2xl p-3 flex flex-col items-start text-left">
+  <div className="bg-card/40 border border-[#3B404F] rounded-2xl p-3 flex flex-col items-start text-left">
     <p className="text-[11px] uppercase tracking-wider text-muted-foreground">{label}</p>
     <p className="text-2xl font-black text-foreground mt-1 whitespace-nowrap">
       {value.toLocaleString()}
@@ -303,7 +303,7 @@ const BestListItem = ({
 
 
 const WinCell = ({ label, value }: { label: string; value: number }) => (
-  <div className="card-glass rounded-2xl p-3 flex flex-col items-center">
+  <div className="bg-card/40 border border-[#3B404F] rounded-2xl p-3 flex flex-col items-center">
     <p className="text-2xl font-black text-foreground">{value}</p>
     <p className="text-[11px] text-muted-foreground mt-1">{label}</p>
   </div>
