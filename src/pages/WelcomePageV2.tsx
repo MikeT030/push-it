@@ -66,20 +66,30 @@ const WelcomePageV2 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
-      <div className="w-full max-w-sm animate-fade-in mt-10">
+    <div className="relative min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12 overflow-hidden">
+      {/* Fireworks: from lower third up to top of page */}
+      <Fireworks className="pointer-events-none absolute inset-x-0 top-0 h-[66vh] z-0" />
 
-        {/* Header */}
-        <div className="text-center mb-8 flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-sm mt-10">
+
+        {/* Header (always visible) */}
+        <div className="text-center mb-8 flex flex-col items-center animate-fade-in">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
           <h1 className="font-black text-white text-2xl">You did it! You hit 30k, awesome.</h1>
-          <p className="text-muted-foreground mt-2 text-sm">
-            Set your personal push-up goal for the rest of the year.
-          </p>
-          <p className="text-muted-foreground/70 mt-1 text-xs">
-            <span className="font-bold">{daysRemaining}d</span> remaining in {new Date().getFullYear()}
-          </p>
+          {showRest && (
+            <>
+              <p className="text-muted-foreground mt-2 text-sm animate-fade-in">
+                Set your personal push-up goal for the rest of the year.
+              </p>
+              <p className="text-muted-foreground/70 mt-1 text-xs animate-fade-in">
+                <span className="font-bold">{daysRemaining}d</span> remaining in {new Date().getFullYear()}
+              </p>
+            </>
+          )}
         </div>
+
+        {showRest && (
+        <div className="animate-fade-in">
 
         {/* Tier options */}
         <div className="space-y-3">
@@ -172,6 +182,8 @@ const WelcomePageV2 = () => {
         <p className="text-center text-muted-foreground/50 text-xs mt-8 flex items-center justify-center gap-1">
           You can change this anytime <img src={muscleIcon} alt="" className="w-4 h-4 inline" />
         </p>
+        </div>
+        )}
       </div>
     </div>
   );
