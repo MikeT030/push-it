@@ -198,9 +198,11 @@ const TotalPage = () => {
           <DailySection />
         </div>
 
-        {/* Weekly Overview & Goal Cards Grid */}
-        <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: "0.15s" }}>
-          {/* Weekly Overview Card */}
+        {/* Your Insights */}
+        <div className="animate-slide-up" style={{ animationDelay: "0.13s" }}>
+          <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} />
+        </div>
+
         {/* Weekly Overview & Goal Cards Grid */}
         <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: "0.15s" }}>
           {/* Weekly Overview Card */}
