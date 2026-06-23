@@ -190,6 +190,24 @@ const AdminPage = () => {
             userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
             allEntries={realAllEntries}
           />
+          <div className="mt-4 space-y-4">
+            <InsightsCard
+              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+              allEntries={realAllEntries}
+              colorVariant="purple"
+            />
+            <InsightsCard
+              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+              allEntries={realAllEntries}
+              colorVariant="magenta"
+            />
+            <InsightsCard
+              userId="2daf5b5e-d8fb-4677-9276-bd42337a2a95"
+              allEntries={realAllEntries}
+              colorVariant="amber"
+            />
+          </div>
+
         </div>
 
         {/* Welcome V2 preview */}
