@@ -185,6 +185,17 @@ const AdminPage = () => {
           />
         </div>
 
+        {/* Welcome V2 preview */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.032s" }}>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/welcome-v2")}
+            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+          >
+            Preview Welcome V2 (30k hit)
+          </Button>
+        </div>
+
         {/* Demo Group Goal Card */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.035s" }}>
           <h2 className="text-lg text-foreground font-semibold mb-2">
