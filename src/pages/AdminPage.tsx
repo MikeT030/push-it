@@ -134,23 +134,24 @@ const AdminPage = () => {
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
-        <header className="mb-8 animate-fade-in flex items-center gap-3">
+        <div className="mb-2 -ml-2 animate-fade-in">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate("/profile")}
             className="h-10 w-10 border border-white text-white hover:bg-white hover:text-black active:bg-white active:text-black"
+            aria-label="Back"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <div>
-            <h1 className="text-4xl font-black text-foreground tracking-tight">
-              Admin
-            </h1>
-            <p className="text-lg text-muted-foreground mt-1">
-              Restricted area
-            </p>
-          </div>
+        </div>
+        <header className="mb-8 animate-fade-in">
+          <h1 className="text-4xl font-black text-foreground tracking-tight">
+            Admin
+          </h1>
+          <p className="text-lg text-muted-foreground mt-1">
+            Restricted area
+          </p>
         </header>
 
         <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-6 animate-slide-up">
