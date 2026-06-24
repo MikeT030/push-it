@@ -333,7 +333,7 @@ const GroupPage = () => {
                 "text-muted-foreground border-[#3B404F]"}`
                 }>
 
-                    {period === "weekly" ? "Week" : period === "monthly" ? "Month" : "All-time"}
+                    {period === "weekly" ? "Week" : period === "monthly" ? "Month" : "Year"}
                   </button>
               )}
               </div>
