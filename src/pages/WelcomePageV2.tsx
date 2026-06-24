@@ -91,7 +91,10 @@ const WelcomePageV2 = () => {
         {/* Header (always visible) */}
         <div className="text-center mb-8 flex flex-col items-center animate-fade-in">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
-          <h1 className="font-black text-white text-2xl">You did it! You hit 30k, awesome.</h1>
+          <h1 className="font-black text-white text-2xl">
+            You did it!<br />
+            You hit 30k Push-Ups, awesome.
+          </h1>
           {showRest && (
             <>
               <p className="text-white mt-2 text-sm animate-fade-in">
