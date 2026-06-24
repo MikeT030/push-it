@@ -162,6 +162,33 @@ const WelcomePage = () => {
           {isSubmitting ? "Saving..." : "Confirm goal"}
         </Button>
 
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={async () => {
+            if (!user) return;
+            setIsSubmitting(true);
+            try {
+              const { error } = await supabase
+                .from("profiles")
+                .update({ onboarded: true })
+                .eq("id", user.id);
+              if (error) {
+                toast.error(error.message);
+                return;
+              }
+              await queryClient.invalidateQueries({ queryKey: ["profile-onboarded", user.id] });
+              navigate("/");
+            } finally {
+              setIsSubmitting(false);
+            }
+          }}
+          disabled={isSubmitting}
+          className="w-full h-12 mt-3 text-muted-foreground hover:text-white"
+        >
+          Back with no changes
+        </Button>
+
         <p className="text-center text-muted-foreground/50 text-xs mt-8 flex items-center justify-center gap-1">
           You can change this anytime <img src={muscleIcon} alt="" className="w-4 h-4 inline" />
         </p>
