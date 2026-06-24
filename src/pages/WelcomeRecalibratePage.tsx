@@ -5,11 +5,12 @@ import smallCircleIcon from "@/assets/small-circle-icon.svg";
 import muscleIcon from "@/assets/muscle-icon.svg";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+
 
 const PRESET_TIERS = [50, 60, 70, 82];
 
