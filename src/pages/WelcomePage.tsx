@@ -43,7 +43,7 @@ const WelcomePage = () => {
     try {
       const { error } = await supabase
         .from("profiles")
-        .update({ yearly_goal: goal, onboarded: true })
+        .update({ yearly_goal: goal, onboarded: true, goal_set_year: new Date().getFullYear() })
         .eq("id", user.id);
       if (error) {
         toast.error(error.message);
@@ -51,6 +51,7 @@ const WelcomePage = () => {
       }
       await queryClient.invalidateQueries({ queryKey: ["push-up-data", user.id] });
       await queryClient.invalidateQueries({ queryKey: ["profile-onboarded", user.id] });
+      await queryClient.invalidateQueries({ queryKey: ["profile-goal-set-year", user.id] });
       toast.success("Goal locked in. Let's push!");
       navigate("/");
     } finally {
@@ -162,32 +163,7 @@ const WelcomePage = () => {
           {isSubmitting ? "Saving..." : "Confirm goal"}
         </Button>
 
-        <Button
-          type="button"
-          variant="outline"
-          onClick={async () => {
-            if (!user) return;
-            setIsSubmitting(true);
-            try {
-              const { error } = await supabase
-                .from("profiles")
-                .update({ onboarded: true })
-                .eq("id", user.id);
-              if (error) {
-                toast.error(error.message);
-                return;
-              }
-              await queryClient.invalidateQueries({ queryKey: ["profile-onboarded", user.id] });
-              navigate("/");
-            } finally {
-              setIsSubmitting(false);
-            }
-          }}
-          disabled={isSubmitting}
-          className="w-full h-8 mt-3 bg-transparent border-white text-white hover:bg-white hover:text-black active:bg-white active:text-black"
-        >
-          Back with no changes
-        </Button>
+        {/* Back button intentionally omitted on /welcome — a current-year goal is required before logging push-ups. */}
 
         <p className="text-center text-muted-foreground/50 text-xs mt-8 flex items-center justify-center gap-1">
           You can change this anytime <img src={muscleIcon} alt="" className="w-4 h-4 inline" />
