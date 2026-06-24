@@ -55,17 +55,10 @@ const WelcomeRecalibratePage = () => {
     }
     setIsSubmitting(true);
     try {
-      // Build new goal on top of pushups already done (same mechanic as
-      // the wrench: everything pushed counts toward the new total).
-      const { data: entries, error: entriesError } = await supabase
-        .from("push_up_entries")
-        .select("count")
-        .eq("user_id", user.id);
-      if (entriesError) {
-        toast.error(entriesError.message);
-        return;
-      }
+      // projectedTotal already includes pushups already done — everything
+      // pushed counts toward the new total (same mechanic as the wrench).
       const goal = Math.min(999999, projectedTotal);
+
 
       const { error } = await supabase
         .from("profiles")
