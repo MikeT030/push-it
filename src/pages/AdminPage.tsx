@@ -134,7 +134,7 @@ const AdminPage = () => {
   return (
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-6 pt-12">
-        <div className="mb-2 -ml-2 animate-fade-in">
+        <div className="mb-2 -ml-2 -mt-10 animate-fade-in">
           <Button
             variant="ghost"
             size="icon"
