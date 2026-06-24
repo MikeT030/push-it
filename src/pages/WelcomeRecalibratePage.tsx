@@ -104,7 +104,7 @@ const WelcomeRecalibratePage = () => {
         {/* Tier options */}
         <div className="space-y-3">
           {PRESET_TIERS.map((tier) => {
-            const total = tier * daysRemaining;
+            const total = tier * daysRemaining + currentTotal;
             const isActive = selected === tier;
             return (
               <button
