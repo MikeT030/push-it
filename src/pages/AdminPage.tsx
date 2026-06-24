@@ -306,17 +306,6 @@ const AdminPage = () => {
           />
         </div>
 
-        {/* Demo Leaderboard */}
-        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.04s" }}>
-          <h2 className="text-lg text-foreground font-semibold mb-4">Demo Leaderboard</h2>
-          <LeaderboardPodium
-            users={[
-              { user_id: "demo-1", display_name: "MichiPU", avatar_url: "tiger", total_pushups: 17352, yearly_goal: 44000, progress_percent: 39, days_logged: 120, streak: 42, avg_pushups: 145 },
-              { user_id: "demo-2", display_name: "FoxFit", avatar_url: "fox", total_pushups: 14210, yearly_goal: 30000, progress_percent: 47, days_logged: 110, streak: 28, avg_pushups: 129 },
-              { user_id: "demo-3", display_name: "PandaPower", avatar_url: "panda", total_pushups: 12880, yearly_goal: 38000, progress_percent: 34, days_logged: 105, streak: 19, avg_pushups: 123 },
-            ]}
-          />
-        </div>
 
         {/* Demo Leaderboard List */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.045s" }}>
