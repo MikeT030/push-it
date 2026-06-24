@@ -5,11 +5,12 @@ import smallCircleIcon from "@/assets/small-circle-icon.svg";
 import muscleIcon from "@/assets/muscle-icon.svg";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+
 
 const PRESET_TIERS = [50, 60, 70, 82];
 
@@ -26,11 +27,25 @@ const WelcomeRecalibratePage = () => {
     return Math.max(1, differenceInCalendarDays(endOfYear(today), today) + 1);
   }, []);
 
+  const { data: currentTotal = 0 } = useQuery({
+    queryKey: ["recalibrate-current-total", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("push_up_entries")
+        .select("count")
+        .eq("user_id", user!.id);
+      if (error) throw error;
+      return (data ?? []).reduce((sum, e) => sum + (Number(e.count) || 0), 0);
+    },
+  });
+
   const dailyValue = selected === "custom"
     ? Math.max(0, Math.floor(Number(customValue) || 0))
     : selected;
 
-  const projectedTotal = dailyValue * daysRemaining;
+  const projectedTotal = dailyValue * daysRemaining + currentTotal;
+
 
   const handleConfirm = async () => {
     if (!user) return;
@@ -40,21 +55,11 @@ const WelcomeRecalibratePage = () => {
     }
     setIsSubmitting(true);
     try {
-      // Build new goal on top of pushups already done (same mechanic as
-      // the wrench: everything pushed counts toward the new total).
-      const { data: entries, error: entriesError } = await supabase
-        .from("push_up_entries")
-        .select("count")
-        .eq("user_id", user.id);
-      if (entriesError) {
-        toast.error(entriesError.message);
-        return;
-      }
-      const currentTotal = (entries ?? []).reduce(
-        (sum, e) => sum + (Number(e.count) || 0),
-        0,
-      );
-      const goal = Math.min(999999, currentTotal + projectedTotal);
+      // projectedTotal already includes pushups already done — everything
+      // pushed counts toward the new total (same mechanic as the wrench).
+      const goal = Math.min(999999, projectedTotal);
+
+
       const { error } = await supabase
         .from("profiles")
         .update({ yearly_goal: goal, onboarded: true, goal_set_year: new Date().getFullYear() })
@@ -92,7 +97,7 @@ const WelcomeRecalibratePage = () => {
         {/* Tier options */}
         <div className="space-y-3">
           {PRESET_TIERS.map((tier) => {
-            const total = tier * daysRemaining;
+            const total = tier * daysRemaining + currentTotal;
             const isActive = selected === tier;
             return (
               <button
