@@ -34,7 +34,7 @@ const PastChallengesPage = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="h-10 w-10 hover:bg-white hover:text-white active:bg-white active:text-white"
+            className="h-10 w-10 hover:bg-white hover:text-black active:bg-white active:text-black"
             aria-label="Back"
           >
             <ArrowLeft className="w-5 h-5" />
