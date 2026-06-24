@@ -65,11 +65,8 @@ const WelcomeRecalibratePage = () => {
         toast.error(entriesError.message);
         return;
       }
-      const currentTotal = (entries ?? []).reduce(
-        (sum, e) => sum + (Number(e.count) || 0),
-        0,
-      );
-      const goal = Math.min(999999, currentTotal + projectedTotal);
+      const goal = Math.min(999999, projectedTotal);
+
       const { error } = await supabase
         .from("profiles")
         .update({ yearly_goal: goal, onboarded: true, goal_set_year: new Date().getFullYear() })
