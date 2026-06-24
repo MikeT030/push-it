@@ -139,7 +139,7 @@ const AdminPage = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate("/profile")}
-            className="h-10 w-10"
+            className="h-10 w-10 border border-white text-white hover:bg-white hover:text-black active:bg-white active:text-black"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
