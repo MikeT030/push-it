@@ -266,7 +266,7 @@ const AdminPage = () => {
             onClick={() => navigate("/welcome-v2")}
             className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
           >
-            Preview Welcome V2 (30k hit)
+            Adjust Goal. 30k hit
           </Button>
         </div>
 
