@@ -20,6 +20,7 @@ export type Database = {
           card_theme: string
           created_at: string
           display_name: string | null
+          goal_set_year: number | null
           id: string
           onboarded: boolean
           updated_at: string
@@ -30,6 +31,7 @@ export type Database = {
           card_theme?: string
           created_at?: string
           display_name?: string | null
+          goal_set_year?: number | null
           id: string
           onboarded?: boolean
           updated_at?: string
@@ -40,6 +42,7 @@ export type Database = {
           card_theme?: string
           created_at?: string
           display_name?: string | null
+          goal_set_year?: number | null
           id?: string
           onboarded?: boolean
           updated_at?: string
