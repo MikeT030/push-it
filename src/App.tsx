@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { useHasEntries } from "@/hooks/useHasEntries";
+import { useOnboarded } from "@/hooks/useOnboarded";
 import { useGoalHit } from "@/hooks/useGoalHit";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
