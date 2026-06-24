@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench, Target } from "lucide-react";
+import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
@@ -351,17 +351,8 @@ const TotalPage = () => {
                 </div>
               </div>
 
-              {/* Recalibrate Goal */}
-              <div className="mt-4 mx-[10px]">
-                <Button
-                  variant="outline"
-                  onClick={() => navigate("/welcome-recalibrate")}
-                  className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
-                >
-                  <Target className="w-4 h-4 mr-2" />
-                  Recalibrate Your Goal
-                </Button>
-              </div>
+            
+
             
           </div>
         

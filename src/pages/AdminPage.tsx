@@ -154,7 +154,20 @@ const AdminPage = () => {
           </p>
         </header>
 
+        {/* Recalibrate Your Goal */}
+        <div className="bg-card/40 rounded-2xl animate-slide-up pt-[10px] pb-[10px] mb-6 px-[10px] border border-[#3B404F]">
+          <Button
+            variant="outline"
+            onClick={() => navigate("/welcome-recalibrate")}
+            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+          >
+            <Target className="w-4 h-4 mr-2" />
+            Recalibrate Your Goal
+          </Button>
+        </div>
+
         <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-6 animate-slide-up">
+
           <div className="flex items-center gap-3 mb-4">
             <Shield className="w-5 h-5 text-primary" />
             <h2 className="text-lg text-foreground font-semibold">Welcome, admin</h2>
@@ -191,17 +204,6 @@ const AdminPage = () => {
           </Button>
         </div>
 
-        {/* Recalibrate Pushups */}
-        <div className="bg-card/40 rounded-2xl mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.036s" }}>
-          <Button
-            variant="outline"
-            onClick={() => navigate("/welcome-recalibrate")}
-            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
-          >
-            <Target className="w-4 h-4 mr-2" />
-            Recalibrate Your Goal
-          </Button>
-        </div>
 
         {/* Past Challenges */}
         <div className="bg-card/40 rounded-2xl mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.037s" }}>
