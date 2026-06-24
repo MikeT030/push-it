@@ -77,17 +77,19 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
         <span className="text-sm font-bold text-primary">Ø</span> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU
       </p>
 
-      {/* Goal badge */}
-      {user.yearly_goal !== 30000 && (
-        <div className={`flex items-center gap-1 rounded-full px-1.5 py-[2px] border ${rank === 0 ? "border-yellow-500" : rank === 1 ? "border-gray-300" : "border-amber-600"}`}>
-          <span className={`text-[10px] font-bold ${rankTextColors[rank]}`}>+{Math.round((user.yearly_goal - 30000) / 1000)}K</span>
-        </div>
-      )}
+      {/* Goal + Score badges (matched widths) */}
+      <div className="inline-flex flex-col items-stretch gap-1">
+        {user.yearly_goal !== 30000 && (
+          <div className={`flex items-center justify-center gap-1 rounded-full px-2.5 py-[2px] border ${rank === 0 ? "border-yellow-500" : rank === 1 ? "border-gray-300" : "border-amber-600"}`}>
+            <span className={`text-[10px] font-bold ${rankTextColors[rank]}`}>+{Math.round((user.yearly_goal - 30000) / 1000)}K</span>
+          </div>
+        )}
 
-      {/* Score badge */}
-      <div className="flex items-center gap-1 rounded-full px-2.5 py-0.5 pt-[4px] border border-[#575F78]">
-        <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
+        <div className="flex items-center justify-center gap-1 rounded-full px-2.5 py-0.5 pt-[4px] border border-[#575F78]">
+          <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
+        </div>
       </div>
+
     </div>);
 };
 
