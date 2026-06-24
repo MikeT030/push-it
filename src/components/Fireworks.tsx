@@ -110,11 +110,12 @@ const Fireworks = ({ className }: FireworksProps) => {
       ctx.globalCompositeOperation = "lighter";
 
       // Spawn rockets at intervals
-      if (t - lastSpawn > 280 + Math.random() * 220) {
+      if (t - lastSpawn > 450 + Math.random() * 350) {
         spawnRocket();
-        if (Math.random() < 0.4) spawnRocket();
+        if (Math.random() < 0.25) spawnRocket();
         lastSpawn = t;
       }
+
 
       // Update rockets
       for (let i = rockets.length - 1; i >= 0; i--) {
