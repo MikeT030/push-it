@@ -243,44 +243,6 @@ const TotalPage = () => {
                           {yearlyGoal.toLocaleString()}
                         </p>
                       </div>
-                      <button
-                        type="button"
-                        disabled={totalPushUps < BASE_GOAL}
-                        onClick={() => {
-                          if (totalPushUps >= BASE_GOAL) {
-                            setShowGoalAdjust((s) => !s);
-                          }
-                        }}
-                        className={`relative self-end w-8 h-8 rounded-full flex items-center justify-center transition-all duration-150 ease-out overflow-hidden focus:outline-none ${
-                          totalPushUps >= BASE_GOAL
-                            ? 'text-slate-100 active:translate-y-[1px] active:scale-[0.98]'
-                            : 'text-slate-100/30 cursor-not-allowed'
-                        }`}
-                        style={{
-                          background:
-                            totalPushUps >= BASE_GOAL
-                              ? 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)'
-                              : 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.25) 0%, rgba(31,36,46,0.15) 60%, rgba(22,26,34,0.10) 100%)',
-                          backdropFilter: 'blur(6px) saturate(1.2)',
-                          WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
-                          boxShadow: [
-                            'inset 0 2px 4px rgba(0,0,0,0.55)',
-                            'inset 0 -1px 2px rgba(255,255,255,0.07)',
-                            'inset 0 0 0 1px rgba(255,255,255,0.06)',
-                            '0 2px 6px rgba(0,0,0,0.3)',
-                            '0 6px 14px rgba(0,0,0,0.25)',
-                          ].join(', '),
-                        }}
-                      >
-                        <span
-                          className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
-                          style={{
-                            background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
-                            filter: 'blur(3px)',
-                          }}
-                        />
-                        <Wrench size={14} className="relative" />
-                      </button>
                     </div>
                     
                     {showGoalAdjust && (
