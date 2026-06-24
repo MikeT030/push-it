@@ -194,6 +194,16 @@ const WelcomePageV2 = () => {
           {isSubmitting ? "Saving..." : "Confirm goal"}
         </Button>
 
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => navigate("/")}
+          disabled={isSubmitting}
+          className="w-full h-8 mt-3 bg-transparent border-white text-white hover:bg-white hover:text-black active:bg-white active:text-black"
+        >
+          Back with no changes
+        </Button>
+
         <p className="text-center text-muted-foreground/50 text-xs mt-8 flex items-center justify-center gap-1">
           You can change this anytime <img src={muscleIcon} alt="" className="w-4 h-4 inline" />
         </p>
