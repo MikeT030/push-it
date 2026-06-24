@@ -189,6 +189,7 @@ const Fireworks = ({ className }: FireworksProps) => {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      ro.disconnect();
     };
   }, []);
 
