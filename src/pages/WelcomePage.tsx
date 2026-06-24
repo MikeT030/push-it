@@ -164,7 +164,7 @@ const WelcomePage = () => {
 
         <Button
           type="button"
-          variant="ghost"
+          variant="outline"
           onClick={async () => {
             if (!user) return;
             setIsSubmitting(true);
@@ -184,7 +184,7 @@ const WelcomePage = () => {
             }
           }}
           disabled={isSubmitting}
-          className="w-full h-12 mt-3 text-muted-foreground hover:text-white"
+          className="w-full h-8 mt-3 bg-transparent border-white text-white hover:bg-white hover:text-black active:bg-white active:text-black"
         >
           Back with no changes
         </Button>
