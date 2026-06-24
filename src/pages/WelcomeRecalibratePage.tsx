@@ -27,11 +27,25 @@ const WelcomeRecalibratePage = () => {
     return Math.max(1, differenceInCalendarDays(endOfYear(today), today) + 1);
   }, []);
 
+  const { data: currentTotal = 0 } = useQuery({
+    queryKey: ["recalibrate-current-total", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("push_up_entries")
+        .select("count")
+        .eq("user_id", user!.id);
+      if (error) throw error;
+      return (data ?? []).reduce((sum, e) => sum + (Number(e.count) || 0), 0);
+    },
+  });
+
   const dailyValue = selected === "custom"
     ? Math.max(0, Math.floor(Number(customValue) || 0))
     : selected;
 
-  const projectedTotal = dailyValue * daysRemaining;
+  const projectedTotal = dailyValue * daysRemaining + currentTotal;
+
 
   const handleConfirm = async () => {
     if (!user) return;
