@@ -50,16 +50,14 @@ const Fireworks = ({ className }: FireworksProps) => {
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      width = Math.max(1, rect.width);
-      height = Math.max(1, rect.height);
+      width = rect.width;
+      height = rect.height;
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener("resize", resize);
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
 
     const rockets: Rocket[] = [];
     const particles: Particle[] = [];
@@ -71,7 +69,7 @@ const Fireworks = ({ className }: FireworksProps) => {
       const targetY = height * (0.02 + Math.random() * 0.3);
       rockets.push({
         x: startX,
-        y: height, // always launch from the bottom edge
+        y: height,
         targetY,
         vy: -(6 + Math.random() * 3),
         color,
@@ -189,7 +187,6 @@ const Fireworks = ({ className }: FireworksProps) => {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
-      ro.disconnect();
     };
   }, []);
 
