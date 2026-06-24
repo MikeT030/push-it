@@ -64,7 +64,7 @@ const WelcomePageV2 = () => {
       const goal = Math.min(999999, currentTotal + projectedTotal);
       const { error } = await supabase
         .from("profiles")
-        .update({ yearly_goal: goal, onboarded: true })
+        .update({ yearly_goal: goal, onboarded: true, goal_set_year: new Date().getFullYear() })
         .eq("id", user.id);
       if (error) {
         toast.error(error.message);
@@ -72,6 +72,7 @@ const WelcomePageV2 = () => {
       }
       await queryClient.invalidateQueries({ queryKey: ["push-up-data", user.id] });
       await queryClient.invalidateQueries({ queryKey: ["profile-onboarded", user.id] });
+      await queryClient.invalidateQueries({ queryKey: ["profile-goal-set-year", user.id] });
       toast.success("Goal locked in. Let's push!");
       navigate("/");
     } finally {
