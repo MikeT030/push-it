@@ -202,6 +202,18 @@ const AdminPage = () => {
           </Button>
         </div>
 
+        {/* Past Challenges */}
+        <div className="bg-card/40 rounded-2xl mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.037s" }}>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/past-challenges")}
+            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+          >
+            <Target className="w-4 h-4 mr-2" />
+            Past Challenges
+          </Button>
+        </div>
+
         {/* Demo Your Insights Card */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
           <Accordion type="single" collapsible>
