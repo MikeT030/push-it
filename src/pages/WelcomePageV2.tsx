@@ -97,9 +97,10 @@ const WelcomePageV2 = () => {
               <p className="text-muted-foreground mt-2 text-sm animate-fade-in">
                 Set your personal push-up goal for the rest of the year.
               </p>
-              <p className="text-muted-foreground/70 mt-1 text-xs animate-fade-in">
+              <p className="text-white mt-1 text-xs animate-fade-in">
                 <span className="font-bold">{daysRemaining}d</span> remaining in {new Date().getFullYear()}
               </p>
+
             </>
           )}
         </div>
