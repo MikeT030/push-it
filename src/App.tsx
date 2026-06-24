@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { useHasEntries } from "@/hooks/useHasEntries";
+import { useOnboarded } from "@/hooks/useOnboarded";
 import { useGoalHit } from "@/hooks/useGoalHit";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
@@ -55,10 +56,11 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   const { hasEntries, isLoading: entriesLoading } = useHasEntries();
+  const { onboarded, isLoading: onboardedLoading } = useOnboarded();
   const { hit30k, isLoading: goalHitLoading } = useGoalHit();
   const location = useLocation();
 
-  if (loading || (user && (entriesLoading || goalHitLoading))) {
+  if (loading || (user && (entriesLoading || onboardedLoading || goalHitLoading))) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -73,7 +75,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/auth" replace />;
   }
 
-  if (hasEntries === false && location.pathname !== "/welcome") {
+  if (hasEntries === false && onboarded === false && location.pathname !== "/welcome") {
     return <Navigate to="/welcome" replace />;
   }
 
