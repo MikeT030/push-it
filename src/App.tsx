@@ -8,6 +8,7 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { useHasEntries } from "@/hooks/useHasEntries";
 import { useOnboarded } from "@/hooks/useOnboarded";
 import { useGoalHit } from "@/hooks/useGoalHit";
+import { useGoalSetThisYear } from "@/hooks/useGoalSetThisYear";
 import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
@@ -55,12 +56,13 @@ const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  const { hasEntries, isLoading: entriesLoading } = useHasEntries();
-  const { onboarded, isLoading: onboardedLoading } = useOnboarded();
+  const { isLoading: entriesLoading } = useHasEntries();
+  const { isLoading: onboardedLoading } = useOnboarded();
   const { hit30k, isLoading: goalHitLoading } = useGoalHit();
+  const { isSetThisYear, isLoading: goalYearLoading } = useGoalSetThisYear();
   const location = useLocation();
 
-  if (loading || (user && (entriesLoading || onboardedLoading || goalHitLoading))) {
+  if (loading || (user && (entriesLoading || onboardedLoading || goalHitLoading || goalYearLoading))) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -75,11 +77,13 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/auth" replace />;
   }
 
-  if (hasEntries === false && onboarded === false && location.pathname !== "/welcome") {
+  // No current-year goal → force /welcome (incl. Jan 1 rollover and brand-new users)
+  if (!isSetThisYear && location.pathname !== "/welcome") {
     return <Navigate to="/welcome" replace />;
   }
 
-  if (hit30k && location.pathname !== "/welcome-v2") {
+  // 30k milestone → /welcome-v2 (only after the user has a current-year goal)
+  if (isSetThisYear && hit30k && location.pathname !== "/welcome-v2") {
     return <Navigate to="/welcome-v2" replace />;
   }
 
