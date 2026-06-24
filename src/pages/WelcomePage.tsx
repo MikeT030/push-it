@@ -17,7 +17,7 @@ const WelcomePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState<number | "custom">(82);
+  const [selected, setSelected] = useState<number | "custom" | null>(null);
   const [customValue, setCustomValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,7 +28,7 @@ const WelcomePage = () => {
 
   const dailyValue = selected === "custom"
     ? Math.max(0, Math.floor(Number(customValue) || 0))
-    : selected;
+    : (selected ?? 0);
 
   const projectedTotal = dailyValue * daysRemaining;
 
@@ -157,7 +157,7 @@ const WelcomePage = () => {
           type="button"
           variant="outline"
           onClick={handleConfirm}
-          disabled={isSubmitting || dailyValue <= 0}
+          disabled={isSubmitting || selected === null || dailyValue <= 0}
           className="w-full h-12 mt-4 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
         >
           {isSubmitting ? "Saving..." : "Confirm goal"}
