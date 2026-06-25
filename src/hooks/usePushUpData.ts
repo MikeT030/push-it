@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { format, parseISO, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, differenceInDays } from "date-fns";
+import { format, parseISO, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, endOfYear, differenceInDays } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
@@ -125,7 +125,17 @@ export const usePushUpData = () => {
   const entries = data?.entries ?? [];
   const profile = data?.profile ?? null;
   const yearlyGoal = profile?.yearly_goal ?? DEFAULT_YEARLY_GOAL;
-  const dailyTarget = Math.round(yearlyGoal / 365);
+  // Daily target is goal divided by the user's personal window (their first
+  // entry date — or today if none — through Dec 31). Users who start mid-year
+  // get a higher per-day number so the goal stays reachable; Jan-1 starters
+  // are unaffected (window = 365).
+  const today = startOfDay(new Date());
+  const firstEntryTime = entries.length
+    ? Math.min(...entries.map((e) => parseISO(e.date).getTime()))
+    : today.getTime();
+  const startDate = new Date(Math.min(firstEntryTime, today.getTime()));
+  const daysInWindow = Math.max(1, differenceInDays(endOfYear(today), startDate) + 1);
+  const dailyTarget = Math.max(1, Math.round(yearlyGoal / daysInWindow));
   const isLoaded = !userId ? true : !isLoading;
 
   // Flush pending writes on hide / unload so we never lose taps

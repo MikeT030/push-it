@@ -1,36 +1,36 @@
-## Problem
+## Goal
 
-In `src/components/DailySection.tsx` (line 329) the "Above/Below Target" stat pro-rates the yearly goal from January 1:
+Fix the mismatch between the "X below Target" number and the "Target N/d" label, while keeping today's quota counted from midnight so users feel pressure to push.
+
+## Change (one file)
+
+**`src/hooks/usePushUpData.ts`** — replace the fixed-365 divisor with a personal window from the user's start date through Dec 31.
 
 ```ts
-const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
+// Determine the user's personal start date
+const firstEntryTime = entries.length
+  ? Math.min(...entries.map(e => new Date(e.date).getTime()))
+  : today.getTime();
+const startDate    = new Date(Math.min(firstEntryTime, today.getTime()));
+const daysInWindow = differenceInDays(endOfYear(today), startDate) + 1;
+const dailyTarget  = Math.max(1, Math.round(yearlyGoal / daysInWindow));
 ```
 
-For a user who signs up mid-year and sets a "rest of year" goal via `/welcome`, this immediately reports a large deficit (e.g. −7.51k on day 1) because the formula assumes they have been pushing since Jan 1.
+That's it. Everywhere `dailyTarget` is consumed (DailySection, TotalPage, WeeklyOverview, etc.) automatically gets the corrected per-day number.
 
-## Fix
+## Explicitly NOT changing
 
-Compute "expected by now" from the user's **daily target × days the user has been active**, not from a Jan 1 baseline.
+- **`expectedByNow` still uses `activeDays` (today counts immediately).** As soon as the clock ticks past midnight, the user owes that day's quota. If they haven't accumulated a surplus from previous days, they'll show as one daily-target behind — by design, to keep them on their toes.
 
-The cleanest available signal is the user's first push-up entry date (with fallback to today when none exist). The daily target is already exposed via `usePushUpData`.
+## Effect
 
-### Change in `src/components/DailySection.tsx`
+For the example user (15,580 goal, no entries, first day):
+- Old: dailyTarget = 43, expectedByNow = 43 → "−43 below Target / Target 82/d" (contradictory)
+- New: dailyTarget = 82, expectedByNow = 82 → "−82 below Target / Target 82/d" (consistent, and creates the daily pressure you want)
 
-1. Replace the Jan 1 pro-ration with a per-user baseline:
-   ```ts
-   const firstEntryDate = /* earliest entry date this year, or today */;
-   const activeDays = Math.max(1, differenceInDays(today, firstEntryDate) + 1);
-   const expectedByNow = activeDays * dailyTarget;
-   const diff = total - expectedByNow;
-   ```
-2. Keep the `Above Tgt / Below Tgt` label and tooltip behavior unchanged.
+For Jan-1 starters: nothing changes (window = 365).
+For mid-year starters: daily target rises to match the shorter remaining window (e.g., Sascha 82 → 114).
 
-### Notes
+## Cleanup
 
-- `dailyTarget` already accounts for goal recalibrations (it is `remaining / daysRemaining`), so this stays correct after `/welcome-recalibrate` or `/welcome-v2`.
-- The `${Math.round(yearlyGoal/1000)}k on` projection stat is unrelated and stays as-is.
-- No backend or schema changes required.
-
-## Out of scope
-
-- Other Jan-1-based pro-rations elsewhere in the app (Yearly card, on-track logic). If you want those normalized to a per-user start date too, say the word and I'll extend the fix.
+Since `dailyTarget` is now correct globally, the local recalculation added earlier to `DailySection.tsx` and `TotalPage.tsx` (the `firstEntryDate`-based expected calc) can be reverted back to using `dailyTarget * activeDays` directly. Keeps the codebase consistent and removes duplicated logic.
