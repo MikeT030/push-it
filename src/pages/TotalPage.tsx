@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { format, startOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
+import { format, startOfYear, endOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
 import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
@@ -94,7 +94,10 @@ const TotalPage = () => {
     const firstEntryTime = entryDates.length
       ? Math.min(...entryDates.map((d) => new Date(d).getTime()))
       : today.getTime();
-    const activeDays = Math.max(1, differenceInDays(today, new Date(firstEntryTime)) + 1);
+    const startDate = new Date(firstEntryTime);
+    const windowTotal = differenceInDays(endOfYear(today), startDate) + 1;
+    const windowDay = Math.min(windowTotal, Math.max(1, differenceInDays(today, startDate) + 1));
+    const activeDays = Math.max(1, differenceInDays(today, startDate) + 1);
     const expectedByNow = Math.round(activeDays * dailyTarget);
     const paceStatus = totalPushUps >= expectedByNow ? "ahead" : "behind";
     const paceDiff = Math.abs(totalPushUps - expectedByNow);
@@ -109,7 +112,9 @@ const TotalPage = () => {
       paceStatus,
       paceDiff,
       requiredDaily,
-      expectedByNow
+      expectedByNow,
+      windowDay,
+      windowTotal
     };
   }, [isLoaded, totalPushUps, getEntryForDate, getDaysWithEntries, remaining, yearlyGoal, dailyTarget]);
 
@@ -304,7 +309,7 @@ const TotalPage = () => {
               }} />
             </div>
             <p className="text-sm text-muted-foreground mb-4 text-center mx-[10px]">
-              Day {stats.daysElapsed} of 365
+              Day {stats.windowDay} of {stats.windowTotal}
             </p>
 
               {/* Inset cut-out group: pace + projected completion */}
@@ -330,7 +335,7 @@ const TotalPage = () => {
                       <span className="font-semibold text-slate-50">
                         {stats.paceDiff.toLocaleString()}
                       </span>{" "}
-                      push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target 82/d
+                      push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target {dailyTarget}/d
                     </span>
                   </p>
                 </div>
