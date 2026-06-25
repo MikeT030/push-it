@@ -111,7 +111,7 @@ const TotalPage = () => {
       requiredDaily,
       expectedByNow
     };
-  }, [isLoaded, totalPushUps, getEntryForDate, remaining, yearlyGoal]);
+  }, [isLoaded, totalPushUps, getEntryForDate, getDaysWithEntries, remaining, yearlyGoal, dailyTarget]);
 
   const recommendedBoost = useMemo(() => {
     if (!isLoaded) return 0;
