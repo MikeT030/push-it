@@ -44,6 +44,7 @@ const TotalPage = lazyWithRetry(() => import("./pages/TotalPage"));
 const GroupPage = lazyWithRetry(() => import("./pages/GroupPage"));
 const ProfilePage = lazyWithRetry(() => import("./pages/ProfilePage"));
 const AuthPage = lazyWithRetry(() => import("./pages/AuthPage"));
+const AuthCallbackPage = lazyWithRetry(() => import("./pages/AuthCallbackPage"));
 const ForgotPasswordPage = lazyWithRetry(() => import("./pages/ForgotPasswordPage"));
 const ResetPasswordPage = lazyWithRetry(() => import("./pages/ResetPasswordPage"));
 const AdminPage = lazyWithRetry(() => import("./pages/AdminPage"));
@@ -106,6 +107,7 @@ const AppContent = () => {
     <Suspense fallback={PageFallback}>
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route
