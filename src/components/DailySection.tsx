@@ -337,9 +337,11 @@ const DailySection = () => {
           const diff = total - expectedByNow;
 
           const absDiff = Math.abs(diff);
-          const diffValue = diff >= 0 ? "+" : "−";
+          const diffValue = diff > 0 ? "+" : diff < 0 ? "−" : "±";
           let diffDisplay: string;
-          if (absDiff < 1000) {
+          if (diff === 0) {
+            diffDisplay = "±0";
+          } else if (absDiff < 1000) {
             diffDisplay = `${diffValue}${Math.min(absDiff, 999)}`;
           } else {
             const k = absDiff / 1000;
@@ -369,11 +371,12 @@ const DailySection = () => {
               }}
             />
           );
+          const targetLabel = diff === 0 ? "On Tgt" : diff > 0 ? "Above Tgt" : "Below Tgt";
           const items = [
             { label: "Most PU", value: maxDay, unit: "​", Icon: MuscleIcon, color: "text-[#d291df]", isCustomIcon: true },
             { label: "Avg. daily", value: avg, unit: "​", Icon: TrendingUp, color: "text-primary", isCustomIcon: false },
             { label: `${Math.round(yearlyGoal / 1000)}k on`, value: projectedMonth, unit: "", Icon: MultiColorTargetIcon, color: "", isCustomIcon: true },
-            { label: diff >= 0 ? "Above Tgt" : "Below Tgt", value: diffDisplay, unit: "", Icon: TargetDiffIcon, color: "", isCustomIcon: true },
+            { label: targetLabel, value: diffDisplay, unit: "", Icon: TargetDiffIcon, color: "", isCustomIcon: true },
             { label: "Streak", value: streak, unit: "​", Icon: Flame, color: "text-[#FF2C2C]", isCustomIcon: false },
             { label: "Avg. prog.", value: avgProgress, unit: "%", Icon: TrendingUp, color: "text-[#5C33FF]", isCustomIcon: false },
           ];
