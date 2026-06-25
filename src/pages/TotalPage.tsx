@@ -309,7 +309,7 @@ const TotalPage = () => {
               }} />
             </div>
             <p className="text-sm text-muted-foreground mb-4 text-center mx-[10px]">
-              Day {stats.daysElapsed} of 365
+              Day {stats.windowDay} of {stats.windowTotal}
             </p>
 
               {/* Inset cut-out group: pace + projected completion */}
