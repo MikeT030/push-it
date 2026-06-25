@@ -53,7 +53,7 @@ const TotalPage = () => {
         streak: 0,
         weeklyAvg: 0,
         allTimeAvg: 0,
-        paceStatus: "behind" as const,
+        paceStatus: "on" as "on" | "ahead" | "behind",
         paceDiff: 0,
         requiredDaily: 0,
         expectedByNow: 0
@@ -99,7 +99,7 @@ const TotalPage = () => {
     const windowDay = Math.min(windowTotal, Math.max(1, differenceInDays(today, startDate) + 1));
     const activeDays = Math.max(1, differenceInDays(today, startDate) + 1);
     const expectedByNow = Math.round(activeDays * dailyTarget);
-    const paceStatus = totalPushUps >= expectedByNow ? "ahead" : "behind";
+    const paceStatus = totalPushUps === expectedByNow ? "on" : totalPushUps > expectedByNow ? "ahead" : "behind";
     const paceDiff = Math.abs(totalPushUps - expectedByNow);
     const requiredDaily = daysRemaining > 0 ? Math.floor(remaining / daysRemaining) : 0;
 
@@ -321,8 +321,8 @@ const TotalPage = () => {
                       className="inline-block w-4 h-4 flex-shrink-0"
                       style={{
                         backgroundColor: "#00C3FF",
-                        WebkitMaskImage: `url(${stats.paceStatus === "ahead" ? rocketAsset.url : megaphoneAsset.url})`,
-                        maskImage: `url(${stats.paceStatus === "ahead" ? rocketAsset.url : megaphoneAsset.url})`,
+                        WebkitMaskImage: `url(${stats.paceStatus === "behind" ? megaphoneAsset.url : rocketAsset.url})`,
+                        maskImage: `url(${stats.paceStatus === "behind" ? megaphoneAsset.url : rocketAsset.url})`,
                         WebkitMaskRepeat: "no-repeat",
                         maskRepeat: "no-repeat",
                         WebkitMaskPosition: "center",
@@ -331,12 +331,19 @@ const TotalPage = () => {
                         maskSize: "contain",
                       }}
                     />
-                    <span>
-                      <span className="font-semibold text-slate-50">
-                        {stats.paceDiff.toLocaleString()}
-                      </span>{" "}
-                      push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target {dailyTarget}/d
-                    </span>
+                    {stats.paceStatus === "on" ? (
+                      <span>
+                        <span className="font-semibold text-slate-50">±0</span>{" "}
+                        push-ups on Target {dailyTarget}/d
+                      </span>
+                    ) : (
+                      <span>
+                        <span className="font-semibold text-slate-50">
+                          {stats.paceDiff.toLocaleString()}
+                        </span>{" "}
+                        push-ups {stats.paceStatus === "ahead" ? "above" : "below"} Target {dailyTarget}/d
+                      </span>
+                    )}
                   </p>
                 </div>
 
