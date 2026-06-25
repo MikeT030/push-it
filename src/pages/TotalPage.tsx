@@ -90,10 +90,16 @@ const TotalPage = () => {
     const last7Total = last7Days.reduce((sum, day) => sum + getEntryForDate(day), 0);
     const weeklyAvg = Math.round(last7Total / 7);
     const allTimeAvg = daysElapsed > 0 ? totalPushUps / daysElapsed : 0;
-    const expectedByNow = Math.round(daysElapsed / 365 * yearlyGoal);
+    const entryDates = getDaysWithEntries();
+    const firstEntryTime = entryDates.length
+      ? Math.min(...entryDates.map((d) => new Date(d).getTime()))
+      : today.getTime();
+    const activeDays = Math.max(1, differenceInDays(today, new Date(firstEntryTime)) + 1);
+    const expectedByNow = Math.round(activeDays * dailyTarget);
     const paceStatus = totalPushUps >= expectedByNow ? "ahead" : "behind";
     const paceDiff = Math.abs(totalPushUps - expectedByNow);
     const requiredDaily = daysRemaining > 0 ? Math.floor(remaining / daysRemaining) : 0;
+
     return {
       daysElapsed,
       daysRemaining,
