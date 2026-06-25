@@ -1,66 +1,61 @@
+
 ## Goal
 
-Wire the three welcome pages to the right audiences, and make sure no push-up can be logged until the current user has confirmed a goal **for the current year**.
+Eliminate the "type everything again" step after email verification, and offer a few alternative flows that are smoother overall.
 
-## Audiences (final wiring)
+## Why the current flow feels broken
 
-| Route | Who lands here | Trigger |
-|---|---|---|
-| `/welcome` | Brand-new users AND anyone who hasn't confirmed a goal for the current year (incl. Jan 1 rollover) | `goal_set_year !== currentYear` |
-| `/welcome-recalibrate` | Existing users who tap "Recalibrate goal" on their profile mid-year | Manual navigation only (from `/profile`) |
-| `/welcome-v2` | Users who hit 30,000 push-ups this year but haven't raised the yearly goal above 30k | `yearlyTotal >= 30000 && yearly_goal <= 30000` |
+When a user clicks the verification link, the backend exchanges the token and redirects to `/`. In the same browser, that already creates a session — so landing on `/auth` means one of two things is happening:
 
-The three pages stay distinct; only their entry conditions and the "back" button behavior change.
+1. The link is opened in a **different browser/device** than where the user signed up (very common on mobile, where mail apps open links in an in-app browser). No session can be created there, so they hit `/auth` with empty fields.
+2. The redirect token isn't being consumed before `ProtectedRoute` runs, so the user is bounced to `/auth` before the session is set.
 
-## Changes
+We'll fix both, and then layer on smoother alternatives.
 
-### 1. Per-year goal flag (new column)
-- Add `profiles.goal_set_year integer` (nullable).
-- Set it to the current year whenever a user confirms a goal on `/welcome`, `/welcome-recalibrate`, or `/welcome-v2`.
-- Replaces the role of `onboarded` for gating `/welcome`. (`onboarded` stays, used only as a "has ever onboarded" signal.)
+## Proposed changes (pick any combination)
 
-### 2. New `useGoalSetThisYear` hook
-- Reads `profiles.goal_set_year` for the current user.
-- Returns `{ isSetThisYear, isLoading }`.
+### 1. Make the existing link flow actually auto-login (baseline fix)
+- Add a dedicated `/auth/callback` route that waits for `supabase.auth.exchangeCodeForSession` / `onAuthStateChange` to resolve before redirecting. Use this as `emailRedirectTo` instead of `/`.
+- On signup, stash `{ email }` (not the password) in `localStorage` under a short-lived key. If the verification link is opened in a different browser and lands on `/auth`, prefill the email field and show "Welcome back — just enter your password to finish signing in."
+- After a successful signup, show a "Check your email" screen (instead of dumping the user back on the form) so the same tab stays open and ready to receive the session when they click the link.
 
-### 3. `ProtectedRoute` updates (`src/App.tsx`)
-Redirect priority (when authenticated, not already on a welcome route):
-1. `goal_set_year !== currentYear` → `/welcome`
-2. else `yearlyTotal >= 30000 && yearly_goal <= 30000` → `/welcome-v2`
-3. else render children
+### 2. Replace the magic link with a 6-digit OTP code (recommended for "smoothest")
+- Switch `signUp` to use Supabase's email OTP: the email contains a 6-digit code instead of a link.
+- The user stays on the signup page; we swap the form to a code input. On submit we call `supabase.auth.verifyOtp({ email, token, type: 'signup' })`, which immediately creates a session — no second login, no cross-browser problem, password they already typed is used as-is.
+- Works perfectly on mobile because the user never leaves the tab.
 
-`/welcome-recalibrate` is never auto-redirected to — it's only reachable from a "Recalibrate goal" entry on `/profile` (already exists via Admin button; we'll surface a profile entry too, scope TBD — out of scope here, just confirming nothing auto-routes there).
+### 3. Add Google sign-in
+- One-tap, no email verification, no password. Add a "Continue with Google" button above the email form on `/auth`. Uses Lovable Cloud's built-in Google provider.
 
-### 4. "Back with no changes" button
-- **`/welcome`**: hide the button entirely when `goal_set_year !== currentYear` (i.e., always on this page). The only exit is "Confirm goal". This enforces "no push-ups without a goal".
-- **`/welcome-recalibrate`**: keep the button. User already has a goal; they can bail.
-- **`/welcome-v2`**: keep the button. User already has a goal (just hit 30k); bailing is fine, but they'll keep getting nudged back to `/welcome-v2` until they raise the goal — which matches today's behavior.
+### 4. Auto-confirm emails (fastest, lowest friction, lower security)
+- Disable the "confirm email" requirement entirely. User signs up → instantly signed in → done. Email is still stored but never verified.
+- Trade-off: anyone can register with someone else's address; no protection against typos in the email field.
 
-### 5. Confirm handlers
-All three pages, on successful goal save:
-```ts
-await supabase.from('profiles').update({
-  yearly_goal: <new value>,
-  onboarded: true,
-  goal_set_year: new Date().getFullYear(),
-}).eq('id', user.id);
-```
+### 5. Small UX polish regardless of which flow we pick
+- After signup, route to a "Check your email" screen with the address shown, a "Resend email" button, and a "Wrong address?" link back to the form (with email prefilled).
+- Keep the typed email in component state across `signin` ↔ `signup` toggles (right now it persists, but make sure it survives the post-signup screen too).
+- Show a clear toast on `/auth` when the user lands there from a verification link in a new browser, explaining what to do.
 
-### 6. Logging guard (defense in depth)
-On `DailyPage` `+`/`-` handlers, if `goal_set_year !== currentYear`, navigate to `/welcome` instead of writing. (`ProtectedRoute` already prevents reaching the page, but this protects against race conditions.)
+## Recommendation
 
-## Out of scope (deferred per user)
-- Jan 1 archival job and `Past challenges` card on `/profile` — will be planned separately.
-- "Recalibrate goal" CTA placement on `/profile`.
+Do **#1 + #2 + #3** together:
+- #1 fixes the bug for same-browser users.
+- #2 makes the cross-browser/mobile case disappear by removing the link entirely.
+- #3 gives users who don't want to deal with email at all a one-click path.
+
+Skip #4 unless you explicitly want to drop email verification.
 
 ## Technical notes
-- Migration: `ALTER TABLE public.profiles ADD COLUMN goal_set_year integer;` (no GRANT changes needed — existing profile grants cover it).
-- Backfill: for users with `onboarded = true`, set `goal_set_year = EXTRACT(year FROM now())::int` so existing users aren't bounced to `/welcome` on deploy.
-- Files touched:
-  - `supabase/migrations/<new>.sql`
-  - `src/App.tsx` (ProtectedRoute logic)
-  - `src/hooks/useGoalSetThisYear.ts` (new)
-  - `src/pages/WelcomePage.tsx` (hide back button, update confirm)
-  - `src/pages/WelcomeRecalibratePage.tsx` (update confirm)
-  - `src/pages/WelcomePageV2.tsx` (update confirm)
-  - `src/pages/DailyPage.tsx` (guard log action)
+
+- `/auth/callback` page mounts, calls `supabase.auth.getSession()` after `onAuthStateChange` fires once, then `navigate("/")`. Guard `ProtectedRoute` so it doesn't redirect while `loading` is true (already the case) and so `/auth/callback` is a public route.
+- For OTP: `supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true, data: { pending_password: ... } } })` won't set a password. Instead, use `supabase.auth.signUp({ email, password })` with `emailRedirectTo` omitted and Supabase email template switched to send `{{ .Token }}` instead of `{{ .ConfirmationURL }}`. Verification call: `supabase.auth.verifyOtp({ email, token, type: 'signup' })`.
+- Google sign-in requires enabling the Google provider in Lovable Cloud (one-time config); the button calls `supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: \`${window.location.origin}/auth/callback\` } })`.
+- Auto-confirm (#4) is a single auth setting toggle; no code changes needed.
+
+## Question before I build
+
+Which combination do you want?
+- **A.** Just fix the auto-login bug (#1) — minimal change.
+- **B.** #1 + #2 (OTP code, no more link) — smoothest email flow.
+- **C.** #1 + #2 + #3 (also add Google) — recommended.
+- **D.** #4 only (turn off email verification) — fastest, least secure.
