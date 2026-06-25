@@ -1,14 +1,23 @@
-## Add "On Target" state
+# Reset two users to their initial 30k goal
 
-When `diff === 0`, treat as a distinct state using the existing above-target visuals (rocket icon, teal color).
+Two users currently have non-30k yearly goals from recalibrations:
 
-### `src/components/DailySection.tsx` (pace tile, ~lines 337–376)
-- Change label logic: `diff === 0 ? "On Tgt" : diff > 0 ? "Above Tgt" : "Below Tgt"`
-- Change value logic: `diff === 0 ? "±0" : (diff > 0 ? `+${diff}` : `−${Math.abs(diff)}`)`
-- Icon/color: use the above-target rocket + teal styling for both `diff >= 0` (unchanged for positive; now also applies to zero).
+| User | Email | Current `yearly_goal` | New |
+|---|---|---|---|
+| Thomas | th.gruhl@gmail.com | 15,580 | **30,000** |
+| nomis | zion.jones@icloud.com | 38,000 | **30,000** |
 
-### `src/pages/TotalPage.tsx` (yearly card tagline, ~line 319)
-- When `paceDiff === 0`: render "On target — keep it up at {dailyTarget}/d" (using the existing above-target megaphone/rocket icon and teal accent already used for positive diff).
-- Keep below/above branches unchanged.
+## Change
 
-No other files affected.
+Run a single data update against `public.profiles`:
+
+```sql
+UPDATE public.profiles
+SET yearly_goal = 30000, updated_at = now()
+WHERE id IN (
+  '4a2a3fa0-cef9-4234-aa4d-4f932fc93ba6', -- Thomas
+  'eee4a752-12de-4052-82cd-8a3e4a98a354'  -- nomis
+);
+```
+
+No code changes. All push-up entries remain intact; only the goal resets, which removes the "+14K"/"+8K" recalibration delta from their stats.
