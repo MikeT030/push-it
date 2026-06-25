@@ -47,8 +47,10 @@ const DailySection = () => {
     isLoaded,
     getCurrentStreak,
     getTotalPushUps,
-    getMaxSingleDay
+    getMaxSingleDay,
+    getDaysWithEntries
   } = usePushUpData();
+
 
   const currentCount = isLoaded ? getEntryForDate(selectedDate) : 0;
   const yesterdayCount = isLoaded ? getEntryForDate(subDays(selectedDate, 1)) : 0;
@@ -326,8 +328,14 @@ const DailySection = () => {
             : null;
           const projectedMonth = projectedDate ? format(projectedDate, "d. MMM") : "—";
           const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
-          const expectedByNow = Math.round((daysElapsed / 365) * yearlyGoal);
+          const entryDates = getDaysWithEntries();
+          const firstEntryTime = entryDates.length
+            ? Math.min(...entryDates.map((d) => new Date(d).getTime()))
+            : today.getTime();
+          const activeDays = Math.max(1, differenceInDays(today, new Date(firstEntryTime)) + 1);
+          const expectedByNow = Math.round(activeDays * dailyTarget);
           const diff = total - expectedByNow;
+
           const absDiff = Math.abs(diff);
           const diffValue = diff >= 0 ? "+" : "−";
           let diffDisplay: string;
