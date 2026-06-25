@@ -1,36 +1,27 @@
-## Goal
+## Change
 
-Fix the mismatch between the "X below Target" number and the "Target N/d" label, while keeping today's quota counted from midnight so users feel pressure to push.
+Update "Day X of 365" under the progress bar on the yearly card to reflect the user's personal start-through-EOY window.
 
-## Change (one file)
+## Implementation
 
-**`src/hooks/usePushUpData.ts`** — replace the fixed-365 divisor with a personal window from the user's start date through Dec 31.
+**File:** `src/pages/TotalPage.tsx`
 
-```ts
-// Determine the user's personal start date
-const firstEntryTime = entries.length
-  ? Math.min(...entries.map(e => new Date(e.date).getTime()))
-  : today.getTime();
-const startDate    = new Date(Math.min(firstEntryTime, today.getTime()));
-const daysInWindow = differenceInDays(endOfYear(today), startDate) + 1;
-const dailyTarget  = Math.max(1, Math.round(yearlyGoal / daysInWindow));
-```
+1. Import `endOfYear` from `date-fns` (line 3).
+2. Inside the existing stats `useMemo` (where `firstEntryTime` is already computed, ~line 94–98), add:
+   ```ts
+   const startDate   = new Date(firstEntryTime);
+   const windowTotal = differenceInDays(endOfYear(today), startDate) + 1;
+   const windowDay   = Math.min(windowTotal, Math.max(1, differenceInDays(today, startDate) + 1));
+   ```
+3. Return `windowDay` and `windowTotal` from `stats`.
+4. Replace line 307:
+   ```tsx
+   Day {stats.windowDay} of {stats.windowTotal}
+   ```
+5. Also fix the existing hardcoded `Target 82/d` on line 333 → `Target {dailyTarget}/d`.
 
-That's it. Everywhere `dailyTarget` is consumed (DailySection, TotalPage, WeeklyOverview, etc.) automatically gets the corrected per-day number.
+## Result
 
-## Explicitly NOT changing
-
-- **`expectedByNow` still uses `activeDays` (today counts immediately).** As soon as the clock ticks past midnight, the user owes that day's quota. If they haven't accumulated a surplus from previous days, they'll show as one daily-target behind — by design, to keep them on their toes.
-
-## Effect
-
-For the example user (15,580 goal, no entries, first day):
-- Old: dailyTarget = 43, expectedByNow = 43 → "−43 below Target / Target 82/d" (contradictory)
-- New: dailyTarget = 82, expectedByNow = 82 → "−82 below Target / Target 82/d" (consistent, and creates the daily pressure you want)
-
-For Jan-1 starters: nothing changes (window = 365).
-For mid-year starters: daily target rises to match the shorter remaining window (e.g., Sascha 82 → 114).
-
-## Cleanup
-
-Since `dailyTarget` is now correct globally, the local recalculation added earlier to `DailySection.tsx` and `TotalPage.tsx` (the `firstEntryDate`-based expected calc) can be reverted back to using `dailyTarget * activeDays` directly. Keeps the codebase consistent and removes duplicated logic.
+- Brand-new user today (no entries) → **Day 1 of 190**, "Target 82/d" (or whatever their real daily is).
+- Sascha → **Day X of 264**, "Target 114/d".
+- Jan-1 starter → **Day 176 of 365**, "Target 82/d" (unchanged).
