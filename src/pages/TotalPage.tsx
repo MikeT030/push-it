@@ -24,11 +24,13 @@ const TotalPage = () => {
     getYearProgress,
     getEntryForDate,
     getGoalCompletionDate,
+    getDaysWithEntries,
     yearlyGoal,
     setYearlyGoal,
     dailyTarget,
     isLoaded
   } = usePushUpData();
+
   const { avatar } = useUserAvatar();
   const { user: authUser } = useAuth();
   const groupEntriesQuery = useGroupEntries();
