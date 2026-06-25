@@ -385,7 +385,7 @@ const DailySection = () => {
             <div className="flex gap-4 pt-4 mt-2 border-t border-b border-[#3B404F] mb-2 overflow-x-auto pb-[20px] mx-[10px]" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
               <TooltipProvider delayDuration={0}>
                 {items.map((s) => {
-                  const isTargetItem = s.label === "Above Tgt" || s.label === "Below Tgt";
+                  const isTargetItem = s.label === "Above Tgt" || s.label === "Below Tgt" || s.label === "On Tgt";
                   const content = (
                     <div className="flex-shrink-0 flex items-start gap-2 first:pl-0 last:pr-0" style={{ minWidth: "90px" }}>
                       {s.label === "Avg. daily" ? (
