@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { format, parseISO, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, differenceInDays } from "date-fns";
+import { format, parseISO, startOfDay, isAfter, subDays, eachDayOfInterval, startOfYear, endOfYear, differenceInDays } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
