@@ -8,6 +8,8 @@ interface AuthContextType {
   loading: boolean;
   signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+  verifySignupOtp: (email: string, token: string) => Promise<{ error: Error | null }>;
+  resendSignupOtp: (email: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
 }
 
