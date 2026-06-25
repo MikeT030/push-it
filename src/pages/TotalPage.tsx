@@ -99,7 +99,7 @@ const TotalPage = () => {
     const windowDay = Math.min(windowTotal, Math.max(1, differenceInDays(today, startDate) + 1));
     const activeDays = Math.max(1, differenceInDays(today, startDate) + 1);
     const expectedByNow = Math.round(activeDays * dailyTarget);
-    const paceStatus = totalPushUps >= expectedByNow ? "ahead" : "behind";
+    const paceStatus = totalPushUps === expectedByNow ? "on" : totalPushUps > expectedByNow ? "ahead" : "behind";
     const paceDiff = Math.abs(totalPushUps - expectedByNow);
     const requiredDaily = daysRemaining > 0 ? Math.floor(remaining / daysRemaining) : 0;
 
