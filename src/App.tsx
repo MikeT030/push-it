@@ -44,6 +44,7 @@ const TotalPage = lazyWithRetry(() => import("./pages/TotalPage"));
 const GroupPage = lazyWithRetry(() => import("./pages/GroupPage"));
 const ProfilePage = lazyWithRetry(() => import("./pages/ProfilePage"));
 const AuthPage = lazyWithRetry(() => import("./pages/AuthPage"));
+const AuthCallbackPage = lazyWithRetry(() => import("./pages/AuthCallbackPage"));
 const ForgotPasswordPage = lazyWithRetry(() => import("./pages/ForgotPasswordPage"));
 const ResetPasswordPage = lazyWithRetry(() => import("./pages/ResetPasswordPage"));
 const AdminPage = lazyWithRetry(() => import("./pages/AdminPage"));
