@@ -24,6 +24,7 @@ export type WelcomeShellProps = {
   showBackButton?: boolean;
   successToast?: string;
   onConfirmRedirect?: string;
+  contentOffsetY?: number;
 };
 
 const DEFAULT_INFO = (
@@ -43,6 +44,7 @@ const WelcomeShell = ({
   showBackButton = true,
   successToast = "Goal locked in. Let's push!",
   onConfirmRedirect = "/",
+  contentOffsetY = 0,
 }: WelcomeShellProps) => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -136,6 +138,7 @@ const WelcomeShell = ({
           "w-full max-w-sm mt-10",
           showFireworks ? "relative z-10" : "animate-fade-in",
         )}
+        style={contentOffsetY ? { transform: `translateY(${contentOffsetY}px)` } : undefined}
       >
         {/* Header */}
         <div
