@@ -13,7 +13,9 @@ const WelcomePageV2 = () => (
     mode="additive"
     showFireworks
     fireworksDelayMs={5000}
+    contentOffsetY={-12}
   />
+
 );
 
 export default WelcomePageV2;
