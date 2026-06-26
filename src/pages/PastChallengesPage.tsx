@@ -27,7 +27,7 @@ const PastChallengesPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
-      <div className="w-full max-w-sm animate-fade-in mt-2">
+      <div className="w-full max-w-sm animate-fade-in mt-10" style={{ transform: "translateY(-12px)" }}>
         {/* Back */}
         <div className="mb-2 -ml-2">
           <Button
