@@ -14,7 +14,9 @@ const WelcomePageV2 = () => (
     showFireworks
     fireworksDelayMs={5000}
     contentOffsetY={-12}
+    showBackButton={false}
   />
+
 
 );
 
