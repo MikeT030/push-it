@@ -6,6 +6,7 @@ const WelcomePage = () => (
     tiers={[50, 60, 70, 82]}
     mode="absolute"
     showBackButton={false}
+    contentOffsetY={-12}
   />
 );
 
