@@ -69,12 +69,12 @@ const ProfilePage = () => {
       display_name: trimmedValue || null
     }).eq("id", user.id);
     if (error) {
-      toast.error("Failed to save nickname");
+      toast.error("Failed to save name");
       return;
     }
     setDisplayName(trimmedValue);
     setIsEditing(false);
-    toast.success("Nickname saved!");
+    toast.success("Name saved!");
   };
   
   const handleBackup = async () => {
