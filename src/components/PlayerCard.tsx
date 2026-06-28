@@ -101,7 +101,7 @@ const PlayerCard = ({
           <div className="px-4 py-3 space-y-2.5">
             {/* Streak stat */}
             <div className="flex items-start gap-2">
-              <span className="text-lg">🔥</span>
+              <Flame className="w-5 h-5 text-[#FF2C2C]" fill="currentColor" />
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-bold text-gray-800">Current Streak</span>
