@@ -245,7 +245,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Sign Out Card */}
-        <div className="rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        <div className="rounded-2xl p-6 animate-slide-up" style={{
         animationDelay: "0.15s"
       }}>
           <Button variant="outline" onClick={handleSignOut} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
