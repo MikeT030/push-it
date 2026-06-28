@@ -1,4 +1,4 @@
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Flame } from "lucide-react";
 import { AvatarOption } from "@/data/avatars";
 import muscleIcon from "@/assets/muscle-icon.svg";
 import defaultAvatarCard from "@/assets/default-avatar-card.svg";
@@ -101,7 +101,7 @@ const PlayerCard = ({
           <div className="px-4 py-3 space-y-2.5">
             {/* Streak stat */}
             <div className="flex items-start gap-2">
-              <span className="text-lg">🔥</span>
+              <Flame className="w-5 h-5 text-[#FF2C2C]" fill="currentColor" />
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-bold text-gray-800">Current Streak</span>
@@ -122,7 +122,7 @@ const PlayerCard = ({
 
             {/* Weekly avg stat */}
             <div className="flex items-start gap-2">
-              <TrendingUp className="w-5 h-5 text-primary" />
+              <span className="text-xl font-bold text-primary">Ø</span>
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-bold text-gray-800">Weekly Average</span>
