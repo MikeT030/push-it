@@ -96,27 +96,27 @@ const PlayerCard = ({
         <div className="mx-3 h-[2px] bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
 
         {/* Stats */}
-        <div className="px-4 py-3 space-y-2">
-          <div className="bg-white/40 rounded-xl px-3 py-2.5 flex items-center justify-between border border-gray-200/60">
-            <div className="flex items-center gap-2">
-              <Flame className="w-4 h-4 text-[#FF2C2C]" fill="currentColor" />
-              <div>
-                <p className="text-xs font-bold text-gray-800 leading-none">Current Streak</p>
-                <p className="text-[9px] text-gray-500 mt-0.5">Consecutive days</p>
+        <div className="px-4 py-3 space-y-2.5">
+          <div className="flex items-start gap-2">
+            <Flame className="w-5 h-5 text-[#FF2C2C]" fill="currentColor" />
+            <div className="flex-1">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-bold text-gray-800">Current Streak</span>
+                <span className="text-lg font-black text-gray-800">{currentStreak}</span>
               </div>
+              <p className="text-[10px] text-gray-500 leading-tight">Consecutive days PU logged</p>
             </div>
-            <span className="text-base font-black text-gray-800">{currentStreak}</span>
           </div>
-
-          <div className="bg-white/40 rounded-xl px-3 py-2.5 flex items-center justify-between border border-gray-200/60">
-            <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-primary">Ø</span>
-              <div>
-                <p className="text-xs font-bold text-gray-800 leading-none">Weekly Average</p>
-                <p className="text-[9px] text-gray-500 mt-0.5">Last 7 days</p>
+          <div className="h-[1px] bg-gray-300/50" />
+          <div className="flex items-start gap-2">
+            <span className="text-xl font-bold text-primary">Ø</span>
+            <div className="flex-1">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-bold text-gray-800">Weekly Average</span>
+                <span className="text-lg font-black text-gray-800">{weeklyAverage}</span>
               </div>
+              <p className="text-[10px] text-gray-500 leading-tight">Avg. PU/day in last 7 days</p>
             </div>
-            <span className="text-base font-black text-gray-800">{weeklyAverage}</span>
           </div>
         </div>
 
@@ -170,27 +170,27 @@ const PlayerCard = ({
         <div className="mx-3 h-[2px] bg-gradient-to-r from-transparent via-[#3B404F] to-transparent" />
 
         {/* Stats */}
-        <div className="px-4 py-3 space-y-2">
-          <div className="bg-[#161b27]/60 rounded-xl px-3 py-2.5 flex items-center justify-between border border-[#3B404F]/50">
-            <div className="flex items-center gap-2">
-              <Flame className="w-4 h-4 text-[#FF2C2C]" fill="currentColor" />
-              <div>
-                <p className="text-xs font-bold text-white leading-none">Current Streak</p>
-                <p className="text-[9px] text-[#575F78] mt-0.5">Consecutive days</p>
+        <div className="px-4 py-3 space-y-2.5">
+          <div className="flex items-start gap-2">
+            <Flame className="w-5 h-5 text-[#FF2C2C]" fill="currentColor" />
+            <div className="flex-1">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-bold text-white">Current Streak</span>
+                <span className="text-lg font-black text-white">{currentStreak}</span>
               </div>
+              <p className="text-[10px] text-[#575F78] leading-tight">Consecutive days PU logged</p>
             </div>
-            <span className="text-base font-black text-white">{currentStreak}</span>
           </div>
-
-          <div className="bg-[#161b27]/60 rounded-xl px-3 py-2.5 flex items-center justify-between border border-[#3B404F]/50">
-            <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-[#0ABAB5]">Ø</span>
-              <div>
-                <p className="text-xs font-bold text-white leading-none">Weekly Average</p>
-                <p className="text-[9px] text-[#575F78] mt-0.5">Last 7 days</p>
+          <div className="h-[1px] bg-[#3B404F]/50" />
+          <div className="flex items-start gap-2">
+            <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
+            <div className="flex-1">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-bold text-white">Weekly Average</span>
+                <span className="text-lg font-black text-white">{weeklyAverage}</span>
               </div>
+              <p className="text-[10px] text-[#575F78] leading-tight">Avg. PU/day in last 7 days</p>
             </div>
-            <span className="text-base font-black text-white">{weeklyAverage}</span>
           </div>
         </div>
 
