@@ -1,4 +1,4 @@
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Flame } from "lucide-react";
 import { AvatarOption } from "@/data/avatars";
 import muscleIcon from "@/assets/muscle-icon.svg";
 import defaultAvatarCard from "@/assets/default-avatar-card.svg";
