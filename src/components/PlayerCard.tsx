@@ -55,9 +55,9 @@ const PlayerCard = ({
               </h3>
             </div>
             <div className="flex items-center gap-1">
-              <span className="text-[10px] font-semibold text-gray-500 uppercase">PU</span>
-              <span className="text-xl font-black text-gray-800">{totalPushUps.toLocaleString()}</span>
               <img src={muscleIcon} alt="" className="w-5 h-5" />
+              <span className="text-xl font-black text-gray-800">{totalPushUps.toLocaleString()}</span>
+              <span className="text-[10px] font-semibold text-gray-500 uppercase">PU</span>
             </div>
           </div>
 
