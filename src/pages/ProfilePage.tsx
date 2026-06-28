@@ -69,12 +69,12 @@ const ProfilePage = () => {
       display_name: trimmedValue || null
     }).eq("id", user.id);
     if (error) {
-      toast.error("Failed to save nickname");
+      toast.error("Failed to save name");
       return;
     }
     setDisplayName(trimmedValue);
     setIsEditing(false);
-    toast.success("Nickname saved!");
+    toast.success("Name saved!");
   };
   
   const handleBackup = async () => {
@@ -168,15 +168,15 @@ const ProfilePage = () => {
               )}
             </div>
           </div>
-
-          {/* Nickname */}
+ 
+          {/* Name */}
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium text-muted-foreground">
-                Nickname
+                Name
               </label>
               {isEditing ? <div className="flex gap-2 mt-1.5">
-                  <Input value={editValue} onChange={e => setEditValue(e.target.value)} maxLength={30} placeholder="Enter your nickname" className="h-12 bg-transparent border-0 border-b border-[#EEEEEE] mb-[20px]" autoFocus />
+                  <Input value={editValue} onChange={e => setEditValue(e.target.value)} maxLength={30} placeholder="Enter your name" className="h-12 bg-transparent border-0 border-b border-[#EEEEEE] mb-[20px]" autoFocus />
                   <Button size="icon" onClick={saveNickname} className="h-12 w-12 shrink-0">
                     <Check className="w-4 h-4" />
                   </Button>
@@ -185,7 +185,7 @@ const ProfilePage = () => {
                   </Button>
                 </div> : <div className="h-12 bg-transparent border-0 border-b border-[#EEEEEE] px-3 flex items-center justify-between mt-1.5 mb-[20px] cursor-pointer transition-colors" onClick={startEditing}>
                   <span className="text-foreground font-medium">
-                    {displayName || "Set a nickname"}
+                    {displayName || "Set a name"}
                   </span>
                   <Pencil className="w-4 h-4 text-muted-foreground" />
                 </div>}
