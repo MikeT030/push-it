@@ -168,8 +168,8 @@ const ProfilePage = () => {
               )}
             </div>
           </div>
-
-          {/* Nickname */}
+ 
+          {/* Name */}
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium text-muted-foreground">
