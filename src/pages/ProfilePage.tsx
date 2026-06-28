@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { User, LogOut, Pencil, Check, X, Download, Users, Shield, Target } from "lucide-react";
+import { User, LogOut, Pencil, Check, X, Shield } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.svg";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
@@ -141,19 +141,25 @@ const ProfilePage = () => {
   };
 
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      <div className="px-6 pt-12">
+      {/* Animated Top Gradient */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[28rem] opacity-80 blur-3xl pointer-events-none animated-aurora"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+        }}
+      />
+
+      <div className="relative max-w-lg mx-auto px-6 space-y-6 py-[32px]">
         {/* Header */}
-        <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">
+        <header className="mb-4 animate-fade-in flex items-center gap-2">
+          <h1 className="text-3xl font-black text-foreground tracking-tight">
             Profile
           </h1>
-          <p className="text-lg text-muted-foreground mt-1">
-            Your account settings
-          </p>
         </header>
 
         {/* Profile Card */}
-        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]">
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]">
           {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
           <div
@@ -205,7 +211,7 @@ const ProfilePage = () => {
 
         {/* Admin Card */}
         {isAdmin && (
-          <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.03s" }}>
+          <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.03s" }}>
             <h2 className="text-lg text-foreground font-semibold mb-4">Admin</h2>
             <Button
               variant="outline"
@@ -220,7 +226,7 @@ const ProfilePage = () => {
 
 
         {/* Info Card */}
-        <div className="bg-card/40 rounded-2xl p-6 mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{
         animationDelay: "0.1s"
       }}>
           <h2 className="text-lg text-foreground font-semibold mb-[6px]">
@@ -239,7 +245,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Sign Out Card */}
-        <div className="rounded-2xl p-6 mt-6 animate-slide-up" style={{
+        <div className="rounded-2xl p-6 animate-slide-up" style={{
         animationDelay: "0.15s"
       }}>
           <Button variant="outline" onClick={handleSignOut} className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white">
