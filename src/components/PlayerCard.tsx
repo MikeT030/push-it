@@ -122,7 +122,7 @@ const PlayerCard = ({
 
             {/* Weekly avg stat */}
             <div className="flex items-start gap-2">
-              <TrendingUp className="w-5 h-5 text-primary" />
+              <span className="text-xl font-bold text-primary">Ø</span>
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-bold text-gray-800">Weekly Average</span>
