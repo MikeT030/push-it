@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { User, LogOut, Pencil, Check, X, Download, Users, Shield, Target } from "lucide-react";
+import { User, LogOut, Pencil, Check, X, Shield } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.svg";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
