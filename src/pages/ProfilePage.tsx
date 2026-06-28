@@ -141,15 +141,21 @@ const ProfilePage = () => {
   };
 
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      <div className="px-6 pt-12">
+      {/* Animated Top Gradient */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[28rem] opacity-80 blur-3xl pointer-events-none animated-aurora"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+        }}
+      />
+
+      <div className="relative max-w-lg mx-auto px-6 space-y-6 py-[32px]">
         {/* Header */}
-        <header className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-black text-foreground tracking-tight">
+        <header className="mb-4 animate-fade-in flex items-center gap-2">
+          <h1 className="text-3xl font-black text-foreground tracking-tight">
             Profile
           </h1>
-          <p className="text-lg text-muted-foreground mt-1">
-            Your account settings
-          </p>
         </header>
 
         {/* Profile Card */}
