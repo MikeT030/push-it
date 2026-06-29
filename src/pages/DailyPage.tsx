@@ -99,7 +99,7 @@ const DailyPage = () => {
   const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
   const handleInputChange = (value: string) => {
     const num = parseInt(value) || 0;
-    if (num >= 0 && num <= 9999) {
+    if (num >= 0 && num <= 1000) {
       const prevCount = currentCount;
       setInputValue(value);
       setEntryForDate(selectedDate, num);
@@ -112,7 +112,7 @@ const DailyPage = () => {
   };
   const adjustCount = (delta: number) => {
     const prevCount = currentCount;
-    const newCount = Math.max(0, Math.min(9999, currentCount + delta));
+    const newCount = Math.max(0, Math.min(1000, currentCount + delta));
     setEntryForDate(selectedDate, newCount);
     setInputValue(newCount > 0 ? newCount.toString() : "");
 

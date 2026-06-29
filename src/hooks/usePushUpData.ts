@@ -162,8 +162,8 @@ export const usePushUpData = () => {
   const setEntryForDate = useCallback(async (date: Date, count: number) => {
     if (!userId) return;
 
-    // Defence-in-depth: clamp to match server CHECK constraint (0-9999)
-    count = Math.max(0, Math.min(9999, Math.floor(Number(count) || 0)));
+    // Defence-in-depth: clamp to match server CHECK constraint (0-1000)
+    count = Math.max(0, Math.min(1000, Math.floor(Number(count) || 0)));
     const dateStr = format(date, "yyyy-MM-dd");
 
     // Optimistic cache update — all subscribers see new value immediately
