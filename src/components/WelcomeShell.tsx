@@ -269,9 +269,11 @@ const WelcomeShell = ({
             </div>
 
             {/* Info text */}
-            <p className="text-xs text-muted-foreground mt-8 leading-relaxed">
-              {infoText}
-            </p>
+            {infoText && (
+              <p className="text-xs text-muted-foreground mt-8 leading-relaxed">
+                {infoText}
+              </p>
+            )}
 
             {/* Confirm */}
             <Button
