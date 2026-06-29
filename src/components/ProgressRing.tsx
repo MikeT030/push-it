@@ -365,7 +365,6 @@ const ProgressRing = ({
           {tier5Progress > 0 && (
             <g mask={`url(#tier5Mask-${uid})`}>
 
-            <>
               {/* Outer red haze - large, warped, slow flicker */}
               <circle
                 cx={size / 2}
