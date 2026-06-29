@@ -250,9 +250,9 @@ const DailySection = () => {
           <div className="relative flex items-center justify-center mt-[20px]">
             {isEditable &&
               <button
-                onClick={() => adjustCount(-10)}
-                disabled={currentCount < 10}
-                aria-label="Decrease by 10"
+                onClick={() => (currentCount < 10 ? adjustCount(-currentCount) : adjustCount(-10))}
+                disabled={currentCount <= 0}
+                aria-label="Decrease"
                 className="absolute left-1/2 -translate-x-[calc(69px+1rem+22px+30px)] w-11 h-11 rounded-full flex items-center justify-center text-foreground transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed overflow-hidden"
                 style={{
                   background:
