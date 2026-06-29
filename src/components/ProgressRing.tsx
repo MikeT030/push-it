@@ -76,7 +76,7 @@ const ProgressRing = ({
           if (enableGame) setShowGame(true);
         }}>
 
-        <svg className="transform -rotate-90" width={size} height={size} overflow="visible">
+        <svg className="transform -rotate-90 overflow-visible" width={size} height={size}>
           <defs>
             {/* Soft outer bloom */}
             <filter id={`bloom-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
