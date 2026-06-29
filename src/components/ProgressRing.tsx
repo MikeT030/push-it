@@ -322,7 +322,80 @@ const ProgressRing = ({
               />
             </>
           )}
+
+          {/* Tier 5 ring - >=401%: animated flame */}
+          {tier5Progress > 0 && (
+            <>
+              {/* Wide outer flame bloom */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#flame-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier5Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  opacity: 0.7,
+                  filter: `blur(${strokeWidth * 1.1}px) drop-shadow(0 0 ${strokeWidth * 2.2}px ${tier5ColorSoft})`,
+                }}
+              >
+                <animate attributeName="opacity" values="0.55;0.85;0.55" dur="1.2s" repeatCount="indefinite" />
+              </circle>
+              {/* Bright flame core */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#flame-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier5Offset}
+                className="transition-all duration-700 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 ${strokeWidth * 0.9}px ${tier5ColorSoft}) drop-shadow(0 0 ${strokeWidth * 1.6}px rgba(255,200,0,0.8))`,
+                }}
+              />
+              {/* Flickering sparks */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke="#FFE680"
+                strokeWidth={Math.max(1, strokeWidth * 0.45)}
+                strokeLinecap="round"
+                strokeDasharray={`${strokeWidth * 0.6} ${strokeWidth * 2.2}`}
+                strokeDashoffset={tier5Offset}
+                className="pointer-events-none"
+                style={{ mixBlendMode: 'screen', opacity: 0.9 }}
+              >
+                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 40}`} dur="0.9s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.5;1;0.5" dur="0.6s" repeatCount="indefinite" />
+              </circle>
+              {/* Sheen */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={`url(#sheen-${uid})`}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier5Offset}
+                className="transition-all duration-700 ease-out pointer-events-none"
+                style={{ mixBlendMode: 'overlay', opacity: 0.85 }}
+              />
+            </>
+          )}
         </svg>
+
         <div
           className={`absolute inset-0 flex items-center justify-center rounded-full overflow-hidden ${enableSunReflection ? 'sun-reflection' : ''}`}
           style={enableGlow ? {
