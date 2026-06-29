@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import BarFlame from "./BarFlame";
-import PillFlame from "./PillFlame";
+import FlamingCountPill from "./FlamingCountPill";
 
 
 interface DayData {
@@ -227,32 +227,14 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
 
                 {/* Count badge on top of bar */}
 
-                {!day.isBeforeYearStart && day.count > 0 && (() => {
-                  const digits = String(day.count).length;
-                  const pillW = Math.max(26, digits * 7 + 10);
-                  const pillH = 22;
-                  const onFire = percentage >= 401;
-                  return (
-                    <div
-                      className="absolute left-1/2 -translate-x-1/2 -top-3 flex items-center justify-center rounded-full bg-background border-2 shadow-md"
-                      style={{
-                        borderColor: onFire ? "#FF2C2C" : colorHex ?? "hsl(var(--muted))",
-                        minWidth: `${pillW}px`,
-                        height: `${pillH}px`,
-                        padding: "0 4px",
-                        opacity: animate ? 1 : 0,
-                        transform: `translate(-50%, ${animate ? "0" : "6px"})`,
-                        transition: "opacity 600ms ease 900ms, transform 600ms ease 900ms",
-                        boxShadow: onFire ? "0 0 14px rgba(255,90,0,0.7)" : undefined,
-                      }}
-                    >
-                      {onFire && <PillFlame width={pillW} height={pillH} />}
-                      <span className="text-[10px] font-bold leading-none text-white relative">
-                        {day.count}
-                      </span>
-                    </div>
-                  );
-                })()}
+                {!day.isBeforeYearStart && day.count > 0 && (
+                  <FlamingCountPill
+                    count={day.count}
+                    colorHex={colorHex}
+                    onFire={percentage >= 401}
+                    animate={animate}
+                  />
+                )}
               </div>
             </div>
             <span
