@@ -43,11 +43,13 @@ const ProgressRing = ({
   const tier2Progress = progress > 100 ? Math.min(progress - 100, 100) : 0;
   const tier3Progress = progress > 200 ? Math.min(progress - 200, 100) : 0;
   const tier4Progress = progress > 300 ? Math.min(progress - 300, 100) : 0;
+  const tier5Progress = progress > 400 ? Math.min(progress - 400, 100) : 0;
 
   const baseOffset = circumference - baseProgress / 100 * circumference;
   const tier2Offset = circumference - tier2Progress / 100 * circumference;
   const tier3Offset = circumference - tier3Progress / 100 * circumference;
   const tier4Offset = circumference - tier4Progress / 100 * circumference;
+  const tier5Offset = circumference - tier5Progress / 100 * circumference;
 
   const baseColor = 'hsl(var(--primary))';
   const tier2Color = '#4300FF';
@@ -56,6 +58,8 @@ const ProgressRing = ({
   const tier2ColorSoft = 'rgba(67, 0, 255, 0.9)';
   const tier3ColorSoft = 'rgba(192, 41, 222, 0.9)';
   const tier4ColorSoft = 'rgba(255, 44, 44, 0.9)';
+  const tier5ColorSoft = 'rgba(255, 140, 0, 0.95)';
+
 
   return (
     <>
