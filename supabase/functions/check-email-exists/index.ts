@@ -1,5 +1,3 @@
-import { createClient } from 'npm:@supabase/supabase-js@2'
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -20,29 +18,21 @@ Deno.serve(async (req) => {
       })
     }
 
-    const admin = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
-    )
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
 
-    // Use admin listUsers with a filter via the REST endpoint
-    const { data, error } = await admin.auth.admin.listUsers({
-      page: 1,
-      perPage: 1,
-    } as any)
-
-    // listUsers doesn't filter by email, so fall back to a direct lookup:
-    // Use the GoTrue admin API to search by email.
-    const url = `${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/users?email=${encodeURIComponent(email)}`
+    const url = `${supabaseUrl}/auth/v1/admin/users?email=${encodeURIComponent(email)}`
     const resp = await fetch(url, {
       headers: {
-        apikey: Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
-        Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!}`,
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
       },
     })
     const json = await resp.json()
     const users = Array.isArray(json?.users) ? json.users : []
-    const exists = users.some((u: any) => (u.email ?? '').toLowerCase() === email.toLowerCase())
+    const exists = users.some(
+      (u: any) => (u.email ?? '').toLowerCase() === email.toLowerCase()
+    )
 
     return new Response(JSON.stringify({ exists }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
