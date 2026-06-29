@@ -490,6 +490,52 @@ const ProgressRing = ({
             </g>
           )}
 
+          {/* Smoke - drifts above the flame arc */}
+          {tier5Progress > 0 && (
+            <g mask={`url(#smokeMask-${uid})`} className="pointer-events-none">
+              {/* Dark smoke base */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke="#6b6b6b"
+                strokeWidth={strokeWidth * 3.2}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={tier5Offset}
+                style={{
+                  filter: `url(#smokeWarp-${uid})`,
+                  opacity: 0.35,
+                  mixBlendMode: 'screen',
+                }}
+              >
+                <animate attributeName="opacity" values="0.25;0.45;0.3;0.4;0.25" dur="3.2s" repeatCount="indefinite" />
+              </circle>
+              {/* Lighter smoke puffs */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke="#b5b5b5"
+                strokeWidth={strokeWidth * 2}
+                strokeLinecap="round"
+                strokeDasharray={`${strokeWidth * 3} ${strokeWidth * 4}`}
+                strokeDashoffset={tier5Offset}
+                style={{
+                  filter: `url(#smokeWarp-${uid})`,
+                  opacity: 0.28,
+                  mixBlendMode: 'screen',
+                }}
+              >
+                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 40}`} dur="4s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.18;0.35;0.22;0.32;0.18" dur="2.6s" repeatCount="indefinite" />
+              </circle>
+            </g>
+          )}
+
+
         </svg>
 
         <div
