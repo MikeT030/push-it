@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { User, X, Check } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { X, Check } from "lucide-react";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import PlayerCard from "@/components/PlayerCard";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
