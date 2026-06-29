@@ -146,16 +146,12 @@ const ProgressRing = ({
               {tier5Progress > 0 && (
                 <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x={-flamePad} y={-flamePad} width={size + flamePad * 2} height={size + flamePad * 2}>
                   <rect x={-flamePad} y={-flamePad} width={size + flamePad * 2} height={size + flamePad * 2} fill="black" />
-                  <circle
-                    cx={size / 2}
-                    cy={size / 2}
-                    r={radius}
+                  <path
+                    d={tier5MaskPath}
                     fill="none"
                     stroke="white"
                     strokeWidth={strokeWidth * 16}
                     strokeLinecap="round"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={tier5Offset}
                   />
                 </mask>
               )}
