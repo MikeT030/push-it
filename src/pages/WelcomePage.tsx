@@ -7,6 +7,7 @@ const WelcomePage = () => (
     mode="absolute"
     showBackButton={false}
     contentOffsetY={-12}
+    infoText={null}
   />
 );
 
