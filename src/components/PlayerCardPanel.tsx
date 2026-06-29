@@ -11,8 +11,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-const PlayerCardPanel = () => {
-  const [open, setOpen] = useState(false);
+interface PlayerCardPanelProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+const PlayerCardPanel = ({ open: controlledOpen, onOpenChange }: PlayerCardPanelProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
+  const setOpen = onOpenChange || setInternalOpen;
   const [activeTab, setActiveTab] = useState<"card" | "avatar">("card");
   const { user } = useAuth();
   const { avatarId, avatar, setAvatarId } = useUserAvatar();
