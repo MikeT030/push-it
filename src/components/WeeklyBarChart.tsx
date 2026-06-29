@@ -113,6 +113,8 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
           { color: "#BA25D8", y: 300 },
           { color: "#FF2C2C", y: 300 },
           { color: "#FF2C2C", y: 400 },
+          { color: "#FFB000", y: 400 },
+          { color: "#FFB000", y: 500 },
         ];
         const gradient = `linear-gradient(to top, ${rawStops
           .map((s) => `${s.color} ${(s.y / denom) * 100}%`)
@@ -121,16 +123,20 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
           { y: 100, outer: "#0ABAB5", inner: "#7036FF" },
           { y: 200, outer: "#7036FF", inner: "#BA25D8" },
           { y: 300, outer: "#BA25D8", inner: "#FF2C2C" },
+          { y: 400, outer: "#FF2C2C", inner: "#FFB000" },
         ].filter((b) => percentage > b.y);
 
         const sweep =
-          percentage >= 301
+          percentage >= 401
+            ? { from: "#FF2C2C", to: "#FFB000" }
+            : percentage >= 301
             ? { from: "#BA25D8", to: "#FF2C2C" }
             : percentage >= 201
             ? { from: "#7036FF", to: "#BA25D8" }
             : percentage >= 101
             ? { from: "#0ABAB5", to: "#7036FF" }
             : null;
+
 
         const hasFill = !!colorHex;
 
