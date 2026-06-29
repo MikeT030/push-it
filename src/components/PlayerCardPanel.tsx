@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { User, X, Check } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { X, Check } from "lucide-react";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import PlayerCard from "@/components/PlayerCard";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
@@ -83,33 +82,6 @@ const PlayerCardPanel = ({ open: controlledOpen, onOpenChange }: PlayerCardPanel
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <div className="rounded-2xl p-5 animate-slide-up border border-transparent bg-transparent">
-        <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            disabled={!user}
-            className="w-full h-12 gap-2"
-            style={{
-              backgroundColor: `${accent}1A`,
-              borderColor: accent,
-              color: accent,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = `${accent}B3`;
-              e.currentTarget.style.color = "#ffffff";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = `${accent}1A`;
-              e.currentTarget.style.color = accent;
-            }}
-            onMouseDown={(e) => (e.currentTarget.style.backgroundColor = `${accent}B3`)}
-          >
-            <User className="w-5 h-5" />
-            Player Card
-          </Button>
-        </SheetTrigger>
-      </div>
-
       <SheetContent
         side="bottom"
         hideCloseButton
