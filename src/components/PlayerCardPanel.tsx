@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
-import { User, X } from "lucide-react";
+import { User, X, Check } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import PlayerCard from "@/components/PlayerCard";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
-import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
+import { avatarOptions, AvatarOption } from "@/data/avatars";
 import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 const PlayerCardPanel = () => {
   const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"card" | "avatar">("card");
   const { user } = useAuth();
-  const { avatar } = useUserAvatar();
-  const { openAvatarSelector } = useAvatarSelector();
+  const { avatarId, avatar, setAvatarId } = useUserAvatar();
   const {
     getTotalPushUps,
     yearlyGoal,
@@ -24,6 +26,7 @@ const PlayerCardPanel = () => {
   } = usePushUpData();
 
   const [displayName, setDisplayName] = useState("");
+  const [takenAvatarIds, setTakenAvatarIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!user || !open) return;
@@ -35,9 +38,41 @@ const PlayerCardPanel = () => {
       .then(({ data }) => {
         if (data?.display_name) setDisplayName(data.display_name);
       });
+
+    supabase
+      .from("profiles")
+      .select("id, avatar_url")
+      .not("avatar_url", "is", null)
+      .neq("avatar_url", "")
+      .then(({ data }) => {
+        if (data) {
+          const taken = new Set<string>(
+            data.filter((p) => p.id !== user.id).map((p) => p.avatar_url!)
+          );
+          setTakenAvatarIds(taken);
+        }
+      });
   }, [user, open]);
 
+  useEffect(() => {
+    if (open) setActiveTab("card");
+  }, [open]);
+
   const accent = "#0ABAB5";
+
+  const handleAvatarSelect = async (option: AvatarOption) => {
+    if (!user) return;
+    const { error } = await supabase
+      .from("profiles")
+      .update({ avatar_url: option.id || null })
+      .eq("id", user.id);
+    if (error) {
+      toast.error("Failed to save avatar");
+      return;
+    }
+    setAvatarId(option.id || null);
+    toast.success(option.id ? "Avatar updated!" : "Avatar removed!");
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -93,22 +128,114 @@ const PlayerCardPanel = () => {
             </button>
           </div>
 
-          <div className="flex justify-center">
-            <PlayerCard
-              displayName={displayName}
-              avatar={avatar ?? undefined}
-              totalPushUps={getTotalPushUps()}
-              yearlyGoal={yearlyGoal}
-              currentStreak={getCurrentStreak()}
-              weeklyAverage={getWeeklyAverage()}
-              yearProgress={getYearProgress()}
-              daysWithEntries={getDaysWithEntries().length}
-              onAvatarClick={() => {
-                setOpen(false);
-                openAvatarSelector("card");
-              }}
-            />
+          {/* Tabs */}
+          <div className="flex border-b border-border mb-6">
+            <button
+              onClick={() => setActiveTab("card")}
+              className={cn(
+                "flex-1 py-2 text-sm font-semibold transition-colors relative",
+                activeTab === "card"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              User Card
+              {activeTab === "card" && (
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary" />
+              )}
+            </button>
+            <button
+              onClick={() => setActiveTab("avatar")}
+              className={cn(
+                "flex-1 py-2 text-sm font-semibold transition-colors relative",
+                activeTab === "avatar"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Choose Avatar
+              {activeTab === "avatar" && (
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary" />
+              )}
+            </button>
           </div>
+
+          {activeTab === "card" ? (
+            <div className="flex justify-center">
+              <PlayerCard
+                displayName={displayName}
+                avatar={avatar ?? undefined}
+                totalPushUps={getTotalPushUps()}
+                yearlyGoal={yearlyGoal}
+                currentStreak={getCurrentStreak()}
+                weeklyAverage={getWeeklyAverage()}
+                yearProgress={getYearProgress()}
+                daysWithEntries={getDaysWithEntries().length}
+                onAvatarClick={() => setActiveTab("avatar")}
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-4 gap-4 p-1">
+              <button
+                onClick={() => handleAvatarSelect({ id: "", name: "None", src: "" })}
+                className={cn(
+                  "relative aspect-square rounded-xl overflow-hidden transition-all duration-200",
+                  "hover:scale-105 hover:ring-2 hover:ring-primary/50",
+                  "focus:outline-none focus:ring-2 focus:ring-primary",
+                  "bg-white/10 flex items-center justify-center",
+                  (!avatarId || avatarId === "") && "ring-2 ring-primary"
+                )}
+              >
+                <span className="text-muted-foreground text-xs font-medium">None</span>
+                {(!avatarId || avatarId === "") && (
+                  <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                      <Check className="w-4 h-4 text-primary-foreground" />
+                    </div>
+                  </div>
+                )}
+              </button>
+              {avatarOptions.map((option) => {
+                const isTaken = takenAvatarIds.has(option.id);
+                return (
+                  <button
+                    key={option.id}
+                    onClick={() => {
+                      if (isTaken) return;
+                      handleAvatarSelect(option);
+                    }}
+                    disabled={isTaken}
+                    className={cn(
+                      "relative aspect-square rounded-xl overflow-hidden transition-all duration-200",
+                      "focus:outline-none focus:ring-2 focus:ring-primary",
+                      isTaken
+                        ? "cursor-not-allowed opacity-40"
+                        : "hover:scale-105 hover:ring-2 hover:ring-primary/50",
+                      avatarId === option.id && "ring-2 ring-primary"
+                    )}
+                  >
+                    <img
+                      src={option.src}
+                      alt={option.name}
+                      loading="lazy"
+                      decoding="async"
+                      className={cn(
+                        "w-full h-full object-cover bg-white/10",
+                        isTaken && "grayscale"
+                      )}
+                    />
+                    {avatarId === option.id && (
+                      <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                        <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                          <Check className="w-4 h-4 text-primary-foreground" />
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </SheetContent>
     </Sheet>
