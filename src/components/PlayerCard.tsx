@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Flame as _Flame } from "lucide-react";
 import { Flame } from "lucide-react";
 import { AvatarOption } from "@/data/avatars";
 import muscleIcon from "@/assets/muscle-icon.svg";
