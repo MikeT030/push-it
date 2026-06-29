@@ -91,18 +91,38 @@ const ProgressRing = ({
               <stop offset="50%" stopColor="rgba(255,255,255,0)" />
               <stop offset="100%" stopColor="rgba(0,0,0,0.35)" />
             </linearGradient>
-            {/* Flame gradient: yellow -> orange -> red -> deep red */}
-            <linearGradient id={`flame-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#FFE600">
-                <animate attributeName="stop-color" values="#FFE600;#FFB000;#FF6A00;#FFE600" dur="1.6s" repeatCount="indefinite" />
+            {/* Flame body gradient: deep red -> orange -> yellow -> white-hot core */}
+            <radialGradient id={`flameBody-${uid}`} cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#FF2C2C" stopOpacity="0" />
+              <stop offset="86%" stopColor="#FF2C2C" stopOpacity="0" />
+              <stop offset="92%" stopColor="#FF6A00" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#7A0000" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id={`flameCore-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FFF6B0">
+                <animate attributeName="stop-color" values="#FFF6B0;#FFE066;#FFB000;#FFF6B0" dur="0.9s" repeatCount="indefinite" />
               </stop>
-              <stop offset="50%" stopColor="#FF6A00">
-                <animate attributeName="stop-color" values="#FF6A00;#FF2C2C;#FFB000;#FF6A00" dur="1.6s" repeatCount="indefinite" />
+              <stop offset="50%" stopColor="#FFB000">
+                <animate attributeName="stop-color" values="#FFB000;#FF6A00;#FFE066;#FFB000" dur="0.9s" repeatCount="indefinite" />
               </stop>
-              <stop offset="100%" stopColor="#FF2C2C">
-                <animate attributeName="stop-color" values="#FF2C2C;#7A0000;#FF2C2C" dur="1.6s" repeatCount="indefinite" />
+              <stop offset="100%" stopColor="#FF6A00">
+                <animate attributeName="stop-color" values="#FF6A00;#FF2C2C;#FFB000;#FF6A00" dur="0.9s" repeatCount="indefinite" />
               </stop>
             </linearGradient>
+            {/* Organic flame distortion */}
+            <filter id={`flameWarp-${uid}`} x="-30%" y="-30%" width="160%" height="160%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.018 0.06" numOctaves="2" seed="3" result="noise">
+                <animate attributeName="baseFrequency" dur="2.4s" values="0.018 0.06;0.022 0.09;0.018 0.06" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 2.2} xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <filter id={`flameWarpBig-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" seed="7" result="noise">
+                <animate attributeName="baseFrequency" dur="1.8s" values="0.012 0.04;0.02 0.07;0.012 0.04" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 4} xChannelSelector="R" yChannelSelector="G" />
+              <feGaussianBlur stdDeviation={strokeWidth * 0.6} />
+            </filter>
           </defs>
 
 
