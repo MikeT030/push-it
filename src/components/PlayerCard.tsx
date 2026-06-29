@@ -95,10 +95,10 @@ const PlayerCard = ({
 
       {AvatarBlock}
 
-      {/* Compact stats grid */}
-      <div className="px-3 pb-3 space-y-2">
+      {/* Stats rows with separator lines */}
+      <div className="px-3 pb-3">
         {/* Streak row */}
-        <div className="bg-[#0F1922]/60 rounded-xl px-3 py-2.5 flex items-center justify-between border border-[#3B404F]/50">
+        <div className="px-3 py-3 flex items-center justify-between border-b border-[#3B404F]/40">
           <div className="flex items-center gap-2">
             <Flame className="w-4 h-4 text-[#FF2C2C]" fill="currentColor" />
             <div>
@@ -110,7 +110,7 @@ const PlayerCard = ({
         </div>
 
         {/* Weekly avg row */}
-        <div className="bg-[#0F1922]/60 rounded-xl px-3 py-2.5 flex items-center justify-between border border-[#3B404F]/50">
+        <div className="px-3 py-3 flex items-center justify-between border-b border-[#3B404F]/40">
           <div className="flex items-center gap-2">
             <span className="text-base font-bold text-[#0ABAB5]">Ø</span>
             <div>
@@ -122,7 +122,7 @@ const PlayerCard = ({
         </div>
 
         {/* Progress mini bar */}
-        <div className="bg-[#0F1922]/60 rounded-xl px-3 py-2.5 border border-[#3B404F]/50">
+        <div className="px-3 py-3">
           <div className="flex justify-between items-center mb-1.5">
             <span className="text-[10px] font-medium text-[#575F78]">Year Progress</span>
             <span className="text-[10px] font-bold text-white">{Math.round(yearProgress)}%</span>
