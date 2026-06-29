@@ -367,27 +367,6 @@ const ProgressRing = ({
           {tier5Progress > 0 && (
             <g mask={`url(#tier5Mask-${uid})`}>
 
-              {/* Smoke wisps - dark, drift outward */}
-              <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke="#2a1a14"
-                strokeWidth={strokeWidth * 4}
-                strokeLinecap="round"
-                strokeDasharray={`${strokeWidth * 6} ${strokeWidth * 3}`}
-                strokeDashoffset={tier5Offset}
-                className="pointer-events-none"
-                style={{
-                  filter: `url(#smokeWarp-${uid})`,
-                  opacity: 0.55,
-                  mixBlendMode: 'screen',
-                }}
-              >
-                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 80}`} dur="6s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.35;0.6;0.4;0.55;0.35" dur="3s" repeatCount="indefinite" />
-              </circle>
 
               {/* Deep red outer tongues - large, irregular, lick outward */}
               <circle
