@@ -31,6 +31,7 @@ const ProgressRing = ({
   const [isPulsing, setIsPulsing] = useState(false);
   const { setIsGameActive } = useGame();
   const uid = useId().replace(/:/g, '');
+  const flamePad = strokeWidth * 22;
 
   useEffect(() => {
     setIsGameActive(showGame);
