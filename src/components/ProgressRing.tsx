@@ -91,7 +91,20 @@ const ProgressRing = ({
               <stop offset="50%" stopColor="rgba(255,255,255,0)" />
               <stop offset="100%" stopColor="rgba(0,0,0,0.35)" />
             </linearGradient>
+            {/* Flame gradient: yellow -> orange -> red -> deep red */}
+            <linearGradient id={`flame-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FFE600">
+                <animate attributeName="stop-color" values="#FFE600;#FFB000;#FF6A00;#FFE600" dur="1.6s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="50%" stopColor="#FF6A00">
+                <animate attributeName="stop-color" values="#FF6A00;#FF2C2C;#FFB000;#FF6A00" dur="1.6s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="100%" stopColor="#FF2C2C">
+                <animate attributeName="stop-color" values="#FF2C2C;#7A0000;#FF2C2C" dur="1.6s" repeatCount="indefinite" />
+              </stop>
+            </linearGradient>
           </defs>
+
 
           {/* Background ring - recessed channel */}
           <circle
