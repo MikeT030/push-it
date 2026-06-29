@@ -370,81 +370,105 @@ const ProgressRing = ({
             </>
           )}
 
-          {/* Tier 5 ring - 401-500%: real flame, builds up along the arc */}
+          {/* Tier 5 ring - 401-500%: layered flame ring with outward tongues */}
           {tier5Progress > 0 && (
             <g mask={`url(#tier5Mask-${uid})`}>
 
-              {/* Outer red haze - large, warped, slow flicker */}
+              {/* Smoke wisps - dark, drift outward */}
               <circle
                 cx={size / 2}
                 cy={size / 2}
                 r={radius}
                 fill="none"
-                stroke="#FF2C2C"
-                strokeWidth={strokeWidth * 2.4}
+                stroke="#2a1a14"
+                strokeWidth={strokeWidth * 4}
                 strokeLinecap="round"
-                strokeDasharray={circumference}
+                strokeDasharray={`${strokeWidth * 6} ${strokeWidth * 3}`}
                 strokeDashoffset={tier5Offset}
-                className="transition-all duration-700 ease-out pointer-events-none"
+                className="pointer-events-none"
                 style={{
-                  filter: `url(#flameWarpBig-${uid}) drop-shadow(0 0 ${strokeWidth * 2}px rgba(255,60,0,0.85))`,
+                  filter: `url(#smokeWarp-${uid})`,
                   opacity: 0.55,
                   mixBlendMode: 'screen',
                 }}
               >
-                <animate attributeName="opacity" values="0.4;0.7;0.45;0.6;0.4" dur="1.4s" repeatCount="indefinite" />
+                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 80}`} dur="6s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.35;0.6;0.4;0.55;0.35" dur="3s" repeatCount="indefinite" />
               </circle>
 
-              {/* Mid orange flame layer - tongues, warped */}
+              {/* Deep red outer tongues - large, irregular, lick outward */}
               <circle
                 cx={size / 2}
                 cy={size / 2}
                 r={radius}
                 fill="none"
-                stroke="#FF8A1F"
-                strokeWidth={strokeWidth * 1.6}
+                stroke="#C81A00"
+                strokeWidth={strokeWidth * 3.2}
                 strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={tier5Offset}
-                className="transition-all duration-700 ease-out pointer-events-none"
-                style={{
-                  filter: `url(#flameWarp-${uid}) drop-shadow(0 0 ${strokeWidth * 1.2}px rgba(255,140,0,0.95))`,
-                  opacity: 0.85,
-                  mixBlendMode: 'screen',
-                }}
-              >
-                <animate attributeName="opacity" values="0.7;1;0.75;0.95;0.7" dur="0.7s" repeatCount="indefinite" />
-              </circle>
-
-              {/* Bright yellow tongues - thin, irregular, fast flicker */}
-              <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke="#FFD24A"
-                strokeWidth={strokeWidth * 0.9}
-                strokeLinecap="round"
-                strokeDasharray={`${strokeWidth * 1.8} ${strokeWidth * 0.9} ${strokeWidth * 0.5} ${strokeWidth * 1.2}`}
+                strokeDasharray={`${strokeWidth * 3} ${strokeWidth * 1.4} ${strokeWidth * 5} ${strokeWidth * 1.8} ${strokeWidth * 2} ${strokeWidth * 2.6}`}
                 strokeDashoffset={tier5Offset}
                 className="pointer-events-none"
                 style={{
-                  filter: `url(#flameWarp-${uid})`,
+                  filter: `url(#flameWarpBig-${uid}) drop-shadow(0 0 ${strokeWidth * 2.4}px rgba(255,40,0,0.9))`,
+                  opacity: 0.75,
                   mixBlendMode: 'screen',
                 }}
               >
-                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 14};${tier5Offset + 8};${tier5Offset}`} dur="0.55s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.6;1;0.7;0.95;0.6" dur="0.4s" repeatCount="indefinite" />
+                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 22};${tier5Offset + 10};${tier5Offset}`} dur="1.3s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.55;0.9;0.6;0.85;0.55" dur="1.1s" repeatCount="indefinite" />
               </circle>
 
-              {/* White-hot core stroke */}
+              {/* Orange flame body - main tongues */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke="#FF6A1F"
+                strokeWidth={strokeWidth * 2.2}
+                strokeLinecap="round"
+                strokeDasharray={`${strokeWidth * 2.4} ${strokeWidth * 0.9} ${strokeWidth * 1.2} ${strokeWidth * 1.6} ${strokeWidth * 3.4} ${strokeWidth * 1.1}`}
+                strokeDashoffset={tier5Offset}
+                className="pointer-events-none"
+                style={{
+                  filter: `url(#flameWarpBig-${uid}) drop-shadow(0 0 ${strokeWidth * 1.6}px rgba(255,120,0,0.95))`,
+                  opacity: 0.95,
+                  mixBlendMode: 'screen',
+                }}
+              >
+                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 18};${tier5Offset + 6};${tier5Offset}`} dur="0.85s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.75;1;0.8;0.95;0.75" dur="0.6s" repeatCount="indefinite" />
+              </circle>
+
+              {/* Yellow tongues - bright crackle */}
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke="#FFC04A"
+                strokeWidth={strokeWidth * 1.2}
+                strokeLinecap="round"
+                strokeDasharray={`${strokeWidth * 1.4} ${strokeWidth * 1.1} ${strokeWidth * 0.4} ${strokeWidth * 1.7} ${strokeWidth * 2.2} ${strokeWidth * 0.9}`}
+                strokeDashoffset={tier5Offset}
+                className="pointer-events-none"
+                style={{
+                  filter: `url(#flameWarp-${uid}) drop-shadow(0 0 ${strokeWidth * 0.8}px rgba(255,200,80,0.95))`,
+                  mixBlendMode: 'screen',
+                }}
+              >
+                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 14};${tier5Offset + 8};${tier5Offset}`} dur="0.45s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.6;1;0.7;0.95;0.6" dur="0.35s" repeatCount="indefinite" />
+              </circle>
+
+              {/* White-hot core - the lit base ring */}
               <circle
                 cx={size / 2}
                 cy={size / 2}
                 r={radius}
                 fill="none"
                 stroke={`url(#flameCore-${uid})`}
-                strokeWidth={Math.max(1.5, strokeWidth * 0.55)}
+                strokeWidth={Math.max(1.5, strokeWidth * 0.5)}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={tier5Offset}
@@ -454,7 +478,7 @@ const ProgressRing = ({
                 }}
               />
 
-              {/* Tiny embers/sparks along the arc */}
+              {/* Embers/sparks streaming outward */}
               <circle
                 cx={size / 2}
                 cy={size / 2}
@@ -463,12 +487,15 @@ const ProgressRing = ({
                 stroke="#FFF0B0"
                 strokeWidth={Math.max(1, strokeWidth * 0.35)}
                 strokeLinecap="round"
-                strokeDasharray={`${strokeWidth * 0.3} ${strokeWidth * 3.5}`}
+                strokeDasharray={`${strokeWidth * 0.25} ${strokeWidth * 4}`}
                 strokeDashoffset={tier5Offset}
                 className="pointer-events-none"
-                style={{ mixBlendMode: 'screen' }}
+                style={{
+                  filter: `url(#flameWarpBig-${uid})`,
+                  mixBlendMode: 'screen',
+                }}
               >
-                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 60}`} dur="1.1s" repeatCount="indefinite" />
+                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 80}`} dur="1.4s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.3;1;0.4;0.9;0.3" dur="0.5s" repeatCount="indefinite" />
               </circle>
             </g>
