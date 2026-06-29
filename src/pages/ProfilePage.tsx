@@ -210,6 +210,11 @@ const ProfilePage = () => {
           </div>
         </div>
 
+        {/* Player Card */}
+        <div className="animate-slide-up" style={{ animationDelay: "0.02s" }}>
+          <PlayerCardPanel />
+        </div>
+
         {/* Admin Card */}
         {isAdmin && (
           <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.03s" }}>
