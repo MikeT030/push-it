@@ -55,7 +55,7 @@ const ProgressRing = ({
   // Arc path for tier 5 mask. The parent <svg> has CSS `-rotate-90`, which also
   // rotates the mask output. So we draw the arc starting at 3 o'clock going
   // clockwise in user space; after the -90deg CSS rotation it visually starts
-  // at 12 o'clock and grows clockwise, matching the other progress rings.
+  // exactly at 12 o'clock and grows clockwise, matching the other progress rings.
   const tier5MaskPath = (() => {
     const cx = size / 2;
     const cy = size / 2;
@@ -154,8 +154,8 @@ const ProgressRing = ({
                     d={tier5MaskPath}
                     fill="none"
                     stroke="white"
-                    strokeWidth={strokeWidth * 16}
-                    strokeLinecap="round"
+                    strokeWidth={strokeWidth * 12}
+                    strokeLinecap="butt"
                   />
                 </mask>
               )}
