@@ -123,23 +123,48 @@ const ProgressRing = ({
               <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 4} xChannelSelector="R" yChannelSelector="G" />
               <feGaussianBlur stdDeviation={strokeWidth * 0.6} />
             </filter>
+            {/* Smoke distortion - slower, larger, blurrier */}
+            <filter id={`smokeWarp-${uid}`} x="-60%" y="-60%" width="220%" height="220%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.008 0.025" numOctaves="2" seed="11" result="noise">
+                <animate attributeName="baseFrequency" dur="6s" values="0.008 0.025;0.012 0.035;0.008 0.025" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 5} xChannelSelector="R" yChannelSelector="G" />
+              <feGaussianBlur stdDeviation={strokeWidth * 1.4} />
+            </filter>
             {/* Mask: confines flame to the progress arc only */}
             {tier5Progress > 0 && (
-              <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
-                <rect width={size} height={size} fill="black" />
-                <circle
-                  cx={size / 2}
-                  cy={size / 2}
-                  r={radius}
-                  fill="none"
-                  stroke="white"
-                  strokeWidth={strokeWidth * 7}
-                  strokeLinecap="round"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={tier5Offset}
-                />
-              </mask>
+              <>
+                <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
+                  <rect width={size} height={size} fill="black" />
+                  <circle
+                    cx={size / 2}
+                    cy={size / 2}
+                    r={radius}
+                    fill="none"
+                    stroke="white"
+                    strokeWidth={strokeWidth * 7}
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={tier5Offset}
+                  />
+                </mask>
+                <mask id={`smokeMask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
+                  <rect width={size} height={size} fill="black" />
+                  <circle
+                    cx={size / 2}
+                    cy={size / 2}
+                    r={radius}
+                    fill="none"
+                    stroke="white"
+                    strokeWidth={strokeWidth * 12}
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={tier5Offset}
+                  />
+                </mask>
+              </>
             )}
+
           </defs>
 
 
