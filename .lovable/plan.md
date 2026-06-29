@@ -1,21 +1,18 @@
-## Lower daily push-up cap from 9,999 → 1,000
+## Task
+Update the text link styles on the `/auth` page.
 
-No existing entries exceed 1,000, so no data clamping is needed.
+## Scope
+File: `src/pages/AuthPage.tsx`
 
-### Changes
+## Changes
+1. **"New here? Create an account"** button (line ~191):
+   - Default text color: white (`text-white`).
+   - Always underlined in white (`underline decoration-white`).
+   - On hover: keep existing primary/teal color shift (`hover:text-primary`).
+   - Remove `text-muted-foreground` from default state.
 
-**Database migration**
-- Drop existing `count_bounds` CHECK constraint on `public.push_up_entries`.
-- Re-add as `CHECK (count >= 0 AND count <= 1000)`.
+2. **"Forgot password?"** Link (line ~178):
+   - Apply the same style: white text, white underline, teal on hover.
 
-**Client-side clamps (replace 9999 with 1000)**
-- `src/hooks/usePushUpData.ts` (line 166) — defence-in-depth clamp.
-- `src/pages/DailyPage.tsx` (lines 102, 115) — input validation and +/- buttons.
-- `src/components/DailySection.tsx` (lines 171, 181) — same input/+- logic.
-- `src/components/WelcomeShell.tsx` (line 235) — freeform goal input `max` stays at 9999 (this is the yearly goal input, not the daily cap) → leave untouched.
-
-The `z-[9999]` and `border-radius: 9999px` references are unrelated styling tokens and stay as-is.
-
-### Notes
-- Users typing over 1,000 will see the input rejected (same UX as before, just a lower ceiling).
-- The yearly goal freeform stays uncapped at the daily level since it's an annual total.
+## Why
+The user wants both auth links to default to white with a white underline for better visibility on the dark background, while retaining the teal hover accent.
