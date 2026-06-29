@@ -206,15 +206,18 @@ const AuthPage = () => {
               onSubmit={step === "signin" ? handleSignIn : handleCreateAccount}
               className="space-y-4"
             >
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-foreground truncate">{email}</span>
-                <button
-                  type="button"
-                  onClick={resetToEmail}
-                  className="text-muted-foreground hover:text-primary hover:underline shrink-0 ml-2"
-                >
-                  Change
-                </button>
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Email</label>
+                <div className="mt-1.5 flex items-center justify-between text-sm h-12 border-b border-[#EEEEEE] mb-[20px]">
+                  <span className="text-foreground truncate">{email}</span>
+                  <button
+                    type="button"
+                    onClick={resetToEmail}
+                    className="text-muted-foreground hover:text-primary hover:underline shrink-0 ml-2"
+                  >
+                    Change
+                  </button>
+                </div>
               </div>
 
               <div>
