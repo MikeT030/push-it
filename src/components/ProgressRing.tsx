@@ -462,8 +462,9 @@ const ProgressRing = ({
                 <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 60}`} dur="1.1s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.3;1;0.4;0.9;0.3" dur="0.5s" repeatCount="indefinite" />
               </circle>
-            </>
+            </g>
           )}
+
         </svg>
 
         <div
