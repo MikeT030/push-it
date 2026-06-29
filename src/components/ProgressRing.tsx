@@ -76,7 +76,7 @@ const ProgressRing = ({
           if (enableGame) setShowGame(true);
         }}>
 
-        <svg className="transform -rotate-90" width={size} height={size}>
+        <svg className="transform -rotate-90" width={size} height={size} overflow="visible">
           <defs>
             {/* Soft outer bloom */}
             <filter id={`bloom-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
@@ -134,22 +134,22 @@ const ProgressRing = ({
               <feGaussianBlur in="warped" stdDeviation={strokeWidth * 1.8} />
             </filter>
             {/* Mask: confines flame to the progress arc — wide so tongues extend outward */}
-            {tier5Progress > 0 && (
-              <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
-                <rect width={size} height={size} fill="black" />
-                <circle
-                  cx={size / 2}
-                  cy={size / 2}
-                  r={radius}
-                  fill="none"
-                  stroke="white"
-                  strokeWidth={strokeWidth * 16}
-                  strokeLinecap="round"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={tier5Offset}
-                />
-              </mask>
-            )}
+              {tier5Progress > 0 && (
+                <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x={-flamePad} y={-flamePad} width={size + flamePad * 2} height={size + flamePad * 2}>
+                  <rect x={-flamePad} y={-flamePad} width={size + flamePad * 2} height={size + flamePad * 2} fill="black" />
+                  <circle
+                    cx={size / 2}
+                    cy={size / 2}
+                    r={radius}
+                    fill="none"
+                    stroke="white"
+                    strokeWidth={strokeWidth * 16}
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={tier5Offset}
+                  />
+                </mask>
+              )}
           </defs>
 
 
