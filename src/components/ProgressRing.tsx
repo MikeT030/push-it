@@ -52,6 +52,23 @@ const ProgressRing = ({
   const tier4Offset = circumference - tier4Progress / 100 * circumference;
   const tier5Offset = circumference - tier5Progress / 100 * circumference;
 
+  // Arc path for tier 5 mask (starts at 12:00, goes clockwise)
+  const tier5MaskPath = (() => {
+    const cx = size / 2;
+    const cy = size / 2;
+    const r = radius;
+    const frac = tier5Progress / 100;
+    if (frac <= 0) return '';
+    if (frac >= 0.999) {
+      return `M ${cx} ${cy - r} A ${r} ${r} 0 0 1 ${cx} ${cy + r} A ${r} ${r} 0 0 1 ${cx} ${cy - r}`;
+    }
+    const theta = 2 * Math.PI * frac;
+    const endX = cx + r * Math.sin(theta);
+    const endY = cy - r * Math.cos(theta);
+    const largeArc = frac > 0.5 ? 1 : 0;
+    return `M ${cx} ${cy - r} A ${r} ${r} 0 ${largeArc} 1 ${endX} ${endY}`;
+  })();
+
   const baseColor = 'hsl(var(--primary))';
   const tier2Color = '#4300FF';
   const tier3Color = '#C029DE';
