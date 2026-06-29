@@ -1,5 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
+import BarFlame from "./BarFlame";
+
 
 interface DayData {
   date: Date;
