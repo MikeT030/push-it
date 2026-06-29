@@ -191,7 +191,7 @@ const AuthPage = () => {
                 <button
                   type="button"
                   onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-                  className="text-sm text-muted-foreground hover:text-primary hover:underline"
+                  className="text-sm text-white underline decoration-white hover:text-primary"
                 >
                   {mode === "signin"
                     ? "New here? Create an account"
