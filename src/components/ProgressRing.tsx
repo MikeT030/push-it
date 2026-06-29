@@ -343,26 +343,6 @@ const ProgressRing = ({
             </>
           )}
 
-          {/* Tier 5 ring - >=401%: animated flame */}
-          {tier5Progress > 0 && (
-            <>
-              {/* Wide outer flame bloom */}
-              <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke={`url(#flame-${uid})`}
-                strokeWidth={strokeWidth}
-                strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={tier5Offset}
-                className="transition-all duration-700 ease-out"
-                style={{
-                  opacity: 0.7,
-                  filter: `blur(${strokeWidth * 1.1}px) drop-shadow(0 0 ${strokeWidth * 2.2}px ${tier5ColorSoft})`,
-                }}
-              >
           {/* Tier 5 ring - 401-500%: real flame, builds up along the arc */}
           {tier5Progress > 0 && (
             <>
