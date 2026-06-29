@@ -29,6 +29,7 @@ const ProfilePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { isAdmin } = useIsAdmin();
+  const [playerCardOpen, setPlayerCardOpen] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("openAvatar") === "true") {
