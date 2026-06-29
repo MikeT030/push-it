@@ -123,7 +123,25 @@ const ProgressRing = ({
               <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 4} xChannelSelector="R" yChannelSelector="G" />
               <feGaussianBlur stdDeviation={strokeWidth * 0.6} />
             </filter>
+            {/* Mask: confines flame to the progress arc only */}
+            {tier5Progress > 0 && (
+              <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
+                <rect width={size} height={size} fill="black" />
+                <circle
+                  cx={size / 2}
+                  cy={size / 2}
+                  r={radius}
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={strokeWidth * 7}
+                  strokeLinecap="round"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={tier5Offset}
+                />
+              </mask>
+            )}
           </defs>
+
 
 
           {/* Background ring - recessed channel */}
