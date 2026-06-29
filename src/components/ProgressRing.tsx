@@ -123,48 +123,23 @@ const ProgressRing = ({
               <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 4} xChannelSelector="R" yChannelSelector="G" />
               <feGaussianBlur stdDeviation={strokeWidth * 0.6} />
             </filter>
-            {/* Smoke distortion - slower, larger, blurrier */}
-            <filter id={`smokeWarp-${uid}`} x="-60%" y="-60%" width="220%" height="220%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.008 0.025" numOctaves="2" seed="11" result="noise">
-                <animate attributeName="baseFrequency" dur="6s" values="0.008 0.025;0.012 0.035;0.008 0.025" repeatCount="indefinite" />
-              </feTurbulence>
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 5} xChannelSelector="R" yChannelSelector="G" />
-              <feGaussianBlur stdDeviation={strokeWidth * 1.4} />
-            </filter>
             {/* Mask: confines flame to the progress arc only */}
             {tier5Progress > 0 && (
-              <>
-                <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
-                  <rect width={size} height={size} fill="black" />
-                  <circle
-                    cx={size / 2}
-                    cy={size / 2}
-                    r={radius}
-                    fill="none"
-                    stroke="white"
-                    strokeWidth={strokeWidth * 7}
-                    strokeLinecap="round"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={tier5Offset}
-                  />
-                </mask>
-                <mask id={`smokeMask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
-                  <rect width={size} height={size} fill="black" />
-                  <circle
-                    cx={size / 2}
-                    cy={size / 2}
-                    r={radius}
-                    fill="none"
-                    stroke="white"
-                    strokeWidth={strokeWidth * 12}
-                    strokeLinecap="round"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={tier5Offset}
-                  />
-                </mask>
-              </>
+              <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
+                <rect width={size} height={size} fill="black" />
+                <circle
+                  cx={size / 2}
+                  cy={size / 2}
+                  r={radius}
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={strokeWidth * 7}
+                  strokeLinecap="round"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={tier5Offset}
+                />
+              </mask>
             )}
-
           </defs>
 
 
@@ -489,52 +464,6 @@ const ProgressRing = ({
               </circle>
             </g>
           )}
-
-          {/* Smoke - drifts above the flame arc */}
-          {tier5Progress > 0 && (
-            <g mask={`url(#smokeMask-${uid})`} className="pointer-events-none">
-              {/* Dark smoke base */}
-              <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke="#6b6b6b"
-                strokeWidth={strokeWidth * 3.2}
-                strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={tier5Offset}
-                style={{
-                  filter: `url(#smokeWarp-${uid})`,
-                  opacity: 0.35,
-                  mixBlendMode: 'screen',
-                }}
-              >
-                <animate attributeName="opacity" values="0.25;0.45;0.3;0.4;0.25" dur="3.2s" repeatCount="indefinite" />
-              </circle>
-              {/* Lighter smoke puffs */}
-              <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke="#b5b5b5"
-                strokeWidth={strokeWidth * 2}
-                strokeLinecap="round"
-                strokeDasharray={`${strokeWidth * 3} ${strokeWidth * 4}`}
-                strokeDashoffset={tier5Offset}
-                style={{
-                  filter: `url(#smokeWarp-${uid})`,
-                  opacity: 0.28,
-                  mixBlendMode: 'screen',
-                }}
-              >
-                <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 40}`} dur="4s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.18;0.35;0.22;0.32;0.18" dur="2.6s" repeatCount="indefinite" />
-              </circle>
-            </g>
-          )}
-
 
         </svg>
 
