@@ -3,6 +3,8 @@ import { format, eachDayOfInterval, isSameDay, subDays } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
+import BarFlame from "./BarFlame";
+
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
@@ -161,6 +163,21 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
           )}
         </div>
 
+        {/* Flame burst at bar tip when >=401% */}
+        {memberPct >= 401 && (
+          <div
+            className="absolute top-1/2 pointer-events-none"
+            style={{
+              left: `${animate ? fillEndPct : 0}%`,
+              transform: "translate(-50%, -50%)",
+              transition: "left 1600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease 1700ms",
+              opacity: animate ? 1 : 0,
+            }}
+          >
+            <BarFlame orientation="horizontal" size={22} />
+          </div>
+        )}
+
         {/* Count badge attached to tip of bar */}
         <div
           className="absolute top-1/2 flex items-center justify-center rounded-full bg-background border-2 pointer-events-none"
@@ -180,6 +197,7 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
             {count.toLocaleString()}
           </span>
         </div>
+
       </div>
     </div>
   );
@@ -305,7 +323,23 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
           />
         )}
       </div>
+
+      {/* Flame burst at bar tip when >=401% */}
+      {percentage >= 401 && (
+        <div
+          className="absolute top-1/2 pointer-events-none"
+          style={{
+            left: `${animate ? Math.min(percentage, 100) : 0}%`,
+            transform: "translate(-50%, -50%)",
+            transition: "left 1600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease 1700ms",
+            opacity: animate ? 1 : 0,
+          }}
+        >
+          <BarFlame orientation="horizontal" size={22} />
+        </div>
+      )}
     </div>
+
   );
 };
 

@@ -1,5 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
+import BarFlame from "./BarFlame";
+
 
 interface DayData {
   date: Date;
@@ -203,7 +205,21 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                   )}
                 </div>
 
+                {/* Flame burst on top when bar reaches >=401% */}
+                {percentage >= 401 && (
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 -top-6 pointer-events-none"
+                    style={{
+                      opacity: animate ? 1 : 0,
+                      transition: "opacity 500ms ease 1400ms",
+                    }}
+                  >
+                    <BarFlame orientation="vertical" size={26} />
+                  </div>
+                )}
+
                 {/* Count badge on top of bar */}
+
                 {!day.isBeforeYearStart && day.count > 0 && (
                   <div
                     className="absolute left-1/2 -translate-x-1/2 -top-3 flex items-center justify-center rounded-full bg-background border-2 shadow-md"
