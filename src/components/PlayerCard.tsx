@@ -150,27 +150,9 @@ const PlayerCard = ({
     </div>
   );
 
-  const cards = [LightCard, DarkGlassCard, DarkMinimalCard];
-
   return (
     <div className="w-full max-w-[320px] mx-auto select-none">
-      {/* Dot navigation */}
-      <div className="flex justify-center gap-2 mb-3">
-        {[0, 1, 2].map((i) => (
-          <button
-            key={i}
-            onClick={() => setVariant(i)}
-            className={`w-2 h-2 rounded-full transition-all duration-200 ${
-              variant === i
-                ? "bg-[#0ABAB5] w-4"
-                : "bg-[#3B404F] hover:bg-[#575F78]"
-            }`}
-            aria-label={`Switch to card version ${i + 1}`}
-          />
-        ))}
-      </div>
-
-      {cards[variant]}
+      {DarkMinimalCard}
     </div>
   );
 };
