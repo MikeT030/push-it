@@ -163,6 +163,21 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
           )}
         </div>
 
+        {/* Flame burst at bar tip when >=401% */}
+        {memberPct >= 401 && (
+          <div
+            className="absolute top-1/2 pointer-events-none"
+            style={{
+              left: `${animate ? fillEndPct : 0}%`,
+              transform: "translate(-50%, -50%)",
+              transition: "left 1600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease 1700ms",
+              opacity: animate ? 1 : 0,
+            }}
+          >
+            <BarFlame orientation="horizontal" size={22} />
+          </div>
+        )}
+
         {/* Count badge attached to tip of bar */}
         <div
           className="absolute top-1/2 flex items-center justify-center rounded-full bg-background border-2 pointer-events-none"
@@ -182,6 +197,7 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
             {count.toLocaleString()}
           </span>
         </div>
+
       </div>
     </div>
   );
