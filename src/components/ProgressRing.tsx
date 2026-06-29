@@ -363,6 +363,8 @@ const ProgressRing = ({
 
           {/* Tier 5 ring - 401-500%: real flame, builds up along the arc */}
           {tier5Progress > 0 && (
+            <g mask={`url(#tier5Mask-${uid})`}>
+
             <>
               {/* Outer red haze - large, warped, slow flicker */}
               <circle
