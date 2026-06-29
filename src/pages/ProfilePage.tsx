@@ -167,7 +167,7 @@ const ProfilePage = () => {
           <div
             className="relative w-24 h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl shadow-primary/20 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
             style={{ background: "linear-gradient(135deg, #BEE7FD, #ECF5FF)" }}
-            onClick={() => openAvatarSelector()}
+            onClick={() => setPlayerCardOpen(true)}
           >
               {selectedAvatar ? (
                 <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
