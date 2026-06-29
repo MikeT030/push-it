@@ -109,21 +109,30 @@ const ProgressRing = ({
                 <animate attributeName="stop-color" values="#FF6A00;#FF2C2C;#FFB000;#FF6A00" dur="0.9s" repeatCount="indefinite" />
               </stop>
             </linearGradient>
-            {/* Organic flame distortion */}
-            <filter id={`flameWarp-${uid}`} x="-30%" y="-30%" width="160%" height="160%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.018 0.06" numOctaves="2" seed="3" result="noise">
-                <animate attributeName="baseFrequency" dur="2.4s" values="0.018 0.06;0.022 0.09;0.018 0.06" repeatCount="indefinite" />
+            {/* Tight flame warp - inner crackle */}
+            <filter id={`flameWarp-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.03 0.09" numOctaves="3" seed="3" result="noise">
+                <animate attributeName="baseFrequency" dur="2.2s" values="0.03 0.09;0.04 0.13;0.03 0.09" repeatCount="indefinite" />
               </feTurbulence>
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 2.2} xChannelSelector="R" yChannelSelector="G" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 3.2} xChannelSelector="R" yChannelSelector="G" />
             </filter>
-            <filter id={`flameWarpBig-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" seed="7" result="noise">
-                <animate attributeName="baseFrequency" dur="1.8s" values="0.012 0.04;0.02 0.07;0.012 0.04" repeatCount="indefinite" />
+            {/* Big tongue warp - large licking flames extending outward */}
+            <filter id={`flameWarpBig-${uid}`} x="-100%" y="-100%" width="300%" height="300%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.008 0.022" numOctaves="3" seed="7" result="noise">
+                <animate attributeName="baseFrequency" dur="1.6s" values="0.008 0.022;0.015 0.04;0.008 0.022" repeatCount="indefinite" />
               </feTurbulence>
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 4} xChannelSelector="R" yChannelSelector="G" />
-              <feGaussianBlur stdDeviation={strokeWidth * 0.6} />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 10} xChannelSelector="R" yChannelSelector="G" result="warped" />
+              <feGaussianBlur in="warped" stdDeviation={strokeWidth * 0.6} />
             </filter>
-            {/* Mask: confines flame to the progress arc only */}
+            {/* Smoke warp - massive, slow drift */}
+            <filter id={`smokeWarp-${uid}`} x="-120%" y="-120%" width="340%" height="340%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.005 0.01" numOctaves="2" seed="11" result="noise">
+                <animate attributeName="baseFrequency" dur="4.5s" values="0.005 0.01;0.009 0.018;0.005 0.01" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 16} xChannelSelector="R" yChannelSelector="G" result="warped" />
+              <feGaussianBlur in="warped" stdDeviation={strokeWidth * 1.8} />
+            </filter>
+            {/* Mask: confines flame to the progress arc — wide so tongues extend outward */}
             {tier5Progress > 0 && (
               <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
                 <rect width={size} height={size} fill="black" />
@@ -133,7 +142,7 @@ const ProgressRing = ({
                   r={radius}
                   fill="none"
                   stroke="white"
-                  strokeWidth={strokeWidth * 7}
+                  strokeWidth={strokeWidth * 16}
                   strokeLinecap="round"
                   strokeDasharray={circumference}
                   strokeDashoffset={tier5Offset}
