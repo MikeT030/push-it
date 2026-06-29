@@ -213,7 +213,7 @@ const ProfilePage = () => {
 
         {/* Player Card */}
         <div className="animate-slide-up" style={{ animationDelay: "0.02s" }}>
-          <PlayerCardPanel />
+          <PlayerCardPanel open={playerCardOpen} onOpenChange={setPlayerCardOpen} />
         </div>
 
         {/* Admin Card */}
