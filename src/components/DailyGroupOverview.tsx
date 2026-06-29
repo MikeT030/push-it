@@ -253,6 +253,8 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
     { color: "#C029DE", x: 300 },
     { color: "#FF3366", x: 300 },
     { color: "#FF3366", x: 400 },
+    { color: "#FFB000", x: 400 },
+    { color: "#FFB000", x: 500 },
   ];
   const gradient = `linear-gradient(to right, ${rawStops
     .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
@@ -261,6 +263,7 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
     { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
     { x: 200, outer: "#7036FF", inner: "#C029DE" },
     { x: 300, outer: "#C029DE", inner: "#FF3366" },
+    { x: 400, outer: "#FF3366", inner: "#FFB000" },
   ].filter((b) => percentage > b.x);
 
   const clipStyle = {
@@ -271,13 +274,16 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
   } as const;
 
   const sweep =
-    percentage >= 301
+    percentage >= 401
+      ? { from: "#FF3366", to: "#FFB000" }
+      : percentage >= 301
       ? { from: "#C029DE", to: "#FF3366" }
       : percentage >= 201
       ? { from: "#7036FF", to: "#C029DE" }
       : percentage >= 101
       ? { from: "#0ABAB5", to: "#7036FF" }
       : null;
+
 
   return (
     <div className="h-2 rounded-full relative mb-4 bg-white/5">
