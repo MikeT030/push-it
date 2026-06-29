@@ -3,6 +3,8 @@ import { format, eachDayOfInterval, isSameDay, subDays } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
+import BarFlame from "./BarFlame";
+
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
 const YEAR_START = new Date(2026, 0, 1); // January 1, 2026
