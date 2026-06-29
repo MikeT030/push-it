@@ -26,7 +26,7 @@ const PlayerCard = ({
   daysWithEntries,
   onAvatarClick
 }: PlayerCardProps) => {
-  const [variant, setVariant] = useState(0);
+  }: PlayerCardProps) => {
 
   const getLevel = () => {
     if (totalPushUps >= 50000) return { label: "LEGEND", color: "from-yellow-400 to-amber-600" };
