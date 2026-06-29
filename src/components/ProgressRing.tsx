@@ -123,7 +123,25 @@ const ProgressRing = ({
               <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 4} xChannelSelector="R" yChannelSelector="G" />
               <feGaussianBlur stdDeviation={strokeWidth * 0.6} />
             </filter>
+            {/* Mask: confines flame to the progress arc only */}
+            {tier5Progress > 0 && (
+              <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
+                <rect width={size} height={size} fill="black" />
+                <circle
+                  cx={size / 2}
+                  cy={size / 2}
+                  r={radius}
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={strokeWidth * 7}
+                  strokeLinecap="round"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={tier5Offset}
+                />
+              </mask>
+            )}
           </defs>
+
 
 
           {/* Background ring - recessed channel */}
@@ -345,7 +363,8 @@ const ProgressRing = ({
 
           {/* Tier 5 ring - 401-500%: real flame, builds up along the arc */}
           {tier5Progress > 0 && (
-            <>
+            <g mask={`url(#tier5Mask-${uid})`}>
+
               {/* Outer red haze - large, warped, slow flicker */}
               <circle
                 cx={size / 2}
@@ -443,8 +462,9 @@ const ProgressRing = ({
                 <animate attributeName="stroke-dashoffset" values={`${tier5Offset};${tier5Offset - 60}`} dur="1.1s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.3;1;0.4;0.9;0.3" dur="0.5s" repeatCount="indefinite" />
               </circle>
-            </>
+            </g>
           )}
+
         </svg>
 
         <div
