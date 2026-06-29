@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import BarFlame from "./BarFlame";
-import PillFlame from "./PillFlame";
+import FlamingCountPill from "./FlamingCountPill";
 
 
 interface DayData {
