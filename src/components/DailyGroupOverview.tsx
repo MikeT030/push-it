@@ -58,6 +58,8 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
   const tierColor =
     count === 0
       ? "#3B404F"
+      : memberPct >= 401
+      ? "#FFB000"
       : memberPct >= 301
       ? "#FF3366"
       : memberPct >= 201
@@ -76,6 +78,8 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
     { color: "#C029DE", x: 300 },
     { color: "#FF3366", x: 300 },
     { color: "#FF3366", x: 400 },
+    { color: "#FFB000", x: 400 },
+    { color: "#FFB000", x: 500 },
   ];
   const gradient = `linear-gradient(to right, ${rawStops
     .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
@@ -84,6 +88,7 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
     { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
     { x: 200, outer: "#7036FF", inner: "#C029DE" },
     { x: 300, outer: "#C029DE", inner: "#FF3366" },
+    { x: 400, outer: "#FF3366", inner: "#FFB000" },
   ].filter((b) => memberPct > b.x);
 
   const clipStyle = {
@@ -97,13 +102,16 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
 
   // Final sweep colors: the last two colors of the highest tier reached.
   const sweep =
-    memberPct >= 301
+    memberPct >= 401
+      ? { from: "#FF3366", to: "#FFB000" }
+      : memberPct >= 301
       ? { from: "#C029DE", to: "#FF3366" }
       : memberPct >= 201
       ? { from: "#7036FF", to: "#C029DE" }
       : memberPct >= 101
       ? { from: "#0ABAB5", to: "#7036FF" }
       : null;
+
 
   return (
     <div className="py-3 px-3 flex items-center gap-3">
@@ -245,6 +253,8 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
     { color: "#C029DE", x: 300 },
     { color: "#FF3366", x: 300 },
     { color: "#FF3366", x: 400 },
+    { color: "#FFB000", x: 400 },
+    { color: "#FFB000", x: 500 },
   ];
   const gradient = `linear-gradient(to right, ${rawStops
     .map((s) => `${s.color} ${(s.x / denom) * 100}%`)
@@ -253,6 +263,7 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
     { x: 100, outer: "#0ABAB5", inner: "#7036FF" },
     { x: 200, outer: "#7036FF", inner: "#C029DE" },
     { x: 300, outer: "#C029DE", inner: "#FF3366" },
+    { x: 400, outer: "#FF3366", inner: "#FFB000" },
   ].filter((b) => percentage > b.x);
 
   const clipStyle = {
@@ -263,13 +274,16 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
   } as const;
 
   const sweep =
-    percentage >= 301
+    percentage >= 401
+      ? { from: "#FF3366", to: "#FFB000" }
+      : percentage >= 301
       ? { from: "#C029DE", to: "#FF3366" }
       : percentage >= 201
       ? { from: "#7036FF", to: "#C029DE" }
       : percentage >= 101
       ? { from: "#0ABAB5", to: "#7036FF" }
       : null;
+
 
   return (
     <div className="h-2 rounded-full relative mb-4 bg-white/5">
