@@ -125,14 +125,6 @@ const ProgressRing = ({
               <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 10} xChannelSelector="R" yChannelSelector="G" result="warped" />
               <feGaussianBlur in="warped" stdDeviation={strokeWidth * 0.6} />
             </filter>
-            {/* Smoke warp - massive, slow drift */}
-            <filter id={`smokeWarp-${uid}`} x="-120%" y="-120%" width="340%" height="340%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.005 0.01" numOctaves="2" seed="11" result="noise">
-                <animate attributeName="baseFrequency" dur="4.5s" values="0.005 0.01;0.009 0.018;0.005 0.01" repeatCount="indefinite" />
-              </feTurbulence>
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale={strokeWidth * 16} xChannelSelector="R" yChannelSelector="G" result="warped" />
-              <feGaussianBlur in="warped" stdDeviation={strokeWidth * 1.8} />
-            </filter>
             {/* Mask: confines flame to the progress arc — wide so tongues extend outward */}
               {tier5Progress > 0 && (
                 <mask id={`tier5Mask-${uid}`} maskUnits="userSpaceOnUse" x={-flamePad} y={-flamePad} width={size + flamePad * 2} height={size + flamePad * 2}>
