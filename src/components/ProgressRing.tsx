@@ -52,7 +52,10 @@ const ProgressRing = ({
   const tier4Offset = circumference - tier4Progress / 100 * circumference;
   const tier5Offset = circumference - tier5Progress / 100 * circumference;
 
-  // Arc path for tier 5 mask (starts at 12:00, goes clockwise)
+  // Arc path for tier 5 mask. The parent <svg> has CSS `-rotate-90`, which also
+  // rotates the mask output. So we draw the arc starting at 3 o'clock going
+  // clockwise in user space; after the -90deg CSS rotation it visually starts
+  // at 12 o'clock and grows clockwise, matching the other progress rings.
   const tier5MaskPath = (() => {
     const cx = size / 2;
     const cy = size / 2;
@@ -60,14 +63,15 @@ const ProgressRing = ({
     const frac = tier5Progress / 100;
     if (frac <= 0) return '';
     if (frac >= 0.999) {
-      return `M ${cx} ${cy - r} A ${r} ${r} 0 0 1 ${cx} ${cy + r} A ${r} ${r} 0 0 1 ${cx} ${cy - r}`;
+      return `M ${cx + r} ${cy} A ${r} ${r} 0 0 1 ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`;
     }
     const theta = 2 * Math.PI * frac;
-    const endX = cx + r * Math.sin(theta);
-    const endY = cy - r * Math.cos(theta);
+    const endX = cx + r * Math.cos(theta);
+    const endY = cy + r * Math.sin(theta);
     const largeArc = frac > 0.5 ? 1 : 0;
-    return `M ${cx} ${cy - r} A ${r} ${r} 0 ${largeArc} 1 ${endX} ${endY}`;
+    return `M ${cx + r} ${cy} A ${r} ${r} 0 ${largeArc} 1 ${endX} ${endY}`;
   })();
+
 
   const baseColor = 'hsl(var(--primary))';
   const tier2Color = '#4300FF';
