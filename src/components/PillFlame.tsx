@@ -35,7 +35,7 @@ const PillFlame = ({ width, height, radius, pad = 14, borderWidth = 2 }: PillFla
       height={H}
       viewBox={`0 0 ${W} ${H}`}
       className="pointer-events-none overflow-visible absolute"
-      style={{ left: -pad, top: -pad }}
+      style={{ left: -(pad + borderWidth), top: -(pad + borderWidth) }}
     >
       <defs>
         <filter id={`pfWarp-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
