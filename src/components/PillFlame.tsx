@@ -6,13 +6,15 @@ interface PillFlameProps {
   radius?: number;
   /** Padding around the pill so flame tongues don't get clipped */
   pad?: number;
+  /** Border thickness of the pill this flame wraps (so we offset onto the outer edge) */
+  borderWidth?: number;
 }
 
 /**
  * Flame outline that wraps around a pill/rounded-rect shape.
  * Mirrors the layered animated flame look from ProgressRing (>=401% tier).
  */
-const PillFlame = ({ width, height, radius, pad = 14 }: PillFlameProps) => {
+const PillFlame = ({ width, height, radius, pad = 14, borderWidth = 2 }: PillFlameProps) => {
   const uid = useId().replace(/:/g, "");
   const r = radius ?? height / 2;
 
@@ -33,7 +35,7 @@ const PillFlame = ({ width, height, radius, pad = 14 }: PillFlameProps) => {
       height={H}
       viewBox={`0 0 ${W} ${H}`}
       className="pointer-events-none overflow-visible absolute"
-      style={{ left: -pad, top: -pad }}
+      style={{ left: -(pad + borderWidth), top: -(pad + borderWidth) }}
     >
       <defs>
         <filter id={`pfWarp-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
