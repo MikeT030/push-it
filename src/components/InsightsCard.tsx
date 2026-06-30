@@ -219,13 +219,13 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
 
                 <div className="divide-y divide-[#3B404F]">
                   <div className="pb-4">
-                    <BestRow label="in a day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
+                    <BestRow label="/day" value={insights.bestDay.count} sub={formatBestDay(insights.bestDay.date)} />
                   </div>
                   <div className="py-4">
-                    <BestRow label="in a week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
+                    <BestRow label="/week" value={insights.bestWeek.count} sub={formatBestWeek(insights.bestWeek.key)} />
                   </div>
                   <div className="pt-4">
-                    <BestRow label="in a month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
+                    <BestRow label="/month" value={insights.bestMonth.count} sub={formatBestMonth(insights.bestMonth.key)} />
                   </div>
                 </div>
               </section>
