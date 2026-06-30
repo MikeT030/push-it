@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
 import BarFlame from "./BarFlame";
+import PillFlame from "./PillFlame";
 
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
