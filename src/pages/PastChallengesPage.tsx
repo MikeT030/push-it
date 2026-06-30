@@ -118,9 +118,9 @@ const PastChallengesPage = () => {
                   </span>
                 </div>
 
-                {/* Your push-up day */}
+                {/* Most PU on a day */}
                 <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">Your push-up day</span>
+                  <span className="text-xs text-muted-foreground">Most PU on a day</span>
                   <span className="text-sm text-white">
                     <span className="font-bold">{c.bestDayDate}</span>
                     <span className="text-xs text-muted-foreground ml-1">({c.bestDayCount} PU)</span>
