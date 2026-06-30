@@ -211,20 +211,6 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
           )}
         </div>
 
-        {/* Flame burst at bar tip when >=401% */}
-        {memberPct >= 401 && (
-          <div
-            className="absolute top-1/2 pointer-events-none"
-            style={{
-              left: `${animate ? fillEndPct : 0}%`,
-              transform: "translate(-50%, -50%)",
-              transition: "left 1600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease 1700ms",
-              opacity: animate ? 1 : 0,
-            }}
-          >
-            <BarFlame orientation="horizontal" size={22} />
-          </div>
-        )}
 
         {/* Flame outline along the orange (>=400%) tier section */}
         {memberPct >= 401 && (
@@ -389,20 +375,6 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
         )}
       </div>
 
-      {/* Flame burst at bar tip when >=401% */}
-      {percentage >= 401 && (
-        <div
-          className="absolute top-1/2 pointer-events-none"
-          style={{
-            left: `${animate ? Math.min(percentage, 100) : 0}%`,
-            transform: "translate(-50%, -50%)",
-            transition: "left 1600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease 1700ms",
-            opacity: animate ? 1 : 0,
-          }}
-        >
-          <BarFlame orientation="horizontal" size={22} />
-        </div>
-      )}
 
       {/* Flame outline along the orange (>=400%) tier section */}
       {percentage >= 401 && (
