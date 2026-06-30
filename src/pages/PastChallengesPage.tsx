@@ -61,6 +61,7 @@ const PastChallengesPage = () => {
           {PAST_CHALLENGES.map((c) => {
             const progressPercent = Math.round((c.total / c.goal) * 100);
             const hitGoal = c.total >= c.goal;
+            const avgPu = Math.round(c.total / c.daysLogged);
             return (
               <div
                 key={c.year}
