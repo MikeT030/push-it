@@ -6,44 +6,7 @@ import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks
 
 import PillFlame from "./PillFlame";
 
-interface FlameSegmentProps {
-  leftPct: number;
-  widthPct: number;
-  animate: boolean;
-}
 
-const FlameSegment = ({ leftPct, widthPct, animate }: FlameSegmentProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [dims, setDims] = useState<{ w: number; h: number } | null>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const measure = () => {
-      const r = el.getBoundingClientRect();
-      if (r.width > 0 && r.height > 0) setDims({ w: r.width, h: r.height });
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className="absolute top-0 bottom-0 pointer-events-none"
-      style={{
-        left: `${leftPct}%`,
-        width: `${widthPct}%`,
-        opacity: animate ? 1 : 0,
-        transition: "opacity 500ms ease 1700ms",
-      }}
-    >
-      {dims && <PillFlame width={dims.w} height={dims.h} pad={10} borderWidth={0} />}
-    </div>
-  );
-};
 
 
 const DAILY_TARGET = 82; // 82 push-ups per day per person
@@ -212,9 +175,6 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
         </div>
 
 
-        {/* Flame outline along the orange (>=400%) tier section */}
-        {memberPct >= 401 && (
-          <FlameSegment
             leftPct={(400 / Math.max(memberPct, 1)) * 100}
             widthPct={100 - (400 / Math.max(memberPct, 1)) * 100}
             animate={animate}
@@ -376,9 +336,6 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
       </div>
 
 
-      {/* Flame outline along the orange (>=400%) tier section */}
-      {percentage >= 401 && (
-        <FlameSegment
           leftPct={(400 / Math.max(percentage, 1)) * 100}
           widthPct={100 - (400 / Math.max(percentage, 1)) * 100}
           animate={animate}
