@@ -215,7 +215,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
                   <Flame className="w-4 h-4 text-[#FF2C2C]" fill="#FF2C2C" />
                   Personal bests
                 </h3>
-                <h4 className="text-xs font-semibold text-foreground mt-[10px] mb-4">Most Push-Ups</h4>
+                <h4 className="text-xs font-semibold text-foreground mt-[10px] mb-4 hidden">Most Push-Ups</h4>
 
                 <div className="divide-y divide-[#3B404F]">
                   <div className="pb-4">
