@@ -175,12 +175,6 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps)
         </div>
 
 
-            leftPct={(400 / Math.max(memberPct, 1)) * 100}
-            widthPct={100 - (400 / Math.max(memberPct, 1)) * 100}
-            animate={animate}
-          />
-        )}
-
         {/* Count badge attached to tip of bar */}
         <div
           className="absolute top-1/2 flex items-center justify-center rounded-full bg-background border-2 pointer-events-none"
@@ -334,13 +328,6 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
           />
         )}
       </div>
-
-
-          leftPct={(400 / Math.max(percentage, 1)) * 100}
-          widthPct={100 - (400 / Math.max(percentage, 1)) * 100}
-          animate={animate}
-        />
-      )}
     </div>
 
   );
