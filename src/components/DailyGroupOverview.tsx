@@ -328,13 +328,6 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
           />
         )}
       </div>
-
-
-          leftPct={(400 / Math.max(percentage, 1)) * 100}
-          widthPct={100 - (400 / Math.max(percentage, 1)) * 100}
-          animate={animate}
-        />
-      )}
     </div>
 
   );
