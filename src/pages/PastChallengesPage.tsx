@@ -109,6 +109,7 @@ const PastChallengesPage = () => {
                     <span className="font-bold">{c.period}</span>
                   </span>
                 </div>
+                <div className="border-b border-[#3B404F] mb-2" />
 
                 {/* Average push-ups */}
                 <div className="flex items-baseline justify-between mb-2">
