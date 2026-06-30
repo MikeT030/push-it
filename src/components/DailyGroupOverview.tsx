@@ -355,6 +355,15 @@ const GroupProgressBar = ({ cycleKey, percentage, dayTotal }: GroupProgressBarPr
           <BarFlame orientation="horizontal" size={22} />
         </div>
       )}
+
+      {/* Flame outline along the orange (>=400%) tier section */}
+      {percentage >= 401 && (
+        <FlameSegment
+          leftPct={(400 / Math.max(percentage, 1)) * 100}
+          widthPct={100 - (400 / Math.max(percentage, 1)) * 100}
+          animate={animate}
+        />
+      )}
     </div>
 
   );
