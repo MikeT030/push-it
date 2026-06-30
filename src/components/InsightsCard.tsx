@@ -300,11 +300,53 @@ const BestRow = ({ label, value, sub }: { label: string; value: number; sub: str
 
 
 
-const WinCell = ({ label, value }: { label: string; value: number }) => (
-  <div className="bg-card/40 border border-[#3B404F] rounded-2xl p-3 flex flex-col items-center">
-    <p className="text-2xl font-black text-foreground">{value}</p>
-    <p className="text-[11px] text-muted-foreground mt-1">{label}</p>
-  </div>
+const WinCell = ({
+  label,
+  value,
+  items,
+  emptyText,
+}: {
+  label: string;
+  value: number;
+  items: string[];
+  emptyText: string;
+}) => (
+  <Popover>
+    <PopoverTrigger asChild>
+      <button
+        type="button"
+        className="bg-card/40 border border-[#3B404F] rounded-2xl p-3 flex flex-col items-center hover:bg-card/60 transition-colors"
+      >
+        <p className="text-2xl font-black text-foreground">{value}</p>
+        <p className="text-[11px] text-muted-foreground mt-1">{label}</p>
+      </button>
+    </PopoverTrigger>
+    <PopoverContent
+      align="center"
+      sideOffset={8}
+      className="w-56 p-0 bg-[#1A1D24] border-[#3B404F]"
+    >
+      <div className="px-4 py-3 border-b border-[#3B404F]">
+        <p className="text-xs font-semibold text-foreground">
+          {label} wins{value > 0 ? ` · ${value}` : ""}
+        </p>
+      </div>
+      <div className="max-h-64 overflow-y-auto py-1">
+        {items.length === 0 ? (
+          <p className="px-4 py-3 text-xs text-muted-foreground">{emptyText}</p>
+        ) : (
+          items.map((item) => (
+            <div
+              key={item}
+              className="px-4 py-2 text-xs text-foreground border-b border-[#3B404F]/50 last:border-b-0"
+            >
+              {item}
+            </div>
+          ))
+        )}
+      </div>
+    </PopoverContent>
+  </Popover>
 );
 
 interface WeekdayBarChartProps {
