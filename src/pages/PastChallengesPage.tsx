@@ -123,10 +123,16 @@ const PastChallengesPage = () => {
                 {/* Most PU on a day */}
                 <div className="flex items-baseline justify-between mb-2">
                   <span className="text-xs text-muted-foreground">Most PU on a day</span>
-                  <div className="flex flex-col items-end">
-                    <span className="text-sm text-white font-bold">{c.bestDayCount} PU</span>
-                    <span className="text-xs text-muted-foreground">{c.bestDayDate}</span>
-                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="text-sm text-white font-bold cursor-pointer">{c.bestDayCount} PU</span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <span>{c.bestDayDate}</span>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
 
                 {/* Your Push-Up day */}
