@@ -219,6 +219,11 @@ const AdminPage = () => {
           </Button>
         </div>
 
+        {/* Demo Insights Panel Button */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.038s" }}>
+          <InsightsCard userId={user?.id ?? null} allEntries={realAllEntries} />
+        </div>
+
         {/* Demo Your Insights Card */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.03s" }}>
           <Accordion type="single" collapsible>
