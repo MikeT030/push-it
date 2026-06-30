@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Trophy } from "lucide-react";
 import smallCircleIcon from "@/assets/small-circle-icon.svg";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type PastChallenge = {
   year: number;
