@@ -9,6 +9,9 @@ type PastChallenge = {
   goal: number;
   daysLogged: number;
   bestStreak: number;
+  bestDayDate: string;
+  bestDayCount: number;
+  avgDayOfWeek: string;
 };
 
 // Demo data — first (and so far only) completed challenge.
@@ -19,6 +22,9 @@ const PAST_CHALLENGES: PastChallenge[] = [
     goal: 30000,
     daysLogged: 312,
     bestStreak: 84,
+    bestDayDate: "Jul 14, 2025",
+    bestDayCount: 520,
+    avgDayOfWeek: "Wednesday",
   },
 ];
 
