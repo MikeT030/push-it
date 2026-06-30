@@ -89,22 +89,25 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
     });
 
     const countWins = (totals: Map<string, Map<string, number>>) => {
-      let wins = 0;
-      totals.forEach((inner) => {
+      const wonKeys: string[] = [];
+      totals.forEach((inner, key) => {
         let max = 0;
         let winners: string[] = [];
         inner.forEach((v, uid) => {
           if (v > max) { max = v; winners = [uid]; }
           else if (v === max) winners.push(uid);
         });
-        if (winners.includes(userId) && max > 0) wins++;
+        if (winners.includes(userId) && max > 0) wonKeys.push(key);
       });
-      return wins;
+      return wonKeys;
     };
 
-    const dailyWins = countWins(dailyTotals);
-    const weeklyWins = countWins(weeklyTotals);
-    const monthlyWins = countWins(monthlyTotals);
+    const dailyWinKeys = countWins(dailyTotals);
+    const weeklyWinKeys = countWins(weeklyTotals);
+    const monthlyWinKeys = countWins(monthlyTotals);
+    const dailyWins = dailyWinKeys.length;
+    const weeklyWins = weeklyWinKeys.length;
+    const monthlyWins = monthlyWinKeys.length;
 
     // ---- Weekday distribution ----
     const weekdayTotals = new Array(7).fill(0) as number[]; // Mon..Sun
