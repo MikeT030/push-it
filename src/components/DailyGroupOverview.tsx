@@ -3,7 +3,7 @@ import { format, eachDayOfInterval, isSameDay, subDays } from "date-fns";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
-import BarFlame from "./BarFlame";
+
 import PillFlame from "./PillFlame";
 
 interface FlameSegmentProps {
