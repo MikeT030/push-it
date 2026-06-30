@@ -79,11 +79,9 @@ const PodiumAvatar = ({ user, rank, onClick }: {user: UserProgress;rank: number;
 
       {/* Goal + Score badges (matched widths) */}
       <div className="inline-flex flex-col items-stretch gap-1">
-        {user.yearly_goal !== 30000 && (
-          <div className={`flex items-center justify-center gap-1 rounded-full px-2.5 py-[2px] border ${rank === 0 ? "border-yellow-500" : rank === 1 ? "border-gray-300" : "border-amber-600"}`}>
-            <span className={`text-[10px] font-bold ${rankTextColors[rank]}`}>+{Math.round((user.yearly_goal - 30000) / 1000)}K</span>
-          </div>
-        )}
+        <div className={`flex items-center justify-center gap-1 rounded-full px-2.5 py-[2px] border ${rank === 0 ? "border-yellow-500" : rank === 1 ? "border-gray-300" : "border-amber-600"}`}>
+          <span className={`text-[10px] font-bold ${rankTextColors[rank]}`}>{Math.round(user.yearly_goal / 1000)}K Goal</span>
+        </div>
 
         <div className="flex items-center justify-center gap-1 rounded-full px-2.5 py-0.5 pt-[4px] border border-[#575F78]">
           <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
