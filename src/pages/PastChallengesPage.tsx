@@ -7,6 +7,7 @@ type PastChallenge = {
   year: number;
   total: number;
   goal: number;
+  period: string;
   daysLogged: number;
   bestStreak: number;
   bestDayDate: string;
@@ -20,6 +21,7 @@ const PAST_CHALLENGES: PastChallenge[] = [
     year: 2025,
     total: 31420,
     goal: 30000,
+    period: "Jan 1 – Dec 31, 2025",
     daysLogged: 312,
     bestStreak: 84,
     bestDayDate: "Jul 14, 2025",
@@ -97,6 +99,14 @@ const PastChallengesPage = () => {
                   <span className="text-xs text-muted-foreground">Goal</span>
                   <span className="text-sm text-white">
                     <span className="font-bold">{c.goal.toLocaleString()}</span> PU
+                  </span>
+                </div>
+
+                {/* Period */}
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-xs text-muted-foreground">Period</span>
+                  <span className="text-sm text-white">
+                    <span className="font-bold">{c.period}</span>
                   </span>
                 </div>
 
