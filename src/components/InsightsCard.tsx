@@ -2,6 +2,7 @@ import { useMemo, useState, useRef, useEffect } from "react";
 import { format, parseISO, startOfWeek, startOfMonth, getDay } from "date-fns";
 import { Sparkles, X, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
 import wreathIcon from "@/assets/medal.svg";
@@ -88,22 +89,25 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
     });
 
     const countWins = (totals: Map<string, Map<string, number>>) => {
-      let wins = 0;
-      totals.forEach((inner) => {
+      const wonKeys: string[] = [];
+      totals.forEach((inner, key) => {
         let max = 0;
         let winners: string[] = [];
         inner.forEach((v, uid) => {
           if (v > max) { max = v; winners = [uid]; }
           else if (v === max) winners.push(uid);
         });
-        if (winners.includes(userId) && max > 0) wins++;
+        if (winners.includes(userId) && max > 0) wonKeys.push(key);
       });
-      return wins;
+      return wonKeys;
     };
 
-    const dailyWins = countWins(dailyTotals);
-    const weeklyWins = countWins(weeklyTotals);
-    const monthlyWins = countWins(monthlyTotals);
+    const dailyWinKeys = countWins(dailyTotals);
+    const weeklyWinKeys = countWins(weeklyTotals);
+    const monthlyWinKeys = countWins(monthlyTotals);
+    const dailyWins = dailyWinKeys.length;
+    const weeklyWins = weeklyWinKeys.length;
+    const monthlyWins = monthlyWinKeys.length;
 
     // ---- Weekday distribution ----
     const weekdayTotals = new Array(7).fill(0) as number[]; // Mon..Sun
@@ -124,6 +128,9 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
       dailyWins,
       weeklyWins,
       monthlyWins,
+      dailyWinKeys,
+      weeklyWinKeys,
+      monthlyWinKeys,
       weekdayAvg,
       maxAvg,
       hasData: userEntries.length > 0,
@@ -230,9 +237,33 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
                   Group wins
                 </h3>
                 <div className="grid grid-cols-3 gap-3">
-                  <WinCell label="Daily" value={insights.dailyWins} />
-                  <WinCell label="Weekly" value={insights.weeklyWins} />
-                  <WinCell label="Monthly" value={insights.monthlyWins} />
+                  <WinCell
+                    label="Daily"
+                    value={insights.dailyWins}
+                    items={insights.dailyWinKeys
+                      .slice()
+                      .sort((a, b) => b.localeCompare(a))
+                      .map((k) => format(parseISO(k), "MMM d, yyyy"))}
+                    emptyText="No daily wins yet."
+                  />
+                  <WinCell
+                    label="Weekly"
+                    value={insights.weeklyWins}
+                    items={insights.weeklyWinKeys
+                      .slice()
+                      .sort((a, b) => b.localeCompare(a))
+                      .map((k) => `Week of ${format(parseISO(k), "MMM d, yyyy")}`)}
+                    emptyText="No weekly wins yet."
+                  />
+                  <WinCell
+                    label="Monthly"
+                    value={insights.monthlyWins}
+                    items={insights.monthlyWinKeys
+                      .slice()
+                      .sort((a, b) => b.localeCompare(a))
+                      .map((k) => format(parseISO(`${k}-01`), "MMMM yyyy"))}
+                    emptyText="No monthly wins yet."
+                  />
                 </div>
               </section>
 
@@ -269,11 +300,53 @@ const BestRow = ({ label, value, sub }: { label: string; value: number; sub: str
 
 
 
-const WinCell = ({ label, value }: { label: string; value: number }) => (
-  <div className="bg-card/40 border border-[#3B404F] rounded-2xl p-3 flex flex-col items-center">
-    <p className="text-2xl font-black text-foreground">{value}</p>
-    <p className="text-[11px] text-muted-foreground mt-1">{label}</p>
-  </div>
+const WinCell = ({
+  label,
+  value,
+  items,
+  emptyText,
+}: {
+  label: string;
+  value: number;
+  items: string[];
+  emptyText: string;
+}) => (
+  <Popover>
+    <PopoverTrigger asChild>
+      <button
+        type="button"
+        className="bg-card/40 border border-[#3B404F] rounded-2xl p-3 flex flex-col items-center hover:bg-card/60 transition-colors"
+      >
+        <p className="text-2xl font-black text-foreground">{value}</p>
+        <p className="text-[11px] text-muted-foreground mt-1">{label}</p>
+      </button>
+    </PopoverTrigger>
+    <PopoverContent
+      align="center"
+      sideOffset={8}
+      className="w-56 p-0 bg-[#1A1D24] border-[#3B404F]"
+    >
+      <div className="px-4 py-3 border-b border-[#3B404F]">
+        <p className="text-xs font-semibold text-foreground">
+          {label} wins{value > 0 ? ` · ${value}` : ""}
+        </p>
+      </div>
+      <div className="max-h-64 overflow-y-auto py-1">
+        {items.length === 0 ? (
+          <p className="px-4 py-3 text-xs text-muted-foreground">{emptyText}</p>
+        ) : (
+          items.map((item) => (
+            <div
+              key={item}
+              className="px-4 py-2 text-xs text-foreground border-b border-[#3B404F]/50 last:border-b-0"
+            >
+              {item}
+            </div>
+          ))
+        )}
+      </div>
+    </PopoverContent>
+  </Popover>
 );
 
 interface WeekdayBarChartProps {
