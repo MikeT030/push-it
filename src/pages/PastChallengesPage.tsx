@@ -7,6 +7,7 @@ type PastChallenge = {
   year: number;
   total: number;
   goal: number;
+  period: string;
   daysLogged: number;
   bestStreak: number;
   bestDayDate: string;
