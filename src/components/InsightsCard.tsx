@@ -237,9 +237,33 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
                   Group wins
                 </h3>
                 <div className="grid grid-cols-3 gap-3">
-                  <WinCell label="Daily" value={insights.dailyWins} />
-                  <WinCell label="Weekly" value={insights.weeklyWins} />
-                  <WinCell label="Monthly" value={insights.monthlyWins} />
+                  <WinCell
+                    label="Daily"
+                    value={insights.dailyWins}
+                    items={insights.dailyWinKeys
+                      .slice()
+                      .sort((a, b) => b.localeCompare(a))
+                      .map((k) => format(parseISO(k), "MMM d, yyyy"))}
+                    emptyText="No daily wins yet."
+                  />
+                  <WinCell
+                    label="Weekly"
+                    value={insights.weeklyWins}
+                    items={insights.weeklyWinKeys
+                      .slice()
+                      .sort((a, b) => b.localeCompare(a))
+                      .map((k) => `Week of ${format(parseISO(k), "MMM d, yyyy")}`)}
+                    emptyText="No weekly wins yet."
+                  />
+                  <WinCell
+                    label="Monthly"
+                    value={insights.monthlyWins}
+                    items={insights.monthlyWinKeys
+                      .slice()
+                      .sort((a, b) => b.localeCompare(a))
+                      .map((k) => format(parseISO(`${k}-01`), "MMMM yyyy"))}
+                    emptyText="No monthly wins yet."
+                  />
                 </div>
               </section>
 
