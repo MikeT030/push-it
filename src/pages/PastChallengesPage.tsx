@@ -9,6 +9,9 @@ type PastChallenge = {
   goal: number;
   daysLogged: number;
   bestStreak: number;
+  bestDayDate: string;
+  bestDayCount: number;
+  avgDayOfWeek: string;
 };
 
 // Demo data — first (and so far only) completed challenge.
@@ -19,6 +22,9 @@ const PAST_CHALLENGES: PastChallenge[] = [
     goal: 30000,
     daysLogged: 312,
     bestStreak: 84,
+    bestDayDate: "Jul 14, 2025",
+    bestDayCount: 520,
+    avgDayOfWeek: "Wednesday",
   },
 ];
 
@@ -55,6 +61,7 @@ const PastChallengesPage = () => {
           {PAST_CHALLENGES.map((c) => {
             const progressPercent = Math.round((c.total / c.goal) * 100);
             const hitGoal = c.total >= c.goal;
+            const avgPu = Math.round(c.total / c.daysLogged);
             return (
               <div
                 key={c.year}
@@ -90,6 +97,31 @@ const PastChallengesPage = () => {
                   <span className="text-xs text-muted-foreground">Goal</span>
                   <span className="text-sm text-white">
                     <span className="font-bold">{c.goal.toLocaleString()}</span> PU
+                  </span>
+                </div>
+
+                {/* Average push-ups */}
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-xs text-muted-foreground">Average push-ups</span>
+                  <span className="text-sm text-white">
+                    <span className="font-bold">{avgPu.toLocaleString()}</span> PU
+                  </span>
+                </div>
+
+                {/* Your push-up day */}
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-xs text-muted-foreground">Your push-up day</span>
+                  <span className="text-sm text-white">
+                    <span className="font-bold">{c.bestDayDate}</span>
+                    <span className="text-xs text-muted-foreground ml-1">({c.bestDayCount} PU)</span>
+                  </span>
+                </div>
+
+                {/* On which day of the week, on average? */}
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-xs text-muted-foreground">On which day of the week, on average?</span>
+                  <span className="text-sm text-white">
+                    <span className="font-bold">{c.avgDayOfWeek}</span>
                   </span>
                 </div>
 
