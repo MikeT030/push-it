@@ -100,6 +100,31 @@ const PastChallengesPage = () => {
                   </span>
                 </div>
 
+                {/* Average push-ups */}
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-xs text-muted-foreground">Average push-ups</span>
+                  <span className="text-sm text-white">
+                    <span className="font-bold">{avgPu.toLocaleString()}</span> PU
+                  </span>
+                </div>
+
+                {/* Your push-up day */}
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-xs text-muted-foreground">Your push-up day</span>
+                  <span className="text-sm text-white">
+                    <span className="font-bold">{c.bestDayDate}</span>
+                    <span className="text-xs text-muted-foreground ml-1">({c.bestDayCount} PU)</span>
+                  </span>
+                </div>
+
+                {/* On which day of the week, on average? */}
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-xs text-muted-foreground">On which day of the week, on average?</span>
+                  <span className="text-sm text-white">
+                    <span className="font-bold">{c.avgDayOfWeek}</span>
+                  </span>
+                </div>
+
                 {/* Days logged */}
                 <div className="flex items-baseline justify-between mb-2">
                   <span className="text-xs text-muted-foreground">Days logged</span>
