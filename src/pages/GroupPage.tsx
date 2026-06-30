@@ -61,17 +61,18 @@ const LeaderboardListView = ({ users }: {users: UserProgress[];}) => {
               }
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate flex items-center gap-1.5">
+              <p className="text-sm font-medium text-foreground truncate">
                 {user.display_name || `Member ${index + 1}`}
-                <div className="flex items-center gap-1 rounded-full px-1.5 py-[2px] border border-white/60">
-                  <span className="text-[10px] font-bold text-white">{Math.round(user.yearly_goal / 1000)}K</span>
-                </div>
               </p>
               <p className="text-xs text-foreground flex items-center gap-0.5"><Flame className="w-3 h-3 text-[#FF2C2C]" fill="#FF2C2C" /> <span className="font-bold">{user.streak ?? 0}d</span> streak</p>
               <p className="text-xs text-foreground flex items-center gap-0.5"><span className="text-xs font-bold text-primary">Ø</span> <span className="font-bold">{Math.round(user.avg_pushups ?? 0)}</span> Avg. PU</p>
             </div>
 
-            <div className="flex items-center gap-1 bg-muted/50 rounded-full px-2.5 py-1">
+            <div className="flex items-center gap-1 rounded-full px-1.5 py-[2px] border border-white/60">
+              <span className="text-[10px] font-bold text-white">{Math.round(user.yearly_goal / 1000)}K</span>
+            </div>
+
+            <div className="flex items-center gap-1 rounded-full px-2.5 py-1">
               <span className="text-sm font-bold text-foreground">{user.total_pushups.toLocaleString()}</span>
             </div>
           </div>);
