@@ -122,10 +122,10 @@ const PastChallengesPage = () => {
                 {/* Most PU on a day */}
                 <div className="flex items-baseline justify-between mb-2">
                   <span className="text-xs text-muted-foreground">Most PU on a day</span>
-                  <span className="text-sm text-white">
+                  <div className="flex flex-col items-end text-sm text-white">
+                    <span className="font-bold">{c.bestDayCount} PU</span>
                     <span className="text-xs text-muted-foreground">{c.bestDayDate}</span>
-                    <span className="font-bold ml-1">{c.bestDayCount} PU</span>
-                  </span>
+                  </div>
                 </div>
 
                 {/* On which day of the week, on average? */}
