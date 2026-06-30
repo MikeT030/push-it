@@ -175,7 +175,7 @@ const AuthPage = () => {
           <p className="text-muted-foreground mt-2">{headerSubtitle}</p>
         </div>
 
-        <div className="bg-card/40 rounded-2xl p-6">
+        <div className="bg-transparent rounded-2xl p-6">
           {step === "email" && (
             <form onSubmit={handleContinue} className="space-y-4">
               <div>
