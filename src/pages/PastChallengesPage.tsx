@@ -128,9 +128,12 @@ const PastChallengesPage = () => {
                   <span className="text-sm text-white font-bold">{c.bestDayCount} PU</span>
                 </div>
 
-                {/* On which day of the week, on average? */}
+                {/* Your Push-Up day */}
                 <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">On which day of the week, on average?</span>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">Your Push-Up day</span>
+                    <span className="text-xs text-muted-foreground">on average</span>
+                  </div>
                   <span className="text-sm text-white">
                     <span className="font-bold">{c.avgDayOfWeek}</span>
                   </span>
