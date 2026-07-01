@@ -39,14 +39,14 @@ function generateDemoEntries(): GroupEntry[] {
     if (i === 88) count = 300;
     if (dow === 1 && i % 14 === 0) count += 60;
     if (count > 0) {
-      entries.push({ id: `demo-${i}`, user_id: "demo-user", date: dateStr, count });
+      entries.push({ user_id: "demo-user", date: dateStr, count });
     }
     rivals.forEach((uid, idx) => {
       const rBase = [50, 70, 60, 80, 55, 45, 35][dow] - idx * 8;
       const rWobble = ((i * (idx + 3) * 1117) % 161) - 80;
       const rCount = Math.max(0, rBase + Math.round(rWobble * 0.5));
       if (rCount > 0) {
-        entries.push({ id: `demo-${uid}-${i}`, user_id: uid, date: dateStr, count: rCount });
+        entries.push({ user_id: uid, date: dateStr, count: rCount });
       }
     });
   }
