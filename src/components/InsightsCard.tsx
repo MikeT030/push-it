@@ -185,7 +185,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: Insig
         <SheetTrigger asChild>
           <Button
             variant="outline"
-            disabled={!userId}
+            disabled={!resolvedUserId}
             className="w-full h-12 gap-2"
             style={{
               backgroundColor: `${accent}1A`,
