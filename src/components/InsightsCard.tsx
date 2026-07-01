@@ -74,11 +74,11 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: Insig
   
 
   const insights = useMemo(() => {
-    if (!userId) {
+    if (!resolvedUserId) {
       return null;
     }
 
-    const userEntries = allEntries.filter((e) => e.user_id === userId && e.count > 0);
+    const userEntries = resolvedEntries.filter((e) => e.user_id === resolvedUserId && e.count > 0);
 
     // ---- Personal bests ----
     let bestDay = { count: 0, date: "" };
