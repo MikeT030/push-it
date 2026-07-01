@@ -168,7 +168,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: Insig
       maxAvg,
       hasData: userEntries.length > 0,
     };
-  }, [allEntries, userId]);
+  }, [resolvedEntries, resolvedUserId]);
 
   const formatBestDay = (date: string) =>
     date ? format(parseISO(date), "MMM d, yyyy") : "—";
