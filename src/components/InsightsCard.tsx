@@ -1,5 +1,5 @@
 import { useMemo, useState, useRef, useEffect } from "react";
-import { format, parseISO, startOfWeek, startOfMonth, getDay } from "date-fns";
+import { format, parseISO, startOfWeek, startOfMonth, getDay, subDays } from "date-fns";
 import { Sparkles, X, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -17,9 +17,40 @@ type InsightsColorVariant =
   | "sky";
 
 interface InsightsCardProps {
-  userId: string | null;
-  allEntries: GroupEntry[];
+  userId?: string | null;
+  allEntries?: GroupEntry[];
   colorVariant?: InsightsColorVariant;
+  demo?: boolean;
+}
+
+function generateDemoEntries(): GroupEntry[] {
+  const entries: GroupEntry[] = [];
+  const today = new Date();
+  const rivals = ["demo-rival-1", "demo-rival-2", "demo-rival-3"];
+  for (let i = 209; i >= 0; i--) {
+    const d = subDays(today, i);
+    const dateStr = format(d, "yyyy-MM-dd");
+    const dow = d.getDay();
+    const base = [70, 110, 80, 130, 90, 60, 40][dow];
+    const wobble = ((i * 9301 + 49297) % 233) - 116;
+    let count = Math.max(0, base + Math.round(wobble * 0.4));
+    if (i === 12) count = 412;
+    if (i === 47) count = 360;
+    if (i === 88) count = 300;
+    if (dow === 1 && i % 14 === 0) count += 60;
+    if (count > 0) {
+      entries.push({ user_id: "demo-user", date: dateStr, count });
+    }
+    rivals.forEach((uid, idx) => {
+      const rBase = [50, 70, 60, 80, 55, 45, 35][dow] - idx * 8;
+      const rWobble = ((i * (idx + 3) * 1117) % 161) - 80;
+      const rCount = Math.max(0, rBase + Math.round(rWobble * 0.5));
+      if (rCount > 0) {
+        entries.push({ user_id: uid, date: dateStr, count: rCount });
+      }
+    });
+  }
+  return entries;
 }
 
 const VARIANT_COLORS: Record<InsightsColorVariant, string> = {
@@ -34,18 +65,20 @@ const VARIANT_COLORS: Record<InsightsColorVariant, string> = {
 
 const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCardProps) => {
+const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: InsightsCardProps) => {
   const [open, setOpen] = useState(false);
   const accent = VARIANT_COLORS[colorVariant];
+  const resolvedUserId = demo ? "demo-user" : userId;
+  const resolvedEntries = demo ? generateDemoEntries() : (allEntries ?? []);
 
   
 
   const insights = useMemo(() => {
-    if (!userId) {
+    if (!resolvedUserId) {
       return null;
     }
 
-    const userEntries = allEntries.filter((e) => e.user_id === userId && e.count > 0);
+    const userEntries = resolvedEntries.filter((e) => e.user_id === resolvedUserId && e.count > 0);
 
     // ---- Personal bests ----
     let bestDay = { count: 0, date: "" };
@@ -73,7 +106,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
     const dailyTotals = new Map<string, Map<string, number>>(); // date -> userId -> count
     const weeklyTotals = new Map<string, Map<string, number>>(); // weekKey -> userId -> count
     const monthlyTotals = new Map<string, Map<string, number>>(); // monthKey -> userId -> count
-    allEntries.forEach((e) => {
+    resolvedEntries.forEach((e) => {
       if (!e.count) return;
       const d = parseISO(e.date);
       const wKey = format(startOfWeek(d, { weekStartsOn: 1 }), "yyyy-MM-dd");
@@ -97,7 +130,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
           if (v > max) { max = v; winners = [uid]; }
           else if (v === max) winners.push(uid);
         });
-        if (winners.includes(userId) && max > 0) wonKeys.push(key);
+        if (winners.includes(resolvedUserId) && max > 0) wonKeys.push(key);
       });
       return wonKeys;
     };
@@ -135,7 +168,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
       maxAvg,
       hasData: userEntries.length > 0,
     };
-  }, [allEntries, userId]);
+  }, [resolvedEntries, resolvedUserId]);
 
   const formatBestDay = (date: string) =>
     date ? format(parseISO(date), "MMM d, yyyy") : "—";
@@ -152,7 +185,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal" }: InsightsCar
         <SheetTrigger asChild>
           <Button
             variant="outline"
-            disabled={!userId}
+            disabled={!resolvedUserId}
             className="w-full h-12 gap-2"
             style={{
               backgroundColor: `${accent}1A`,

@@ -52,51 +52,6 @@ const AdminPage = () => {
     };
   }, [progressQuery.data, realAllEntries]);
 
-  // Synthesized demo entries so the Insights panel always has rich content.
-  const demoInsightsEntries = useMemo(() => {
-    const entries: any[] = [];
-    const today = new Date();
-    const rivals = ["demo-rival-1", "demo-rival-2", "demo-rival-3"];
-    // 210 days of history, deterministic pseudo-random pattern
-    for (let i = 209; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
-      const dateStr = format(d, "yyyy-MM-dd");
-      const dow = d.getDay(); // 0=Sun
-      // Demo user: stronger on Mon/Wed/Fri, rest day occasional Sun
-      const base = [70, 110, 80, 130, 90, 60, 40][dow];
-      const wobble = ((i * 9301 + 49297) % 233) - 116; // -116..116
-      let count = Math.max(0, base + Math.round(wobble * 0.4));
-      // Inject a few standout peak days
-      if (i === 12) count = 412; // best day
-      if (i === 47) count = 360;
-      if (i === 88) count = 300;
-      if (dow === 1 && i % 14 === 0) count += 60;
-      if (count > 0) {
-        entries.push({
-          id: `demo-${i}`,
-          user_id: "demo-user",
-          date: dateStr,
-          count,
-        });
-      }
-      // Rivals push less on average so demo-user wins often
-      rivals.forEach((uid, idx) => {
-        const rBase = [50, 70, 60, 80, 55, 45, 35][dow] - idx * 8;
-        const rWobble = ((i * (idx + 3) * 1117) % 161) - 80;
-        const rCount = Math.max(0, rBase + Math.round(rWobble * 0.5));
-        if (rCount > 0) {
-          entries.push({
-            id: `demo-${uid}-${i}`,
-            user_id: uid,
-            date: dateStr,
-            count: rCount,
-          });
-        }
-      });
-    }
-    return entries;
-  }, []);
 
 
 
@@ -269,7 +224,7 @@ const AdminPage = () => {
 
         {/* Demo Insights Panel Button */}
         <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.038s" }}>
-          <InsightsCard userId="demo-user" allEntries={demoInsightsEntries} />
+          <InsightsCard demo />
         </div>
 
         {/* Demo Your Insights Card */}
