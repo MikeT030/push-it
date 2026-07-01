@@ -468,7 +468,7 @@ const DailySection = () => {
                 style={{ flex: "0 0 calc((100% - 16px) / 3)" }}
                 className={`snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${textColor} ${isSelected ? "ring-2 ring-primary/60" : isTodayDate ? "ring-2 ring-white" : ""}`}
               >
-                <span className="text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
+                <span className="text-[10px] uppercase opacity-70 font-normal">{format(day, "EEE")}</span>
                 <span className="text-lg font-bold">{format(day, "d")}</span>
               </div>
             );
