@@ -106,7 +106,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: Insig
     const dailyTotals = new Map<string, Map<string, number>>(); // date -> userId -> count
     const weeklyTotals = new Map<string, Map<string, number>>(); // weekKey -> userId -> count
     const monthlyTotals = new Map<string, Map<string, number>>(); // monthKey -> userId -> count
-    allEntries.forEach((e) => {
+    resolvedEntries.forEach((e) => {
       if (!e.count) return;
       const d = parseISO(e.date);
       const wKey = format(startOfWeek(d, { weekStartsOn: 1 }), "yyyy-MM-dd");
@@ -130,7 +130,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: Insig
           if (v > max) { max = v; winners = [uid]; }
           else if (v === max) winners.push(uid);
         });
-        if (winners.includes(userId) && max > 0) wonKeys.push(key);
+        if (winners.includes(resolvedUserId) && max > 0) wonKeys.push(key);
       });
       return wonKeys;
     };
