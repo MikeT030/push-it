@@ -114,8 +114,8 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
           { color: "#BA25D8", y: 300 },
           { color: "#FF2C2C", y: 300 },
           { color: "#FF2C2C", y: 400 },
-          { color: "#FFB000", y: 400 },
-          { color: "#FFB000", y: 500 },
+          { color: "#FF6A00", y: 400 },
+          { color: "#FF6A00", y: 500 },
         ];
         const gradient = `linear-gradient(to top, ${rawStops
           .map((s) => `${s.color} ${(s.y / denom) * 100}%`)
@@ -124,12 +124,12 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
           { y: 100, outer: "#0ABAB5", inner: "#7036FF" },
           { y: 200, outer: "#7036FF", inner: "#BA25D8" },
           { y: 300, outer: "#BA25D8", inner: "#FF2C2C" },
-          { y: 400, outer: "#FF2C2C", inner: "#FFB000" },
+          { y: 400, outer: "#FF2C2C", inner: "#FF6A00" },
         ].filter((b) => percentage > b.y);
 
         const sweep =
           percentage >= 401
-            ? { from: "#FF2C2C", to: "#FFB000" }
+            ? { from: "#FF2C2C", to: "#FF6A00" }
             : percentage >= 301
             ? { from: "#BA25D8", to: "#FF2C2C" }
             : percentage >= 201

@@ -122,13 +122,13 @@ const ProgressRing = ({
             </radialGradient>
             <linearGradient id={`flameCore-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#FFF6B0">
-                <animate attributeName="stop-color" values="#FFF6B0;#FFE066;#FFB000;#FFF6B0" dur="0.9s" repeatCount="indefinite" />
+                <animate attributeName="stop-color" values="#FFF6B0;#FFE066;#FF6A00;#FFF6B0" dur="0.9s" repeatCount="indefinite" />
               </stop>
-              <stop offset="50%" stopColor="#FFB000">
-                <animate attributeName="stop-color" values="#FFB000;#FF6A00;#FFE066;#FFB000" dur="0.9s" repeatCount="indefinite" />
+              <stop offset="50%" stopColor="#FF6A00">
+                <animate attributeName="stop-color" values="#FF6A00;#FF6A00;#FFE066;#FF6A00" dur="0.9s" repeatCount="indefinite" />
               </stop>
               <stop offset="100%" stopColor="#FF6A00">
-                <animate attributeName="stop-color" values="#FF6A00;#FF2C2C;#FFB000;#FF6A00" dur="0.9s" repeatCount="indefinite" />
+                <animate attributeName="stop-color" values="#FF6A00;#FF2C2C;#FF6A00;#FF6A00" dur="0.9s" repeatCount="indefinite" />
               </stop>
             </linearGradient>
             {/* Tight flame warp - inner crackle */}
