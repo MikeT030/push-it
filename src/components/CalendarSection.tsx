@@ -144,23 +144,47 @@ const CalendarSection = () => {
             const dayProgress = getDailyProgress(day);
             const dayCount = getEntryForDate(day);
             const hasEntry = dayCount > 0;
+
             let bg = "";
-            let text = "text-foreground";
+            let textColor = "text-foreground";
+            let outline = "";
+
             if (hasEntry) {
-              if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; text = "text-white"; }
-              else if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
-              else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; text = "text-white"; }
-              else { bg = "bg-[#0ABAB5]/20"; text = "text-[#0ABAB5]"; }
+              if (dayProgress >= 400) { bg = "bg-[#FF6A00]"; textColor = "text-black"; }
+              else if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; textColor = "text-white"; }
+              else if (dayProgress >= 200) { bg = "bg-[#C029DE]"; textColor = "text-white"; }
+              else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; textColor = "text-white"; }
+              else { bg = "bg-[#0ABAB5]/20"; textColor = "text-[#0ABAB5]"; }
             }
-            if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
+
+            if (isSelected) {
+              if (!isTodayDate) {
+                outline = "border-2 border-primary";
+              } else if (hasEntry) {
+                bg = "bg-primary";
+                textColor = "text-primary-foreground";
+                outline = "ring-2 ring-primary/60";
+              }
+            }
+
+            if (isTodayDate && !hasEntry) {
+              outline = "border-2 border-primary";
+              bg = "";
+              textColor = "text-foreground";
+            }
+
+            if (isTodayDate && hasEntry && !isSelected) {
+              outline = "ring-2 ring-white";
+            }
+
             return (
               <div
                 key={day.toISOString()}
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
                 style={{ flex: "0 0 calc((100% - 16px) / 3)" }}
-                className={`snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white px-0" : ""}`}
+                className={`snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${textColor} ${outline}`}
               >
-                <span className="text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
+                <span className="text-[10px] uppercase opacity-70 font-normal">{format(day, "EEE")}</span>
                 <span className="text-lg font-bold">{format(day, "d")}</span>
               </div>
             );
