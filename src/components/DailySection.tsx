@@ -456,7 +456,8 @@ const DailySection = () => {
             let outline = "";
 
             if (hasEntry) {
-              if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; textColor = "text-white"; }
+              if (dayProgress >= 400) { bg = "bg-[#FFB000]"; textColor = "text-black"; }
+              else if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; textColor = "text-white"; }
               else if (dayProgress >= 200) { bg = "bg-[#C029DE]"; textColor = "text-white"; }
               else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; textColor = "text-white"; }
               else { bg = "bg-[#0ABAB5]/20"; textColor = "text-[#0ABAB5]"; }
