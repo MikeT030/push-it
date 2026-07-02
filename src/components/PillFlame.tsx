@@ -53,13 +53,13 @@ const PillFlame = ({ width, height, radius, pad = 14, borderWidth = 2 }: PillFla
         </filter>
         <linearGradient id={`pfCore-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#FFF6B0">
-            <animate attributeName="stop-color" values="#FFF6B0;#FFE066;#FF6A00;#FFF6B0" dur="0.9s" repeatCount="indefinite" />
+            <animate attributeName="stop-color" values="#FFF6B0;#FFE066;#FF8C00;#FFF6B0" dur="0.9s" repeatCount="indefinite" />
           </stop>
-          <stop offset="50%" stopColor="#FF6A00">
-            <animate attributeName="stop-color" values="#FF6A00;#FF6A00;#FFE066;#FF6A00" dur="0.9s" repeatCount="indefinite" />
+          <stop offset="50%" stopColor="#FF8C00">
+            <animate attributeName="stop-color" values="#FF8C00;#FF8C00;#FFE066;#FF8C00" dur="0.9s" repeatCount="indefinite" />
           </stop>
-          <stop offset="100%" stopColor="#FF6A00">
-            <animate attributeName="stop-color" values="#FF6A00;#FF2C2C;#FF6A00;#FF6A00" dur="0.9s" repeatCount="indefinite" />
+          <stop offset="100%" stopColor="#FF8C00">
+            <animate attributeName="stop-color" values="#FF8C00;#FF2C2C;#FF8C00;#FF8C00" dur="0.9s" repeatCount="indefinite" />
           </stop>
         </linearGradient>
       </defs>

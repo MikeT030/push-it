@@ -44,11 +44,11 @@ const BarFlame = ({ orientation = "vertical", size = 28 }: BarFlameProps) => {
         <radialGradient id={`bfBody-${uid}`} cx="50%" cy="68%" r="55%">
           <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
           <stop offset="25%" stopColor="#FFD24A" stopOpacity="0.95" />
-          <stop offset="55%" stopColor="#FF6A00" stopOpacity="0.85" />
+          <stop offset="55%" stopColor="#FF8C00" stopOpacity="0.85" />
           <stop offset="100%" stopColor="#FF2C2C" stopOpacity="0" />
         </radialGradient>
         <radialGradient id={`bfHalo-${uid}`} cx="50%" cy="70%" r="60%">
-          <stop offset="0%" stopColor="#FF6A00" stopOpacity="0.5" />
+          <stop offset="0%" stopColor="#FF8C00" stopOpacity="0.5" />
           <stop offset="100%" stopColor="#FF2C2C" stopOpacity="0" />
         </radialGradient>
       </defs>
