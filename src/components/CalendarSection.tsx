@@ -144,23 +144,47 @@ const CalendarSection = () => {
             const dayProgress = getDailyProgress(day);
             const dayCount = getEntryForDate(day);
             const hasEntry = dayCount > 0;
+
             let bg = "";
-            let text = "text-foreground";
+            let textColor = "text-foreground";
+            let outline = "";
+
             if (hasEntry) {
-              if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; text = "text-white"; }
-              else if (dayProgress >= 200) { bg = "bg-[#C029DE]"; text = "text-white"; }
-              else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; text = "text-white"; }
-              else { bg = "bg-[#0ABAB5]/20"; text = "text-[#0ABAB5]"; }
+              if (dayProgress >= 400) { bg = "bg-[#FF6A00]"; textColor = "text-black"; }
+              else if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; textColor = "text-white"; }
+              else if (dayProgress >= 200) { bg = "bg-[#C029DE]"; textColor = "text-white"; }
+              else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; textColor = "text-white"; }
+              else { bg = "bg-[#0ABAB5]/20"; textColor = "text-[#0ABAB5]"; }
             }
-            if (isSelected) { bg = "bg-primary"; text = "text-primary-foreground"; }
+
+            if (isSelected) {
+              if (!isTodayDate) {
+                outline = "border-2 border-primary";
+              } else if (hasEntry) {
+                bg = "bg-primary";
+                textColor = "text-primary-foreground";
+                outline = "ring-2 ring-primary/60";
+              }
+            }
+
+            if (isTodayDate && !hasEntry) {
+              outline = "border-2 border-primary";
+              bg = "";
+              textColor = "text-foreground";
+            }
+
+            if (isTodayDate && hasEntry && !isSelected) {
+              outline = "ring-2 ring-white";
+            }
+
             return (
               <div
                 key={day.toISOString()}
                 onClick={(e) => { e.stopPropagation(); setSelectedDate(day); }}
                 style={{ flex: "0 0 calc((100% - 16px) / 3)" }}
-                className={`snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${text} ${isTodayDate && !isSelected ? "ring-2 ring-white px-0" : ""}`}
+                className={`snap-end flex flex-col items-center justify-center rounded-xl py-2 cursor-pointer transition-all ${bg} ${textColor} ${outline}`}
               >
-                <span className="text-[10px] uppercase opacity-70">{format(day, "EEE")}</span>
+                <span className="text-[10px] uppercase opacity-70 font-normal">{format(day, "EEE")}</span>
                 <span className="text-lg font-bold">{format(day, "d")}</span>
               </div>
             );
@@ -250,6 +274,7 @@ const CalendarSection = () => {
                 const hasEntry = dayCount > 0;
 
                 const getProgressColor = () => {
+                  if (dayProgress >= 400) return { bg: "bg-[#FF6A00]", text: "text-black", dot: "bg-[#FF6A00]/60" };
                   if (dayProgress >= 300) return { bg: "bg-[#FF2C2C]", text: "text-white", dot: "bg-[#FF2C2C]/60" };
                   if (dayProgress >= 200) return { bg: "bg-[#C029DE]", text: "text-white", dot: "bg-[#C029DE]/60" };
                   if (dayProgress >= 100) return { bg: "bg-[#7036FF]", text: "text-white", dot: "bg-[#7036FF]/60" };
@@ -257,8 +282,37 @@ const CalendarSection = () => {
                   return { bg: "", text: "text-foreground", dot: "" };
                 };
                 const colors = getProgressColor();
+
+                let bg = "";
+                let textColor = colors.text;
+                let outline = "";
+
+                if (hasEntry) {
+                  bg = colors.bg;
+                }
+
+                if (isSelected) {
+                  if (!isTodayDate) {
+                    outline = "border-2 border-primary";
+                  } else if (hasEntry) {
+                    bg = "bg-primary";
+                    textColor = "text-primary-foreground";
+                    outline = "ring-2 ring-primary/60";
+                  }
+                }
+
+                if (isTodayDate && !hasEntry) {
+                  outline = "border-2 border-primary";
+                  bg = "";
+                  textColor = "text-foreground";
+                }
+
+                if (isTodayDate && hasEntry && !isSelected) {
+                  outline = "ring-2 ring-white";
+                }
+
                 return (
-                  <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-muted-foreground/30" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+                  <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-muted-foreground/30" : isFutureDate ? "text-muted-foreground/40" : isSelected && isTodayDate && hasEntry ? `${bg} ${textColor} shadow-lg shadow-primary/30` : `${bg} ${textColor}`} ${outline}`}>
                     <span>{format(day, "d")}</span>
                     {hasEntry && !isSelected && isCurrentMonth && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
                   </button>
