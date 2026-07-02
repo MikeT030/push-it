@@ -150,7 +150,7 @@ const CalendarSection = () => {
             let outline = "";
 
             if (hasEntry) {
-              if (dayProgress >= 400) { bg = "bg-[#FF6A00]"; textColor = "text-black"; }
+              if (dayProgress >= 400) { bg = "bg-[#FF8C00]"; textColor = "text-black"; }
               else if (dayProgress >= 300) { bg = "bg-[#FF2C2C]"; textColor = "text-white"; }
               else if (dayProgress >= 200) { bg = "bg-[#C029DE]"; textColor = "text-white"; }
               else if (dayProgress >= 100) { bg = "bg-[#7036FF]"; textColor = "text-white"; }
@@ -274,7 +274,7 @@ const CalendarSection = () => {
                 const hasEntry = dayCount > 0;
 
                 const getProgressColor = () => {
-                  if (dayProgress >= 400) return { bg: "bg-[#FF6A00]", text: "text-black", dot: "bg-[#FF6A00]/60" };
+                  if (dayProgress >= 400) return { bg: "bg-[#FF8C00]", text: "text-black", dot: "bg-[#FF8C00]/60" };
                   if (dayProgress >= 300) return { bg: "bg-[#FF2C2C]", text: "text-white", dot: "bg-[#FF2C2C]/60" };
                   if (dayProgress >= 200) return { bg: "bg-[#C029DE]", text: "text-white", dot: "bg-[#C029DE]/60" };
                   if (dayProgress >= 100) return { bg: "bg-[#7036FF]", text: "text-white", dot: "bg-[#7036FF]/60" };
