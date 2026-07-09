@@ -185,6 +185,11 @@ const AdminPage = () => {
           </div>
         </div>
 
+        {/* Push the Right Way */}
+        <div className="bg-card/40 rounded-2xl mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.0335s" }}>
+          <PushTheRightWayPanel />
+        </div>
+
         {/* Recalibrate Your Goal */}
         <div className="bg-card/40 rounded-2xl mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.034s" }}>
           <Button
