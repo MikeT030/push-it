@@ -53,7 +53,7 @@ const PushTheRightWayPanel = () => {
           <div className="flex items-center justify-between mb-6 mt-5">
             <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
               <BookOpen className="w-6 h-6" style={{ color: ACCENT }} />
-              Push the Right Way
+              Push it&nbsp;
             </h2>
             <button
               onClick={() => setOpen(false)}
