@@ -93,6 +93,7 @@ const PushTheRightWayPanel = () => {
               </li>
               <li>
                 <span className="text-foreground font-medium">Shoulder Impingement:</span> As the chest tightens and the upper back weakens, the space inside your shoulder joint narrows. This can trap the tendons of your rotator cuff, leading to a dull, persistent ache whenever you raise your arms.
+                <img src={impingementSyndrome.url} alt="Medical illustration of shoulder impingement syndrome showing narrowed shoulder joint space" className="w-1/2 h-auto rounded-lg mt-3" />
               </li>
               <li>
                 <span className="text-foreground font-medium">Overuse Joint Strain:</span> Doing any repetitive motion daily leaves little time for systemic recovery. Your wrists, elbows, and shoulders bear the brunt of the load without a break, increasing the risk of tendonitis.
