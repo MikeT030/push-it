@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import muscle1 from "@/assets/push-ups-muscle-1.png.asset.json";
 import muscle2 from "@/assets/push-ups-muscle-2.png.asset.json";
+import muscle1Wrong from "@/assets/push-ups-muscle-1-wrong.png.asset.json";
 
 const ACCENT = "#0ABAB5";
 const BODY_TEXT = "#EEEEEE";
@@ -87,6 +88,7 @@ const PushTheRightWayPanel = () => {
             <ul className="space-y-3 text-sm list-disc pl-5 leading-relaxed" style={{ color: BODY_TEXT }}>
               <li>
                 <span className="text-foreground font-medium">The "Hunched" Posture:</span> Push-ups heavily train your chest (pectoralis major) and the front of your shoulders (anterior deltoids). Over time, these muscles become tight and short, pulling your shoulders forward into a slumped, rounded posture.
+                <img src={muscle1Wrong.url} alt="Illustration of hunched forward posture showing tight chest and shoulder muscles" className="w-full h-auto rounded-lg mt-3" />
               </li>
               <li>
                 <span className="text-foreground font-medium">Shoulder Impingement:</span> As the chest tightens and the upper back weakens, the space inside your shoulder joint narrows. This can trap the tendons of your rotator cuff, leading to a dull, persistent ache whenever you raise your arms.
