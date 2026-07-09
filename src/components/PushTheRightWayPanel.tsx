@@ -2,6 +2,8 @@ import { useState } from "react";
 import { BookOpen, X, CheckCircle2, AlertTriangle, Activity } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import muscle1 from "@/assets/push-ups-muscle-1.png.asset.json";
+import muscle2 from "@/assets/push-ups-muscle-2.png.asset.json";
 
 const ACCENT = "#0ABAB5";
 const BODY_TEXT = "#EEEEEE";
