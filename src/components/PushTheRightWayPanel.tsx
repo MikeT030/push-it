@@ -83,6 +83,19 @@ const PushTheRightWayPanel = () => {
             </p>
           </div>
 
+          {/* Progress smart */}
+          <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
+            <h3 className="text-lg text-foreground font-semibold mb-3">
+              Progress smart
+            </h3>
+            <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
+              <li>Warm up: arm circles, scap push-ups, a light first set.</li>
+              <li>Add volume gradually — roughly 10% per week is plenty.</li>
+              <li>Sharp joint pain = stop. Muscle burn = fine.</li>
+              <li>Track quality reps, not just totals.</li>
+            </ul>
+          </section>
+
           <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
             <h2 className="text-lg text-foreground font-semibold mb-3">
               The Hidden Harms of a Push-Up-Only Routine
@@ -157,18 +170,6 @@ const PushTheRightWayPanel = () => {
               </ul>
             </section>
 
-            {/* Progression */}
-            <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
-              <h3 className="text-lg text-foreground font-semibold mb-3">
-                Progress smart
-              </h3>
-              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
-                <li>Warm up: arm circles, scap push-ups, a light first set.</li>
-                <li>Add volume gradually — roughly 10% per week is plenty.</li>
-                <li>Sharp joint pain = stop. Muscle burn = fine.</li>
-                <li>Track quality reps, not just totals.</li>
-              </ul>
-            </section>
           </div>
         </div>
       </SheetContent>
