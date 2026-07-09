@@ -18,6 +18,7 @@ import { getAvatarById } from "@/data/avatars";
 import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 import { useGroupUserProgress, useGroupEntries } from "@/hooks/useGroupData";
 import InsightsCard from "@/components/InsightsCard";
+import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const AdminPage = () => {
