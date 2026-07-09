@@ -52,8 +52,7 @@ const PushTheRightWayPanel = () => {
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
           <div className="flex items-start justify-between mb-6 mt-5">
             <div className="flex flex-col">
-              <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
-                <BookOpen className="w-6 h-6" style={{ color: ACCENT }} />
+              <h2 className="text-3xl font-black text-foreground tracking-tight">
                 Push it&nbsp;
               </h2>
               <span className="text-3xl font-thin text-foreground tracking-tight">
