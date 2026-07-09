@@ -50,11 +50,16 @@ const PushTheRightWayPanel = () => {
         }}
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
-          <div className="flex items-center justify-between mb-6 mt-5">
-            <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
-              <BookOpen className="w-6 h-6" style={{ color: ACCENT }} />
-              Push it&nbsp;
-            </h2>
+          <div className="flex items-start justify-between mb-6 mt-5">
+            <div className="flex flex-col">
+              <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
+                <BookOpen className="w-6 h-6" style={{ color: ACCENT }} />
+                Push it&nbsp;
+              </h2>
+              <span className="text-3xl font-thin text-foreground tracking-tight">
+                The right Way
+              </span>
+            </div>
             <button
               onClick={() => setOpen(false)}
               className="w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
