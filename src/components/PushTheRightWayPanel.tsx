@@ -63,9 +63,9 @@ const PushTheRightWayPanel = () => {
             <p className="text-sm text-muted-foreground leading-relaxed">
               Doing daily push-ups is great for building consistent discipline, chest strength, and core stability. However, focusing exclusively on a single "pushing" movement day in and day out will eventually trigger structural and muscular imbalances.
             </p>
-            <h3 className="text-lg text-foreground font-semibold mt-4 mb-3">
+            <h2 className="text-lg text-foreground font-semibold mt-4 mb-3">
               The Hidden Harms of a Push-Up-Only Routine
-            </h3>
+            </h2>
             <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
               When you perform horizontal pressing movements repeatedly without equal pulling work, you risk developing specific upper-body issues:
             </p>
