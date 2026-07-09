@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
 const ACCENT = "#0ABAB5";
+const BODY_TEXT = "#EEEEEE";
 
 const PushTheRightWayPanel = () => {
   const [open, setOpen] = useState(false);
@@ -60,16 +61,16 @@ const PushTheRightWayPanel = () => {
           </div>
 
           <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm leading-relaxed" style={{ color: BODY_TEXT }}>
               Doing daily push-ups is great for building consistent discipline, chest strength, and core stability. However, focusing exclusively on a single "pushing" movement day in and day out will eventually trigger structural and muscular imbalances.
             </p>
             <h2 className="text-lg text-foreground font-semibold mt-4 mb-3">
               The Hidden Harms of a Push-Up-Only Routine
             </h2>
-            <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+            <p className="text-sm mb-3 leading-relaxed" style={{ color: BODY_TEXT }}>
               When you perform horizontal pressing movements repeatedly without equal pulling work, you risk developing specific upper-body issues:
             </p>
-            <ul className="space-y-3 text-sm text-muted-foreground list-disc pl-5 leading-relaxed">
+            <ul className="space-y-3 text-sm list-disc pl-5 leading-relaxed" style={{ color: BODY_TEXT }}>
               <li>
                 <span className="text-foreground font-medium">The "Hunched" Posture:</span> Push-ups heavily train your chest (pectoralis major) and the front of your shoulders (anterior deltoids). Over time, these muscles become tight and short, pulling your shoulders forward into a slumped, rounded posture.
               </li>
@@ -89,7 +90,7 @@ const PushTheRightWayPanel = () => {
                 <CheckCircle2 className="w-4 h-4" style={{ color: ACCENT }} />
                 Proper form
               </h3>
-              <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
                 <li>Hands shoulder-width apart, fingers spread, index fingers pointing forward.</li>
                 <li>Straight line from head to heels — no sagging hips, no piked butt.</li>
                 <li>Brace your core and glutes the whole rep.</li>
@@ -105,7 +106,7 @@ const PushTheRightWayPanel = () => {
                 <AlertTriangle className="w-4 h-4 text-[#FF8C00]" />
                 Common mistakes
               </h3>
-              <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
                 <li>Sagging or piking hips — kills core tension and lower back.</li>
                 <li>Flared elbows — stresses shoulders.</li>
                 <li>Half reps — no full lockout or no full descent.</li>
@@ -120,11 +121,11 @@ const PushTheRightWayPanel = () => {
                 <Activity className="w-4 h-4 text-white" />
                 Counter-body activities
               </h3>
-              <p className="text-xs text-muted-foreground mb-3">
+              <p className="text-xs mb-3" style={{ color: BODY_TEXT }}>
                 Push-ups load the chest, front shoulders and triceps. Balance them
                 so your posture, joints and back stay healthy.
               </p>
-              <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
                 <li><span className="text-foreground font-medium">Pulling work:</span> rows, pull-ups, band pull-aparts — 1 pull for every 1–2 pushes.</li>
                 <li><span className="text-foreground font-medium">Rear delts & upper back:</span> face pulls, reverse flys, YTWs.</li>
                 <li><span className="text-foreground font-medium">Chest & shoulder mobility:</span> doorway pec stretch, thread-the-needle, wall angels.</li>
@@ -139,7 +140,7 @@ const PushTheRightWayPanel = () => {
               <h3 className="text-lg text-foreground font-semibold mb-3">
                 Progress smart
               </h3>
-              <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
                 <li>Warm up: arm circles, scap push-ups, a light first set.</li>
                 <li>Add volume gradually — roughly 10% per week is plenty.</li>
                 <li>Sharp joint pain = stop. Muscle burn = fine.</li>
