@@ -60,11 +60,12 @@ const PushTheRightWayPanel = () => {
             </button>
           </div>
 
+          <p className="text-sm leading-relaxed mb-4" style={{ color: BODY_TEXT }}>
+            Doing daily push-ups is great for building consistent discipline, chest strength, and core stability. However, focusing exclusively on a single "pushing" movement day in and day out will eventually trigger structural and muscular imbalances.
+          </p>
+
           <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
-            <p className="text-sm leading-relaxed" style={{ color: BODY_TEXT }}>
-              Doing daily push-ups is great for building consistent discipline, chest strength, and core stability. However, focusing exclusively on a single "pushing" movement day in and day out will eventually trigger structural and muscular imbalances.
-            </p>
-            <h2 className="text-lg text-foreground font-semibold mt-4 mb-3">
+            <h2 className="text-lg text-foreground font-semibold mb-3">
               The Hidden Harms of a Push-Up-Only Routine
             </h2>
             <p className="text-sm mb-3 leading-relaxed" style={{ color: BODY_TEXT }}>
