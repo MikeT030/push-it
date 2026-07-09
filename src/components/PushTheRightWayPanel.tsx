@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import muscle1 from "@/assets/push-ups-muscle-1.png.asset.json";
 import muscle2 from "@/assets/push-ups-muscle-2.png.asset.json";
 import muscle1Wrong from "@/assets/push-ups-muscle-1-wrong.png.asset.json";
+import impingementSyndrome from "@/assets/impingement-syndrome.png.asset.json";
 
 const ACCENT = "#0ABAB5";
 const BODY_TEXT = "#EEEEEE";
