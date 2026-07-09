@@ -2,6 +2,8 @@ import { useState } from "react";
 import { BookOpen, X, CheckCircle2, AlertTriangle, Activity } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import muscle1 from "@/assets/push-ups-muscle-1.png.asset.json";
+import muscle2 from "@/assets/push-ups-muscle-2.png.asset.json";
 
 const ACCENT = "#0ABAB5";
 const BODY_TEXT = "#EEEEEE";
@@ -60,8 +62,17 @@ const PushTheRightWayPanel = () => {
             </button>
           </div>
 
+          <p className="text-sm leading-relaxed mb-3" style={{ color: BODY_TEXT }}>
+            Doing daily push-ups is great for building consistent discipline, chest strength, and core stability.
+          </p>
+
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            <img src={muscle1.url} alt="Push-up muscle activation front view" className="w-full h-auto rounded-lg" />
+            <img src={muscle2.url} alt="Push-up muscle activation side view" className="w-full h-auto rounded-lg" />
+          </div>
+
           <p className="text-sm leading-relaxed mb-4" style={{ color: BODY_TEXT }}>
-            Doing daily push-ups is great for building consistent discipline, chest strength, and core stability. However, focusing exclusively on a single "pushing" movement day in and day out will eventually trigger structural and muscular imbalances.
+            However, focusing exclusively on a single "pushing" movement day in and day out will eventually trigger structural and muscular imbalances.
           </p>
 
           <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
