@@ -59,7 +59,30 @@ const PushTheRightWayPanel = () => {
             </button>
           </div>
 
-          <div className="space-y-4 mt-5">
+          <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Doing daily push-ups is great for building consistent discipline, chest strength, and core stability. However, focusing exclusively on a single "pushing" movement day in and day out will eventually trigger structural and muscular imbalances.
+            </p>
+            <h3 className="text-lg text-foreground font-semibold mt-4 mb-3">
+              The Hidden Harms of a Push-Up-Only Routine
+            </h3>
+            <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+              When you perform horizontal pressing movements repeatedly without equal pulling work, you risk developing specific upper-body issues:
+            </p>
+            <ul className="space-y-3 text-sm text-muted-foreground list-disc pl-5 leading-relaxed">
+              <li>
+                <span className="text-foreground font-medium">The "Hunched" Posture:</span> Push-ups heavily train your chest (pectoralis major) and the front of your shoulders (anterior deltoids). Over time, these muscles become tight and short, pulling your shoulders forward into a slumped, rounded posture.
+              </li>
+              <li>
+                <span className="text-foreground font-medium">Shoulder Impingement:</span> As the chest tightens and the upper back weakens, the space inside your shoulder joint narrows. This can trap the tendons of your rotator cuff, leading to a dull, persistent ache whenever you raise your arms.
+              </li>
+              <li>
+                <span className="text-foreground font-medium">Overuse Joint Strain:</span> Doing any repetitive motion daily leaves little time for systemic recovery. Your wrists, elbows, and shoulders bear the brunt of the load without a break, increasing the risk of tendonitis.
+              </li>
+            </ul>
+          </section>
+
+          <div className="space-y-4">
             {/* Proper form */}
             <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
               <h3 className="text-lg text-foreground font-semibold mb-3 flex items-center gap-2">
