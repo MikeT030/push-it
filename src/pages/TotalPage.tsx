@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, endOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
 import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
@@ -6,6 +7,7 @@ import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
 import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
+import controllerIcon from "@/assets/controller.svg";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
@@ -16,9 +18,14 @@ import DailySection from "@/components/DailySection";
 import InsightsCard from "@/components/InsightsCard";
 import { useGroupEntries } from "@/hooks/useGroupData";
 import { useAuth } from "@/contexts/AuthContext";
+import { useGame } from "@/contexts/GameContext";
+import BrickBreakerGame from "@/components/BrickBreakerGame";
+import SpaceShooterGame from "@/components/SpaceShooterGame";
+import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 
 const TotalPage = () => {
   const navigate = useNavigate();
+  const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
   const {
     getTotalPushUps,
     getYearProgress,
@@ -33,6 +40,7 @@ const TotalPage = () => {
 
   const { avatar } = useUserAvatar();
   const { user: authUser } = useAuth();
+  const { isGameActive } = useGame();
   const groupEntriesQuery = useGroupEntries();
   const allEntries = groupEntriesQuery.data || [];
 
@@ -198,11 +206,20 @@ const TotalPage = () => {
           </button>
         </div>
 
-        {/* Date */}
+        {/* Date + Mini Games */}
         <header className="animate-fade-in">
-          <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide">
-            {format(new Date(), "EEEE, d. MMMM")}
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-[#ffffff] font-medium uppercase tracking-wide">
+              {format(new Date(), "EEEE, d. MMMM")}
+            </p>
+            <button
+              onClick={() => setActiveGame("select")}
+              className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
+              aria-label="Open mini game"
+            >
+              <img src={controllerIcon} alt="Game" className="w-6 h-6" />
+            </button>
+          </div>
         </header>
 
 
@@ -379,6 +396,23 @@ const TotalPage = () => {
 
 
       </div>
+
+      <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
+      
+      <MiniGameSelectorLayer
+        isOpen={activeGame === "select"}
+        onClose={() => setActiveGame(null)}
+        onSelectBrickBreaker={() => setActiveGame("brickbreaker")}
+        onSelectSpaceShooter={() => setActiveGame("spaceshooter")}
+      />
+
+      {/* Space Shooter Game */}
+      {activeGame === "spaceshooter" && createPortal(
+        <div className="fixed inset-0 z-[9999]">
+          <SpaceShooterGame onBack={() => setActiveGame(null)} />
+        </div>,
+        document.body
+      )}
     </div>;
 };
 export default TotalPage;
