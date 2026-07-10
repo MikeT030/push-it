@@ -16,6 +16,7 @@ import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import WeeklyOverview from "@/components/WeeklyOverview";
 import DailySection from "@/components/DailySection";
 import InsightsCard from "@/components/InsightsCard";
+import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import { useGroupEntries } from "@/hooks/useGroupData";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGame } from "@/contexts/GameContext";
@@ -226,6 +227,11 @@ const TotalPage = () => {
         {/* Daily Push-ups + Calendar */}
         <div className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
           <DailySection />
+        </div>
+
+        {/* Push the Right Way */}
+        <div className="animate-slide-up" style={{ animationDelay: "0.12s" }}>
+          <PushTheRightWayPanel />
         </div>
 
         {/* Your Insights */}
