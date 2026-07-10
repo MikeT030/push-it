@@ -18,7 +18,6 @@ import { getAvatarById } from "@/data/avatars";
 import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 import { useGroupUserProgress, useGroupEntries } from "@/hooks/useGroupData";
 import InsightsCard from "@/components/InsightsCard";
-import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const AdminPage = () => {
@@ -183,11 +182,6 @@ const AdminPage = () => {
               Users Backup
             </Button>
           </div>
-        </div>
-
-        {/* Push the Right Way */}
-        <div className="bg-card/40 rounded-2xl mt-6 animate-slide-up pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.0335s" }}>
-          <PushTheRightWayPanel />
         </div>
 
         {/* Recalibrate Your Goal */}
