@@ -1,8 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { createPortal } from "react-dom";
 import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame } from "lucide-react";
-import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import partyAsset from "@/assets/party.svg.asset.json";
@@ -12,10 +10,6 @@ import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
 import { toast } from "@/hooks/use-toast";
-import { useGame } from "@/contexts/GameContext";
-import BrickBreakerGame from "@/components/BrickBreakerGame";
-import SpaceShooterGame from "@/components/SpaceShooterGame";
-import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 const MuscleIcon = ({ className }: { className?: string }) => (
@@ -35,8 +29,6 @@ const DailySection = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
-  const { isGameActive } = useGame();
   const {
     getEntryForDate,
     setEntryForDate,
@@ -225,13 +217,6 @@ const DailySection = () => {
       {/* Combined Today + Calendar Card */}
       <div className="bg-card/40 rounded-2xl border border-[#3B404F] animate-slide-up overflow-hidden" style={{ animationDelay: "0.05s" }}>
       <div className="relative p-6 pt-[20px] px-[10px] pb-[2px]">
-        <button
-          onClick={() => setActiveGame("select")}
-          className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted/50 transition-colors z-10"
-          aria-label="Open mini game"
-        >
-          <ControllerIcon className="w-8 h-8 text-[#D9D9D9]" aria-label="Mini game" />
-        </button>
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
             <div className="flex flex-col items-center text-center">
@@ -506,7 +491,7 @@ const DailySection = () => {
         aria-hidden={!isCalendarOpen}
       >
         <div className="overflow-hidden min-h-0">
-          <div className={`p-5 pt-2 ${isGameActive ? "pointer-events-none opacity-50" : ""}`}>
+          <div className="p-5 pt-2">
             <div className="flex items-center justify-between mb-[6px] px-[10px]">
               <button
                 onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
@@ -606,21 +591,6 @@ const DailySection = () => {
 
 
 
-      <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
-
-      <MiniGameSelectorLayer
-        isOpen={activeGame === "select"}
-        onClose={() => setActiveGame(null)}
-        onSelectBrickBreaker={() => setActiveGame("brickbreaker")}
-        onSelectSpaceShooter={() => setActiveGame("spaceshooter")}
-      />
-
-      {activeGame === "spaceshooter" && createPortal(
-        <div className="fixed inset-0 z-[9999]">
-          <SpaceShooterGame onBack={() => setActiveGame(null)} />
-        </div>,
-        document.body
-      )}
     </>
   );
 };
