@@ -29,8 +29,6 @@ const DailySection = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
-  const { isGameActive } = useGame();
   const {
     getEntryForDate,
     setEntryForDate,
