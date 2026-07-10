@@ -38,6 +38,23 @@ const DailySection = () => {
       return new Set();
     }
   });
+  const [shareEnabled, setShareEnabled] = useState(() => {
+    try {
+      const raw = localStorage.getItem("share-button-enabled");
+      return raw ? JSON.parse(raw) : true;
+    } catch {
+      return true;
+    }
+  });
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "share-button-enabled") {
+        setShareEnabled(e.newValue ? JSON.parse(e.newValue) : true);
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
   const hasCounterActivity = (date: Date) => counterActivities.has(format(date, "yyyy-MM-dd"));
   const toggleCounterActivity = (date: Date) => {
     const key = format(date, "yyyy-MM-dd");
