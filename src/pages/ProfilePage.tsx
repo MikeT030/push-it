@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { User, LogOut, Pencil, Check, X, Shield } from "lucide-react";
+import { User, LogOut, Pencil, Check, X, Shield, Share2 } from "lucide-react";
 import PlayerCardPanel from "@/components/PlayerCardPanel";
 import defaultAvatar from "@/assets/default-avatar.svg";
 import { usePushUpData } from "@/hooks/usePushUpData";
@@ -9,6 +9,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
@@ -30,6 +32,21 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const { isAdmin } = useIsAdmin();
   const [playerCardOpen, setPlayerCardOpen] = useState(false);
+  const [shareEnabled, setShareEnabled] = useState(() => {
+    try {
+      const raw = localStorage.getItem("share-button-enabled");
+      return raw ? JSON.parse(raw) : true;
+    } catch {
+      return true;
+    }
+  });
+
+  const handleShareToggle = (checked: boolean) => {
+    setShareEnabled(checked);
+    try {
+      localStorage.setItem("share-button-enabled", JSON.stringify(checked));
+    } catch {}
+  };
 
   useEffect(() => {
     if (searchParams.get("openAvatar") === "true") {
@@ -211,8 +228,29 @@ const ProfilePage = () => {
           </div>
         </div>
 
+        {/* Share Toggle Card */}
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.02s" }}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Share2 className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-lg text-foreground font-semibold">Share button</h2>
+                <p className="text-sm text-muted-foreground">Show the share button on the daily card</p>
+              </div>
+            </div>
+            <Switch
+              id="share-toggle"
+              checked={shareEnabled}
+              onCheckedChange={handleShareToggle}
+              aria-label="Toggle share button"
+            />
+          </div>
+        </div>
+
         {/* Player Card */}
-        <div className="animate-slide-up" style={{ animationDelay: "0.02s" }}>
+        <div className="animate-slide-up" style={{ animationDelay: "0.03s" }}>
           <PlayerCardPanel open={playerCardOpen} onOpenChange={setPlayerCardOpen} />
         </div>
 
