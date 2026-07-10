@@ -180,7 +180,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: Insig
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <div
-        className="rounded-2xl p-5 animate-slide-up border border-transparent bg-transparent"
+        className="rounded-2xl animate-slide-up border border-transparent bg-transparent"
       >
         <SheetTrigger asChild>
           <Button
