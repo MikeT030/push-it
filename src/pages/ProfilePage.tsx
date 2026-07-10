@@ -32,6 +32,21 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const { isAdmin } = useIsAdmin();
   const [playerCardOpen, setPlayerCardOpen] = useState(false);
+  const [shareEnabled, setShareEnabled] = useState(() => {
+    try {
+      const raw = localStorage.getItem("share-button-enabled");
+      return raw ? JSON.parse(raw) : true;
+    } catch {
+      return true;
+    }
+  });
+
+  const handleShareToggle = (checked: boolean) => {
+    setShareEnabled(checked);
+    try {
+      localStorage.setItem("share-button-enabled", JSON.stringify(checked));
+    } catch {}
+  };
 
   useEffect(() => {
     if (searchParams.get("openAvatar") === "true") {
