@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, endOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
 import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
@@ -6,6 +7,7 @@ import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
 import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
+import controllerIcon from "@/assets/controller.svg";
 import { Button } from "@/components/ui/button";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
@@ -16,6 +18,10 @@ import DailySection from "@/components/DailySection";
 import InsightsCard from "@/components/InsightsCard";
 import { useGroupEntries } from "@/hooks/useGroupData";
 import { useAuth } from "@/contexts/AuthContext";
+import { useGame } from "@/contexts/GameContext";
+import BrickBreakerGame from "@/components/BrickBreakerGame";
+import SpaceShooterGame from "@/components/SpaceShooterGame";
+import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 
 const TotalPage = () => {
   const navigate = useNavigate();
