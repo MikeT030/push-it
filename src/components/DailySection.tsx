@@ -627,7 +627,10 @@ const DailySection = () => {
                 };
                 const colors = getProgressColor();
                 return (
-                  <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-[#CBCCCC]" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+                  <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`relative aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-[#CBCCCC]" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+                    {hasCounterActivity(day) && isCurrentMonth && (
+                      <img src={kettleBellAsset.url} alt="" className="absolute top-0.5 left-0.5 w-2.5 h-2.5" style={{ filter: 'brightness(0) saturate(100%) invert(64%) sepia(58%) saturate(3266%) hue-rotate(141deg) brightness(94%) contrast(90%)' }} />
+                    )}
                     <span>{format(day, "d")}</span>
                     {hasEntry && !isSelected && isCurrentMonth && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
                   </button>
