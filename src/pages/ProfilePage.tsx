@@ -35,9 +35,9 @@ const ProfilePage = () => {
   const [shareEnabled, setShareEnabled] = useState(() => {
     try {
       const raw = localStorage.getItem("share-button-enabled");
-      return raw ? JSON.parse(raw) : true;
+      return raw ? JSON.parse(raw) : false;
     } catch {
-      return true;
+      return false;
     }
   });
 
