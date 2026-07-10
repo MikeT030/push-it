@@ -1,8 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { createPortal } from "react-dom";
 import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame } from "lucide-react";
-import { ControllerIcon } from "@/components/ControllerIcon";
 import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import partyAsset from "@/assets/party.svg.asset.json";
@@ -12,10 +10,6 @@ import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
 import { toast } from "@/hooks/use-toast";
-import { useGame } from "@/contexts/GameContext";
-import BrickBreakerGame from "@/components/BrickBreakerGame";
-import SpaceShooterGame from "@/components/SpaceShooterGame";
-import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 const MuscleIcon = ({ className }: { className?: string }) => (
