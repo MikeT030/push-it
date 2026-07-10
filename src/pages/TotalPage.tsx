@@ -25,6 +25,7 @@ import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
 
 const TotalPage = () => {
   const navigate = useNavigate();
+  const [activeGame, setActiveGame] = useState<"select" | "brickbreaker" | "spaceshooter" | null>(null);
   const {
     getTotalPushUps,
     getYearProgress,
@@ -39,6 +40,7 @@ const TotalPage = () => {
 
   const { avatar } = useUserAvatar();
   const { user: authUser } = useAuth();
+  const { isGameActive } = useGame();
   const groupEntriesQuery = useGroupEntries();
   const allEntries = groupEntriesQuery.data || [];
 
