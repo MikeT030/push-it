@@ -342,7 +342,7 @@ const DailySection = () => {
                       filter: 'blur(3px)',
                     }}
                   />
-                  <img src={kettleBellAsset.url} alt="" className="relative w-5 h-5" style={{ filter: active ? 'brightness(0) invert(1)' : 'none' }} />
+                  <img src={kettleBellAsset.url} alt="" className="relative w-5 h-5" style={{ filter: 'brightness(0) invert(1)' }} />
                 </button>
               );
             })()}
