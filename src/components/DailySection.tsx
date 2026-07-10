@@ -30,6 +30,24 @@ const DailySection = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [counterActivities, setCounterActivities] = useState<Set<string>>(() => {
+    try {
+      const raw = localStorage.getItem("counter-activities");
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    } catch {
+      return new Set();
+    }
+  });
+  const hasCounterActivity = (date: Date) => counterActivities.has(format(date, "yyyy-MM-dd"));
+  const toggleCounterActivity = (date: Date) => {
+    const key = format(date, "yyyy-MM-dd");
+    setCounterActivities((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      try { localStorage.setItem("counter-activities", JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  };
   const {
     getEntryForDate,
     setEntryForDate,
