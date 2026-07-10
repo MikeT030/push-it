@@ -103,19 +103,19 @@ const PushTheRightWayPanel = () => {
             <p className="text-sm mb-3 leading-relaxed" style={{ color: BODY_TEXT }}>
               When you perform horizontal pressing movements repeatedly without equal pulling work, you risk developing specific upper-body issues:
             </p>
-            <ul className="space-y-3 text-sm list-disc pl-5 leading-relaxed" style={{ color: BODY_TEXT }}>
-              <li>
+            <div className="space-y-3 text-sm leading-relaxed" style={{ color: BODY_TEXT }}>
+              <p>
                 <span className="text-foreground font-medium">The "Hunched" Posture:</span> Push-ups heavily train your chest (pectoralis major) and the front of your shoulders (anterior deltoids). Over time, these muscles become tight and short, pulling your shoulders forward into a slumped, rounded posture.
                 <img src={muscle1Wrong.url} alt="Illustration of hunched forward posture showing tight chest and shoulder muscles" className="w-1/2 h-auto rounded-lg mt-3" />
-              </li>
-              <li>
+              </p>
+              <p>
                 <span className="text-foreground font-medium">Shoulder Impingement:</span> As the chest tightens and the upper back weakens, the space inside your shoulder joint narrows. This can trap the tendons of your rotator cuff, leading to a dull, persistent ache whenever you raise your arms.
                 <img src={impingementSyndrome.url} alt="Medical illustration of shoulder impingement syndrome showing narrowed shoulder joint space" className="w-1/2 h-auto rounded-lg mt-3" />
-              </li>
-              <li>
+              </p>
+              <p>
                 <span className="text-foreground font-medium">Overuse Joint Strain:</span> Doing any repetitive motion daily leaves little time for systemic recovery. Your wrists, elbows, and shoulders bear the brunt of the load without a break, increasing the risk of tendonitis.
-              </li>
-            </ul>
+              </p>
+            </div>
           </section>
 
           <div className="space-y-4">
