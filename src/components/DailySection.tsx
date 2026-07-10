@@ -6,6 +6,7 @@ import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
 import partyAsset from "@/assets/party.svg.asset.json";
 import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
+import kettleBellAsset from "@/assets/kettle_bell.svg.asset.json";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
@@ -29,6 +30,24 @@ const DailySection = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [counterActivities, setCounterActivities] = useState<Set<string>>(() => {
+    try {
+      const raw = localStorage.getItem("counter-activities");
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    } catch {
+      return new Set();
+    }
+  });
+  const hasCounterActivity = (date: Date) => counterActivities.has(format(date, "yyyy-MM-dd"));
+  const toggleCounterActivity = (date: Date) => {
+    const key = format(date, "yyyy-MM-dd");
+    setCounterActivities((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      try { localStorage.setItem("counter-activities", JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  };
   const {
     getEntryForDate,
     setEntryForDate,
@@ -293,6 +312,40 @@ const DailySection = () => {
             <button onClick={() => isEditable && adjustCount(10)} disabled={!isEditable} className="disabled:opacity-50">
               <ProgressRing progress={progress} size={138} strokeWidth={7} enableGame={false} enableAnimation={false} enableOuterGlow={true} topBadge={currentCount} />
             </button>
+            {(() => {
+              const active = hasCounterActivity(selectedDate);
+              return (
+                <button
+                  onClick={() => toggleCounterActivity(selectedDate)}
+                  aria-label="Toggle counter activity"
+                  aria-pressed={active}
+                  className="absolute left-1/2 translate-x-[calc(69px+1rem+22px+30px-44px)] w-11 h-11 rounded-full flex items-center justify-center transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden"
+                  style={{
+                    background: active
+                      ? 'radial-gradient(circle at 50% 55%, rgba(10,186,181,0.85) 0%, rgba(10,186,181,0.65) 60%, rgba(10,186,181,0.45) 100%)'
+                      : 'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                    backdropFilter: 'blur(6px) saturate(1.2)',
+                    WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                    boxShadow: [
+                      'inset 0 2px 4px rgba(0,0,0,0.55)',
+                      'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                      'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                      '0 2px 6px rgba(0,0,0,0.3)',
+                      '0 6px 14px rgba(0,0,0,0.25)',
+                    ].join(', '),
+                  }}
+                >
+                  <span
+                    className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+                    style={{
+                      background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                      filter: 'blur(3px)',
+                    }}
+                  />
+                  <img src={kettleBellAsset.url} alt="" className="relative w-5 h-5" style={{ filter: active ? 'brightness(0) invert(1)' : 'none' }} />
+                </button>
+              );
+            })()}
           </div>
         </div>
 
@@ -574,7 +627,10 @@ const DailySection = () => {
                 };
                 const colors = getProgressColor();
                 return (
-                  <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-[#CBCCCC]" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+                  <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`relative aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-[#CBCCCC]" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
+                    {hasCounterActivity(day) && isCurrentMonth && (
+                      <img src={kettleBellAsset.url} alt="" className="absolute top-0.5 left-0.5 w-2.5 h-2.5" style={{ filter: 'brightness(0) saturate(100%) invert(64%) sepia(58%) saturate(3266%) hue-rotate(141deg) brightness(94%) contrast(90%)' }} />
+                    )}
                     <span>{format(day, "d")}</span>
                     {hasEntry && !isSelected && isCurrentMonth && <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${colors.dot}`} />}
                   </button>
