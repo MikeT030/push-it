@@ -228,8 +228,29 @@ const ProfilePage = () => {
           </div>
         </div>
 
+        {/* Share Toggle Card */}
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.02s" }}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Share2 className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-lg text-foreground font-semibold">Share button</h2>
+                <p className="text-sm text-muted-foreground">Show the share button on the daily card</p>
+              </div>
+            </div>
+            <Switch
+              id="share-toggle"
+              checked={shareEnabled}
+              onCheckedChange={handleShareToggle}
+              aria-label="Toggle share button"
+            />
+          </div>
+        </div>
+
         {/* Player Card */}
-        <div className="animate-slide-up" style={{ animationDelay: "0.02s" }}>
+        <div className="animate-slide-up" style={{ animationDelay: "0.03s" }}>
           <PlayerCardPanel open={playerCardOpen} onOpenChange={setPlayerCardOpen} />
         </div>
 
