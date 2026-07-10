@@ -255,33 +255,35 @@ const DailySection = () => {
       <div className="relative p-6 pt-[20px] px-[10px] pb-[2px]">
         <div className="pb-[12px] mb-[20px]">
           <div className="relative flex items-start justify-center">
-            <button
-              onClick={handleShare}
-              aria-label="Share progress"
-              className="absolute left-0 top-0 w-11 h-11 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden"
-              style={{
-                background:
-                  'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
-                backdropFilter: 'blur(6px) saturate(1.2)',
-                WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
-                boxShadow: [
-                  'inset 0 2px 4px rgba(0,0,0,0.55)',
-                  'inset 0 -1px 2px rgba(255,255,255,0.07)',
-                  'inset 0 0 0 1px rgba(255,255,255,0.06)',
-                  '0 2px 6px rgba(0,0,0,0.3)',
-                  '0 6px 14px rgba(0,0,0,0.25)',
-                ].join(', '),
-              }}
-            >
-              <span
-                className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+            {shareEnabled && (
+              <button
+                onClick={handleShare}
+                aria-label="Share progress"
+                className="absolute left-0 top-0 w-11 h-11 rounded-full flex items-center justify-center text-slate-100 transition-all duration-150 ease-out active:translate-y-[1px] active:scale-[0.98] overflow-hidden"
                 style={{
-                  background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
-                  filter: 'blur(3px)',
+                  background:
+                    'radial-gradient(circle at 50% 55%, rgba(42,47,58,0.55) 0%, rgba(31,36,46,0.45) 60%, rgba(22,26,34,0.35) 100%)',
+                  backdropFilter: 'blur(6px) saturate(1.2)',
+                  WebkitBackdropFilter: 'blur(6px) saturate(1.2)',
+                  boxShadow: [
+                    'inset 0 2px 4px rgba(0,0,0,0.55)',
+                    'inset 0 -1px 2px rgba(255,255,255,0.07)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.06)',
+                    '0 2px 6px rgba(0,0,0,0.3)',
+                    '0 6px 14px rgba(0,0,0,0.25)',
+                  ].join(', '),
                 }}
-              />
-              <ShareIcon size={16} className="relative" />
-            </button>
+              >
+                <span
+                  className="pointer-events-none absolute inset-x-[18%] top-[10%] h-[8%] rounded-full opacity-30"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)',
+                    filter: 'blur(3px)',
+                  }}
+                />
+                <ShareIcon size={16} className="relative" />
+              </button>
+            )}
             <div className="flex flex-col items-center text-center">
               <p className="text-sm text-muted-foreground font-medium">Today</p>
               {isEditable ?
