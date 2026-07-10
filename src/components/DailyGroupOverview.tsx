@@ -33,9 +33,10 @@ interface MemberBarProps {
   count: number;
   memberPct: number;
   isOpen: boolean;
+  showCounterActivity?: boolean;
 }
 
-const MemberBar = ({ cycleKey, name, count, memberPct, isOpen }: MemberBarProps) => {
+const MemberBar = ({ cycleKey, name, count, memberPct, isOpen, showCounterActivity }: MemberBarProps) => {
   const barRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
 
