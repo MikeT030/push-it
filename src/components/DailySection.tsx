@@ -41,15 +41,15 @@ const DailySection = () => {
   const [shareEnabled, setShareEnabled] = useState(() => {
     try {
       const raw = localStorage.getItem("share-button-enabled");
-      return raw ? JSON.parse(raw) : true;
+      return raw ? JSON.parse(raw) : false;
     } catch {
-      return true;
+      return false;
     }
   });
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
       if (e.key === "share-button-enabled") {
-        setShareEnabled(e.newValue ? JSON.parse(e.newValue) : true);
+        setShareEnabled(e.newValue ? JSON.parse(e.newValue) : false);
       }
     };
     window.addEventListener("storage", onStorage);
