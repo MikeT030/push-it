@@ -184,22 +184,22 @@ const DailyPage = () => {
             <img src={smallCircleIcon} alt="" className="w-7 h-7" />
             <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">You Push</h1>
           </div>
-          <p className="text-lg text-muted-foreground mt-1">
-            {format(selectedDate, "EEEE, dd.MM.yyyy")}
-          </p>
+          <div className="flex items-center justify-between mt-1">
+            <p className="text-lg text-muted-foreground">
+              {format(selectedDate, "EEEE, dd.MM.yyyy")}
+            </p>
+            <button
+              onClick={() => setActiveGame("select")}
+              className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
+              aria-label="Open mini game"
+            >
+              <img src={controllerIcon} alt="Game" className="w-6 h-6" />
+            </button>
+          </div>
         </header>
 
 
 
-        <div className="flex items-center justify-end mb-4 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <button
-            onClick={() => setActiveGame("select")}
-            className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
-            aria-label="Open mini game"
-          >
-            <img src={controllerIcon} alt="Game" className="w-6 h-6" />
-          </button>
-        </div>
 
 
 
