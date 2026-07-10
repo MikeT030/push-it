@@ -121,20 +121,12 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen, showCounterActivi
 
   return (
     <div className="py-3 px-3 flex items-center gap-3">
-      <div className="flex items-center gap-1.5 w-16 shrink-0">
-        {showCounterActivity && (
-          <img
-            src={kettleBellAsset.url}
-            alt=""
-            className="w-4 h-4"
-            style={{ filter: 'brightness(0) invert(1)' }}
-          />
-        )}
+      <div className="flex items-center w-16 shrink-0">
         <span className="text-sm text-foreground truncate">{name}</span>
       </div>
 
       {/* Track + animated fill */}
-      <div className="flex-1 relative h-2 rounded-full bg-white/5 mr-6">
+      <div className="flex-1 relative h-2 rounded-full bg-white/5 mr-2">
         <div
           ref={barRef}
           className="absolute inset-0 rounded-full overflow-hidden"
@@ -210,6 +202,17 @@ const MemberBar = ({ cycleKey, name, count, memberPct, isOpen, showCounterActivi
           </span>
         </div>
 
+      </div>
+
+      <div className="w-5 shrink-0 flex items-center justify-end">
+        {showCounterActivity && (
+          <img
+            src={kettleBellAsset.url}
+            alt=""
+            className="w-4 h-4"
+            style={{ filter: 'brightness(0) invert(1)' }}
+          />
+        )}
       </div>
     </div>
   );
