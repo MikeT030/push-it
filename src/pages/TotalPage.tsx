@@ -396,6 +396,23 @@ const TotalPage = () => {
 
 
       </div>
+
+      <BrickBreakerGame isOpen={activeGame === "brickbreaker"} onClose={() => setActiveGame(null)} />
+      
+      <MiniGameSelectorLayer
+        isOpen={activeGame === "select"}
+        onClose={() => setActiveGame(null)}
+        onSelectBrickBreaker={() => setActiveGame("brickbreaker")}
+        onSelectSpaceShooter={() => setActiveGame("spaceshooter")}
+      />
+
+      {/* Space Shooter Game */}
+      {activeGame === "spaceshooter" && createPortal(
+        <div className="fixed inset-0 z-[9999]">
+          <SpaceShooterGame onBack={() => setActiveGame(null)} />
+        </div>,
+        document.body
+      )}
     </div>;
 };
 export default TotalPage;
