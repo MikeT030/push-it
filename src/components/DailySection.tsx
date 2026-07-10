@@ -531,7 +531,7 @@ const DailySection = () => {
                 <span className="text-[10px] uppercase opacity-70 font-normal">{format(day, "EEE")}</span>
                 <div className="flex items-center gap-0.5">
                   {hasCounterActivity(day) && (
-                    <img src={kettleBellAsset.url} alt="" className="w-3 h-3" style={{ filter: 'brightness(0) invert(1)' }} />
+                    <img src={kettleBellAsset.url} alt="" className="w-[15px] h-[15px]" style={{ filter: 'brightness(0) invert(1)' }} />
                   )}
                   <span className="text-lg font-bold">{format(day, "d")}</span>
                 </div>
@@ -635,7 +635,7 @@ const DailySection = () => {
                   <button key={day.toISOString()} onClick={() => setSelectedDate(day)} className={`relative aspect-square rounded-full flex flex-col items-center justify-center text-sm font-medium transition-all ${!isCurrentMonth ? "text-[#CBCCCC]" : isSelected ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" : isFutureDate ? "text-muted-foreground/40" : hasEntry ? `${colors.bg} ${colors.text}` : "text-foreground hover:bg-muted"} ${isTodayDate && !isSelected ? "ring-2 ring-white" : ""}`}>
                     <div className="flex items-center gap-0.5">
                       {hasCounterActivity(day) && isCurrentMonth && (
-                        <img src={kettleBellAsset.url} alt="" className="w-2.5 h-2.5" style={{ filter: 'brightness(0) invert(1)' }} />
+                        <img src={kettleBellAsset.url} alt="" className="w-[12.5px] h-[12.5px]" style={{ filter: 'brightness(0) invert(1)' }} />
                       )}
                       <span>{format(day, "d")}</span>
                     </div>
