@@ -303,7 +303,7 @@ const GroupPage = () => {
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
           <div className="flex items-center gap-3">
             
-            <h1 className="text-4xl font-black text-foreground tracking-tight">We Push</h1>
+            <h1 className="sr-only">We Push</h1>
           </div>
           <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-1">
             <PushTheRightWayPanel
