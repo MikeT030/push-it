@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, endOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
+import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench, BookOpen } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
