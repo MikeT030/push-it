@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { User, LogOut, Pencil, Check, X, Shield, Share2, BookOpen, Lightbulb } from "lucide-react";
 import PlayerCardPanel from "@/components/PlayerCardPanel";
 import defaultAvatar from "@/assets/default-avatar.svg";
-import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
+
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
@@ -206,16 +206,6 @@ const ProfilePage = () => {
                 </button>
               }
             />
-            <div
-              className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center"
-              style={{ background: selectedAvatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: selectedAvatar ? "none" : "1px solid white" }}
-            >
-              {selectedAvatar ? (
-                <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
-              ) : (
-                <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
-              )}
-            </div>
           </div>
         </div>
 
