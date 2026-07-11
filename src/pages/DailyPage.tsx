@@ -185,9 +185,9 @@ const DailyPage = () => {
             <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">You Push</h1>
           </div>
           <div className="flex items-center justify-between mt-1">
-            <p className="text-lg text-muted-foreground">
+            <h3 className="text-lg text-muted-foreground">
               {format(selectedDate, "EEEE, dd.MM.yyyy")}
-            </p>
+            </h3>
             <button
               onClick={() => setActiveGame("select")}
               className="p-1.5 rounded-full hover:bg-muted/50 transition-colors"
