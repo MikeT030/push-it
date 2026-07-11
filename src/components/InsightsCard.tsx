@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef, useEffect } from "react";
 import { format, parseISO, startOfWeek, startOfMonth, getDay, subDays } from "date-fns";
-import { Sparkles, X, Flame, Calendar, TrendingUp } from "lucide-react";
+import { Lightbulb, X, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import type { ReactNode } from "react";
@@ -197,7 +197,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo, trigger
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-6 mt-5">
             <h2 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
-              <Sparkles className="w-6 h-6" style={{ color: accent }} />
+              <Lightbulb className="w-6 h-6 text-white" />
               Insights
             </h2>
             <button
