@@ -137,7 +137,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
                 <CheckCircle2 className="w-4 h-4" style={{ color: ACCENT }} />
                 Proper form
               </h3>
-              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
+              <ul className="space-y-3 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
                 <li>Hands shoulder-width apart, fingers spread, index fingers pointing forward.</li>
                 <li>Straight line from head to heels — no sagging hips, no piked butt.</li>
                 <li>Brace your core and glutes the whole rep.</li>
@@ -153,7 +153,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
                 <AlertTriangle className="w-4 h-4 text-[#FF8C00]" />
                 Common mistakes
               </h3>
-              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
+              <ul className="space-y-3 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
                 <li>Sagging or piking hips — kills core tension and lower back.</li>
                 <li>Flared elbows — stresses shoulders.</li>
                 <li>Half reps — no full lockout or no full descent.</li>
@@ -172,7 +172,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
                 Push-ups load the chest, front shoulders and triceps. Balance them
                 so your posture, joints and back stay healthy.
               </p>
-              <ul className="space-y-2 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
+              <ul className="space-y-3 text-sm list-disc pl-5" style={{ color: BODY_TEXT }}>
                 <li><span className="text-foreground font-medium">Pulling work:</span> rows, pull-ups, band pull-aparts — 1 pull for every 1–2 pushes.</li>
                 <li><span className="text-foreground font-medium">Rear delts & upper back:</span> face pulls, reverse flys, YTWs.</li>
                 <li><span className="text-foreground font-medium">Chest & shoulder mobility:</span> doorway pec stretch, thread-the-needle, wall angels.</li>
