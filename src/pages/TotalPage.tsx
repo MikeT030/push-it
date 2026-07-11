@@ -241,11 +241,6 @@ const TotalPage = () => {
           <DailySection />
         </div>
 
-        {/* Push the Right Way */}
-        <div className="animate-slide-up" style={{ animationDelay: "0.12s" }}>
-          <PushTheRightWayPanel />
-        </div>
-
         {/* Your Insights */}
         <div className="animate-slide-up" style={{ animationDelay: "0.13s" }}>
           <InsightsCard userId={authUser?.id ?? null} allEntries={allEntries} colorVariant="sky" />
