@@ -200,7 +200,7 @@ const TotalPage = () => {
           <div className="flex items-center gap-3">
             <h1 className="sr-only">You Push</h1>
           </div>
-          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-1.5">
+          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
             <PushTheRightWayPanel
               trigger={
                 <button
