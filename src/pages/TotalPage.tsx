@@ -198,11 +198,11 @@ const TotalPage = () => {
         {/* Profile Button + Header */}
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
           <h1 className="text-4xl font-black text-foreground tracking-tight">You Push</h1>
-          <button onClick={() => navigate("/profile")} className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
+          <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
             {avatar ? (
               <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
             ) : (
-              <img src={defaultAvatarWhite} alt="User" className="w-5 h-5 object-contain" />
+              <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
             )}
           </button>
         </div>
