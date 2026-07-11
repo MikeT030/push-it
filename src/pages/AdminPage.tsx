@@ -19,6 +19,7 @@ import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 import { useGroupUserProgress, useGroupEntries } from "@/hooks/useGroupData";
 import InsightsCard from "@/components/InsightsCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
