@@ -185,7 +185,7 @@ const DailyPage = () => {
             <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">You Push</h1>
           </div>
           <div className="flex items-center justify-between mt-1">
-            <h3 className="text-lg text-muted-foreground">
+            <h3 className="text-xl text-muted-foreground">
               {format(selectedDate, "EEEE, dd.MM.yyyy")}
             </h3>
             <button
