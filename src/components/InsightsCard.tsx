@@ -22,6 +22,7 @@ interface InsightsCardProps {
   allEntries?: GroupEntry[];
   colorVariant?: InsightsColorVariant;
   demo?: boolean;
+  trigger?: ReactNode;
 }
 
 function generateDemoEntries(): GroupEntry[] {
