@@ -219,6 +219,11 @@ const ProfilePage = () => {
           </div>
         </div>
 
+        {/* Section Label */}
+        <h2 className="text-foreground mb-6 text-xl font-medium animate-fade-in" style={{ animationDelay: "0.05s" }}>
+          Profile
+        </h2>
+
         {/* Profile Card */}
         <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]">
           {/* Avatar */}
