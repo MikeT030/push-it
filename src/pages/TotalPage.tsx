@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, endOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench } from "lucide-react";
+import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench, BookOpen } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
@@ -198,7 +198,17 @@ const TotalPage = () => {
         {/* Profile Button + Header */}
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
           <h1 className="text-4xl font-black text-foreground tracking-tight">You Push</h1>
-          <div className="rounded-full bg-[#2A2A2A] border border-[#3B404F] p-1 flex items-center justify-center">
+          <div className="rounded-full bg-[#2A2A2A] border border-[#3B404F] p-1 flex items-center gap-1">
+            <PushTheRightWayPanel
+              trigger={
+                <button
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                  aria-label="Open Push the Right Way"
+                >
+                  <BookOpen className="w-4 h-4 text-[#0ABAB5]" />
+                </button>
+              }
+            />
             <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
               {avatar ? (
                 <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
@@ -229,11 +239,6 @@ const TotalPage = () => {
         {/* Daily Push-ups + Calendar */}
         <div className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
           <DailySection />
-        </div>
-
-        {/* Push the Right Way */}
-        <div className="animate-slide-up" style={{ animationDelay: "0.12s" }}>
-          <PushTheRightWayPanel />
         </div>
 
         {/* Your Insights */}
