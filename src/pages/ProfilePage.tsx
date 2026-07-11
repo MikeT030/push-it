@@ -206,16 +206,6 @@ const ProfilePage = () => {
                 </button>
               }
             />
-            <div
-              className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center"
-              style={{ background: selectedAvatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: selectedAvatar ? "none" : "1px solid white" }}
-            >
-              {selectedAvatar ? (
-                <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
-              ) : (
-                <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
-              )}
-            </div>
           </div>
         </div>
 
