@@ -77,7 +77,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
             </button>
           </div>
 
-          <div className="bg-transparent border border-[#3B404F] rounded-2xl p-5 mb-4">
+          <div className="bg-transparent border border-transparent rounded-2xl p-5 mb-4">
             <p className="text-sm leading-relaxed mb-3" style={{ color: BODY_TEXT }}>
               Doing daily push-ups is great for building consistent discipline, chest strength, and core stability.
             </p>
