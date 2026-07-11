@@ -19,6 +19,7 @@ import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 import { useGroupUserProgress, useGroupEntries } from "@/hooks/useGroupData";
 import InsightsCard from "@/components/InsightsCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 
 const AdminPage = () => {
   const { isAdmin, loading } = useIsAdmin();
@@ -220,6 +221,26 @@ const AdminPage = () => {
             <Target className="w-4 h-4 mr-2" />
             Past Challenges
           </Button>
+        </div>
+
+        {/* Demo H1 Headline Section */}
+        <div className="mt-6 animate-slide-up" style={{ animationDelay: "0.0385s" }}>
+          <h2 className="text-lg text-foreground font-semibold mb-2">
+            Demo H1 Headline
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Sandbox copy of the main page headline. Edit it here before rolling
+            changes out to all users.
+          </p>
+          <div className="flex items-center gap-3">
+            <img src={smallCircleIcon} alt="" className="w-7 h-7" />
+            <h1 className="text-4xl font-black text-foreground tracking-tight pt-0">
+              You Push
+            </h1>
+          </div>
+          <p className="text-lg text-muted-foreground mt-1">
+            {format(new Date(), "EEEE, dd.MM.yyyy")}
+          </p>
         </div>
 
         {/* Demo Insights Panel Button */}
