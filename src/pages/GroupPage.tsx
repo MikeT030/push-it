@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, differenceInDays } from "date-fns";
-import { Users, Trophy, Flame, TrendingUp, Info, List } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Info, List, BookOpen, Sparkles } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
 
@@ -20,6 +20,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
+import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
+import InsightsCard from "@/components/InsightsCard";
 
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
