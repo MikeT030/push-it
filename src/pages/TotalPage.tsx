@@ -237,7 +237,7 @@ const TotalPage = () => {
         {/* Date + Mini Games */}
         <header className="animate-fade-in">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm text-[#ffffff] font-medium uppercase tracking-wide">
+            <h2 className="text-foreground text-xl font-medium">
               {format(new Date(), "EEEE, d. MMMM")}
             </h2>
             <button
