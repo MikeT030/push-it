@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { User, LogOut, Pencil, Check, X, Shield, Share2 } from "lucide-react";
+import { User, LogOut, Pencil, Check, X, Shield, Share2, BookOpen, Lightbulb } from "lucide-react";
 import PlayerCardPanel from "@/components/PlayerCardPanel";
 import defaultAvatar from "@/assets/default-avatar.svg";
+import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useGroupEntries } from "@/hooks/useGroupData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -14,6 +16,8 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
+import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
+import InsightsCard from "@/components/InsightsCard";
 const ProfilePage = () => {
   const {
     yearlyGoal,
@@ -21,9 +25,12 @@ const ProfilePage = () => {
   } = usePushUpData();
   const {
     user,
-    signOut
+    signOut,
+    user: authUser
   } = useAuth();
   const { avatar: selectedAvatar, avatarId, setAvatarId } = useUserAvatar();
+  const groupEntriesQuery = useGroupEntries();
+  const allEntries = groupEntriesQuery.data || [];
   const [displayName, setDisplayName] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
