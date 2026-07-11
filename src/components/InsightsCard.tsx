@@ -67,7 +67,7 @@ const VARIANT_COLORS: Record<InsightsColorVariant, string> = {
 
 const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo }: InsightsCardProps) => {
+const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo, trigger }: InsightsCardProps) => {
   const [open, setOpen] = useState(false);
   const accent = VARIANT_COLORS[colorVariant];
   const resolvedUserId = demo ? "demo-user" : userId;
