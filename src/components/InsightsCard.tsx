@@ -4,7 +4,7 @@ import { Sparkles, X, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import type { ReactNode } from "react";
-import { Button } from "@/components/ui/button";
+
 import type { GroupEntry } from "@/hooks/useGroupData";
 import wreathIcon from "@/assets/medal.svg";
 
@@ -181,36 +181,7 @@ const InsightsCard = ({ userId, allEntries, colorVariant = "teal", demo, trigger
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      {trigger ? (
-        <SheetTrigger asChild>{trigger}</SheetTrigger>
-      ) : (
-        <div className="rounded-2xl animate-slide-up border border-transparent bg-transparent">
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              disabled={!resolvedUserId}
-              className="w-full h-12 gap-2"
-              style={{
-                backgroundColor: `${accent}1A`,
-                borderColor: accent,
-                color: accent,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = `${accent}B3`;
-                e.currentTarget.style.color = "#ffffff";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = `${accent}1A`;
-                e.currentTarget.style.color = accent;
-              }}
-              onMouseDown={(e) => (e.currentTarget.style.backgroundColor = `${accent}B3`)}
-            >
-              <Sparkles className="w-5 h-5" />
-              Get your insights
-            </Button>
-          </SheetTrigger>
-        </div>
-      )}
+      {trigger && <SheetTrigger asChild>{trigger}</SheetTrigger>}
 
 
       <SheetContent
