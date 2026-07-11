@@ -198,13 +198,15 @@ const TotalPage = () => {
         {/* Profile Button + Header */}
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
           <h1 className="text-4xl font-black text-foreground tracking-tight">You Push</h1>
-          <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
-            {avatar ? (
-              <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
-            ) : (
-              <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
-            )}
-          </button>
+          <div className="rounded-full bg-[#2A2A2A] border border-[#3B404F] p-1 flex items-center justify-center">
+            <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
+              {avatar ? (
+                <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
+              ) : (
+                <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Date + Mini Games */}
