@@ -182,7 +182,7 @@ const ProfilePage = () => {
           <h1 className="sr-only text-3xl font-black text-foreground tracking-tight">
             Profile
           </h1>
-          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
+          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2 ml-auto">
             <PushTheRightWayPanel
               trigger={
                 <button
