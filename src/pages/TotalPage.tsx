@@ -194,7 +194,7 @@ const TotalPage = () => {
       />
 
       
-      <div className="relative max-w-lg mx-auto px-6 space-y-6 py-[32px]">
+      <div className="relative max-w-lg mx-auto px-6 space-y-3 py-[32px]">
         {/* Profile Button + Header */}
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
           <h1 className="text-4xl font-black text-foreground tracking-tight">You Push</h1>

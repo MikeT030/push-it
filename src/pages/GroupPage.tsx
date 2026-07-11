@@ -486,7 +486,7 @@ const GroupPage = () => {
               </div>
 
               {/* Daily Group Overview */}
-              <div className="mb-6 mt-6 animate-slide-up">
+              <div className="mb-3 mt-3 animate-slide-up">
                 <DailyGroupOverview
                   selectedDate={groupSelectedDate}
                   onSelectedDateChange={setGroupSelectedDate}
@@ -496,7 +496,7 @@ const GroupPage = () => {
 
 
               {/* Weekly Group Overview */}
-              <div className="mb-6 animate-slide-up" style={{
+              <div className="mb-3 animate-slide-up" style={{
               animationDelay: "0.1s"
             }}>
                 <WeeklyGroupOverview
