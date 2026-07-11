@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, differenceInDays } from "date-fns";
-import { Users, Trophy, Flame, TrendingUp, Info, List, BookOpen, Sparkles } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Info, List, BookOpen, Lightbulb } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
 
@@ -325,7 +325,7 @@ const GroupPage = () => {
                   className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
                   aria-label="Get your insights"
                 >
-                  <Sparkles className="w-5 h-5 text-[#38BDF8]" />
+                  <Lightbulb className="w-5 h-5 text-white" />
                 </button>
               }
             />

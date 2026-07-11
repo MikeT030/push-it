@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { format, startOfYear, endOfYear, differenceInDays, eachDayOfInterval, subDays } from "date-fns";
-import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench, BookOpen, Sparkles } from "lucide-react";
+import { TrendingUp, Flame, Calendar, ChevronDown, ChevronRight, Wrench, BookOpen, Lightbulb } from "lucide-react";
 
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
@@ -218,7 +218,7 @@ const TotalPage = () => {
                   className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
                   aria-label="Get your insights"
                 >
-                  <Sparkles className="w-5 h-5 text-[#38BDF8]" />
+                  <Lightbulb className="w-5 h-5 text-white" />
                 </button>
               }
             />
