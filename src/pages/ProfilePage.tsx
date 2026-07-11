@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { User, LogOut, Pencil, Check, X, Shield, Share2 } from "lucide-react";
+import { User, LogOut, Pencil, Check, X, Shield, Share2, BookOpen, Lightbulb } from "lucide-react";
 import PlayerCardPanel from "@/components/PlayerCardPanel";
 import defaultAvatar from "@/assets/default-avatar.svg";
+import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useGroupEntries } from "@/hooks/useGroupData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -14,6 +16,8 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
+import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
+import InsightsCard from "@/components/InsightsCard";
 const ProfilePage = () => {
   const {
     yearlyGoal,
@@ -21,9 +25,12 @@ const ProfilePage = () => {
   } = usePushUpData();
   const {
     user,
-    signOut
+    signOut,
+    user: authUser
   } = useAuth();
   const { avatar: selectedAvatar, avatarId, setAvatarId } = useUserAvatar();
+  const groupEntriesQuery = useGroupEntries();
+  const allEntries = groupEntriesQuery.data || [];
   const [displayName, setDisplayName] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
@@ -171,11 +178,46 @@ const ProfilePage = () => {
 
       <div className="relative max-w-lg mx-auto px-6 space-y-6 py-[32px]">
         {/* Header */}
-        <header className="mb-4 animate-fade-in flex items-center gap-2">
+        <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
           <h1 className="text-3xl font-black text-foreground tracking-tight">
             Profile
           </h1>
-        </header>
+          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
+            <PushTheRightWayPanel
+              trigger={
+                <button
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                  aria-label="Open Push the Right Way"
+                >
+                  <BookOpen className="w-5 h-5 text-white" />
+                </button>
+              }
+            />
+            <InsightsCard
+              userId={authUser?.id ?? null}
+              allEntries={allEntries}
+              colorVariant="sky"
+              trigger={
+                <button
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                  aria-label="Get your insights"
+                >
+                  <Lightbulb className="w-5 h-5 text-white" />
+                </button>
+              }
+            />
+            <div
+              className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center"
+              style={{ background: selectedAvatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: selectedAvatar ? "none" : "1px solid white" }}
+            >
+              {selectedAvatar ? (
+                <img src={selectedAvatar.src} alt={selectedAvatar.name} className="w-full h-full object-cover" />
+              ) : (
+                <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* Profile Card */}
         <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]">
