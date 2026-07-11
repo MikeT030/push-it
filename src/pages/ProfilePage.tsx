@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { User, LogOut, Pencil, Check, X, Shield, Share2, BookOpen, Lightbulb } from "lucide-react";
 import PlayerCardPanel from "@/components/PlayerCardPanel";
 import defaultAvatar from "@/assets/default-avatar.svg";
-import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
+
 import { usePushUpData } from "@/hooks/usePushUpData";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useAuth } from "@/contexts/AuthContext";
