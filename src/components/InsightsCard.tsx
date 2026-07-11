@@ -3,6 +3,7 @@ import { format, parseISO, startOfWeek, startOfMonth, getDay, subDays } from "da
 import { Sparkles, X, Flame, Calendar, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import type { GroupEntry } from "@/hooks/useGroupData";
 import wreathIcon from "@/assets/medal.svg";
