@@ -93,7 +93,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
           </div>
 
           {/* Progress smart */}
-          <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
+          <section className="bg-card/40 rounded-2xl border border-[#3B404F] p-5 mb-4 animate-slide-up">
             <h3 className="text-lg text-foreground font-semibold mb-3">
               Progress smart
             </h3>
