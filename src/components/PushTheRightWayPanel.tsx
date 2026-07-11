@@ -93,7 +93,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
           </div>
 
           {/* Progress smart */}
-          <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
+          <section className="bg-card/40 rounded-2xl border border-[#3B404F] p-5 mb-4 animate-slide-up">
             <h3 className="text-lg text-foreground font-semibold mb-3">
               Progress smart
             </h3>
@@ -105,7 +105,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
             </ul>
           </section>
 
-          <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5 mb-4">
+          <section className="bg-card/40 rounded-2xl border border-[#3B404F] p-5 mb-4 animate-slide-up">
             <h2 className="text-lg text-foreground font-semibold mb-3">
               The Hidden Harms of a Push-Up-Only Routine
             </h2>
@@ -132,7 +132,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
 
           <div className="space-y-4">
             {/* Proper form */}
-            <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
+            <section className="bg-card/40 rounded-2xl border border-[#3B404F] p-5 animate-slide-up">
               <h3 className="text-lg text-foreground font-semibold mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" style={{ color: ACCENT }} />
                 Proper form
@@ -148,7 +148,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
             </section>
 
             {/* Common mistakes */}
-            <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
+            <section className="bg-card/40 rounded-2xl border border-[#3B404F] p-5 animate-slide-up">
               <h3 className="text-lg text-foreground font-semibold mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-[#FF8C00]" />
                 Common mistakes
@@ -163,7 +163,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
             </section>
 
             {/* Counter-body activities */}
-            <section className="bg-card/40 border border-[#3B404F] rounded-2xl p-5">
+            <section className="bg-card/40 rounded-2xl border border-[#3B404F] p-5 animate-slide-up">
               <h3 className="text-lg text-foreground font-semibold mb-3 flex items-center gap-2">
                 <Activity className="w-4 h-4 text-white" />
                 Counter-body activities
