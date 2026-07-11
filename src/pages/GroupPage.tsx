@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, differenceInDays } from "date-fns";
-import { Users, Trophy, Flame, TrendingUp, Info, List } from "lucide-react";
+import { Users, Trophy, Flame, TrendingUp, Info, List, BookOpen, Sparkles } from "lucide-react";
 import defaultAvatarWhite from "@/assets/default-avatar-white.svg";
 import defaultAvatarList from "@/assets/default-avatar-list.svg";
 
@@ -20,6 +20,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PlayerCard from "@/components/PlayerCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
+import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
+import InsightsCard from "@/components/InsightsCard";
 
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
@@ -303,7 +305,30 @@ const GroupPage = () => {
             
             <h1 className="text-4xl font-black text-foreground tracking-tight">We Push</h1>
           </div>
-          <div className="rounded-full bg-[#2A2A2A] border border-[#3B404F] p-1 flex items-center justify-center">
+          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-1">
+            <PushTheRightWayPanel
+              trigger={
+                <button
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                  aria-label="Open Push the Right Way"
+                >
+                  <BookOpen className="w-5 h-5 text-[#0ABAB5]" />
+                </button>
+              }
+            />
+            <InsightsCard
+              userId={authUser?.id ?? null}
+              allEntries={allEntries}
+              colorVariant="sky"
+              trigger={
+                <button
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                  aria-label="Get your insights"
+                >
+                  <Sparkles className="w-5 h-5 text-[#38BDF8]" />
+                </button>
+              }
+            />
             <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
               {avatar ?
             <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" /> :
