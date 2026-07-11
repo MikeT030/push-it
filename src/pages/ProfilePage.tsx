@@ -179,7 +179,7 @@ const ProfilePage = () => {
       <div className="relative max-w-lg mx-auto px-6 space-y-6 py-[32px]">
         {/* Header */}
         <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
-          <h1 className="text-3xl font-black text-foreground tracking-tight">
+          <h1 className="sr-only text-3xl font-black text-foreground tracking-tight">
             Profile
           </h1>
           <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
