@@ -10,33 +10,39 @@ import impingementSyndrome from "@/assets/impingement-syndrome.png.asset.json";
 const ACCENT = "#0ABAB5";
 const BODY_TEXT = "#EEEEEE";
 
-const PushTheRightWayPanel = () => {
+interface PushTheRightWayPanelProps {
+  trigger?: React.ReactNode;
+}
+
+const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          className="w-full h-12 gap-2"
-          style={{
-            backgroundColor: `${ACCENT}1A`,
-            borderColor: ACCENT,
-            color: ACCENT,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = `${ACCENT}B3`;
-            e.currentTarget.style.color = "#ffffff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = `${ACCENT}1A`;
-            e.currentTarget.style.color = ACCENT;
-          }}
-          onMouseDown={(e) => (e.currentTarget.style.backgroundColor = `${ACCENT}B3`)}
-        >
-          <BookOpen className="w-5 h-5" />
-          Push the Right Way
-        </Button>
+        {trigger ?? (
+          <Button
+            variant="outline"
+            className="w-full h-12 gap-2"
+            style={{
+              backgroundColor: `${ACCENT}1A`,
+              borderColor: ACCENT,
+              color: ACCENT,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = `${ACCENT}B3`;
+              e.currentTarget.style.color = "#ffffff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = `${ACCENT}1A`;
+              e.currentTarget.style.color = ACCENT;
+            }}
+            onMouseDown={(e) => (e.currentTarget.style.backgroundColor = `${ACCENT}B3`)}
+          >
+            <BookOpen className="w-5 h-5" />
+            Push the Right Way
+          </Button>
+        )}
       </SheetTrigger>
 
       <SheetContent
