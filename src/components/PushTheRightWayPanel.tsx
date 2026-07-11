@@ -109,7 +109,7 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
             <h2 className="text-lg text-foreground font-semibold mb-3">
               The Hidden Harms of a Push-Up-Only Routine
             </h2>
-            <p className="text-sm mb-3 leading-relaxed" style={{ color: BODY_TEXT }}>
+            <p className="text-sm mb-[18px] leading-relaxed" style={{ color: BODY_TEXT }}>
               When you perform horizontal pressing movements repeatedly without equal pulling work, you risk developing specific upper-body issues:
             </p>
             <div className="space-y-6" style={{ color: BODY_TEXT }}>
