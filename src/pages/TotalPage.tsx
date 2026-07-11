@@ -205,7 +205,7 @@ const TotalPage = () => {
                   className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
                   aria-label="Open Push the Right Way"
                 >
-                  <BookOpen className="w-4 h-4 text-[#0ABAB5]" />
+                  <BookOpen className="w-5 h-5 text-[#0ABAB5]" />
                 </button>
               }
             />
@@ -218,7 +218,7 @@ const TotalPage = () => {
                   className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
                   aria-label="Get your insights"
                 >
-                  <Sparkles className="w-4 h-4 text-[#38BDF8]" />
+                  <Sparkles className="w-5 h-5 text-[#38BDF8]" />
                 </button>
               }
             />
