@@ -57,13 +57,16 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-lg mx-auto">
           <div className="flex items-start justify-between mb-6 mt-5">
-            <div className="flex flex-col">
-              <h2 className="text-3xl font-black text-foreground tracking-tight">
-                Push it&nbsp;
-              </h2>
-              <span className="text-3xl font-thin text-foreground tracking-tight">
-                The right Way
-              </span>
+            <div className="flex items-start gap-3">
+              <BookOpen className="w-7 h-7 text-white mt-1" />
+              <div className="flex flex-col">
+                <h2 className="text-3xl font-black text-foreground tracking-tight">
+                  Push it
+                </h2>
+                <span className="text-3xl font-thin text-foreground tracking-tight">
+                  The right Way
+                </span>
+              </div>
             </div>
             <button
               onClick={() => setOpen(false)}
