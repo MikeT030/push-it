@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 const emailSchema = z.string().email("Invalid email address");
@@ -154,6 +155,27 @@ const AuthPage = () => {
     setOtp("");
   };
 
+  const handleTryDemo = async () => {
+    setIsSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-demo-account", { body: {} });
+      if (error || !data?.email || !data?.password) {
+        toast.error("Could not start demo. Please try again.");
+        return;
+      }
+      const { error: signInErr } = await signIn(data.email, data.password);
+      if (signInErr) {
+        toast.error(signInErr.message);
+        return;
+      }
+      toast.success("Demo account ready — expires in 5 days.");
+      navigate("/");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
   const headerSubtitle =
     step === "verify"
       ? "Enter your code"
@@ -198,6 +220,19 @@ const AuthPage = () => {
               >
                 {isSubmitting ? "Checking..." : "Continue"}
               </Button>
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={handleTryDemo}
+                  disabled={isSubmitting}
+                  className="text-sm text-white underline decoration-white hover:text-primary disabled:opacity-50"
+                >
+                  Try the demo (no signup)
+                </button>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Explore every feature. Nothing is saved to the real leaderboard.
+                </p>
+              </div>
             </form>
           )}
 
