@@ -169,7 +169,7 @@ const AuthPage = () => {
         return;
       }
       toast.success("Demo account ready — expires in 5 days.");
-      navigate("/");
+      navigate("/welcome");
     } finally {
       setIsSubmitting(false);
     }
