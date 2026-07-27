@@ -50,8 +50,8 @@ Deno.serve(async (req) => {
     }
     const userId = created.id as string;
 
-    // 2) Seed profile so the user skips /welcome and lands on the home page.
-    const year = new Date().getFullYear();
+    // 2) Seed profile — mark as test cohort but leave goal unset so the user
+    //    is routed through /welcome to pick a goal (same as real signup).
     const patchRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
       method: 'PATCH',
       headers: {
@@ -63,9 +63,6 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         is_test: true,
         display_name: displayName,
-        onboarded: true,
-        goal_set_year: year,
-        yearly_goal: 30000,
       }),
     });
     if (!patchRes.ok) {
