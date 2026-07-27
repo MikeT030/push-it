@@ -18,6 +18,7 @@ import { getAvatarById } from "@/data/avatars";
 import { useDemoNav, setDemoNavEnabled } from "@/hooks/useDemoNav";
 import { useGroupUserProgress, useGroupEntries } from "@/hooks/useGroupData";
 import InsightsCard from "@/components/InsightsCard";
+import DemoAccountsCard from "@/components/DemoAccountsCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import smallCircleIcon from "@/assets/small-circle-icon-2.svg";
 
