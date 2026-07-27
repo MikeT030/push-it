@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
 import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import InsightsCard from "@/components/InsightsCard";
+import DemoBanner from "@/components/DemoBanner";
 const ProfilePage = () => {
   const {
     yearlyGoal,
@@ -177,35 +178,38 @@ const ProfilePage = () => {
       />
 
       <div className="relative max-w-lg mx-auto px-6 space-y-6 py-[32px]">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
-          <h1 className="sr-only text-3xl font-black text-foreground tracking-tight">
-            Profile
-          </h1>
-          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2 ml-auto">
-            <PushTheRightWayPanel
-              trigger={
-                <button
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                  aria-label="Open Push the Right Way"
-                >
-                  <BookOpen className="w-5 h-5 text-white" />
-                </button>
-              }
-            />
-            <InsightsCard
-              userId={authUser?.id ?? null}
-              allEntries={allEntries}
-              colorVariant="sky"
-              trigger={
-                <button
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                  aria-label="Get your insights"
-                >
-                  <Lightbulb className="w-5 h-5 text-white" />
-                </button>
-              }
-            />
+        {/* Demo Banner + Header */}
+        <div className="flex flex-col gap-[10px]">
+          <DemoBanner />
+          <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
+            <h1 className="sr-only text-3xl font-black text-foreground tracking-tight">
+              Profile
+            </h1>
+            <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2 ml-auto">
+              <PushTheRightWayPanel
+                trigger={
+                  <button
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Open Push the Right Way"
+                  >
+                    <BookOpen className="w-5 h-5 text-white" />
+                  </button>
+                }
+              />
+              <InsightsCard
+                userId={authUser?.id ?? null}
+                allEntries={allEntries}
+                colorVariant="sky"
+                trigger={
+                  <button
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Get your insights"
+                  >
+                    <Lightbulb className="w-5 h-5 text-white" />
+                  </button>
+                }
+              />
+            </div>
           </div>
         </div>
 
