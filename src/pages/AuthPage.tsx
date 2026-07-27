@@ -155,6 +155,27 @@ const AuthPage = () => {
     setOtp("");
   };
 
+  const handleTryDemo = async () => {
+    setIsSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-demo-account", { body: {} });
+      if (error || !data?.email || !data?.password) {
+        toast.error("Could not start demo. Please try again.");
+        return;
+      }
+      const { error: signInErr } = await signIn(data.email, data.password);
+      if (signInErr) {
+        toast.error(signInErr.message);
+        return;
+      }
+      toast.success("Demo account ready — expires in 5 days.");
+      navigate("/");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
   const headerSubtitle =
     step === "verify"
       ? "Enter your code"
