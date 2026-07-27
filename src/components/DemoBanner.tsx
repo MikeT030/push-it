@@ -15,9 +15,9 @@ const DemoBanner = () => {
 
   const label =
     daysLeft === null
-      ? "Demo account — nothing is saved to the real leaderboard."
+      ? "Demo account — not on the real leaderboard."
       : daysLeft > 0
-      ? `Demo account — expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"}. Nothing is saved to the real leaderboard.`
+      ? `Demo account — expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"}. Not on the real leaderboard.`
       : "Demo account — expired. Awaiting cleanup.";
 
   return (
