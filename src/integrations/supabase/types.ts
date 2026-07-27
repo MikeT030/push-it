@@ -22,6 +22,7 @@ export type Database = {
           display_name: string | null
           goal_set_year: number | null
           id: string
+          is_test: boolean
           onboarded: boolean
           updated_at: string
           yearly_goal: number
@@ -33,6 +34,7 @@ export type Database = {
           display_name?: string | null
           goal_set_year?: number | null
           id: string
+          is_test?: boolean
           onboarded?: boolean
           updated_at?: string
           yearly_goal?: number
@@ -44,6 +46,7 @@ export type Database = {
           display_name?: string | null
           goal_set_year?: number | null
           id?: string
+          is_test?: boolean
           onboarded?: boolean
           updated_at?: string
           yearly_goal?: number
@@ -104,6 +107,7 @@ export type Database = {
         Row: {
           days_logged: number | null
           display_name: string | null
+          is_test: boolean | null
           progress_percent: number | null
           total_pushups: number | null
           user_id: string | null
