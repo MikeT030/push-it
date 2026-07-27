@@ -106,7 +106,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           opacity: isMorphing ? 0 : 1,
         }}
       >
-        <h1 className="text-5xl font-black tracking-tight text-foreground text-center">Push-it</h1>
+        <h1 className="text-5xl font-black tracking-tight text-foreground text-center">Push it</h1>
         <p className="mt-3 text-muted-foreground text-lg font-medium text-center">30k push-up challenge</p>
       </div>
     </div>
