@@ -220,6 +220,19 @@ const AuthPage = () => {
               >
                 {isSubmitting ? "Checking..." : "Continue"}
               </Button>
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={handleTryDemo}
+                  disabled={isSubmitting}
+                  className="text-sm text-white underline decoration-white hover:text-primary disabled:opacity-50"
+                >
+                  Try the demo (no signup)
+                </button>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Explore every feature. Nothing is saved to the real leaderboard.
+                </p>
+              </div>
             </form>
           )}
 
