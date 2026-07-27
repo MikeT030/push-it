@@ -13,6 +13,7 @@ import { GameProvider } from "@/contexts/GameContext";
 import { AvatarSelectorProvider } from "@/contexts/AvatarSelectorContext";
 import BottomNav from "./components/BottomNav";
 import SplashScreen from "./components/SplashScreen";
+import DemoBanner from "./components/DemoBanner";
 
 // Reload once if a lazy chunk fails to load (stale hash after redeploy)
 const lazyWithRetry = <T,>(factory: () => Promise<{ default: T }>) =>
