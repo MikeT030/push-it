@@ -20,6 +20,7 @@ import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import { useGroupEntries } from "@/hooks/useGroupData";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGame } from "@/contexts/GameContext";
+import DemoBanner from "@/components/DemoBanner";
 import BrickBreakerGame from "@/components/BrickBreakerGame";
 import SpaceShooterGame from "@/components/SpaceShooterGame";
 import MiniGameSelectorLayer from "@/components/MiniGameSelectorLayer";
@@ -195,42 +196,45 @@ const TotalPage = () => {
 
       
       <div className="relative max-w-lg mx-auto px-6 space-y-3 py-[32px]">
-        {/* Profile Button + Header */}
-        <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
-          <div className="flex items-center gap-3">
-            <h1 className="sr-only">You Push</h1>
-          </div>
-          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
-            <PushTheRightWayPanel
-              trigger={
-                <button
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                  aria-label="Open Push the Right Way"
-                >
-                  <BookOpen className="w-5 h-5 text-white" />
-                </button>
-              }
-            />
-            <InsightsCard
-              userId={authUser?.id ?? null}
-              allEntries={allEntries}
-              colorVariant="sky"
-              trigger={
-                <button
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                  aria-label="Get your insights"
-                >
-                  <Lightbulb className="w-5 h-5 text-white" />
-                </button>
-              }
-            />
-            <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
-              {avatar ? (
-                <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
-              ) : (
-                <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
-              )}
-            </button>
+        {/* Demo Banner + Header */}
+        <div className="flex flex-col gap-[10px]">
+          <DemoBanner />
+          <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
+            <div className="flex items-center gap-3">
+              <h1 className="sr-only">You Push</h1>
+            </div>
+            <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
+              <PushTheRightWayPanel
+                trigger={
+                  <button
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Open Push the Right Way"
+                  >
+                    <BookOpen className="w-5 h-5 text-white" />
+                  </button>
+                }
+              />
+              <InsightsCard
+                userId={authUser?.id ?? null}
+                allEntries={allEntries}
+                colorVariant="sky"
+                trigger={
+                  <button
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Get your insights"
+                  >
+                    <Lightbulb className="w-5 h-5 text-white" />
+                  </button>
+                }
+              />
+              <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
+                {avatar ? (
+                  <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" />
+                ) : (
+                  <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 

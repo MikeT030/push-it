@@ -22,6 +22,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import InsightsCard from "@/components/InsightsCard";
+import DemoBanner from "@/components/DemoBanner";
 
 
 type LeaderboardPeriod = "weekly" | "monthly" | "alltime";
@@ -299,43 +300,46 @@ const GroupPage = () => {
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="max-w-lg mx-auto px-6 py-8">
-        {/* Profile Button + Header */}
-        <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
-          <div className="flex items-center gap-3">
-            
-            <h1 className="sr-only">We Push</h1>
-          </div>
-          <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
-            <PushTheRightWayPanel
-              trigger={
-                <button
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                  aria-label="Open Push the Right Way"
-                >
-                  <BookOpen className="w-5 h-5 text-white" />
-                </button>
-              }
-            />
-            <InsightsCard
-              userId={authUser?.id ?? null}
-              allEntries={allEntries}
-              colorVariant="sky"
-              trigger={
-                <button
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                  aria-label="Get your insights"
-                >
-                  <Lightbulb className="w-5 h-5 text-white" />
-                </button>
-              }
-            />
-            <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
-              {avatar ?
-            <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" /> :
+        {/* Demo Banner + Header */}
+        <div className="flex flex-col gap-[10px]">
+          <DemoBanner />
+          <div className="flex justify-between items-center mb-4 animate-fade-in pb-[20px]">
+            <div className="flex items-center gap-3">
+              
+              <h1 className="sr-only">We Push</h1>
+            </div>
+            <div className="rounded-full bg-card/40 border border-[#3B404F] p-1 flex items-center gap-2">
+              <PushTheRightWayPanel
+                trigger={
+                  <button
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Open Push the Right Way"
+                  >
+                    <BookOpen className="w-5 h-5 text-white" />
+                  </button>
+                }
+              />
+              <InsightsCard
+                userId={authUser?.id ?? null}
+                allEntries={allEntries}
+                colorVariant="sky"
+                trigger={
+                  <button
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Get your insights"
+                  >
+                    <Lightbulb className="w-5 h-5 text-white" />
+                  </button>
+                }
+              />
+              <button onClick={() => navigate("/profile")} className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity" style={{ background: avatar ? "linear-gradient(135deg, #BEE7FD, #ECF5FF)" : "transparent", border: avatar ? "none" : "1px solid white" }}>
+                {avatar ?
+              <img src={avatar.src} alt={avatar.name} className="w-full h-full object-cover" /> :
 
-            <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
-            }
-            </button>
+              <img src={defaultAvatarWhite} alt="User" className="w-4 h-4 object-contain" />
+              }
+              </button>
+            </div>
           </div>
         </div>
 
