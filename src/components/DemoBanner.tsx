@@ -23,7 +23,7 @@ const DemoBanner = () => {
   return (
     <div className="fixed top-0 inset-x-0 z-50 pointer-events-none">
       <div className="mx-auto max-w-md px-3 pt-2 pointer-events-auto">
-        <div className="rounded-full bg-[#0ABAB5]/15 border border-[#0ABAB5]/40 text-[#0ABAB5] text-xs font-medium px-3 py-1.5 text-center backdrop-blur-md">
+        <div className="rounded-full bg-[#0ABAB5]/15 border border-[#0ABAB5]/40 text-[#0ABAB5] text-[11px] leading-tight font-medium px-3 py-1.5 text-center backdrop-blur-md">
           {label}
         </div>
       </div>
