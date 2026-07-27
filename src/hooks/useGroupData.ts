@@ -43,15 +43,21 @@ export const useGroupEntries = () => {
     enabled: !cohortLoading,
     staleTime: STALE_MS,
     queryFn: async (): Promise<GroupEntry[]> => {
-      // Fetch entries joined to profile.is_test, then filter by viewer cohort.
+      // No FK from push_up_entries to profiles, so fetch cohort ids first.
+      const { data: profs, error: profErr } = await supabase
+        .from("profiles")
+        .select("id")
+        .eq("is_test", isTest);
+      if (profErr) throw profErr;
+      const ids = (profs ?? []).map((p: any) => p.id);
+      if (ids.length === 0) return [];
       const { data, error } = await supabase
         .from("push_up_entries")
-        .select("date, user_id, count, profiles!inner(is_test)")
+        .select("date, user_id, count")
+        .in("user_id", ids)
         .gte("date", YEAR_START_ISO);
       if (error) throw error;
-      return (data ?? [])
-        .filter((row: any) => (row.profiles?.is_test ?? false) === isTest)
-        .map((row: any) => ({ date: row.date, user_id: row.user_id, count: row.count }));
+      return data ?? [];
     },
   });
 };
