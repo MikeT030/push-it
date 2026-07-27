@@ -106,6 +106,7 @@ const AppContent = () => {
 
   return (
     <Suspense fallback={PageFallback}>
+      {user && <DemoBanner />}
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
