@@ -1,7 +1,10 @@
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 import BarFlame from "./BarFlame";
 import FlamingCountPill from "./FlamingCountPill";
+
 
 
 interface DayData {
@@ -21,6 +24,8 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
   const barRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [cycle, setCycle] = useState(0);
   const [animate, setAnimate] = useState(false);
+  const { hasCounterActivity } = useCounterActivities();
+
 
   useEffect(() => {
     setAnimate(false);
@@ -152,10 +157,23 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
                 <div className="w-full max-w-[20px] h-full rounded-full bg-white/5" />
               </div>
 
+              {/* Kettlebell counter-activity indicator */}
+              {!day.isBeforeYearStart && hasCounterActivity(day.date) && (
+                <div className="absolute left-1/2 -top-5 -translate-x-1/2 pointer-events-none z-10">
+                  <img
+                    src={kettleBellAsset.url}
+                    alt=""
+                    className="w-4 h-4"
+                    style={{ filter: "brightness(0) invert(1)" }}
+                  />
+                </div>
+              )}
+
               {/* Bar */}
               <div
                 ref={(el) => (barRefs.current[i] = el)}
                 className="relative w-full max-w-[20px] rounded-full"
+
                 style={{
                   height: animate ? targetHeight : "0px",
                   transition: "height 1400ms cubic-bezier(0.33, 1, 0.68, 1)",
