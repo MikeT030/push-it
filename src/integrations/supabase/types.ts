@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      counter_activities: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
