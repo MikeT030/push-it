@@ -8,6 +8,8 @@ import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
 import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 import { usePushUpData } from "@/hooks/usePushUpData";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
 import { toast } from "@/hooks/use-toast";
