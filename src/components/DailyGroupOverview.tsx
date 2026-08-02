@@ -365,31 +365,10 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(-1);
-  const [counterActivities, setCounterActivities] = useState<Set<string>>(() => {
-    try {
-      const raw = localStorage.getItem("counter-activities");
-      return raw ? new Set(JSON.parse(raw)) : new Set();
-    } catch {
-      return new Set();
-    }
-  });
+  const { hasCounterActivity } = useCounterActivities();
   const scrollRef = useRef<HTMLDivElement>(null);
   const dayRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
 
-  useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === "counter-activities") {
-        try {
-          const raw = e.newValue;
-          setCounterActivities(raw ? new Set(JSON.parse(raw)) : new Set());
-        } catch {
-          setCounterActivities(new Set());
-        }
-      }
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
 
   const isLoaded =
     !entriesQuery.isLoading && !profilesQuery.isLoading && !usersQuery.isLoading;
