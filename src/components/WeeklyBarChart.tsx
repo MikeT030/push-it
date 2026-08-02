@@ -24,6 +24,8 @@ const WeeklyBarChart = ({ days, dailyTarget }: WeeklyBarChartProps) => {
   const barRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [cycle, setCycle] = useState(0);
   const [animate, setAnimate] = useState(false);
+  const { hasCounterActivity } = useCounterActivities();
+
 
   useEffect(() => {
     setAnimate(false);
