@@ -20,6 +20,7 @@ const WeeklyOverview = () => {
     getEntryForDate,
     isLoaded
   } = usePushUpData();
+  const { hasCounterActivity } = useCounterActivities();
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const weekRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
