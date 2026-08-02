@@ -4,6 +4,8 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+
 import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 
 import PillFlame from "./PillFlame";
