@@ -1,7 +1,10 @@
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 import BarFlame from "./BarFlame";
 import FlamingCountPill from "./FlamingCountPill";
+
 
 
 interface DayData {
