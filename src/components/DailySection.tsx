@@ -30,14 +30,8 @@ const DailySection = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [counterActivities, setCounterActivities] = useState<Set<string>>(() => {
-    try {
-      const raw = localStorage.getItem("counter-activities");
-      return raw ? new Set(JSON.parse(raw)) : new Set();
-    } catch {
-      return new Set();
-    }
-  });
+  const { hasCounterActivity, toggleCounterActivity } = useCounterActivities();
+
   const [shareEnabled, setShareEnabled] = useState(() => {
     try {
       const raw = localStorage.getItem("share-button-enabled");
