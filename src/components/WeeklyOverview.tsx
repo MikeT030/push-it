@@ -3,6 +3,8 @@ import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay 
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { usePushUpData } from "@/hooks/usePushUpData";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 import WeeklyBarChart from "./WeeklyBarChart";
 const DAILY_TARGET = 82;
 const YEAR_START = new Date(2026, 0, 1);
