@@ -607,11 +607,8 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
                     count={member.count}
                     memberPct={memberPct}
                     isOpen={isOpen}
-                    showCounterActivity={
-                      !!user &&
-                      member.user_id === user.id &&
-                      counterActivities.has(selectedDateStr)
-                    }
+                    showCounterActivity={hasCounterActivity(selectedDateStr, member.user_id)}
+
                   />
                   {index < memberContributions.length - 1 && (
                     <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
