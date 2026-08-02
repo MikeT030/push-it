@@ -49,16 +49,6 @@ const DailySection = () => {
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, []);
-  const hasCounterActivity = (date: Date) => counterActivities.has(format(date, "yyyy-MM-dd"));
-  const toggleCounterActivity = (date: Date) => {
-    const key = format(date, "yyyy-MM-dd");
-    setCounterActivities((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key); else next.add(key);
-      try { localStorage.setItem("counter-activities", JSON.stringify([...next])); } catch {}
-      return next;
-    });
-  };
   const {
     getEntryForDate,
     setEntryForDate,
