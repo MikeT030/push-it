@@ -8,6 +8,8 @@ import megaphoneAsset from "@/assets/megaphone.svg.asset.json";
 import rocketAsset from "@/assets/rocket.svg.asset.json";
 import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 import { usePushUpData } from "@/hooks/usePushUpData";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+
 import ProgressRing from "@/components/ProgressRing";
 import MuscleConfetti from "@/components/MuscleConfetti";
 import { toast } from "@/hooks/use-toast";
@@ -30,14 +32,8 @@ const DailySection = () => {
   const [inputValue, setInputValue] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [counterActivities, setCounterActivities] = useState<Set<string>>(() => {
-    try {
-      const raw = localStorage.getItem("counter-activities");
-      return raw ? new Set(JSON.parse(raw)) : new Set();
-    } catch {
-      return new Set();
-    }
-  });
+  const { hasCounterActivity, toggleCounterActivity } = useCounterActivities();
+
   const [shareEnabled, setShareEnabled] = useState(() => {
     try {
       const raw = localStorage.getItem("share-button-enabled");
@@ -55,16 +51,6 @@ const DailySection = () => {
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, []);
-  const hasCounterActivity = (date: Date) => counterActivities.has(format(date, "yyyy-MM-dd"));
-  const toggleCounterActivity = (date: Date) => {
-    const key = format(date, "yyyy-MM-dd");
-    setCounterActivities((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key); else next.add(key);
-      try { localStorage.setItem("counter-activities", JSON.stringify([...next])); } catch {}
-      return next;
-    });
-  };
   const {
     getEntryForDate,
     setEntryForDate,

@@ -4,6 +4,8 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroupEntries, useGroupProfiles, useGroupUserProgress } from "@/hooks/useGroupData";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+
 import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 
 import PillFlame from "./PillFlame";
@@ -363,31 +365,10 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(-1);
-  const [counterActivities, setCounterActivities] = useState<Set<string>>(() => {
-    try {
-      const raw = localStorage.getItem("counter-activities");
-      return raw ? new Set(JSON.parse(raw)) : new Set();
-    } catch {
-      return new Set();
-    }
-  });
+  const { hasCounterActivity } = useCounterActivities();
   const scrollRef = useRef<HTMLDivElement>(null);
   const dayRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
 
-  useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === "counter-activities") {
-        try {
-          const raw = e.newValue;
-          setCounterActivities(raw ? new Set(JSON.parse(raw)) : new Set());
-        } catch {
-          setCounterActivities(new Set());
-        }
-      }
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
 
   const isLoaded =
     !entriesQuery.isLoading && !profilesQuery.isLoading && !usersQuery.isLoading;
@@ -626,11 +607,8 @@ const DailyGroupOverview = ({ selectedDate, onSelectedDateChange }: DailyGroupOv
                     count={member.count}
                     memberPct={memberPct}
                     isOpen={isOpen}
-                    showCounterActivity={
-                      !!user &&
-                      member.user_id === user.id &&
-                      counterActivities.has(selectedDateStr)
-                    }
+                    showCounterActivity={hasCounterActivity(selectedDateStr, member.user_id)}
+
                   />
                   {index < memberContributions.length - 1 && (
                     <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
