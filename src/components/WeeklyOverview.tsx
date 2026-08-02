@@ -3,6 +3,8 @@ import { format, startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, isSameDay 
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { usePushUpData } from "@/hooks/usePushUpData";
+import { useCounterActivities } from "@/hooks/useCounterActivities";
+import kettleBellAsset from "@/assets/kettle_bell_2.svg.asset.json";
 import WeeklyBarChart from "./WeeklyBarChart";
 const DAILY_TARGET = 82;
 const YEAR_START = new Date(2026, 0, 1);
@@ -18,6 +20,7 @@ const WeeklyOverview = () => {
     getEntryForDate,
     isLoaded
   } = usePushUpData();
+  const { hasCounterActivity } = useCounterActivities();
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const weekRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
@@ -186,7 +189,7 @@ const WeeklyOverview = () => {
           <div>
             {weeklyData.days.map((day, index) => (
               <div key={format(day.date, "yyyy-MM-dd")}>
-                <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : ""}`}>
+            <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${day.isBeforeYearStart ? "opacity-40" : ""}`}>
                   <div className="flex items-center gap-2">
                     <span className={`text-sm font-medium w-9 text-left ${day.isToday ? "text-primary" : "text-muted-foreground"}`}>
                       {format(day.date, "EEE")}
@@ -197,9 +200,21 @@ const WeeklyOverview = () => {
                         Today
                       </span>}
                   </div>
-                  <span className={`font-bold ${day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"}`}>
-                    {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count : "—"}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className={`font-bold ${day.isBeforeYearStart ? "text-muted-foreground" : day.count > 0 ? "text-foreground" : "text-muted-foreground"}`}>
+                      {day.isBeforeYearStart ? "—" : day.count > 0 ? day.count : "—"}
+                    </span>
+                    <div className="w-5 flex items-center justify-end">
+                      {!day.isBeforeYearStart && hasCounterActivity(day.date) && (
+                        <img
+                          src={kettleBellAsset.url}
+                          alt=""
+                          className="w-4 h-4"
+                          style={{ filter: 'brightness(0) invert(1)' }}
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
                 {index < weeklyData.days.length - 1 && (
                   <div className="h-px mx-3" style={{ backgroundColor: "#575F78" }} />
