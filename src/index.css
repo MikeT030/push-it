@@ -194,6 +194,30 @@
     background-size: 400% 400%;
     animation: auroraShift 24s ease-in-out infinite;
   }
+
+  .we-push-ghost-orb {
+    position: absolute;
+    left: 8%;
+    top: 16%;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(224, 247, 250, 0.92),
+      rgba(209, 196, 233, 0.82) 38%,
+      rgba(128, 203, 196, 0.72) 68%,
+      transparent 100%
+    );
+    filter: blur(18px);
+    opacity: 0.68;
+    box-shadow:
+      0 0 40px 14px rgba(128, 203, 196, 0.32),
+      0 0 72px 28px rgba(209, 196, 233, 0.22);
+    animation: ghostOrbit 16s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 @keyframes auroraShift {
@@ -202,6 +226,33 @@
   50%  { background-position: 100% 50%; }
   75%  { background-position: 50% 0%; }
   100% { background-position: 0% 50%; }
+}
+
+@keyframes ghostOrbit {
+  0%, 100% {
+    left: 8%;
+    top: 16%;
+    transform: scale(1);
+    filter: blur(18px) hue-rotate(0deg);
+  }
+  25% {
+    left: 48%;
+    top: 4%;
+    transform: scale(1.08);
+    filter: blur(20px) hue-rotate(22deg);
+  }
+  50% {
+    left: 82%;
+    top: 20%;
+    transform: scale(0.96);
+    filter: blur(18px) hue-rotate(42deg);
+  }
+  75% {
+    left: 46%;
+    top: 32%;
+    transform: scale(1.04);
+    filter: blur(20px) hue-rotate(18deg);
+  }
 }
 
 @keyframes clickPulse {
