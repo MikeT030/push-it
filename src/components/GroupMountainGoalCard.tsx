@@ -527,7 +527,7 @@ const GroupMountainGoalCard = ({
         />
         {avgProgress > expectedProgress && (
           <div
-            className="h-full bg-[#7036FF] absolute top-0 rounded-r-full transition-all duration-700"
+            className="h-full bg-[#0ABAB5] absolute top-0 rounded-r-full transition-all duration-700"
             style={{
               left: `${Math.min(expectedProgress, 100)}%`,
               width: `${Math.min(avgProgress - expectedProgress, 100 - expectedProgress)}%`,
@@ -536,13 +536,13 @@ const GroupMountainGoalCard = ({
         )}
         {avgProgress < expectedProgress && (
           <div
-            className="h-full bg-[#7036FF] absolute left-0 top-0 rounded-full transition-all duration-700"
+            className="h-full bg-[#0ABAB5] absolute left-0 top-0 rounded-full transition-all duration-700"
             style={{ width: `${Math.min(avgProgress, 100)}%` }}
           />
         )}
       </div>
       <div className="flex items-center justify-center gap-2 mt-2">
-        <span className="w-2 h-2 rounded-full bg-[#7036FF]" />
+        <span className="w-2 h-2 rounded-full bg-[#0ABAB5]" />
         <p className="text-sm text-muted-foreground">Average progress {avgProgress.toFixed(1)}%</p>
       </div>
 
