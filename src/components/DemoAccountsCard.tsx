@@ -92,7 +92,7 @@ const DemoAccountsCard = () => {
 
   return (
     <div
-      className="bg-card/40 rounded-2xl mt-6 animate-slide-up p-4 border border-[#3B404F]"
+      className="bg-card/40 rounded-2xl mt-6 animate-slide-up p-6 pt-[10px] pb-[10px] mb-[10px] px-[10px] border border-[#3B404F]"
       style={{ animationDelay: "0.036s" }}
     >
       <div className="flex items-center justify-between mb-3">
