@@ -391,12 +391,12 @@ const GroupMountainGoalCard = ({
                 />
               )}
 
-              {/* Actual progress — solid purple line along the ridge up to current progress */}
+              {/* Actual progress — solid teal line along the ridge up to current progress */}
               {progressFrac > 0 && (
                 <path
                   d={progress.d}
                   fill="none"
-                  stroke="#7036FF"
+                  stroke="#0ABAB5"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -405,7 +405,7 @@ const GroupMountainGoalCard = ({
               )}
 
               {/* Current position marker */}
-              <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#7036FF" stroke="#0F1922" strokeWidth="1.5" />
+              <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#0ABAB5" stroke="#0F1922" strokeWidth="1.5" />
 
               {/* Tip marker — colored by whichever value is the peak */}
               <circle
