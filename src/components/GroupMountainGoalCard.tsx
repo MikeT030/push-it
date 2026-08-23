@@ -440,7 +440,7 @@ const GroupMountainGoalCard = ({
         </button>
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
-            showProjection ? "bg-[#C029DE]/10 border-[#C029DE] text-[#C029DE]" : "text-muted-foreground border-[#3B404F]"
+            showProjection ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]" : "text-muted-foreground border-[#3B404F]"
           }`}
           onClick={() => {
             setShowProjection(true);
