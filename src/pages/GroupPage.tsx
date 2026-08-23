@@ -299,15 +299,7 @@ const GroupPage = () => {
       </div>;
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      {/* Animated Top Gradient */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[28rem] opacity-80 blur-3xl pointer-events-none animated-aurora"
-        style={{
-          WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
-        }}
-      />
-      <div className="relative max-w-lg mx-auto px-6 py-8">
+      <div className="max-w-lg mx-auto px-6 py-8">
         {/* Demo Banner + Header */}
         <div className="flex flex-col gap-[10px]">
           <DemoBanner />
@@ -428,7 +420,7 @@ const GroupPage = () => {
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex items-start gap-2 pl-[4px] pr-[4px]" style={{ minWidth: "90px" }}>
-                    <TrendingUp className="w-5 h-5 text-[#0ABAB5]" />
+                    <TrendingUp className="w-5 h-5 text-[#7036FF]" />
                     <div>
                       <p className="text-xs text-muted-foreground font-medium">Avg. prog.</p>
                       <p className="text-xl font-black text-foreground">
@@ -463,10 +455,10 @@ const GroupPage = () => {
                   </p>
                 </div>
 
-                  <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xl font-bold text-[#0ABAB5]">Ø</span>
-                      <p className="text-sm text-muted-foreground font-medium">Avg. /d</p>
+                <div className="flex-shrink-0 bg-card/40 rounded-2xl p-5" style={{ minWidth: "140px" }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xl font-bold text-[#7036FF]">Ø</span>
+                    <p className="text-sm text-muted-foreground font-medium">Avg. /d</p>
                   </div>
                   <p className="text-[1.625rem] font-black text-foreground">
                     {stats.avgPuPerDay.toLocaleString()}
