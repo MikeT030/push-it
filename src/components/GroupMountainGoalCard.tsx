@@ -297,8 +297,8 @@ const GroupMountainGoalCard = ({
               <stop offset="100%" stopColor="#3B404F" stopOpacity="0.15" />
             </linearGradient>
             <linearGradient id={`${gradientId}-mtn2`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#7036FF" stopOpacity="0.30" />
-              <stop offset="100%" stopColor="#C029DE" stopOpacity="0.18" />
+              <stop offset="0%" stopColor="#0ABAB5" stopOpacity="0.30" />
+              <stop offset="100%" stopColor="#0ABAB5" stopOpacity="0.18" />
             </linearGradient>
             <filter id={`${gradientId}-glow`}>
               <feGaussianBlur stdDeviation="2.5" result="blur" />
