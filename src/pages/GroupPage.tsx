@@ -360,7 +360,7 @@ const GroupPage = () => {
                 className={`flex-1 py-2 px-2 rounded-full text-sm font-medium transition-all border ${
                 leaderboardPeriod === period ?
                 "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]" :
-                "text-muted-foreground border-[#575F78]"}`
+                "text-muted-foreground border-[#3B404F]"}`
                 }>
 
                     {period === "weekly" ? "Week" : period === "monthly" ? "Month" : "Year"}
