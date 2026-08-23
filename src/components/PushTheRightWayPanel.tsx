@@ -119,13 +119,13 @@ const PushTheRightWayPanel = ({ trigger }: PushTheRightWayPanelProps) => {
                 <img src={impingementSyndrome.url} alt="Medical illustration of shoulder impingement syndrome showing narrowed shoulder joint space" className="w-1/2 h-auto rounded-lg mt-3" />
               </div>
               <div>
+                <h3 className="text-base text-foreground font-semibold mb-1">Overuse Joint Strain</h3>
+                <p className="text-sm leading-relaxed">Doing any repetitive motion daily leaves little time for systemic recovery. Your wrists, elbows, and shoulders bear the brunt of the load without a break, increasing the risk of tendonitis.</p>
+              </div>
+              <div>
                 <h3 className="text-base text-foreground font-semibold mb-1">The "Hunched" Posture</h3>
                 <p className="text-sm leading-relaxed">Push-ups heavily train your chest (pectoralis major) and the front of your shoulders (anterior deltoids). Over time, these muscles become tight and short, pulling your shoulders forward into a slumped, rounded posture.</p>
                 <img src={muscle1Wrong.url} alt="Illustration of hunched forward posture showing tight chest and shoulder muscles" className="w-1/2 h-auto rounded-lg mt-3" />
-              </div>
-              <div>
-                <h3 className="text-base text-foreground font-semibold mb-1">Overuse Joint Strain</h3>
-                <p className="text-sm leading-relaxed">Doing any repetitive motion daily leaves little time for systemic recovery. Your wrists, elbows, and shoulders bear the brunt of the load without a break, increasing the risk of tendonitis.</p>
               </div>
             </div>
           </section>
