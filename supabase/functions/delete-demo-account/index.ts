@@ -50,10 +50,29 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Safety: only allow deleting profiles flagged as is_test.
+    // Safety: only allow deleting demo accounts (profile flagged is_test,
+    // or the auth user carries the demo marker in its metadata).
     const { data: prof, error: pErr } = await admin
       .from('profiles').select('is_test').eq('id', user_id).maybeSingle();
-    if (pErr || !prof || !prof.is_test) {
+    if (pErr) {
+      return new Response(JSON.stringify({ error: pErr.message }), {
+        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const { data: authUser } = await admin.auth.admin.getUserById(user_id);
+    const meta = (authUser?.user?.user_metadata ?? {}) as Record<string, unknown>;
+    const metaIsDemo = meta.is_test === true || meta.is_demo === true;
+
+    // Already gone from auth: just clean up any leftover profile row.
+    if (!authUser?.user) {
+      if (prof?.is_test) await admin.from('profiles').delete().eq('id', user_id);
+      return new Response(JSON.stringify({ ok: true, alreadyDeleted: true }), {
+        status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (!prof?.is_test && !metaIsDemo) {
       return new Response(JSON.stringify({ error: 'Not a demo account' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -65,6 +84,7 @@ Deno.serve(async (req) => {
         status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+    await admin.from('profiles').delete().eq('id', user_id);
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
