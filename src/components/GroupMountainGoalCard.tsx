@@ -335,7 +335,7 @@ const GroupMountainGoalCard = ({
                 y1={projection.end.y}
                 x2={W}
                 y2={projection.end.y}
-                stroke="#C029DE"
+                stroke="#0ABAB5"
                 strokeWidth="1"
                 strokeDasharray="3 5"
                 opacity="0.3"
@@ -343,7 +343,7 @@ const GroupMountainGoalCard = ({
               <text
                 x={W - 6}
                 y={projection.end.y - 4}
-                fill="#C029DE"
+                fill="#0ABAB5"
                 fontSize={showProjection ? "14" : "12"}
                 opacity="0.85"
                 textAnchor="end"
