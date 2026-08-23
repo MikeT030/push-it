@@ -300,11 +300,6 @@ const GroupPage = () => {
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="relative max-w-lg mx-auto px-6 py-8">
-        {/* Ghost orb header animation */}
-        <div className="absolute top-0 left-0 right-0 h-32 overflow-hidden pointer-events-none">
-          <div className="we-push-ghost-orb" aria-hidden="true" />
-        </div>
-
         {/* Demo Banner + Header */}
         <div className="relative z-10 flex flex-col gap-[10px]">
           <DemoBanner />
