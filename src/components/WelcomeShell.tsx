@@ -112,6 +112,8 @@ const WelcomeShell = ({
       await queryClient.invalidateQueries({ queryKey: ["push-up-data", user.id] });
       await queryClient.invalidateQueries({ queryKey: ["profile-onboarded", user.id] });
       await queryClient.invalidateQueries({ queryKey: ["profile-goal-set-year", user.id] });
+      await queryClient.invalidateQueries({ queryKey: ["goal-hit-30k", user.id] });
+      await queryClient.refetchQueries({ queryKey: ["goal-hit-30k", user.id] });
       toast.success(successToast);
       navigate(onConfirmRedirect);
     } finally {
