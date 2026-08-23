@@ -297,8 +297,8 @@ const GroupMountainGoalCard = ({
               <stop offset="100%" stopColor="#3B404F" stopOpacity="0.15" />
             </linearGradient>
             <linearGradient id={`${gradientId}-mtn2`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#7036FF" stopOpacity="0.30" />
-              <stop offset="100%" stopColor="#C029DE" stopOpacity="0.18" />
+              <stop offset="0%" stopColor="#0ABAB5" stopOpacity="0.30" />
+              <stop offset="100%" stopColor="#0ABAB5" stopOpacity="0.18" />
             </linearGradient>
             <filter id={`${gradientId}-glow`}>
               <feGaussianBlur stdDeviation="2.5" result="blur" />
@@ -335,7 +335,7 @@ const GroupMountainGoalCard = ({
                 y1={projection.end.y}
                 x2={W}
                 y2={projection.end.y}
-                stroke="#C029DE"
+                stroke="#0ABAB5"
                 strokeWidth="1"
                 strokeDasharray="3 5"
                 opacity="0.3"
@@ -343,7 +343,7 @@ const GroupMountainGoalCard = ({
               <text
                 x={W - 6}
                 y={projection.end.y - 4}
-                fill="#C029DE"
+                fill="#0ABAB5"
                 fontSize={showProjection ? "14" : "12"}
                 opacity="0.85"
                 textAnchor="end"
@@ -377,12 +377,12 @@ const GroupMountainGoalCard = ({
                 />
               )}
 
-              {/* Projection — dashed magenta along the ridge up to projected fraction */}
+              {/* Projection — dashed teal along the ridge up to projected fraction */}
               {showProjection && (
                 <path
                   d={projection.d}
                   fill="none"
-                  stroke="#C029DE"
+                  stroke="#0ABAB5"
                   strokeWidth="2.5"
                   strokeDasharray="5 4"
                   strokeLinejoin="round"
@@ -391,12 +391,12 @@ const GroupMountainGoalCard = ({
                 />
               )}
 
-              {/* Actual progress — solid purple line along the ridge up to current progress */}
+              {/* Actual progress — solid teal line along the ridge up to current progress */}
               {progressFrac > 0 && (
                 <path
                   d={progress.d}
                   fill="none"
-                  stroke="#7036FF"
+                  stroke="#0ABAB5"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -405,14 +405,14 @@ const GroupMountainGoalCard = ({
               )}
 
               {/* Current position marker */}
-              <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#7036FF" stroke="#0F1922" strokeWidth="1.5" />
+              <circle cx={progress.end.x} cy={progress.end.y} r="3.5" fill="#0ABAB5" stroke="#0F1922" strokeWidth="1.5" />
 
               {/* Tip marker — colored by whichever value is the peak */}
               <circle
                 cx={peakCoord.x}
                 cy={peakCoord.y}
                 r="3"
-                fill={projectedEOY >= groupGoal ? "#C029DE" : "#0ABAB5"}
+                fill={projectedEOY >= groupGoal ? "#0ABAB5" : "#0ABAB5"}
               />
             </g>
           </g>
@@ -440,7 +440,7 @@ const GroupMountainGoalCard = ({
         </button>
         <button
           className={`text-center select-none rounded-lg px-3 py-2 border transition-all active:scale-95 ${
-            showProjection ? "bg-[#C029DE]/10 border-[#C029DE] text-[#C029DE]" : "text-muted-foreground border-[#3B404F]"
+            showProjection ? "bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5]" : "text-muted-foreground border-[#3B404F]"
           }`}
           onClick={() => {
             setShowProjection(true);
@@ -527,7 +527,7 @@ const GroupMountainGoalCard = ({
         />
         {avgProgress > expectedProgress && (
           <div
-            className="h-full bg-[#7036FF] absolute top-0 rounded-r-full transition-all duration-700"
+            className="h-full bg-[#0ABAB5] absolute top-0 rounded-r-full transition-all duration-700"
             style={{
               left: `${Math.min(expectedProgress, 100)}%`,
               width: `${Math.min(avgProgress - expectedProgress, 100 - expectedProgress)}%`,
@@ -536,13 +536,13 @@ const GroupMountainGoalCard = ({
         )}
         {avgProgress < expectedProgress && (
           <div
-            className="h-full bg-[#7036FF] absolute left-0 top-0 rounded-full transition-all duration-700"
+            className="h-full bg-[#0ABAB5] absolute left-0 top-0 rounded-full transition-all duration-700"
             style={{ width: `${Math.min(avgProgress, 100)}%` }}
           />
         )}
       </div>
       <div className="flex items-center justify-center gap-2 mt-2">
-        <span className="w-2 h-2 rounded-full bg-[#7036FF]" />
+        <span className="w-2 h-2 rounded-full bg-[#0ABAB5]" />
         <p className="text-sm text-muted-foreground">Average progress {avgProgress.toFixed(1)}%</p>
       </div>
 
