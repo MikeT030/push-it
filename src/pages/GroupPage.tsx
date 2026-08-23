@@ -299,7 +299,15 @@ const GroupPage = () => {
       </div>;
   }
   return <div className="min-h-screen bg-background pb-32 safe-top">
-      <div className="max-w-lg mx-auto px-6 py-8">
+      {/* Animated Top Gradient */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[28rem] opacity-80 blur-3xl pointer-events-none animated-aurora"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+        }}
+      />
+      <div className="relative max-w-lg mx-auto px-6 py-8">
         {/* Demo Banner + Header */}
         <div className="flex flex-col gap-[10px]">
           <DemoBanner />
