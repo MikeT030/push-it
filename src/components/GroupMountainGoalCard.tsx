@@ -412,7 +412,7 @@ const GroupMountainGoalCard = ({
                 cx={peakCoord.x}
                 cy={peakCoord.y}
                 r="3"
-                fill={projectedEOY >= groupGoal ? "#C029DE" : "#0ABAB5"}
+                fill={projectedEOY >= groupGoal ? "#0ABAB5" : "#0ABAB5"}
               />
             </g>
           </g>
