@@ -377,12 +377,12 @@ const GroupMountainGoalCard = ({
                 />
               )}
 
-              {/* Projection — dashed magenta along the ridge up to projected fraction */}
+              {/* Projection — dashed teal along the ridge up to projected fraction */}
               {showProjection && (
                 <path
                   d={projection.d}
                   fill="none"
-                  stroke="#C029DE"
+                  stroke="#0ABAB5"
                   strokeWidth="2.5"
                   strokeDasharray="5 4"
                   strokeLinejoin="round"
