@@ -142,11 +142,15 @@ export const usePushUpData = () => {
   useEffect(() => {
     if (!userId) return;
     const onHide = () => { flushAllForUser(userId); };
-    window.addEventListener("visibilitychange", onHide);
+    // visibilitychange only fires on document — listening on window silently
+    // dropped pending taps when the app was backgrounded/closed.
+    document.addEventListener("visibilitychange", onHide);
     window.addEventListener("pagehide", onHide);
+    window.addEventListener("blur", onHide);
     return () => {
-      window.removeEventListener("visibilitychange", onHide);
+      document.removeEventListener("visibilitychange", onHide);
       window.removeEventListener("pagehide", onHide);
+      window.removeEventListener("blur", onHide);
     };
   }, [userId]);
 
