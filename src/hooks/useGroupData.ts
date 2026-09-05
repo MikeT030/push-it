@@ -51,13 +51,23 @@ export const useGroupEntries = () => {
       if (profErr) throw profErr;
       const ids = (profs ?? []).map((p: any) => p.id);
       if (ids.length === 0) return [];
-      const { data, error } = await supabase
-        .from("push_up_entries")
-        .select("date, user_id, count")
-        .in("user_id", ids)
-        .gte("date", YEAR_START_ISO);
-      if (error) throw error;
-      return data ?? [];
+      // Page through results: the API caps a single response at 1000 rows,
+      // which was silently dropping the most recent entries.
+      const PAGE = 1000;
+      const all: GroupEntry[] = [];
+      for (let from = 0; ; from += PAGE) {
+        const { data, error } = await supabase
+          .from("push_up_entries")
+          .select("date, user_id, count")
+          .in("user_id", ids)
+          .gte("date", YEAR_START_ISO)
+          .order("date", { ascending: true })
+          .range(from, from + PAGE - 1);
+        if (error) throw error;
+        all.push(...((data ?? []) as GroupEntry[]));
+        if (!data || data.length < PAGE) break;
+      }
+      return all;
     },
   });
 };
