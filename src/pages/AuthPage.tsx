@@ -15,7 +15,7 @@ const passwordSchema = z.string().min(6, "Password must be at least 6 characters
 
 const PENDING_EMAIL_KEY = "pushit:pendingSignupEmail";
 
-type Step = "email" | "signin" | "signup" | "verify";
+type Step = "email" | "code" | "signin" | "signup" | "verify";
 
 const AuthPage = () => {
   const [step, setStep] = useState<Step>("email");
@@ -24,8 +24,10 @@ const AuthPage = () => {
   const [otp, setOtp] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const [showContent, setShowContent] = useState(() => sessionStorage.getItem("splashShown") === "true");
-  const { signIn, signUp, verifySignupOtp, resendSignupOtp, checkEmailExists, user } = useAuth();
+  const { signIn, signUp, verifySignupOtp, resendSignupOtp, sendLoginCode, verifyLoginCode, checkEmailExists, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
