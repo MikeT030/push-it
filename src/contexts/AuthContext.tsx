@@ -10,6 +10,8 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   verifySignupOtp: (email: string, token: string) => Promise<{ error: Error | null }>;
   resendSignupOtp: (email: string) => Promise<{ error: Error | null }>;
+  sendLoginCode: (email: string) => Promise<{ error: Error | null }>;
+  verifyLoginCode: (email: string, token: string) => Promise<{ error: Error | null }>;
   checkEmailExists: (email: string) => Promise<{ exists: boolean; error: Error | null }>;
   signOut: () => Promise<void>;
 }
@@ -72,6 +74,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return { error };
   };
 
+  const sendLoginCode = async (email: string) => {
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: false },
+    });
+    return { error };
+  };
+
+  const verifyLoginCode = async (email: string, token: string) => {
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: "email",
+    });
+    return { error };
+  };
+
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -97,7 +116,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signUp, signIn, verifySignupOtp, resendSignupOtp, checkEmailExists, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, signUp, signIn, verifySignupOtp, resendSignupOtp, sendLoginCode, verifyLoginCode, checkEmailExists, signOut }}>
       {children}
     </AuthContext.Provider>
   );
