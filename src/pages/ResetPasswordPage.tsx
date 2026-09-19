@@ -88,9 +88,24 @@ const ResetPasswordPage = () => {
 
         <div className="card-glass rounded-2xl p-6">
           {!ready ? (
-            <p className="text-center text-muted-foreground">
-              Validating reset link...
-            </p>
+            linkFailed ? (
+              <div className="text-center space-y-4">
+                <p className="text-foreground">
+                  This reset link didn't work — it may have expired or already been used.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate("/auth")}
+                  className="text-sm text-primary font-medium hover:underline"
+                >
+                  Sign in with an email code instead
+                </button>
+              </div>
+            ) : (
+              <p className="text-center text-muted-foreground">
+                Validating reset link...
+              </p>
+            )
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
