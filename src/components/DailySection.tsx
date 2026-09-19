@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, startOfYear, differenceInDays } from "date-fns";
+import { format, addMonths, subMonths, subDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isFuture, startOfDay, isSameMonth, isSameYear, startOfYear, differenceInDays } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Minus, ChevronDown, TrendingUp, Flame } from "lucide-react";
 import ShareIcon from "@/components/ShareIcon";
 import MultiColorTargetIcon from "@/components/MultiColorTargetIcon";
@@ -365,17 +365,19 @@ const DailySection = () => {
 
           const avgProgress = dailyTarget > 0 ? Math.round((avg / dailyTarget) * 100) : 0;
           const remaining = Math.max(0, yearlyGoal - total);
-          const allTimeAvg = daysElapsed > 0 ? total / daysElapsed : 0;
-          const projectedDate = allTimeAvg > 0
-            ? new Date(Date.now() + (remaining / allTimeAvg) * 24 * 60 * 60 * 1000)
-            : null;
-          const projectedMonth = projectedDate ? format(projectedDate, "d. MMM") : "—";
-          const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
           const entryDates = getDaysWithEntries();
           const firstEntryTime = entryDates.length
             ? Math.min(...entryDates.map((d) => new Date(d).getTime()))
             : today.getTime();
           const activeDays = Math.max(1, differenceInDays(today, new Date(firstEntryTime)) + 1);
+          const activeAvg = total / activeDays;
+          const projectedDate = activeAvg > 0
+            ? new Date(Date.now() + (remaining / activeAvg) * 24 * 60 * 60 * 1000)
+            : null;
+          const projectedDays = projectedDate ? Math.max(0, differenceInDays(projectedDate, today)) : 0;
+          const projectedMonth = projectedDate && projectedDays <= 3650
+            ? format(projectedDate, isSameYear(projectedDate, today) ? "d. MMM" : "d. MMM yy")
+            : "—";
           const expectedByNow = Math.round(activeDays * dailyTarget);
           const diff = total - expectedByNow;
 
