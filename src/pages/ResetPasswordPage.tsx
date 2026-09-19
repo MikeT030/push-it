@@ -30,7 +30,18 @@ const ResetPasswordPage = () => {
       if (session) setReady(true);
     });
 
-    return () => subscription.unsubscribe();
+    // If nothing arrives, the link is expired or was already used.
+    const timeout = setTimeout(() => {
+      setReady((r) => {
+        if (!r) setLinkFailed(true);
+        return r;
+      });
+    }, 4000);
+
+    return () => {
+      clearTimeout(timeout);
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
