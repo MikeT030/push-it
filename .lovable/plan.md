@@ -9,7 +9,9 @@ Two issues combine on the test account:
 
 ## The fix
 
-- Base the forecast pace on the days since the person's **first logged day** (the same active-day basis the card already uses for the "on target" figure), so a fresh account projects from its real daily rate.
+The forecast already works off the yearly goal: it takes the push-ups still missing to reach it and divides by the daily pace. Only the pace is wrong. So:
+
+- Keep the remaining-to-goal part as is, but base the pace on the days since the person's **first logged day** (the same active-day basis the card already uses for the "on target" figure), so a fresh account projects from its real daily rate.
 - Show the year whenever the projected finish is not in the current year, e.g. "25. Sep 27".
 - If the finish is further out than a sensible horizon (more than about 10 years) or the pace is zero, show a dash instead of a misleading date.
 
