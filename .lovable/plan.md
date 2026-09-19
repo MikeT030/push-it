@@ -1,65 +1,38 @@
+# Email code sign-in (password optional)
 
-# Demo / Test Area
+Goal: make signing in reliable by sending a 6-digit code to the email, while keeping the password option for people who already have one.
 
-Goal: let anyone try the app with full functionality without polluting real stats. Test users are sandboxed from real users, and admins delete expired accounts manually from `/admin`.
+## What I found so far
 
-## 1. Mark test accounts
+Sign-in attempts for your account were rejected with "invalid credentials" tonight. A password-reset link was opened at 00:26 and it did sign you in at that moment, but no password change was recorded afterwards, and the attempts right after that were rejected again. So the likely story is that the new password never got saved before the next sign-in attempt. This is not confirmed yet — the first step below verifies it before anything else.
 
-Add `is_test boolean not null default false` to `profiles`. Every real signup stays `false`; only the demo entry point creates `true` accounts. A single flag drives isolation, auth restrictions, and admin cleanup.
+## Step 1 — Verify the reset page
 
-## 2. "Try demo" entry point
+Open the app, request a reset link, open it, and follow the flow end to end while watching for errors. Confirm whether the "Update password" step actually saves. Two known risks to check:
+- The page may sit on "Validating reset link..." if the link opens in a browser where the session is not picked up.
+- Saving may be rejected if the account settings require the old password to be entered.
 
-On `/auth` (email step), add a secondary "Try the demo" button under the primary CTA.
+Fix whatever the check turns up, including a clear error message instead of a silent failure.
 
-Tapping it calls a new edge function `create-demo-account` that:
-- Generates a random email like `demo+<uuid>@pushit.demo` and a random password.
-- Creates the auth user via service role, `email_confirm: true` (no OTP).
-- Sets `profiles.is_test = true`, `display_name = "Demo <4-char>"`, `onboarded = true`, `goal_set_year = current year`, `yearly_goal = 30000` so the user lands straight on `/` without the welcome gate.
-- Returns the email + password to the client, which signs in with them.
+## Step 2 — Add code sign-in as the default
 
-Users see a persistent banner on every page: "Demo account — expires in N days. Nothing is saved to the leaderboard." (N computed from `created_at + 5`.)
+After entering an email, the next screen becomes:
+- "Email me a code" as the main action — a 6-digit code arrives, you type it in, you're in.
+- "Use password instead" as a small link below, for anyone who prefers it. Existing passwords keep working.
+- "Resend code" with a short cooldown, and "Change email" to go back.
 
-## 3. Sandboxing (test users only see other test users)
+New accounts also sign up with a code, as they do today, so there is one consistent experience.
 
-Everywhere the app aggregates across users, filter by `is_test` matching the current viewer's flag. Concretely:
+## Step 3 — Tidy up the surrounding flows
 
-- `useGroupData` / `useGroupEntries`: join `profiles` and filter `is_test = <viewer.is_test>`.
-- Leaderboard (`LeaderboardPodium`, `GroupPage`): same filter.
-- Group goal chart, group averages, daily/weekly group overviews: same filter.
-- Past challenges: same filter.
-- Avatar "taken" grayscale check in `AvatarSelector`: only within the same cohort.
-
-Real users never see demo data; demo users see a parallel leaderboard populated only by other active demo accounts.
-
-## 4. Block real signup path for demo, and vice versa
-
-- `check-email-exists` and normal signup keep working for real users.
-- Demo emails use the `@pushit.demo` domain, which the real signup form rejects client-side to avoid confusion.
-- Signed-in demo users cannot change their email (hide the field in profile).
-
-## 5. Admin cleanup UI
-
-On `/admin`, new card **"Demo accounts"** below the existing admin sections:
-- Lists all `profiles` where `is_test = true` with columns: display name, created date, days remaining (5 - age), total push-ups logged.
-- Red "Delete" button per row. Confirms, then calls new edge function `delete-demo-account` which deletes the `auth.users` row (cascades to `profiles`, `push_up_entries`, `user_roles`).
-- "Delete all expired" bulk button for rows past 5 days.
-
-No automatic cron — admin decides when.
-
-## 6. Expiry behavior
-
-Login is not blocked after 5 days — the account just sits there until an admin removes it. The banner keeps counting down (into negative "expired" state) so the admin sees stale accounts and the user knows.
+- The "Forgot password?" link stays, but moves under the password screen where it belongs.
+- Clearer messages: expired code, wrong code, too many attempts.
+- The demo account button keeps working unchanged.
 
 ## Technical notes
 
-- Migration: `alter table profiles add column is_test boolean not null default false;` plus updated RLS/queries. No new tables.
-- Filtering pattern: change `useGroupEntries` to fetch `profiles(is_test)` alongside entries, then filter in JS by the current user's flag (cached in `AuthContext` via a `useProfile` hook or read from the existing profile query).
-- Two new edge functions: `create-demo-account` (service role, public — no JWT), `delete-demo-account` (service role, admin-only via `has_role`).
-- Admin list view uses a new admin RPC or a direct query gated by `has_role(auth.uid(), 'admin')` since regular RLS on `profiles` allows all authenticated to read — that's fine, admin just needs the extra columns.
-- The demo banner lives in `AppContent` above `<Routes>` and reads `is_test` from the profile cache.
-
-## Out of scope
-
-- Automatic cron deletion (explicitly manual per your answer).
-- Rate limiting on the demo button (can add later if abused; suggest a simple IP-based limit in the edge function if you want).
-- Separate demo-only tutorial overlay.
+- Use `supabase.auth.signInWithOtp` with `shouldCreateUser: false` for existing accounts, verified via `verifyOtp` with `type: "email"`; keep the current `type: "signup"` path for brand-new accounts.
+- Extend `AuthContext` with `sendLoginCode` / `verifyLoginCode`; keep `signIn` for the password fallback.
+- `AuthPage` gains a `code` step alongside the existing `email` / `signin` / `signup` / `verify` steps; the existing email-existence check decides which branch is shown.
+- Confirm email auth and the auth email rate limit are sufficient for code-based sign-in before rollout; raise the hourly limit if it is too low.
+- Check `ResetPasswordPage` against the "require current password" setting and surface the returned error to the user.
