@@ -81,6 +81,8 @@ const AuthPage = () => {
     const m = message.toLowerCase();
     if (m.includes("expired")) return "That code has expired. Request a new one.";
     if (m.includes("invalid")) return "That code isn't right. Please check and try again.";
+    if (m.includes("email rate limit") || m.includes("email send rate"))
+      return "We're sending a lot of emails right now. Try again in a few minutes, or sign in with your password.";
     if (m.includes("rate") || m.includes("too many") || m.includes("security purposes"))
       return "Too many attempts. Please wait a moment before trying again.";
     return message;
@@ -97,7 +99,7 @@ const AuthPage = () => {
       }
       setCodeSent(true);
       setOtp("");
-      setCooldown(30);
+      setCooldown(60);
       toast.success("We sent a 6-digit code to your email.");
     } finally {
       setIsSubmitting(false);
