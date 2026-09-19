@@ -232,7 +232,7 @@ const AuthPage = () => {
 
 
   const headerSubtitle =
-    step === "verify"
+    step === "verify" || step === "code"
       ? "Enter your code"
       : step === "signin"
       ? "Welcome back!"
