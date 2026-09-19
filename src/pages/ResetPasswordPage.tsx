@@ -13,7 +13,6 @@ const ResetPasswordPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ready, setReady] = useState(false);
-  const [linkFailed, setLinkFailed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,18 +29,7 @@ const ResetPasswordPage = () => {
       if (session) setReady(true);
     });
 
-    // If nothing arrives, the link is expired or was already used.
-    const timeout = setTimeout(() => {
-      setReady((r) => {
-        if (!r) setLinkFailed(true);
-        return r;
-      });
-    }, 4000);
-
-    return () => {
-      clearTimeout(timeout);
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,14 +49,7 @@ const ResetPasswordPage = () => {
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
-        const m = error.message.toLowerCase();
-        if (m.includes("current password")) {
-          toast.error("This reset link is no longer valid. Request a new one and open it again.");
-        } else if (m.includes("session") || m.includes("jwt") || m.includes("expired")) {
-          toast.error("Your reset link expired. Request a new one to set your password.");
-        } else {
-          toast.error(error.message);
-        }
+        toast.error(error.message);
       } else {
         toast.success("Password updated! You're now signed in.");
         navigate("/");
@@ -88,24 +69,9 @@ const ResetPasswordPage = () => {
 
         <div className="card-glass rounded-2xl p-6">
           {!ready ? (
-            linkFailed ? (
-              <div className="text-center space-y-4">
-                <p className="text-foreground">
-                  This reset link didn't work — it may have expired or already been used.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => navigate("/auth")}
-                  className="text-sm text-primary font-medium hover:underline"
-                >
-                  Sign in with an email code instead
-                </button>
-              </div>
-            ) : (
-              <p className="text-center text-muted-foreground">
-                Validating reset link...
-              </p>
-            )
+            <p className="text-center text-muted-foreground">
+              Validating reset link...
+            </p>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
