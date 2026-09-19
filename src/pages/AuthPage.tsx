@@ -42,6 +42,12 @@ const AuthPage = () => {
   }, [showContent]);
 
   useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(t);
+  }, [cooldown]);
+
+  useEffect(() => {
     if (user) {
       localStorage.removeItem(PENDING_EMAIL_KEY);
       navigate("/");
@@ -63,11 +69,58 @@ const AuthPage = () => {
         return;
       }
       setPassword("");
-      setStep(exists ? "signin" : "signup");
+      setOtp("");
+      setCodeSent(false);
+      setStep(exists ? "code" : "signup");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const describeCodeError = (message: string) => {
+    const m = message.toLowerCase();
+    if (m.includes("expired")) return "That code has expired. Request a new one.";
+    if (m.includes("invalid")) return "That code isn't right. Please check and try again.";
+    if (m.includes("rate") || m.includes("too many") || m.includes("security purposes"))
+      return "Too many attempts. Please wait a moment before trying again.";
+    return message;
+  };
+
+  const handleSendCode = async () => {
+    if (cooldown > 0) return;
+    setIsSubmitting(true);
+    try {
+      const { error } = await sendLoginCode(email);
+      if (error) {
+        toast.error(describeCodeError(error.message));
+        return;
+      }
+      setCodeSent(true);
+      setOtp("");
+      setCooldown(30);
+      toast.success("We sent a 6-digit code to your email.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleVerifyLogin = async (code: string) => {
+    if (code.length !== 6) return;
+    setIsSubmitting(true);
+    try {
+      const { error } = await verifyLoginCode(email, code);
+      if (error) {
+        toast.error(describeCodeError(error.message || "Invalid or expired code"));
+        setOtp("");
+      } else {
+        localStorage.removeItem(PENDING_EMAIL_KEY);
+        toast.success("Welcome, push Buddy!");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
