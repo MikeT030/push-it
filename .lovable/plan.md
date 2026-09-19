@@ -1,84 +1,66 @@
-# Turning Push-it into a native iOS app
+# A proper "here's your sign-in code" email
 
-## Short answer
+## What you'll get
 
-Yes. The cleanest route is to keep this app exactly as it is and wrap it in a native shell with Capacitor, then publish that shell to the App Store. Nothing gets rewritten: your screens, your database, your group all stay put. The shell is what makes it a real app — an icon on the phone, its own install, its own entry in the store, and access to things a browser can't touch (notifications, haptics, the native share sheet).
-
-Two things are unavoidable and worth knowing up front:
-
-- An Apple Developer account costs $99 a year.
-- The final build, signing and upload must run on a Mac with Xcode. I can prepare everything up to that point, but I cannot press "upload to Apple" from here.
-
-## Path A and Path B
-
-Path A is a one-line upgrade you already half-have: the app installs from Safari via Share → Add to Home Screen, gets the icon you already made, and opens full-screen. It costs nothing, takes minutes, and is not reversible damage if you later choose B. What it cannot do is send push notifications — iOS web apps don't receive them — and it can't be listed in the App Store.
-
-Path B is the real thing. Recommended if the goal is "it's in the store, my group downloads it like any app."
+Right now the sign-in code arrives in an email titled "Sign in to your account" that only contains a link — the six digits you actually type are hidden inside it. The new one says what's happening and shows the code itself.
 
 ```text
-Path A  browser ──> your website ──> home-screen shortcut   (minutes, $0, no store)
-Path B  App Store ──> native shell ──> your website inside it
-                                      (days, $99/yr, Apple reviews it)
+Push it
+
+Your sign-in code
+
+ 4   8   2   1   9   6
+
+Use this code to finish signing in. It works on this
+device only and can be used once.
+
+Didn't ask for a code? Nothing has happened to your
+account — just delete this email.
 ```
 
-## Before I build anything: three decisions
+Subject line becomes "Your Push-it sign-in code" so it's findable in a crowded inbox. The code is drawn as six large, evenly spaced digits in its own bordered box, so it's readable at a glance on a lock-screen preview and easy to tap-read while typing.
 
-1. Notifications yes or no. This is the single strongest argument Apple accepts that your app is more than a website. Daily "you haven't pushed today" reminders and "someone passed you" alerts are the natural fit here.
-2. TestFlight first, then the store. TestFlight is Apple's private beta: your group installs it in a minute from a link, no review wait. I'd use it for a week before submitting.
-3. Should the app keep working with no signal? Right now a dead connection means a blank screen and lost taps. Caching the last-known numbers plus a queue for pending push-ups is a real feature, not a nicety.
+## The one thing standing in the way
 
-## Phase 1 — the shell
+Custom auth emails can only be created once the project sends from a domain you own — there is no shared or provided sender domain, and nothing can be built against a domain you don't have. Your project has no email domain configured today, so the custom templates can't be created yet.
 
-Add Capacitor to this project, name the app `push-it`, give it a bundle id under `app.lovable`, and point it at the running preview so the shell hot-reloads as you work. Then generate the iOS project. At this stage the app opens your site full-screen on a phone with no browser bar.
+That's the same missing piece as the two-emails-an-hour cap we hit while testing sign-in codes, so one setup clears both: the branded email and a real sending allowance.
 
-## Phase 2 — make it app-like enough to survive review
+## Steps
 
-This is the part most people skip and then get rejected for. Apple's rule 4.2 says an app must offer something a browser doesn't; a bare website in a box is rejected as "a repackaged website" [4](https://appcompliance.io/blog/apple-guideline-4-2-minimum-functionality/), and push notifications or sharing alone are explicitly called out as not enough on their own [5](https://www.technetexperts.com/guideline-4-2-minimum-functionality/). So the shell gets real native wiring:
+1. **Connect a domain** — you pick a domain you own and already pay for, the setup hands you a couple of records to paste at your DNS provider, and the sender address becomes something like `no-reply@yourdomain.com`.
+2. **Create the auth email templates** — this adds the six auth emails (sign-in code, sign-up code, password reset, invite, email change, reauthentication) plus the sending hook, all wired to your new domain.
+3. **Restyle them to the app** — Push-it wording and colours, teal accents, the muscle mark as the header. Emails keep a light background even though the app is dark; that's what mail clients render reliably.
+4. **Show the code in the sign-in email** — the code is already in the data the backend hands over when it asks for an email to be sent [1](https://supabase.com/docs/guides/auth/auth-hooks/send-email-hook), and Supabase's own template system exposes the same six-digit value [2](https://supabase.com/docs/guides/auth/auth-email-templates), so this is a rendering change, not a new mechanism.
+5. **Deploy and test** — request a code on the sign-in page, read the real email, confirm the digits match and that signing in works, then repeat for sign-up and password reset.
 
-- Push notifications with a daily nudge and leaderboard alerts.
-- The system share sheet instead of the browser's, plus copy-to-clipboard fallback (your share button already does both, so this is a swap, not a redesign).
-- Haptics: a tap on the + buttons and a buzz when a goal is hit.
-- A proper launch screen, generated icon set, and no pull-to-refresh or text-selection artefacts.
-- Offline cache of the last numbers and a queue for taps made without signal.
+## Wording I'd use
 
-## Phase 3 — sign-in links that land in the app
+- Subject: `Your Push-it sign-in code`
+- Heading: `Your sign-in code`
+- Above the code: `Enter these six digits to finish signing in.`
+- Under the code: `The code works on this device only and can be used once. If it doesn't arrive, request a new one after a minute.`
+- Footer: `Didn't ask for a code? Nothing has happened to your account — just delete this email.`
+- No marketing, no links to anything else. The email does one job.
 
-Your sign-in codes, email confirmations and password resets currently point at web addresses (`/auth/callback`, `/reset-password`). Inside a native shell, a tap on one of those links would bounce into Safari and lose the session. This phase adds Apple's "universal links" so those emails open in the app instead, with the browser version still working for everyone who uses the site.
+## Two choices to make
 
-## Phase 4 — ship
+1. **Code only, or code plus a button?** Code only is the tighter story and matches how the app actually signs you in. A second "sign in now" link is a convenience for someone reading it on a different device, but it also invites phishing-style confusion. My suggestion: code only for sign-in, and keep the link for password reset where a code isn't used.
+2. **Do the other emails in the same pass?** The sign-up confirmation also sends a six-digit code, so it should look identical. Password reset and the rest would get the same header and footer. Doing them all now costs very little extra and avoids a half-branded set.
 
-Build on the Mac, upload, fill in the store listing (description, screenshots at the required sizes, a privacy label saying what data you collect, a privacy policy page, support URL), then submit. First submission usually draws a question or two; the answers are template replies.
+## What doesn't change
 
-## What I can do here, and what needs you
+Password sign-in stays available as the fallback, the "resend code" wait stays at 60 seconds, and nobody gets locked out for a wrong code. Nothing about the app's screens moves.
 
-```text
-Me, in this project        You, once           Me again
-- Capacitor setup          - Mac + Xcode       - npx cap sync after each pull
-- icon + splash sets       - $99 developer     - debug on the real device
-- notification wiring        account           - store listing copy
-- universal links          - App Store Connect
-- offline cache                                - final upload
-```
+## Rough effort
 
-After every pull of this repo you'd run `npx cap sync` to refresh the shell.
-
-## Rough cost and time
-
-$99/year to Apple, plus your existing plan. The wrapper and native wiring is a day or two of work here; the Mac steps are a few hours of following instructions; Apple's review is typically a day or two, longer if they ask questions.
-
-## Risks
-
-- Review rejection under 4.2 if the app is too thin. Mitigated by Phase 2 — that's exactly what it's for.
-- Notifications need an Apple push key and a small server-side piece; if that stalls, the app still ships without them.
-- Anyone who already added the site to their home screen keeps that shortcut; the store app is a separate install.
-- The store app and the website must stay in sync; a change here isn't in the store until a new build is uploaded and reviewed.
+Domain setup is a few minutes of yours plus DNS propagation, which varies from minutes to a few hours. Templates, styling and testing are one working session here. Until DNS verifies, the default emails keep going out, so nobody is left without a code.
 
 ## Technical details
 
-- Current state (verified): no web app manifest and no install metadata beyond `theme-color` and `apple-touch-icon` in `index.html`; no Capacitor or service-worker code anywhere in the project.
-- Dependencies: `@capacitor/core`, `@capacitor/ios`, `@capacitor/android`, `@capacitor/cli` (dev only), plus `@capacitor/push-notifications`, `@capacitor/share`, `@capacitor/haptics`, `@capacitor/app`, `@capacitor/splash-screen`.
-- `capacitor.config.json`: `appName: "push-it"`, `appID: "app.lovable.f4b487714b41458f9c7931787b179ae0"`, `webDir: "dist"`, and a `server.url` pointing at the preview (`https://f4b48771-4b41-458f-9c79-31787b179ae0.lovableproject.com?forceHideBadge=true`, `cleartext: true`) for hot-reload while developing — emptied before release so the app ships with the bundled build.
-- Device steps: export to GitHub, `npm install`, `npx cap add ios`, `npx cap update ios`, `npm run build`, `npx cap sync`, `npx cap run ios`.
-- Auth: `emailRedirectTo` and `redirectTo` values in `src/contexts/AuthContext.tsx` and `src/pages/ForgotPasswordPage.tsx` move from `window.location.origin` to a configured universal-link host, with an associated-domains Apple App ID prefix file served from the site.
-- Local storage today holds the share toggle (`share-button-enabled`), the demo flag, the pending email and the splash flag; in the shell these live in the app's own web data store, so they persist per install but do not carry over from a browser session.
-- Mini-games already use canvas and `requestAnimationFrame`, which run fine inside the shell; safe-area insets are already handled in `index.css`.
+- Verified current state: no email domain configured, no auth email templates or sending hook in the project, and the code email is triggered by `signInWithOtp` in `src/contexts/AuthContext.tsx` (verified: `sendLoginCode` at line 77, `verifyLoginCode` using `verifyOtp` at line 86).
+- Once a domain is active, scaffolding creates the sending hook plus six React Email templates under the shared functions folder, and the templates must be deployed as a function to take effect.
+- The payload that triggers an auth email carries the six-digit code as `email_data.token` alongside the link and redirect target [1](https://supabase.com/docs/guides/auth/auth-hooks/send-email-hook); the sign-in template will render `token` as the digit box and stop relying on the confirmation link.
+- Email body background stays white with brand accents inside, for mail-client compatibility, even though the app itself is dark.
+- The expiry line will state whatever the backend actually enforces — I'll confirm the real window before writing it rather than guessing "10 minutes".
+- The native iOS app plan is untouched and parked; it can be picked up again after this.
