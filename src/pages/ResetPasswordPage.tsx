@@ -61,7 +61,14 @@ const ResetPasswordPage = () => {
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
-        toast.error(error.message);
+        const m = error.message.toLowerCase();
+        if (m.includes("current password")) {
+          toast.error("This reset link is no longer valid. Request a new one and open it again.");
+        } else if (m.includes("session") || m.includes("jwt") || m.includes("expired")) {
+          toast.error("Your reset link expired. Request a new one to set your password.");
+        } else {
+          toast.error(error.message);
+        }
       } else {
         toast.success("Password updated! You're now signed in.");
         navigate("/");
