@@ -1,65 +1,60 @@
+# Groups: from one global team to many
 
-# Demo / Test Area
+Today there is no notion of a team in the data — everyone who signs in is compared against every other account (the only separation is the demo/real flag). To ship this as a real app, the team has to become a thing people create, own, and invite into.
 
-Goal: let anyone try the app with full functionality without polluting real stats. Test users are sandboxed from real users, and admins delete expired accounts manually from `/admin`.
+Below is a concrete proposal using sensible defaults. Say the word on any point and I'll adjust before we build.
 
-## 1. Mark test accounts
+## The defaults I'd pick
 
-Add `is_test boolean not null default false` to `profiles`. Every real signup stays `false`; only the demo entry point creates `true` accounts. A single flag drives isolation, auth restrictions, and admin cleanup.
+- **One active group per person, but you can belong to several.** A switcher in the header changes which team's leaderboard, group chart and overviews you see. Personal stats (You Push) stay the same no matter the team.
+- **Invite link / code first.** The owner creates a group and shares a link like `push-it.app/join/AB7K2Q`. Opening it while signed in shows "Join *Morning Crew*?" and one tap joins. No approval queue for links.
+- **Optional public discovery.** A group can be flagged public; new users see a short list and can send a join request the owner approves. Off by default so nobody's private team gets strangers.
+- **Member limit set by the owner, default 30, hard max 100.** Keeps leaderboards readable and podium/overview screens from breaking.
+- **New users must create or join a group** before reaching the app — it becomes a step in the existing welcome flow, right before picking the yearly goal.
 
-## 2. "Try demo" entry point
+## What changes in the app
 
-On `/auth` (email step), add a secondary "Try the demo" button under the primary CTA.
+**New: Create group screen** — name, optional member limit, then lands you in the group as owner with the invite link ready to copy/share.
 
-Tapping it calls a new edge function `create-demo-account` that:
-- Generates a random email like `demo+<uuid>@pushit.demo` and a random password.
-- Creates the auth user via service role, `email_confirm: true` (no OTP).
-- Sets `profiles.is_test = true`, `display_name = "Demo <4-char>"`, `onboarded = true`, `goal_set_year = current year`, `yearly_goal = 30000` so the user lands straight on `/` without the welcome gate.
-- Returns the email + password to the client, which signs in with them.
+**New: Join screen** — enter a code, open an invite link, or browse public groups and request to join.
 
-Users see a persistent banner on every page: "Demo account — expires in N days. Nothing is saved to the leaderboard." (N computed from `created_at + 5`.)
+**New: Group switcher** — a small control in the We Push header showing the current team name; tapping it lists your teams plus "Create" and "Join".
 
-## 3. Sandboxing (test users only see other test users)
+**New: Group settings** (owner only) — rename, change the limit, regenerate the invite code, approve/reject pending requests, remove a member, transfer ownership, delete the group.
 
-Everywhere the app aggregates across users, filter by `is_test` matching the current viewer's flag. Concretely:
+**Changed: We Push page** — leaderboard, daily/weekly overviews, group goal chart and group averages all scope to the active group instead of everyone.
 
-- `useGroupData` / `useGroupEntries`: join `profiles` and filter `is_test = <viewer.is_test>`.
-- Leaderboard (`LeaderboardPodium`, `GroupPage`): same filter.
-- Group goal chart, group averages, daily/weekly group overviews: same filter.
-- Past challenges: same filter.
-- Avatar "taken" grayscale check in `AvatarSelector`: only within the same cohort.
+**Changed: Profile page** — lists your teams with a "Leave" action.
 
-Real users never see demo data; demo users see a parallel leaderboard populated only by other active demo accounts.
+**Unchanged: You Push and Daily pages** — your own numbers and calendar are personal and stay as they are.
 
-## 4. Block real signup path for demo, and vice versa
+## Things worth deciding now, because they're painful later
 
-- `check-email-exists` and normal signup keep working for real users.
-- Demo emails use the `@pushit.demo` domain, which the real signup form rejects client-side to avoid confusion.
-- Signed-in demo users cannot change their email (hide the field in profile).
-
-## 5. Admin cleanup UI
-
-On `/admin`, new card **"Demo accounts"** below the existing admin sections:
-- Lists all `profiles` where `is_test = true` with columns: display name, created date, days remaining (5 - age), total push-ups logged.
-- Red "Delete" button per row. Confirms, then calls new edge function `delete-demo-account` which deletes the `auth.users` row (cascades to `profiles`, `push_up_entries`, `user_roles`).
-- "Delete all expired" bulk button for rows past 5 days.
-
-No automatic cron — admin decides when.
-
-## 6. Expiry behavior
-
-Login is not blocked after 5 days — the account just sits there until an admin removes it. The banner keeps counting down (into negative "expired" state) so the admin sees stale accounts and the user knows.
+- **Yearly goal is per person, not per group.** A group goal stays the sum of members' goals, as it works today. If you ever want "this team aims at 500k together", that's a different model — better to decide before people have history.
+- **Leaving a group.** I'd keep your entries (they're yours) and simply remove you from that team's rankings, with no backfill of past weeks.
+- **Joining mid-year.** You appear in the leaderboard with your full year-to-date total. The alternative — counting only from join date — makes the group chart lie about totals. I'd go with full totals.
+- **The existing crowd.** Everyone currently in the app gets migrated into one group, "Push It", with you as owner, so nothing visibly breaks on release day.
+- **Demo accounts.** Each demo signup gets its own throwaway group so demo users never see or pollute a real team.
 
 ## Technical notes
 
-- Migration: `alter table profiles add column is_test boolean not null default false;` plus updated RLS/queries. No new tables.
-- Filtering pattern: change `useGroupEntries` to fetch `profiles(is_test)` alongside entries, then filter in JS by the current user's flag (cached in `AuthContext` via a `useProfile` hook or read from the existing profile query).
-- Two new edge functions: `create-demo-account` (service role, public — no JWT), `delete-demo-account` (service role, admin-only via `has_role`).
-- Admin list view uses a new admin RPC or a direct query gated by `has_role(auth.uid(), 'admin')` since regular RLS on `profiles` allows all authenticated to read — that's fine, admin just needs the extra columns.
-- The demo banner lives in `AppContent` above `<Routes>` and reads `is_test` from the profile cache.
+- New tables: `groups` (name, owner, invite_code, member_limit, is_public), `group_members` (group_id, user_id, role, joined_at), `group_join_requests` (group_id, user_id, status).
+- `profiles` gets `active_group_id` so the app knows which team to render.
+- Access rules: membership checked through a security-definer function (same pattern as the existing role check) to avoid recursive policy loops; group data readable only by members, writable only by the owner.
+- Member-limit enforcement and invite-code redemption run in a database function / edge function so the cap can't be bypassed from the client.
+- `useGroupData`, `useGroupEntries`, `useGroupProfiles`, `useGroupUserProgress` and the `user_progress` view all take the active group id instead of the demo cohort flag; the demo flag stays as a second-level guard.
+- A one-off data migration creates the legacy group and adds every existing non-demo profile to it.
 
-## Out of scope
+## Suggested build order
 
-- Automatic cron deletion (explicitly manual per your answer).
-- Rate limiting on the demo button (can add later if abused; suggest a simple IP-based limit in the edge function if you want).
-- Separate demo-only tutorial overlay.
+1. Schema, access rules, and the migration of today's users into one group.
+2. Scope the We Push page and all group hooks to the active group.
+3. Create / join / invite-link flows and the welcome-flow gate for new users.
+4. Group switcher and group settings, including requests and member removal.
+5. Public discovery and join requests (can ship after launch).
+
+## Out of scope for now
+
+- Group-level shared goals and group-vs-group competition.
+- Chat or comments inside a group.
+- Push notifications for invites and requests.
