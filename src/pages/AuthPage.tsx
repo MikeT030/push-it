@@ -291,6 +291,103 @@ const AuthPage = () => {
             </form>
           )}
 
+          {step === "code" && (
+            <div className="space-y-5">
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Email</label>
+                <div className="mt-1.5 flex items-center justify-between text-sm h-12 border-b border-[#EEEEEE] mb-[20px]">
+                  <span className="text-foreground truncate">{email}</span>
+                  <button
+                    type="button"
+                    onClick={resetToEmail}
+                    className="text-muted-foreground hover:text-primary hover:underline shrink-0 ml-2"
+                  >
+                    Change
+                  </button>
+                </div>
+              </div>
+
+              {!codeSent ? (
+                <>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isSubmitting}
+                    onClick={handleSendCode}
+                    className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white disabled:opacity-50"
+                  >
+                    {isSubmitting ? "Sending..." : "Email me a code"}
+                  </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    No password needed — we'll send a 6-digit code.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-muted-foreground text-center">
+                    We sent a 6-digit code to{" "}
+                    <span className="text-foreground font-medium">{email}</span>.
+                  </p>
+
+                  <div className="flex justify-center">
+                    <InputOTP
+                      maxLength={6}
+                      value={otp}
+                      onChange={(v) => {
+                        setOtp(v);
+                        if (v.length === 6) handleVerifyLogin(v);
+                      }}
+                      disabled={isSubmitting}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </div>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isSubmitting || otp.length !== 6}
+                    onClick={() => handleVerifyLogin(otp)}
+                    className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white disabled:opacity-50"
+                  >
+                    {isSubmitting ? "Verifying..." : "Sign In"}
+                  </Button>
+
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={handleSendCode}
+                      disabled={isSubmitting || cooldown > 0}
+                      className="text-sm text-muted-foreground hover:text-primary hover:underline disabled:opacity-50"
+                    >
+                      {cooldown > 0 ? `Resend code in ${cooldown}s` : "Resend code"}
+                    </button>
+                  </div>
+                </>
+              )}
+
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStep("signin");
+                    setOtp("");
+                  }}
+                  className="text-sm text-white underline decoration-white hover:text-primary"
+                >
+                  Use password instead
+                </button>
+              </div>
+            </div>
+          )}
+
           {(step === "signin" || step === "signup") && (
             <form
               onSubmit={step === "signin" ? handleSignIn : handleCreateAccount}
