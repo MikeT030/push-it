@@ -15,7 +15,7 @@ const passwordSchema = z.string().min(6, "Password must be at least 6 characters
 
 const PENDING_EMAIL_KEY = "pushit:pendingSignupEmail";
 
-type Step = "email" | "signin" | "signup" | "verify";
+type Step = "email" | "code" | "signin" | "signup" | "verify";
 
 const AuthPage = () => {
   const [step, setStep] = useState<Step>("email");
@@ -24,8 +24,10 @@ const AuthPage = () => {
   const [otp, setOtp] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const [showContent, setShowContent] = useState(() => sessionStorage.getItem("splashShown") === "true");
-  const { signIn, signUp, verifySignupOtp, resendSignupOtp, checkEmailExists, user } = useAuth();
+  const { signIn, signUp, verifySignupOtp, resendSignupOtp, sendLoginCode, verifyLoginCode, checkEmailExists, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +40,12 @@ const AuthPage = () => {
     }, 100);
     return () => clearInterval(interval);
   }, [showContent]);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(t);
+  }, [cooldown]);
 
   useEffect(() => {
     if (user) {
@@ -61,11 +69,58 @@ const AuthPage = () => {
         return;
       }
       setPassword("");
-      setStep(exists ? "signin" : "signup");
+      setOtp("");
+      setCodeSent(false);
+      setStep(exists ? "code" : "signup");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const describeCodeError = (message: string) => {
+    const m = message.toLowerCase();
+    if (m.includes("expired")) return "That code has expired. Request a new one.";
+    if (m.includes("invalid")) return "That code isn't right. Please check and try again.";
+    if (m.includes("rate") || m.includes("too many") || m.includes("security purposes"))
+      return "Too many attempts. Please wait a moment before trying again.";
+    return message;
+  };
+
+  const handleSendCode = async () => {
+    if (cooldown > 0) return;
+    setIsSubmitting(true);
+    try {
+      const { error } = await sendLoginCode(email);
+      if (error) {
+        toast.error(describeCodeError(error.message));
+        return;
+      }
+      setCodeSent(true);
+      setOtp("");
+      setCooldown(30);
+      toast.success("We sent a 6-digit code to your email.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleVerifyLogin = async (code: string) => {
+    if (code.length !== 6) return;
+    setIsSubmitting(true);
+    try {
+      const { error } = await verifyLoginCode(email, code);
+      if (error) {
+        toast.error(describeCodeError(error.message || "Invalid or expired code"));
+        setOtp("");
+      } else {
+        localStorage.removeItem(PENDING_EMAIL_KEY);
+        toast.success("Welcome, push Buddy!");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -177,7 +232,7 @@ const AuthPage = () => {
 
 
   const headerSubtitle =
-    step === "verify"
+    step === "verify" || step === "code"
       ? "Enter your code"
       : step === "signin"
       ? "Welcome back!"
@@ -236,6 +291,103 @@ const AuthPage = () => {
             </form>
           )}
 
+          {step === "code" && (
+            <div className="space-y-5">
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Email</label>
+                <div className="mt-1.5 flex items-center justify-between text-sm h-12 border-b border-[#EEEEEE] mb-[20px]">
+                  <span className="text-foreground truncate">{email}</span>
+                  <button
+                    type="button"
+                    onClick={resetToEmail}
+                    className="text-muted-foreground hover:text-primary hover:underline shrink-0 ml-2"
+                  >
+                    Change
+                  </button>
+                </div>
+              </div>
+
+              {!codeSent ? (
+                <>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isSubmitting}
+                    onClick={handleSendCode}
+                    className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white disabled:opacity-50"
+                  >
+                    {isSubmitting ? "Sending..." : "Email me a code"}
+                  </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    No password needed — we'll send a 6-digit code.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-muted-foreground text-center">
+                    We sent a 6-digit code to{" "}
+                    <span className="text-foreground font-medium">{email}</span>.
+                  </p>
+
+                  <div className="flex justify-center">
+                    <InputOTP
+                      maxLength={6}
+                      value={otp}
+                      onChange={(v) => {
+                        setOtp(v);
+                        if (v.length === 6) handleVerifyLogin(v);
+                      }}
+                      disabled={isSubmitting}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </div>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isSubmitting || otp.length !== 6}
+                    onClick={() => handleVerifyLogin(otp)}
+                    className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white disabled:opacity-50"
+                  >
+                    {isSubmitting ? "Verifying..." : "Sign In"}
+                  </Button>
+
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={handleSendCode}
+                      disabled={isSubmitting || cooldown > 0}
+                      className="text-sm text-muted-foreground hover:text-primary hover:underline disabled:opacity-50"
+                    >
+                      {cooldown > 0 ? `Resend code in ${cooldown}s` : "Resend code"}
+                    </button>
+                  </div>
+                </>
+              )}
+
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStep("signin");
+                    setOtp("");
+                  }}
+                  className="text-sm text-white underline decoration-white hover:text-primary"
+                >
+                  Use password instead
+                </button>
+              </div>
+            </div>
+          )}
+
           {(step === "signin" || step === "signup") && (
             <form
               onSubmit={step === "signin" ? handleSignIn : handleCreateAccount}
@@ -282,13 +434,27 @@ const AuthPage = () => {
               </Button>
 
               {step === "signin" && (
-                <div className="text-center">
-                  <Link
-                    to="/forgot-password"
-                    className="text-sm text-white underline decoration-white hover:text-primary"
-                  >
-                    Forgot password?
-                  </Link>
+                <div className="text-center space-y-2">
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStep("code");
+                        setPassword("");
+                      }}
+                      className="text-sm text-white underline decoration-white hover:text-primary"
+                    >
+                      Email me a code instead
+                    </button>
+                  </div>
+                  <div>
+                    <Link
+                      to="/forgot-password"
+                      className="text-sm text-muted-foreground underline hover:text-primary"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
                 </div>
               )}
             </form>
