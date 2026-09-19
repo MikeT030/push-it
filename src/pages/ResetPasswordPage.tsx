@@ -13,6 +13,7 @@ const ResetPasswordPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ready, setReady] = useState(false);
+  const [linkFailed, setLinkFailed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {

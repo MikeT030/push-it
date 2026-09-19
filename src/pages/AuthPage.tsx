@@ -434,13 +434,27 @@ const AuthPage = () => {
               </Button>
 
               {step === "signin" && (
-                <div className="text-center">
-                  <Link
-                    to="/forgot-password"
-                    className="text-sm text-white underline decoration-white hover:text-primary"
-                  >
-                    Forgot password?
-                  </Link>
+                <div className="text-center space-y-2">
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStep("code");
+                        setPassword("");
+                      }}
+                      className="text-sm text-white underline decoration-white hover:text-primary"
+                    >
+                      Email me a code instead
+                    </button>
+                  </div>
+                  <div>
+                    <Link
+                      to="/forgot-password"
+                      className="text-sm text-muted-foreground underline hover:text-primary"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
                 </div>
               )}
             </form>
