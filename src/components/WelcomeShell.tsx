@@ -25,6 +25,8 @@ export type WelcomeShellProps = {
   successToast?: string;
   onConfirmRedirect?: string;
   contentOffsetY?: number;
+  /** The goal just reached — marked as celebrated when the user confirms a new goal. */
+  celebratedGoal?: number;
 };
 
 const DEFAULT_INFO = (
@@ -45,6 +47,7 @@ const WelcomeShell = ({
   successToast = "Goal locked in. Let's push!",
   onConfirmRedirect = "/",
   contentOffsetY = 0,
+  celebratedGoal,
 }: WelcomeShellProps) => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -103,6 +106,7 @@ const WelcomeShell = ({
           yearly_goal: goal,
           onboarded: true,
           goal_set_year: new Date().getFullYear(),
+          ...(celebratedGoal ? { celebrated_goal: celebratedGoal } : {}),
         })
         .eq("id", user.id);
       if (error) {

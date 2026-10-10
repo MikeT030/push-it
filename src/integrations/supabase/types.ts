@@ -39,6 +39,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           card_theme: string
+          celebrated_goal: number
           created_at: string
           display_name: string | null
           goal_set_year: number | null
@@ -51,6 +52,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           card_theme?: string
+          celebrated_goal?: number
           created_at?: string
           display_name?: string | null
           goal_set_year?: number | null
@@ -63,6 +65,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           card_theme?: string
+          celebrated_goal?: number
           created_at?: string
           display_name?: string | null
           goal_set_year?: number | null
