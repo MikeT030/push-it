@@ -8,6 +8,20 @@
       "when": 1791614046726,
       "tag": "0000_add_celebrated_goal_to_profiles",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791616427655,
+      "tag": "0001_create_completed_goal_history",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791616606186,
+      "tag": "0002_preserve_goal_completion_overage",
+      "breakpoints": true
     }
   ]
 }

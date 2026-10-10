@@ -1,173 +1,39 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Trophy } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import smallCircleIcon from "@/assets/small-circle-icon.svg";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-
-type PastChallenge = {
-  year: number;
-  total: number;
-  goal: number;
-  period: string;
-  daysLogged: number;
-  bestStreak: number;
-  bestDayDate: string;
-  bestDayCount: number;
-  avgDayOfWeek: string;
-};
-
-// Demo data — first (and so far only) completed challenge.
-const PAST_CHALLENGES: PastChallenge[] = [
-  {
-    year: 2025,
-    total: 31420,
-    goal: 30000,
-    period: "Jan 1 – Dec 31, 2025",
-    daysLogged: 312,
-    bestStreak: 84,
-    bestDayDate: "Jul 14, 2025",
-    bestDayCount: 520,
-    avgDayOfWeek: "Wednesday",
-  },
-];
+import PastChallengesContent from "@/components/PastChallengesContent";
 
 const PastChallengesPage = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
-      <div className="w-full max-w-sm animate-fade-in mt-10" style={{ transform: "translateY(-12px)" }}>
-        {/* Back */}
+      <div className="w-full max-w-sm animate-fade-in mt-10 -translate-y-3">
         <div className="mb-2 -ml-2">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="h-10 w-10 border border-white text-white hover:bg-white hover:text-black active:bg-white active:text-black"
+            className="h-10 w-10 border border-foreground text-foreground hover:bg-foreground hover:text-background"
             aria-label="Back"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
         </div>
 
-        {/* Header */}
-        <div className="text-center mb-8 flex flex-col items-center">
+        <header className="text-center mb-8 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
-          <h1 className="font-black text-white text-2xl">Past Challenges</h1>
+          <h1 className="font-black text-foreground text-2xl">Past Challenges</h1>
           <p className="text-muted-foreground mt-2 text-sm">
-            Every year you push gets archived here.
+            Every goal you reach gets archived here.
           </p>
-        </div>
+        </header>
 
-        {/* Challenge list */}
-        <div className="space-y-3">
-          {PAST_CHALLENGES.map((c) => {
-            const progressPercent = Math.round((c.total / c.goal) * 100);
-            const hitGoal = c.total >= c.goal;
-            const avgPu = Math.round(c.total / c.daysLogged);
-            return (
-              <div
-                key={c.year}
-                className="w-full rounded-2xl p-4 border border-[#3B404F] bg-card/40"
-              >
-                {/* Top row */}
-                <div className="flex items-baseline justify-between mb-3">
-                  <span className="text-lg text-white">
-                    <span className="font-bold">{c.year}</span>
-                  </span>
-                  <span
-                    className={
-                      hitGoal
-                        ? "text-xs text-[#0ABAB5] flex items-center gap-1"
-                        : "text-xs text-muted-foreground flex items-center gap-1"
-                    }
-                  >
-                    {hitGoal && <Trophy className="w-3 h-3" />}
-                    <span className="font-bold">{progressPercent}%</span> of goal
-                  </span>
-                </div>
-
-                {/* Total */}
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">Total</span>
-                  <span className="text-sm text-white">
-                    <span className="font-bold">{c.total.toLocaleString()}</span> PU
-                  </span>
-                </div>
-
-                {/* Goal */}
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">Goal</span>
-                  <span className="text-sm text-white">
-                    <span className="font-bold">{c.goal.toLocaleString()}</span> PU
-                  </span>
-                </div>
-
-                {/* Period */}
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">Period</span>
-                  <span className="text-sm text-white">
-                    <span className="font-bold">{c.period}</span>
-                  </span>
-                </div>
-                <div className="border-b border-[#3B404F] mb-2" />
-
-                {/* Average push-ups */}
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">Average push-ups</span>
-                  <span className="text-sm text-white">
-                    <span className="font-bold">{avgPu.toLocaleString()}</span> PU
-                  </span>
-                </div>
-
-                {/* Most PU on a day */}
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">Most PU on a day</span>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span className="text-sm text-white font-bold cursor-pointer">{c.bestDayCount} PU</span>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <span>{c.bestDayDate}</span>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-
-                {/* Your Push-Up day */}
-                <div className="flex items-baseline justify-between mb-2">
-                  <div className="flex flex-col">
-                    <span className="text-xs text-muted-foreground">Your Push-Up day</span>
-                    <span className="text-xs text-muted-foreground">on average</span>
-                  </div>
-                  <span className="text-sm text-white">
-                    <span className="font-bold">{c.avgDayOfWeek}</span>
-                  </span>
-                </div>
-
-                {/* Days logged */}
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">Days logged</span>
-                  <span className="text-sm text-white">
-                    <span className="font-bold">{c.daysLogged}</span>d
-                  </span>
-                </div>
-
-                {/* Best streak */}
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs text-muted-foreground">Best streak</span>
-                  <span className="text-sm text-white">
-                    <span className="font-bold">{c.bestStreak}</span>d
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <PastChallengesContent />
 
         <p className="text-center text-muted-foreground/50 text-xs mt-8">
-          Your story, one year at a time.
+          Your story, one goal at a time.
         </p>
       </div>
     </div>

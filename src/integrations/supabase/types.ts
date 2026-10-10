@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      completed_goal_history: {
+        Row: {
+          average_day_of_week: number | null
+          average_pushups: number
+          best_day_count: number
+          best_day_date: string | null
+          best_streak: number
+          challenge_year: number
+          completed_at: string
+          created_at: string
+          days_logged: number
+          goal: number
+          id: string
+          period_end: string
+          period_start: string
+          total_at_completion: number
+          user_id: string
+        }
+        Insert: {
+          average_day_of_week?: number | null
+          average_pushups?: number
+          best_day_count?: number
+          best_day_date?: string | null
+          best_streak?: number
+          challenge_year: number
+          completed_at: string
+          created_at?: string
+          days_logged?: number
+          goal: number
+          id?: string
+          period_end: string
+          period_start: string
+          total_at_completion: number
+          user_id: string
+        }
+        Update: {
+          average_day_of_week?: number | null
+          average_pushups?: number
+          best_day_count?: number
+          best_day_date?: string | null
+          best_streak?: number
+          challenge_year?: number
+          completed_at?: string
+          created_at?: string
+          days_logged?: number
+          goal?: number
+          id?: string
+          period_end?: string
+          period_start?: string
+          total_at_completion?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "completed_goal_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "completed_goal_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_progress"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       counter_activities: {
         Row: {
           created_at: string
@@ -141,6 +210,10 @@ export type Database = {
       }
     }
     Functions: {
+      complete_goal_and_set_next: {
+        Args: { _next_goal: number; _reached_goal: number }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
