@@ -269,6 +269,21 @@ const ProfilePage = () => {
           </div>
         </div>
 
+        {/* Recalibrate Goal Card */}
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.02s" }}>
+          <h2 className="text-lg text-foreground font-semibold mb-[6px]">Your goal</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Currently aiming for <span className="text-foreground font-semibold">{yearlyGoal.toLocaleString()}</span> push-ups this year.
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/welcome-recalibrate")}
+            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
+          >
+            Recalibrate Your Goal
+          </Button>
+        </div>
+
         {/* Share Toggle Card */}
         <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.02s" }}>
           <div className="flex items-center justify-between">
@@ -310,21 +325,6 @@ const ProfilePage = () => {
           </div>
         )}
 
-
-        {/* Recalibrate Goal Card */}
-        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.05s" }}>
-          <h2 className="text-lg text-foreground font-semibold mb-[6px]">Your goal</h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            Currently aiming for <span className="text-foreground font-semibold">{yearlyGoal.toLocaleString()}</span> push-ups this year.
-          </p>
-          <Button
-            variant="outline"
-            onClick={() => navigate("/welcome-recalibrate")}
-            className="w-full h-12 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
-          >
-            Recalibrate Your Goal
-          </Button>
-        </div>
 
         {/* Info Card */}
         <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{
