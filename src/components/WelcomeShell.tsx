@@ -101,9 +101,18 @@ const WelcomeShell = ({
   const dailyValue =
     selected === "custom"
       ? Math.max(0, Math.floor(Number(customValue) || 0))
-      : (selected ?? 0);
+      : typeof selected === "number"
+        ? selected
+        : 0;
 
   const projectedTotal = dailyValue * daysRemaining;
+
+  const eoyGoal = Math.max(0, Math.floor(Number(eoyValue) || 0));
+  const eoyRemaining = Math.max(0, eoyGoal - (currentTotal ?? 0));
+  const eoyDaily = Math.ceil(eoyRemaining / daysRemaining);
+  const eoyInvalid =
+    selected === "eoy" &&
+    (currentTotal === null || eoyGoal <= currentTotal || eoyDaily > 1000);
 
   const handleConfirm = async () => {
     if (!user) return;
