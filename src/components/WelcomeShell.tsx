@@ -116,29 +116,40 @@ const WelcomeShell = ({
 
   const handleConfirm = async () => {
     if (!user) return;
-    if (dailyValue <= 0) {
+    if (selected === "eoy") {
+      if (eoyInvalid) {
+        toast.error("Please enter a valid end-of-year goal");
+        return;
+      }
+    } else if (dailyValue <= 0) {
       toast.error("Please choose a daily push-up goal");
       return;
     }
     setIsSubmitting(true);
     try {
-      let goal = projectedTotal;
-      if (mode === "additive") {
-        const { data: entries, error: entriesError } = await supabase
-          .from("push_up_entries")
-          .select("count")
-          .eq("user_id", user.id);
-        if (entriesError) {
-          toast.error(entriesError.message);
-          return;
+      let goal: number;
+      if (selected === "eoy") {
+        // Save the typed end-of-year total exactly as the yearly goal.
+        goal = Math.min(999999, eoyGoal);
+      } else {
+        goal = projectedTotal;
+        if (mode === "additive") {
+          const { data: entries, error: entriesError } = await supabase
+            .from("push_up_entries")
+            .select("count")
+            .eq("user_id", user.id);
+          if (entriesError) {
+            toast.error(entriesError.message);
+            return;
+          }
+          const currentTotal = (entries ?? []).reduce(
+            (sum, e) => sum + (Number(e.count) || 0),
+            0,
+          );
+          goal = currentTotal + projectedTotal;
         }
-        const currentTotal = (entries ?? []).reduce(
-          (sum, e) => sum + (Number(e.count) || 0),
-          0,
-        );
-        goal = currentTotal + projectedTotal;
+        goal = Math.min(999999, goal);
       }
-      goal = Math.min(999999, goal);
       const { error } = celebratedGoal
         ? await supabase.rpc("complete_goal_and_set_next", {
             _reached_goal: celebratedGoal,
