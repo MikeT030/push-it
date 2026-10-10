@@ -35,15 +35,14 @@ const PastChallengesPanel = ({ trigger }: PastChallengesPanelProps) => {
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-sm mx-auto">
         <div className="relative">
-          <Button
-            variant="outline"
-            size="icon"
+          <button
+            type="button"
             onClick={() => setOpen(false)}
-            className="absolute right-0 top-0 w-10 h-10 rounded-full border-border"
+            className="absolute right-0 top-0 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
             aria-label="Close"
           >
-            <X className="w-5 h-5" />
-          </Button>
+            <X className="w-5 h-5 text-foreground" />
+          </button>
         </div>
 
         <header className="text-center mb-8 mt-5 flex flex-col items-center">

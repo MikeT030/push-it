@@ -13,6 +13,7 @@ const WelcomeRecalibratePage = () => (
     mode="additive"
     successToast="Goal recalibrated. Keep pushing!"
     contentOffsetY={-12}
+    showCloseButton
   />
 
 );

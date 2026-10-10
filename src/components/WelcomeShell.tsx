@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { differenceInCalendarDays, endOfYear } from "date-fns";
+import { X } from "lucide-react";
 import smallCircleIcon from "@/assets/small-circle-icon.svg";
 import muscleIcon from "@/assets/muscle-icon.svg";
 import { useAuth } from "@/contexts/AuthContext";
@@ -27,6 +28,9 @@ export type WelcomeShellProps = {
   contentOffsetY?: number;
   /** The goal just reached — marked as celebrated when the user confirms a new goal. */
   celebratedGoal?: number;
+  /** Shows a close (X) button in the upper-right corner, like the Insights screen. */
+  showCloseButton?: boolean;
+  onClose?: () => void;
 };
 
 const DEFAULT_INFO = (
@@ -48,6 +52,8 @@ const WelcomeShell = ({
   onConfirmRedirect = "/",
   contentOffsetY = 0,
   celebratedGoal,
+  showCloseButton = false,
+  onClose,
 }: WelcomeShellProps) => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -142,6 +148,19 @@ const WelcomeShell = ({
     >
       {showFireworks && (
         <Fireworks className="pointer-events-none fixed inset-0 w-screen h-screen z-0" />
+      )}
+
+      {showCloseButton && (
+        <button
+          type="button"
+          onClick={onClose ?? (() => navigate("/"))}
+          disabled={isSubmitting}
+          className="fixed right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors disabled:opacity-50"
+          style={{ top: "calc(env(safe-area-inset-top, 20px) + 20px)" }}
+          aria-label="Close"
+        >
+          <X className="w-5 h-5 text-foreground" />
+        </button>
       )}
 
       <div
