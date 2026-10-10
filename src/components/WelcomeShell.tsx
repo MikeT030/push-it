@@ -142,8 +142,8 @@ const WelcomeShell = ({
   return (
     <div
       className={cn(
-        "min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12",
-        showFireworks && "relative overflow-hidden",
+        "relative min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12",
+        showFireworks && "overflow-hidden",
       )}
     >
       {showFireworks && (
@@ -155,7 +155,7 @@ const WelcomeShell = ({
           type="button"
           onClick={onClose ?? (() => navigate("/"))}
           disabled={isSubmitting}
-          className="fixed right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors disabled:opacity-50"
+          className="absolute right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors disabled:opacity-50"
           style={{ top: "calc(env(safe-area-inset-top, 20px) + 20px)" }}
           aria-label="Close"
         >
