@@ -3,9 +3,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 
 /**
- * Returns true when the user has reached 30,000 push-ups AND has not yet
- * recalibrated their yearly goal above the default 30,000. Used to auto-redirect
- * users to /welcome-v2 to celebrate and pick a new goal.
+ * Returns true when the user has reached their current yearly goal AND that
+ * goal has not been celebrated yet. Used to auto-redirect users to
+ * /welcome-v2 to celebrate and pick a new goal. Fires for every goal
+ * milestone (30k, 40k, ...), not just the first one.
  */
 export const useGoalHit = () => {
   const { user } = useAuth();
@@ -17,12 +18,17 @@ export const useGoalHit = () => {
     staleTime: 30_000,
     queryFn: async () => {
       const [{ data: profile }, { data: entries }] = await Promise.all([
-        supabase.from("profiles").select("yearly_goal").eq("id", userId!).maybeSingle(),
+        supabase
+          .from("profiles")
+          .select("yearly_goal, celebrated_goal")
+          .eq("id", userId!)
+          .maybeSingle(),
         supabase.from("push_up_entries").select("count").eq("user_id", userId!),
       ]);
       const total = (entries ?? []).reduce((sum, e) => sum + (e.count ?? 0), 0);
       const goal = profile?.yearly_goal ?? 30000;
-      return total >= 30000 && goal <= 30000;
+      const celebrated = profile?.celebrated_goal ?? 0;
+      return total >= goal && goal > celebrated;
     },
   });
 
