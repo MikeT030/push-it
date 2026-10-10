@@ -31,6 +31,8 @@ export type WelcomeShellProps = {
   /** Shows a close (X) button in the upper-right corner, like the Insights screen. */
   showCloseButton?: boolean;
   onClose?: () => void;
+  /** Adds an input card where the user types an end-of-year total goal. */
+  showEoyInput?: boolean;
 };
 
 const DEFAULT_INFO = (
@@ -54,6 +56,7 @@ const WelcomeShell = ({
   celebratedGoal,
   showCloseButton = false,
   onClose,
+  showEoyInput = false,
 }: WelcomeShellProps) => {
   const { user } = useAuth();
   const navigate = useNavigate();
