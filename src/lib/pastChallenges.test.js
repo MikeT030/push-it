@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { groupPastChallenges, type PastChallenge } from "./pastChallenges";
+import { groupPastChallenges } from "./pastChallenges";
 
-const challenge = (id: string, year: number, goal: number, completedAt: string): PastChallenge => ({
+const challenge = (id, year, goal, completedAt) => ({
   id,
   challenge_year: year,
   goal,
