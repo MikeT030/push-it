@@ -34,16 +34,15 @@ const PastChallengesPanel = ({ trigger }: PastChallengesPanelProps) => {
         className="h-[100dvh] w-full max-w-none rounded-none border-none p-0 overflow-y-auto bg-background"
       >
         <div className="safe-top px-6 pt-6 pb-12 max-w-sm mx-auto">
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            className="absolute right-0 top-0 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5 text-foreground" />
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          className="fixed right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
+          style={{ top: "calc(env(safe-area-inset-top, 20px) + 20px)" }}
+          aria-label="Close"
+        >
+          <X className="w-5 h-5 text-foreground" />
+        </button>
 
         <header className="text-center mb-8 mt-5 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />

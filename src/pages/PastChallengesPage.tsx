@@ -8,17 +8,18 @@ const PastChallengesPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className="fixed right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
+        style={{ top: "calc(env(safe-area-inset-top, 20px) + 20px)" }}
+        aria-label="Close"
+      >
+        <X className="w-5 h-5 text-foreground" />
+      </button>
+
       <div className="w-full max-w-sm animate-fade-in mt-10 -translate-y-3">
-        <div className="mb-2 -mr-2 flex justify-end">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5 text-foreground" />
-          </button>
-        </div>
+
 
         <header className="text-center mb-8 flex flex-col items-center">
           <img src={smallCircleIcon} alt="" className="w-20 h-20 mb-4" />
