@@ -340,6 +340,66 @@ const WelcomeShell = ({
                   </span>
                 </div>
               </button>
+
+              {/* End-of-year goal option */}
+              {showEoyInput && (
+                <button
+                  type="button"
+                  onClick={() => setSelected("eoy")}
+                  className={cn(
+                    "w-full rounded-2xl p-4 text-left transition-all border",
+                    selected === "eoy"
+                      ? "border-[#0ABAB5] bg-[#0ABAB5]/10"
+                      : "border-[#3B404F] bg-card/40 hover:border-[#0ABAB5]/50",
+                  )}
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="flex items-center gap-2 flex-1">
+                      <Input
+                        type="number"
+                        min={1}
+                        max={999999}
+                        inputMode="numeric"
+                        value={eoyValue}
+                        onChange={(e) => {
+                          setEoyValue(e.target.value);
+                          setSelected("eoy");
+                        }}
+                        onFocus={() => setSelected("eoy")}
+                        placeholder="Your goal"
+                        className={cn(
+                          "h-9 w-28 bg-transparent border-0 border-b text-foreground placeholder:text-muted-foreground px-0 font-bold",
+                          selected === "eoy"
+                            ? "border-[#0ABAB5]"
+                            : "border-[#EEEEEE]",
+                        )}
+                      />
+                      <span
+                        className={cn(
+                          "text-sm",
+                          selected === "eoy" ? "text-[#0ABAB5]" : "text-white",
+                        )}
+                      >
+                        PU / EOY
+                      </span>
+                    </div>
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">
+                      ≈{" "}
+                      <span className="font-bold text-white">
+                        {(selected === "eoy" ? eoyDaily : 0).toLocaleString()}
+                      </span>{" "}
+                      PU / day
+                    </span>
+                  </div>
+                  {selected === "eoy" && eoyInvalid && eoyGoal > 0 && (
+                    <p className="text-xs text-destructive mt-2">
+                      {currentTotal !== null && eoyGoal <= currentTotal
+                        ? `You've already logged ${currentTotal.toLocaleString()} — pick a higher goal.`
+                        : "That would need more than 1,000 PU a day — pick a lower goal."}
+                    </p>
+                  )}
+                </button>
+              )}
             </div>
 
             {/* Info text */}
