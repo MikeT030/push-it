@@ -85,7 +85,7 @@ const PastChallengesContent = () => {
     <div className="space-y-8">
       {years.map(({ year, challenges }) => (
         <section key={year} aria-labelledby={`challenge-year-${year}`}>
-          <h3 id={`challenge-year-${year}`} className="text-2xl text-foreground mb-3">
+          <h3 id={`challenge-year-${year}`} className="text-2xl text-foreground mb-3 text-center">
             <span className="font-bold">{year}</span>
           </h3>
           <div className="space-y-3">
