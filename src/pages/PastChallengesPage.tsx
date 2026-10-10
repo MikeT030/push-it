@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { X } from "lucide-react";
 import smallCircleIcon from "@/assets/small-circle-icon.svg";
-import { Button } from "@/components/ui/button";
 import PastChallengesContent from "@/components/PastChallengesContent";
 
 const PastChallengesPage = () => {
@@ -10,16 +9,15 @@ const PastChallengesPage = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
       <div className="w-full max-w-sm animate-fade-in mt-10 -translate-y-3">
-        <div className="mb-2 -ml-2">
-          <Button
-            variant="ghost"
-            size="icon"
+        <div className="mb-2 -mr-2 flex justify-end">
+          <button
+            type="button"
             onClick={() => navigate(-1)}
-            className="h-10 w-10 border border-foreground text-foreground hover:bg-foreground hover:text-background"
-            aria-label="Back"
+            className="w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
+            aria-label="Close"
           >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
+            <X className="w-5 h-5 text-foreground" />
+          </button>
         </div>
 
         <header className="text-center mb-8 flex flex-col items-center">
