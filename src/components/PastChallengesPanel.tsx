@@ -33,11 +33,11 @@ const PastChallengesPanel = ({ trigger }: PastChallengesPanelProps) => {
         hideCloseButton
         className="h-[100dvh] w-full max-w-none rounded-none border-none p-0 overflow-y-auto bg-background"
       >
-        <div className="safe-top px-6 pt-6 pb-12 max-w-sm mx-auto">
+        <div className="relative safe-top px-6 pt-6 pb-12 max-w-sm mx-auto">
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="fixed right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
+          className="absolute right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
           style={{ top: "calc(env(safe-area-inset-top, 20px) + 20px)" }}
           aria-label="Close"
         >

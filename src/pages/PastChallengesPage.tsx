@@ -7,11 +7,11 @@ const PastChallengesPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
+    <div className="relative min-h-screen bg-background flex flex-col items-center px-6 safe-top pt-12 pb-12">
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className="fixed right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
+        className="absolute right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-[#3B404F] hover:bg-white/5 transition-colors"
         style={{ top: "calc(env(safe-area-inset-top, 20px) + 20px)" }}
         aria-label="Close"
       >
