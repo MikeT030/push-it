@@ -1,0 +1,1 @@
+ALTER TABLE public.profiles ADD COLUMN celebrated_goal integer NOT NULL DEFAULT 0;
