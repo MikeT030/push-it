@@ -14,6 +14,7 @@ const WelcomeRecalibratePage = () => (
     successToast="Goal recalibrated. Keep pushing!"
     contentOffsetY={-12}
     showCloseButton
+    showEoyInput
   />
 
 );

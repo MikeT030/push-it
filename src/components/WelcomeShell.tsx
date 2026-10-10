@@ -31,6 +31,8 @@ export type WelcomeShellProps = {
   /** Shows a close (X) button in the upper-right corner, like the Insights screen. */
   showCloseButton?: boolean;
   onClose?: () => void;
+  /** Adds an input card where the user types an end-of-year total goal. */
+  showEoyInput?: boolean;
 };
 
 const DEFAULT_INFO = (
@@ -54,14 +56,36 @@ const WelcomeShell = ({
   celebratedGoal,
   showCloseButton = false,
   onClose,
+  showEoyInput = false,
 }: WelcomeShellProps) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState<number | "custom" | null>(null);
+  const [selected, setSelected] = useState<number | "custom" | "eoy" | null>(null);
   const [customValue, setCustomValue] = useState("");
+  const [eoyValue, setEoyValue] = useState("");
+  const [currentTotal, setCurrentTotal] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showRest, setShowRest] = useState(!showFireworks);
+
+  // Load the user's all-time total once so the EOY card can convert live.
+  useEffect(() => {
+    if (!showEoyInput || !user) return;
+    let cancelled = false;
+    supabase
+      .from("push_up_entries")
+      .select("count")
+      .eq("user_id", user.id)
+      .then(({ data }) => {
+        if (cancelled) return;
+        setCurrentTotal(
+          (data ?? []).reduce((sum, e) => sum + (Number(e.count) || 0), 0),
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [showEoyInput, user]);
 
   useEffect(() => {
     if (!showFireworks) return;
@@ -77,35 +101,55 @@ const WelcomeShell = ({
   const dailyValue =
     selected === "custom"
       ? Math.max(0, Math.floor(Number(customValue) || 0))
-      : (selected ?? 0);
+      : typeof selected === "number"
+        ? selected
+        : 0;
 
   const projectedTotal = dailyValue * daysRemaining;
 
+  const eoyGoal = Math.max(0, Math.floor(Number(eoyValue) || 0));
+  const eoyRemaining = Math.max(0, eoyGoal - (currentTotal ?? 0));
+  const eoyDaily = Math.ceil(eoyRemaining / daysRemaining);
+  const eoyInvalid =
+    selected === "eoy" &&
+    (currentTotal === null || eoyGoal <= currentTotal || eoyDaily > 1000);
+
   const handleConfirm = async () => {
     if (!user) return;
-    if (dailyValue <= 0) {
+    if (selected === "eoy") {
+      if (eoyInvalid) {
+        toast.error("Please enter a valid end-of-year goal");
+        return;
+      }
+    } else if (dailyValue <= 0) {
       toast.error("Please choose a daily push-up goal");
       return;
     }
     setIsSubmitting(true);
     try {
-      let goal = projectedTotal;
-      if (mode === "additive") {
-        const { data: entries, error: entriesError } = await supabase
-          .from("push_up_entries")
-          .select("count")
-          .eq("user_id", user.id);
-        if (entriesError) {
-          toast.error(entriesError.message);
-          return;
+      let goal: number;
+      if (selected === "eoy") {
+        // Save the typed end-of-year total exactly as the yearly goal.
+        goal = Math.min(999999, eoyGoal);
+      } else {
+        goal = projectedTotal;
+        if (mode === "additive") {
+          const { data: entries, error: entriesError } = await supabase
+            .from("push_up_entries")
+            .select("count")
+            .eq("user_id", user.id);
+          if (entriesError) {
+            toast.error(entriesError.message);
+            return;
+          }
+          const currentTotal = (entries ?? []).reduce(
+            (sum, e) => sum + (Number(e.count) || 0),
+            0,
+          );
+          goal = currentTotal + projectedTotal;
         }
-        const currentTotal = (entries ?? []).reduce(
-          (sum, e) => sum + (Number(e.count) || 0),
-          0,
-        );
-        goal = currentTotal + projectedTotal;
+        goal = Math.min(999999, goal);
       }
-      goal = Math.min(999999, goal);
       const { error } = celebratedGoal
         ? await supabase.rpc("complete_goal_and_set_next", {
             _reached_goal: celebratedGoal,
@@ -296,6 +340,66 @@ const WelcomeShell = ({
                   </span>
                 </div>
               </button>
+
+              {/* End-of-year goal option */}
+              {showEoyInput && (
+                <button
+                  type="button"
+                  onClick={() => setSelected("eoy")}
+                  className={cn(
+                    "w-full rounded-2xl p-4 text-left transition-all border",
+                    selected === "eoy"
+                      ? "border-[#0ABAB5] bg-[#0ABAB5]/10"
+                      : "border-[#3B404F] bg-card/40 hover:border-[#0ABAB5]/50",
+                  )}
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="flex items-center gap-2 flex-1">
+                      <Input
+                        type="number"
+                        min={1}
+                        max={999999}
+                        inputMode="numeric"
+                        value={eoyValue}
+                        onChange={(e) => {
+                          setEoyValue(e.target.value);
+                          setSelected("eoy");
+                        }}
+                        onFocus={() => setSelected("eoy")}
+                        placeholder="Your goal"
+                        className={cn(
+                          "h-9 w-28 bg-transparent border-0 border-b text-foreground placeholder:text-muted-foreground px-0 font-bold",
+                          selected === "eoy"
+                            ? "border-[#0ABAB5]"
+                            : "border-[#EEEEEE]",
+                        )}
+                      />
+                      <span
+                        className={cn(
+                          "text-sm",
+                          selected === "eoy" ? "text-[#0ABAB5]" : "text-white",
+                        )}
+                      >
+                        PU / EOY
+                      </span>
+                    </div>
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">
+                      ≈{" "}
+                      <span className="font-bold text-white">
+                        {(selected === "eoy" ? eoyDaily : 0).toLocaleString()}
+                      </span>{" "}
+                      PU / day
+                    </span>
+                  </div>
+                  {selected === "eoy" && eoyInvalid && eoyGoal > 0 && (
+                    <p className="text-xs text-destructive mt-2">
+                      {currentTotal !== null && eoyGoal <= currentTotal
+                        ? `You've already logged ${currentTotal.toLocaleString()} — pick a higher goal.`
+                        : "That would need more than 1,000 PU a day — pick a lower goal."}
+                    </p>
+                  )}
+                </button>
+              )}
             </div>
 
             {/* Info text */}
@@ -310,7 +414,11 @@ const WelcomeShell = ({
               type="button"
               variant="outline"
               onClick={handleConfirm}
-              disabled={isSubmitting || selected === null || dailyValue <= 0}
+              disabled={
+                isSubmitting ||
+                selected === null ||
+                (selected === "eoy" ? eoyInvalid : dailyValue <= 0)
+              }
               className="w-full h-12 mt-4 bg-[#0ABAB5]/10 border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white active:bg-[#0ABAB5]/25 active:text-white"
             >
               {isSubmitting ? "Saving..." : "Confirm goal"}
