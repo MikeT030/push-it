@@ -61,10 +61,31 @@ const WelcomeShell = ({
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState<number | "custom" | null>(null);
+  const [selected, setSelected] = useState<number | "custom" | "eoy" | null>(null);
   const [customValue, setCustomValue] = useState("");
+  const [eoyValue, setEoyValue] = useState("");
+  const [currentTotal, setCurrentTotal] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showRest, setShowRest] = useState(!showFireworks);
+
+  // Load the user's all-time total once so the EOY card can convert live.
+  useEffect(() => {
+    if (!showEoyInput || !user) return;
+    let cancelled = false;
+    supabase
+      .from("push_up_entries")
+      .select("count")
+      .eq("user_id", user.id)
+      .then(({ data }) => {
+        if (cancelled) return;
+        setCurrentTotal(
+          (data ?? []).reduce((sum, e) => sum + (Number(e.count) || 0), 0),
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [showEoyInput, user]);
 
   useEffect(() => {
     if (!showFireworks) return;
