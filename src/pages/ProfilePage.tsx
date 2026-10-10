@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
 import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import InsightsCard from "@/components/InsightsCard";
+import PastChallengesPanel from "@/components/PastChallengesPanel";
 import DemoBanner from "@/components/DemoBanner";
 const ProfilePage = () => {
   const {
@@ -282,6 +283,15 @@ const ProfilePage = () => {
           >
             Recalibrate Your Goal
           </Button>
+        </div>
+
+        {/* Past Challenges Card */}
+        <div className="bg-card/40 rounded-2xl p-6 animate-slide-up pt-[10px] pb-[10px] px-[10px] border border-[#3B404F]" style={{ animationDelay: "0.02s" }}>
+          <h2 className="text-lg text-foreground font-semibold mb-[6px]">Past Challenges</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Every year you push gets archived here.
+          </p>
+          <PastChallengesPanel />
         </div>
 
         {/* Share Toggle Card */}
