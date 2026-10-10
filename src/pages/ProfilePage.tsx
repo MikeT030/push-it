@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { useAvatarSelector } from "@/contexts/AvatarSelectorContext";
 import PushTheRightWayPanel from "@/components/PushTheRightWayPanel";
 import InsightsCard from "@/components/InsightsCard";
+import PastChallengesPanel from "@/components/PastChallengesPanel";
 import DemoBanner from "@/components/DemoBanner";
 const ProfilePage = () => {
   const {
