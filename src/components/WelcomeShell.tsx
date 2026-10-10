@@ -100,15 +100,19 @@ const WelcomeShell = ({
         goal = currentTotal + projectedTotal;
       }
       goal = Math.min(999999, goal);
-      const { error } = await supabase
-        .from("profiles")
-        .update({
-          yearly_goal: goal,
-          onboarded: true,
-          goal_set_year: new Date().getFullYear(),
-          ...(celebratedGoal ? { celebrated_goal: celebratedGoal } : {}),
-        })
-        .eq("id", user.id);
+      const { error } = celebratedGoal
+        ? await supabase.rpc("complete_goal_and_set_next", {
+            _reached_goal: celebratedGoal,
+            _next_goal: goal,
+          })
+        : await supabase
+            .from("profiles")
+            .update({
+              yearly_goal: goal,
+              onboarded: true,
+              goal_set_year: new Date().getFullYear(),
+            })
+            .eq("id", user.id);
       if (error) {
         toast.error(error.message);
         return;
@@ -117,6 +121,7 @@ const WelcomeShell = ({
       await queryClient.invalidateQueries({ queryKey: ["profile-onboarded", user.id] });
       await queryClient.invalidateQueries({ queryKey: ["profile-goal-set-year", user.id] });
       await queryClient.invalidateQueries({ queryKey: ["goal-hit-30k", user.id] });
+      await queryClient.invalidateQueries({ queryKey: ["past-challenges", user.id] });
       await queryClient.refetchQueries({ queryKey: ["goal-hit-30k", user.id] });
       toast.success(successToast);
       navigate(onConfirmRedirect);
